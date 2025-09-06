@@ -6,4 +6,5 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun RouterScreen() {
     val vm = hiltViewModel<MainViewModel>()
+    ViewerScreen(vm)
 }
