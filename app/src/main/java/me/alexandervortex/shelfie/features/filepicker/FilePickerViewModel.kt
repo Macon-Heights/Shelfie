@@ -1,11 +1,11 @@
-package me.alexandervortex.shelfie.features.filepick
+package me.alexandervortex.shelfie.features.filepicker
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FilePickViewModel
+class FilePickerViewModel
 @Inject constructor() : ViewModel() {
 
 }

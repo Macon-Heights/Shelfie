@@ -6,11 +6,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import com.kursx.parser.fb2.Element
 import com.kursx.parser.fb2.Section
 
 @Composable
-fun ViewerScreen(viewModel: ViewerViewModel) {
+fun ViewerScreen(
+    navController: NavHostController,
+    viewModel: ViewerViewModel,
+) {
     val context = LocalContext.current
     LaunchedEffect(true) { viewModel.initScreenData(context) }
 
