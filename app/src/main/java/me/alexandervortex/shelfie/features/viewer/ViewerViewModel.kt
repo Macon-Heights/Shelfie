@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie
+package me.alexandervortex.shelfie.features.viewer
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
@@ -10,7 +10,7 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel
+class ViewerViewModel
 @Inject constructor() : ViewModel() {
 
     val error = mutableStateOf("no error")
