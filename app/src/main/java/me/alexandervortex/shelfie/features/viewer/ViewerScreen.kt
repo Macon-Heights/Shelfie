@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie
+package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,7 +10,7 @@ import com.kursx.parser.fb2.Element
 import com.kursx.parser.fb2.Section
 
 @Composable
-fun ViewerScreen(viewModel: MainViewModel) {
+fun ViewerScreen(viewModel: ViewerViewModel) {
     val context = LocalContext.current
     LaunchedEffect(true) { viewModel.initScreenData(context) }
 

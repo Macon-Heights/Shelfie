@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie
+package me.alexandervortex.shelfie.base
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
