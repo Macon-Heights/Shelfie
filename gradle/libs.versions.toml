@@ -12,6 +12,8 @@ composeBom = "2024.09.00"
 # mine
 ksp = "1.9.24-1.0.20"
 hilt = "2.49"
+navVersion = "2.7.7"
+hiltNavigationVersion = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +34,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 # hilt
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+
+# Navigation
+nav-version = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navVersion" }
+hilt-nav-version = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
