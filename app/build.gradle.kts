@@ -51,6 +51,10 @@ dependencies {
     implementation (libs.nav.version)
     implementation (libs.hilt.nav.version)
 
+
+    // FB2 Parser
+    implementation(files("../libs/fb2parser.jar"))
+
     // LEGACY
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
