@@ -6,26 +6,43 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.lifecycle.HiltViewModel
+import me.alexandervortex.shelfie.base.App
 import java.io.File
 import javax.inject.Inject
-
 @HiltViewModel
-class ViewerViewModel
-@Inject constructor() : ViewModel() {
+class ViewerViewModel @Inject constructor() : ViewModel() {
 
     val error = mutableStateOf("no error")
     val bookSample: MutableState<FictionBook?> = mutableStateOf(null)
 
+    /**
+     * Загружает книгу из App.uri, а если его нет — sample.fb2 из assets.
+     */
     fun initScreenData(context: Context) {
         try {
-            val inputStream = context.assets.open("sample.fb2")
-            val bookFile = File(context.cacheDir, "sample.fb2")
-            inputStream.use { input ->
-                bookFile.outputStream().use {
-                    input.copyTo(it)
+            val file: File = App.uri?.let { uri ->
+                // копируем выбранный content:// во временный файл в кэше
+                val outFile = File(context.cacheDir, "current.fb2")
+                context.contentResolver.openInputStream(uri)?.use { input ->
+                    outFile.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
+                } ?: throw IllegalStateException("Не удалось открыть выбранный файл")
+                outFile
+            } ?: run {
+                // фоллбек на sample.fb2 из assets
+                val outFile = File(context.cacheDir, "sample.fb2")
+                context.assets.open("sample.fb2").use { input ->
+                    outFile.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
                 }
+                outFile
             }
-            bookSample.value = FictionBook(bookFile)
+
+            bookSample.value = FictionBook(file)
+            error.value = "no error"
+
         } catch (e: Exception) {
             error.value = e.localizedMessage ?: "unknown error"
         }

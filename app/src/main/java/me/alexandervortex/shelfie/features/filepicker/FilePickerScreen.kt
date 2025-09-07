@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import me.alexandervortex.shelfie.base.App
 
 @Composable
 fun FilePickerScreen(
@@ -19,19 +20,19 @@ fun FilePickerScreen(
     val picker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
-        uri ?: return@rememberLauncherForActivityResult
+            uri ?: return@rememberLauncherForActivityResult
 
-        try {
-            context.contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
-            )
-        } catch (e: SecurityException) {
-            /* провайдер мог не дать persist */
+            try {
+                context.contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (e: SecurityException) {
+                /* провайдер мог не дать persist */
+            }
+
+            App.uri = uri
         }
-
-//        TODO: viewModel.onPicked(uri)
-    }
 
     Button({
         picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
