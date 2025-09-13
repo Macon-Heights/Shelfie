@@ -3,6 +3,7 @@ package me.alexandervortex.shelfie.data.db.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 
@@ -12,11 +13,11 @@ const val BOOK_TABLE = "book_table"
 interface BookDao {
 
     @Query("SELECT * FROM $BOOK_TABLE")
-    fun getAll(): List<BookEntity>
+    suspend fun getAll(): List<BookEntity>
 
-    @Insert
-    fun insert(book: BookEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(book: BookEntity)
 
     @Delete
-    fun delete(user: BookEntity)
+    suspend fun delete(user: BookEntity)
 }
