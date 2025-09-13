@@ -9,11 +9,18 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
+import me.alexandervortex.shelfie.data.repository.BookRepo
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
+
+    @Provides
+    @Singleton
+    fun provideRepo(dao: BookDao): BookRepo {
+        return BookRepo(dao)
+    }
 
     @Provides
     @Singleton
