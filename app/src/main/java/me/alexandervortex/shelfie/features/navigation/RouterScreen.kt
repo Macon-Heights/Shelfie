@@ -18,7 +18,7 @@ fun RouterScreen() {
 
     NavHost(
         navController = navController,
-        startDestination = "welcome"
+        startDestination = "filePicker"
     ) {
         composable("welcome") { WelcomeScreen(navController,hiltViewModel<WelcomeViewModel>()) }
         composable("viewer") { ViewerScreen(navController,hiltViewModel<ViewerViewModel>()) }

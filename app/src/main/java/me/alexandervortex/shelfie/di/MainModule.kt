@@ -12,6 +12,8 @@ import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.repository.BookRepo
 import javax.inject.Singleton
 
+const val BOOK_DB = "book_db"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
@@ -26,7 +28,7 @@ object MainModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): BookDb {
         return Room.databaseBuilder(
-            context, BookDb::class.java,"asda_asda"
+            context, BookDb::class.java, BOOK_DB
         ).build()
     }
 
