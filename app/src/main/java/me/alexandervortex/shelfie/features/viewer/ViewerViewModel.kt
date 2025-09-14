@@ -8,13 +8,13 @@ import androidx.lifecycle.ViewModel
 import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.lifecycle.HiltViewModel
 import me.alexandervortex.shelfie.base.ext.toBook
-import me.alexandervortex.shelfie.data.repository.BookRepo
+import me.alexandervortex.shelfie.data.repository.RepositoryImpl
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewerViewModel
 @Inject constructor(
-    private val repo: BookRepo,
+    private val repo: RepositoryImpl,
 ) : ViewModel() {
 
     val error = mutableStateOf("no error")

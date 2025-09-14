@@ -9,7 +9,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
-import me.alexandervortex.shelfie.data.repository.BookRepo
+import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
+import me.alexandervortex.shelfie.data.repository.RepositoryImpl
 import javax.inject.Singleton
 
 const val BOOK_DB = "book_db"
@@ -20,8 +21,11 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun provideRepo(dao: BookDao): BookRepo {
-        return BookRepo(dao)
+    fun provideRepo(
+        dao: BookDao,
+        mapper: BookEntityMapper,
+    ): RepositoryImpl {
+        return RepositoryImpl(dao, mapper)
     }
 
     @Provides
