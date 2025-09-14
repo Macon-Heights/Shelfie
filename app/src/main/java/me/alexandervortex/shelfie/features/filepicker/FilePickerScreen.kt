@@ -37,7 +37,7 @@ fun FilePickerScreen(
         } catch (e: SecurityException) {
             /* провайдер мог не дать persist */
         }
-        viewModel?.onBookAdded(uri)
+        viewModel?.onBookAdded(uri, context)
     }
 
     LaunchedEffect(true) { viewModel?.loadBooks() }
@@ -47,7 +47,7 @@ fun FilePickerScreen(
             Text("Твои книги")
         }
         items(viewModel?.books.orEmpty()) { item ->
-            Text(item.name, Modifier.clickable {
+            Text(item.title, Modifier.clickable {
                 viewModel?.setCurrentBook(item)
                 navController?.navigate("viewer")
             })

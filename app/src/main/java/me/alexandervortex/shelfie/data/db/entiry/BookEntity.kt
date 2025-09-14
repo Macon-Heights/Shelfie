@@ -16,18 +16,6 @@ data class BookEntity(
     @ColumnInfo(name = "title")
     val title: String,
 
-    @ColumnInfo(name = "author")
-    val author: String,
-
-    @ColumnInfo(name = "lang")
-    val lang: String,
-
-    @ColumnInfo(name = "version")
-    val version: Int,
-
     @ColumnInfo(name = "uri")
     val uri: String,
-
-    @ColumnInfo(name = "addedAt")
-    val addedAt: Long,
 )
