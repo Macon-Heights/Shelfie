@@ -13,8 +13,12 @@ class BookEntityMapper
             BookEntity(
                 id = fb2book.description.hashCode(),
                 fb2DocumentId = fb2book.description?.documentInfo?.id,
+                uri = uri.toString(),
                 title = fb2book.title,
-                uri = uri.toString()
+                author = fb2book.authors.firstOrNull()?.fullName,
+                image = fb2book.binaries.values.firstOrNull {
+                    it.contentType.contains("image")
+                }?.binary?.toByteArray()
             )
         }
     }

@@ -9,19 +9,19 @@ import javax.inject.Inject
 
 class RepositoryImpl
 @Inject constructor(
-    private val dao: BookDao, // todo
+    private val dao: BookDao,
     private val mapper: BookEntityMapper,
 ) {
 
     var currentBook: BookEntity? = null
-    var books = mutableListOf<BookEntity>()
 
     suspend fun addBook(book: FictionBook?, uri: Uri) {
-        val bk = mapper.map(book, uri)
-        bk?.let { books.add(bk) }
+        mapper.map(book, uri)?.let { item ->
+            dao.insert(item)
+        }
     }
 
     suspend fun getBooks(): List<BookEntity> {
-        return books
+        return dao.getAll()
     }
 }
