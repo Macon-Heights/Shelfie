@@ -5,6 +5,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
+import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.filepicker.FilePickerScreen
 import me.alexandervortex.shelfie.features.filepicker.FilePickerViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerScreen
@@ -18,10 +20,11 @@ fun RouterScreen() {
 
     NavHost(
         navController = navController,
-        startDestination = "filePicker"
+        startDestination = "catalogue"
     ) {
         composable("welcome") { WelcomeScreen(navController,hiltViewModel<WelcomeViewModel>()) }
         composable("viewer") { ViewerScreen(navController,hiltViewModel<ViewerViewModel>()) }
+        composable("catalogue") { CatalogueScreen(navController, hiltViewModel<CatalogueViewModel>()) }
         composable("filePicker") { FilePickerScreen(navController,hiltViewModel<FilePickerViewModel>()) }
     }
 }
