@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +42,7 @@ fun CatalogueScreen(
         vm.addBookByUri(uri, context)
     }
     // endregion
-
+    LaunchedEffect(true) { vm.loadBooks() }
     LazyColumn(modifier = Modifier.padding(32.dp)) {
         item {
             Text(
