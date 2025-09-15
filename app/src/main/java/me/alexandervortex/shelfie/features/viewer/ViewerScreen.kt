@@ -12,8 +12,8 @@ import com.kursx.parser.fb2.Section
 
 @Composable
 fun ViewerScreen(
-    navController: NavHostController,
     viewModel: ViewerViewModel,
+    navController: NavHostController,
 ) {
     val context = LocalContext.current
     LaunchedEffect(true) { viewModel.initScreenData(context) }

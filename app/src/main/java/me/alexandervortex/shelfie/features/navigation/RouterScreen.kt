@@ -9,8 +9,6 @@ import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 import me.alexandervortex.shelfie.features.viewer.ViewerViewModel
-import me.alexandervortex.shelfie.features.welcome.WelcomeScreen
-import me.alexandervortex.shelfie.features.welcome.WelcomeViewModel
 
 @Composable
 fun RouterScreen() {
@@ -20,8 +18,11 @@ fun RouterScreen() {
         navController = navController,
         startDestination = "catalogue"
     ) {
-        composable("welcome") { WelcomeScreen(navController,hiltViewModel<WelcomeViewModel>()) }
-        composable("viewer") { ViewerScreen(navController,hiltViewModel<ViewerViewModel>()) }
-        composable("catalogue") { CatalogueScreen(navController, hiltViewModel<CatalogueViewModel>()) }
+        composable("viewer") {
+            ViewerScreen(hiltViewModel<ViewerViewModel>(), navController)
+        }
+        composable("catalogue") {
+            CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController)
+        }
     }
 }

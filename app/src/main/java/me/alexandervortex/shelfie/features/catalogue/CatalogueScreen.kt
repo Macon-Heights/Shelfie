@@ -15,15 +15,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.base.BaseCatalogueViewModel
 
 @Composable
 fun CatalogueScreen(
-    navController: NavHostController,
     vm: BaseCatalogueViewModel,
+    navController: NavHostController? = null,
 ) {
     // region fixme
     val context = LocalContext.current
@@ -56,7 +58,7 @@ fun CatalogueScreen(
         items(vm.books) { item ->
             Text(item.title, Modifier.clickable {
                 vm.setCurrentBook(item)
-                navController.navigate("viewer")
+                navController?.navigate("viewer")
             })
         }
         item {
@@ -66,4 +68,10 @@ fun CatalogueScreen(
             }) { Text("Добавить") }
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun CatalogueScreen() {
+    CatalogueScreen(vm = hiltViewModel<CataloguePreviewViewModel>())
 }
