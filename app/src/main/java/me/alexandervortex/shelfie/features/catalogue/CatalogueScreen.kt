@@ -18,11 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import me.alexandervortex.shelfie.base.BaseCatalogueViewModel
 
 @Composable
 fun CatalogueScreen(
     navController: NavHostController,
-    vm: CatalogueViewModel,
+    vm: BaseCatalogueViewModel,
 ) {
     // region fixme
     val context = LocalContext.current
