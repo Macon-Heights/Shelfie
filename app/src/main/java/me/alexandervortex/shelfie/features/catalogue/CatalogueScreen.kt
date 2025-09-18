@@ -4,9 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -29,8 +31,6 @@ import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
-
-const val PADDINGS = 32
 
 @Composable
 fun CatalogueScreen(
@@ -56,8 +56,15 @@ fun CatalogueScreen(
     }
     // endregion
     LaunchedEffect(true) { vm.loadBooks() }
-    Box(contentAlignment = Alignment.BottomEnd) {
-        Column(Modifier.padding(horizontal = 32.dp)) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        Column(
+            Modifier
+                .padding(horizontal = 32.dp)
+                .fillMaxSize()
+        ) {
             TitleComponent(
                 text = "Your\nBooks",
                 modifier = Modifier.padding(vertical = 128.dp)
@@ -69,7 +76,10 @@ fun CatalogueScreen(
                 modifier = Modifier,
             ) {
                 items(vm.books) { item ->
-                    BookComponent(item)
+                    BookComponent(item, Modifier.clickable {
+                        vm.setCurrentBook(item)
+                        navController?.navigate("viewer")
+                    })
                 }
             }
         }
