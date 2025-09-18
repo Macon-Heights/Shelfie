@@ -42,7 +42,7 @@ object BookPreviewFactory {
                 fb2DocumentId = "",
                 uri = "",
                 title = it.firstOrNull().orEmpty(),
-                author = it.lastOrNull().orEmpty(),
+                author = it.lastOrNull(),
                 image = null
             )
         }
