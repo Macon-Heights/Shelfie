@@ -20,6 +20,7 @@ fun TitleComponent(
             text = text,
             modifier = modifier,
             fontSize = size.sp,
+            lineHeight = size.sp,
             letterSpacing = spacing.sp,
             fontWeight = FontWeight.Thin,
         )
