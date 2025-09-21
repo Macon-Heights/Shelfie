@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,13 +12,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -57,22 +59,25 @@ fun CatalogueScreen(
     // endregion
     LaunchedEffect(true) { vm.loadBooks() }
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+//            .background(Color.Red)
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
         Column(
             Modifier
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxSize()
         ) {
             TitleComponent(
                 text = "Your\nBooks",
                 modifier = Modifier.padding(vertical = 128.dp)
             )
-            LazyVerticalGrid(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                columns = GridCells.Adaptive(120.dp),
+            LazyVerticalStaggeredGrid(
+                verticalItemSpacing = 8.dp,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                columns = StaggeredGridCells.Adaptive(120.dp),
                 modifier = Modifier,
             ) {
                 items(vm.books) { item ->
