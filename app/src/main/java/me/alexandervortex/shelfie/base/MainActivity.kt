@@ -3,10 +3,9 @@ package me.alexandervortex.shelfie.base
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import com.example.compose.ShelfieTheme
 import dagger.hilt.android.AndroidEntryPoint
 import me.alexandervortex.shelfie.features.navigation.RouterScreen
-import me.alexandervortex.shelfie.ui.theme.ShelfieTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
