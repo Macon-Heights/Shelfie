@@ -19,7 +19,7 @@ fun RouterScreen() {
         startDestination = "catalogue"
     ) {
         composable("viewer") {
-            ViewerScreen(hiltViewModel<ViewerViewModel>(), navController)
+            ViewerScreen(hiltViewModel<ViewerViewModel>())
         }
         composable("catalogue") {
             CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController)
