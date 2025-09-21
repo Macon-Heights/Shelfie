@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.features.catalogue.BookPreviewFactory
 import me.alexandervortex.shelfie.features.catalogue.CataloguePreviewViewModel
 
 @Composable
@@ -31,39 +30,48 @@ fun BookComponent(
 ) {
     Column(
         modifier = modifier
-//            .sizeIn(minHeight = 120.dp)
             .clip(RoundedCornerShape(16.dp))
-//            .border(1.dp, Color(0xFF_777777), RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(16.dp)
     ) {
-// если 4-5 символов и 1 слово - добавим неразрывных пробелов по-кайфу
-// если есть слово из 3 и меньше символов - добавь перенос до и после по-кайфу
 
         Text(
             model.title,
             fontSize = 18.sp,
-            fontWeight = FontWeight.Black,
+            fontWeight = FontWeight.Medium,
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Justify
+            textAlign = TextAlign.Left
         )
         model.author?.let {
             Spacer(Modifier.size(8.dp))
             Text(
+                fontWeight = FontWeight.Light,
                 text = (it),
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.End
             )
         }
     }
 }
 
-@Composable
-@Preview(showBackground = true, widthDp = 120, heightDp = 180)
-fun BookComponent() {
-    val model = BookPreviewFactory.getBooks().random()
-    BookComponent(model)
+private fun String.format(): String {
+    return replace("""(?<=\b\p{L}{4,}) +(?=\p{L}{1,3}\b)""".toRegex(), "\n")
+        .replace("""(?<=\b\p{L}{1,3}) +(?=\p{L}{4,}\b)""".toRegex(), "\n")
 }
+
+//@Composable
+//@Preview(showBackground = true, widthDp = 120)
+//fun BookComponent() {
+//    val model = BookEntity(
+//        id = 1,
+//        fb2DocumentId = "",
+//        uri = "",
+//        title = "center",
+//        author = "",
+//        image = null
+//    )
+//    BookComponent(model)
+//}
 
 @Composable
 @Preview(showBackground = true)
