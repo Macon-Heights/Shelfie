@@ -60,7 +60,6 @@ fun CatalogueScreen(
     LaunchedEffect(true) { vm.loadBooks() }
     Box(
         modifier = Modifier
-//            .background(Color.Red)
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
@@ -77,7 +76,7 @@ fun CatalogueScreen(
             LazyVerticalStaggeredGrid(
                 verticalItemSpacing = 8.dp,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                columns = StaggeredGridCells.Adaptive(120.dp),
+                columns = StaggeredGridCells.Adaptive(180.dp),
                 modifier = Modifier,
             ) {
                 items(vm.books) { item ->
