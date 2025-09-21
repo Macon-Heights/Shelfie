@@ -2,6 +2,7 @@ package com.example.compose
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -480,7 +481,8 @@ fun ShelfieTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-      typography = Typography,
+        typography = Typography,
+        shapes = Shapes(),
         content = content
     )
 }
