@@ -25,15 +25,18 @@ fun BookComponent(
     model: BookEntity,
     modifier: Modifier = Modifier,
 ) {
+    val color = MaterialTheme.colorScheme.surfaceVariant
+    val onColor = MaterialTheme.colorScheme.onSurfaceVariant
+
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(color)
             .padding(16.dp)
     ) {
-
         Text(
             model.title,
+            color = onColor,
             fontSize = 18.sp,
             fontWeight = FontWeight.Medium,
             modifier = Modifier.fillMaxWidth(),
@@ -42,6 +45,7 @@ fun BookComponent(
         model.author?.let {
             Spacer(Modifier.size(8.dp))
             Text(
+                color = onColor,
                 fontWeight = FontWeight.Light,
                 text = (it),
                 modifier = Modifier.fillMaxWidth(),

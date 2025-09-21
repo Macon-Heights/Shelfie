@@ -18,7 +18,6 @@ fun TitleComponent(
 ) {
     text?.let {
         Text(
-//            color = Color.Red,
             color = MaterialTheme.colorScheme.onBackground,
             text = text,
             modifier = modifier,
