@@ -38,3 +38,9 @@ fun ViewerScreen(
         }
     }
 }
+
+@Composable
+@Preview
+fun ViewerScreen() {
+    ViewerScreen(hiltViewModel<ViewerViewModel>())
+}
