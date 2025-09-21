@@ -17,16 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.features.catalogue.CataloguePreviewViewModel
+import me.alexandervortex.shelfie.features.catalogue.BookPreviewFactory
 
 @Composable
 fun BookComponent(
     model: BookEntity,
     modifier: Modifier = Modifier,
-    navHostController: NavHostController? = null,
 ) {
     Column(
         modifier = modifier
@@ -54,27 +51,9 @@ fun BookComponent(
     }
 }
 
-private fun String.format(): String {
-    return replace("""(?<=\b\p{L}{4,}) +(?=\p{L}{1,3}\b)""".toRegex(), "\n")
-        .replace("""(?<=\b\p{L}{1,3}) +(?=\p{L}{4,}\b)""".toRegex(), "\n")
-}
-
-//@Composable
-//@Preview(showBackground = true, widthDp = 120)
-//fun BookComponent() {
-//    val model = BookEntity(
-//        id = 1,
-//        fb2DocumentId = "",
-//        uri = "",
-//        title = "center",
-//        author = "",
-//        image = null
-//    )
-//    BookComponent(model)
-//}
-
 @Composable
-@Preview(showBackground = true)
-private fun CatalogueScreen() {
-    me.alexandervortex.shelfie.features.catalogue.CatalogueScreen(vm = hiltViewModel<CataloguePreviewViewModel>())
+@Preview(widthDp = 180)
+fun BookComponent() {
+    val model = BookPreviewFactory.getBooks().random()
+    BookComponent(model)
 }
