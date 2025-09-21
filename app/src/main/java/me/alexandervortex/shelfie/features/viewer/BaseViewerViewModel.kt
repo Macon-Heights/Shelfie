@@ -2,9 +2,10 @@ package me.alexandervortex.shelfie.features.viewer
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
+import androidx.lifecycle.ViewModel
 import com.kursx.parser.fb2.FictionBook
 
-abstract class BaseViewerViewModel {
+abstract class BaseViewerViewModel : ViewModel() {
 
     abstract val error: MutableState<String>
     abstract val bookSample: MutableState<FictionBook?>
