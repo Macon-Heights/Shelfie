@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
-import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.lifecycle.HiltViewModel
 import me.alexandervortex.shelfie.base.ext.toBook
+import me.alexandervortex.shelfie.data.model.BookModel
+import me.alexandervortex.shelfie.data.model.toBookModel
 import me.alexandervortex.shelfie.data.repository.RepositoryImpl
 import javax.inject.Inject
 
@@ -17,11 +18,15 @@ class ViewerViewModel
 ) : BaseViewerViewModel() {
 
     override val error = mutableStateOf("no error")
-    override val bookSample: MutableState<FictionBook?> = mutableStateOf(null)
+    override val bookSample: MutableState<BookModel?> = mutableStateOf(null)
 
     override fun initScreenData(context: Context) {
         try {
-            bookSample.value = repo.currentBook?.uri?.toUri().toBook(context)
+            bookSample.value = repo.currentBook
+                ?.uri
+                ?.toUri()
+                .toBook(context)
+                .toBookModel()
             error.value = "no error"
         } catch (e: Exception) {
             error.value = e.localizedMessage ?: "unknown error"

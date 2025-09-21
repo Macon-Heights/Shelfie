@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.kursx.parser.fb2.Element
-import com.kursx.parser.fb2.Section
 
 @Composable
 fun ViewerScreen(
@@ -21,19 +19,11 @@ fun ViewerScreen(
     val context = LocalContext.current
     LaunchedEffect(true) { viewModel.initScreenData(context) }
 
-    val items: List<String> = viewModel.bookSample.value?.let { book ->
-        book.body.sections.flatMap { section: Section ->
-            section.elements.map { element: Element? ->
-                element?.text
-            }
-        }
-    }?.filterNotNull().orEmpty()
-
     LazyColumn(Modifier.background(MaterialTheme.colorScheme.background)) {
-        items(items) { name: String ->
+        items(viewModel.bookSample.value?.list.orEmpty()) { line ->
             Text(
                 color = MaterialTheme.colorScheme.onBackground,
-                text = name
+                text = line.orEmpty()
             )
         }
     }
@@ -42,5 +32,5 @@ fun ViewerScreen(
 @Composable
 @Preview
 fun ViewerScreen() {
-    ViewerScreen(hiltViewModel<ViewerViewModel>())
+    ViewerScreen(hiltViewModel<ViewerPreviewViewModel>())
 }
