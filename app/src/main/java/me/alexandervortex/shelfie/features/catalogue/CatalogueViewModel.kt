@@ -38,6 +38,6 @@ class CatalogueViewModel
     }
 
     override fun setCurrentBook(item: BookEntity) {
-        repository.currentBook = item
+        repository.saveBook(item)
     }
 }

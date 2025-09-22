@@ -13,7 +13,7 @@ class RepositoryImpl
     private val mapper: BookEntityMapper,
 ) {
 
-    var currentBook: BookEntity? = null
+    private var currentBook: BookEntity? = null
 
     suspend fun addBook(book: FictionBook?, uri: Uri) {
         mapper.map(book, uri)?.let { item ->
@@ -23,5 +23,13 @@ class RepositoryImpl
 
     suspend fun getBooks(): List<BookEntity> {
         return dao.getAll()
+    }
+
+    fun saveBook(item: BookEntity) {
+        currentBook = item
+    }
+
+    fun loadBook(): BookEntity? {
+        return currentBook
     }
 }

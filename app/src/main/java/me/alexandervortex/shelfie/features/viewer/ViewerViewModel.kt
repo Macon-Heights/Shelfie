@@ -22,7 +22,7 @@ class ViewerViewModel
 
     override fun initScreenData(context: Context) {
         try {
-            bookSample.value = repo.currentBook
+            bookSample.value = repo.loadBook()
                 ?.uri
                 ?.toUri()
                 .toBook(context)
