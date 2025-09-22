@@ -25,7 +25,6 @@ fun ViewerScreen(
         contentPadding = PaddingValues(32.dp),
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
-//            .padding(32.dp)
     ) {
         items(viewModel.bookSample.value?.list.orEmpty()) { line ->
             Text(
