@@ -3,9 +3,9 @@ package me.alexandervortex.shelfie.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import me.alexandervortex.shelfie.data.db.dao.BookDao
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entiry.BookUri
 
-@Database(entities = [BookEntity::class], version = 2)
+@Database(entities = [BookUri::class], version = 2)
 abstract class BookDb : RoomDatabase() {
 
     abstract fun bookDao(): BookDao

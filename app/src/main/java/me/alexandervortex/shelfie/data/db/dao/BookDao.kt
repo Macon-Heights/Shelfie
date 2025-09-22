@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entiry.BookUri
 
 const val BOOK_TABLE = "book_table"
 
@@ -13,11 +13,11 @@ const val BOOK_TABLE = "book_table"
 interface BookDao {
 
     @Query("SELECT * FROM $BOOK_TABLE")
-    suspend fun getAll(): List<BookEntity>
+    suspend fun getAll(): List<BookUri>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(book: BookEntity)
+    suspend fun insert(book: BookUri)
 
     @Delete
-    suspend fun delete(user: BookEntity)
+    suspend fun delete(user: BookUri)
 }

@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.compose.runtime.toMutableStateList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import me.alexandervortex.shelfie.base.BaseCatalogueViewModel
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entiry.BookUri
 import me.alexandervortex.shelfie.features.catalogue.BookPreviewFactory.getBooks
 import javax.inject.Inject
 
@@ -19,5 +19,5 @@ class CataloguePreviewViewModel
 
     override fun loadBooks() {}
 
-    override fun setCurrentBook(item: BookEntity) {}
+    override fun setCurrentBook(item: BookUri) {}
 }
