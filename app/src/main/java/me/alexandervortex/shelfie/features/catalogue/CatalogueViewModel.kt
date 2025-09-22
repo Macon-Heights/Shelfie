@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.base.ext.toBook
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entiry.BookUri
 import me.alexandervortex.shelfie.data.repository.RepositoryImpl
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class CatalogueViewModel
     private val repository: RepositoryImpl,
 ) : BaseCatalogueViewModel() {
 
-    override val books = mutableStateListOf<BookEntity>()
+    override val books = mutableStateListOf<BookUri>()
 
     override fun addBookByUri(uri: Uri, context: Context) {
         viewModelScope.launch {
@@ -37,7 +37,7 @@ class CatalogueViewModel
         }
     }
 
-    override fun setCurrentBook(item: BookEntity) {
-        repository.saveBook(item)
+    override fun setCurrentBook(item: BookUri) {
+        repository.saveTheBook(item)
     }
 }

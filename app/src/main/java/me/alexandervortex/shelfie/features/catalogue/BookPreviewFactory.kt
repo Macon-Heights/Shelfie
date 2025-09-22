@@ -1,10 +1,10 @@
 package me.alexandervortex.shelfie.features.catalogue
 
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entiry.BookUri
 
 object BookPreviewFactory {
 
-    fun getBooks(): List<BookEntity> {
+    fun getBooks(): List<BookUri> {
         return listOf(
             listOf("1984", "George Orwell"),
             listOf("To Kill a Mockingbird", "Harper Lee"),
@@ -37,7 +37,7 @@ object BookPreviewFactory {
             listOf("Frankenstein", "Mary Shelley"),
             listOf("The Shining", "Stephen King")
         ).map {
-            BookEntity(
+            BookUri(
                 id = 1,
                 fb2DocumentId = "",
                 uri = "",
