@@ -8,10 +8,7 @@ import me.alexandervortex.shelfie.data.db.dao.BOOK_TABLE
 @Entity(tableName = BOOK_TABLE)
 data class BookUri(
     @PrimaryKey
-    val id: Int,
-
-    @ColumnInfo(name = "fb2DocumentId")
-    val fb2DocumentId: String?,
+    val id: String,
 
     @ColumnInfo(name = "uri")
     val uri: String,
@@ -22,6 +19,6 @@ data class BookUri(
     @ColumnInfo(name = "author")
     val author: String?,
 
-    @ColumnInfo(name = "image")
-    val image: ByteArray?,
+    @ColumnInfo(name = "localPath")
+    val localPath: String,
 )

@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.data.datasource
 
 import android.content.Context
 import android.net.Uri
+import androidx.core.net.toUri
 import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ class Fb2DataSource
     @ApplicationContext private val context: Context,
 ) {
 
-    suspend fun importFromUri(uri: Uri): FictionBook = withContext(Dispatchers.IO) {
+    suspend fun importFromUri(uri: Uri): Parsed = withContext(Dispatchers.IO) {
         // Имя выходного файла жёстко задано — каждый вызов перезапишет "current.fb2".
         // Это удобно для простоты, но плохо для многократных импортов/параллельности.
 
@@ -30,14 +31,39 @@ class Fb2DataSource
                 output.write(input.readBytes())
             }
         } ?: error("Не удалось открыть выбранный файл")
-        FictionBook(out)
+//        localPath = file.absolutePath,
+        parse(out, uri)
     }
 
-    suspend fun importFromAssets(assetName: String): FictionBook = withContext(Dispatchers.IO) {
+    suspend fun importFromAssets(assetName: String): Parsed = withContext(Dispatchers.IO) {
         val out = File(context.cacheDir, assetName)
         context.assets.open(assetName).use { input ->
             out.outputStream().use { it.write(input.readBytes()) }
         }
-        FictionBook(out)
+        parse(out, out.toUri())
+    }
+
+    private fun parse(file: File, uri: Uri): Parsed {
+        val fb = FictionBook(file)
+        val title = fb.description?.titleInfo?.bookTitle ?: file.nameWithoutExtension
+        val author = fb.description?.titleInfo?.authors?.firstOrNull()?.fullName
+
+        return Parsed(
+            localPath = file.absolutePath,
+            title = title,
+            author = author,
+            fb2 = fb,
+            uri = uri,
+            id = fb.body.toString()
+        )
     }
 }
+
+data class Parsed(
+    val id: String,
+    val uri: Uri,
+    val fb2: FictionBook,
+    val localPath: String,
+    val title: String,
+    val author: String?,
+)

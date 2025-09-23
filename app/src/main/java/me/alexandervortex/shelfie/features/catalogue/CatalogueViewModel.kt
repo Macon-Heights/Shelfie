@@ -17,6 +17,7 @@ class CatalogueViewModel
     private val repository: RepositoryImpl,
 ) : BaseCatalogueViewModel() {
 
+    // URIs
     override val books = mutableStateListOf<BookUri>()
 
     override fun addBookByUri(
@@ -24,21 +25,20 @@ class CatalogueViewModel
         context: Context,
     ) {
         viewModelScope.launch {
-            repository.addBook(context, uri)
+            repository.addBookByUri(uri)
             loadBooks()
         }
-        // просто добавляю в репо (он сам решит что делать)
-        // и обновляю список текущих
     }
 
     override fun loadBooks() {
         viewModelScope.launch {
             books.clear()
-            books.addAll(repository.getBooks())
+            books.addAll(repository.getBooksUri())
         }
     }
 
     override fun setCurrentBook(item: BookUri) {
+        // замени потом на норм параметр в навигации
         repository.saveTheBook(item)
     }
 }
