@@ -20,6 +20,12 @@ fun RouterScreen() {
         startDestination = "catalogue"
     ) {
         composable(
+            route = Catalogue.route
+        ) {
+            CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController)
+        }
+
+        composable(
             route = Viewer.route,
             arguments = listOf(getId()),
             deepLinks = listOf(navDeepLink {
@@ -28,9 +34,6 @@ fun RouterScreen() {
         ) {
 
             ViewerScreen(hiltViewModel<ViewerViewModel>(), it.getId())
-        }
-        composable(Catalogue.route) {
-            CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController)
         }
     }
 }
