@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.compose.ShelfieTheme
 import dagger.hilt.android.AndroidEntryPoint
-import me.alexandervortex.shelfie.features.navigation.RouterScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
