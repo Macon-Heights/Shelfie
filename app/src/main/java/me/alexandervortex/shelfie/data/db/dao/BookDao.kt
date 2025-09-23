@@ -12,6 +12,9 @@ const val BOOK_TABLE = "book_table"
 @Dao
 interface BookDao {
 
+    @Query("SELECT * FROM $BOOK_TABLE WHERE id = :id LIMIT 1")
+    suspend fun getById(id: String): BookUri?
+
     @Query("SELECT * FROM $BOOK_TABLE")
     suspend fun getAll(): List<BookUri>
 

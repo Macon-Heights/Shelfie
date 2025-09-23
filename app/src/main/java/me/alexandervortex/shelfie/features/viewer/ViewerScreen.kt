@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -18,9 +17,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun ViewerScreen(
     viewModel: BaseViewerViewModel,
+    id: String,
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(true) { viewModel.initScreenData(context) }
+    LaunchedEffect(true) { viewModel.initScreenData(id) }
 
     LazyColumn(
         contentPadding = PaddingValues(32.dp),
@@ -40,5 +39,5 @@ fun ViewerScreen(
 @Composable
 @Preview
 fun ViewerScreen() {
-    ViewerScreen(hiltViewModel<ViewerPreviewViewModel>())
+    ViewerScreen(hiltViewModel<ViewerPreviewViewModel>(), "id")
 }

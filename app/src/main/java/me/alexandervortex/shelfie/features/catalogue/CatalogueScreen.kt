@@ -81,8 +81,7 @@ fun CatalogueScreen(
             ) {
                 items(vm.books) { item ->
                     BookComponent(item, Modifier.clickable {
-                        vm.setCurrentBook(item)
-                        navController?.navigate("viewer")
+                        navController?.navigate("viewer?id=${item.id}")
                     })
                 }
             }
