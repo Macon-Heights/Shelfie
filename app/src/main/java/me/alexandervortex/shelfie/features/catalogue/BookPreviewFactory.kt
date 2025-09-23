@@ -38,12 +38,11 @@ object BookPreviewFactory {
             listOf("The Shining", "Stephen King")
         ).map {
             BookUri(
-                id = 1,
-                fb2DocumentId = "",
+                id = "thisisid",
                 uri = "",
                 title = it.firstOrNull().orEmpty(),
                 author = it.lastOrNull(),
-                image = null
+                localPath = ""
             )
         }
     }

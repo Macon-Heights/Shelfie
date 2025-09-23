@@ -1,32 +1,40 @@
 package me.alexandervortex.shelfie.data.repository
 
-import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import me.alexandervortex.shelfie.base.ext.toBook
+import com.kursx.parser.fb2.FictionBook
+import me.alexandervortex.shelfie.data.datasource.Fb2DataSource
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookUri
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.model.FB2Model
-import me.alexandervortex.shelfie.data.model.toFB2Model
 import javax.inject.Inject
 
+@Deprecated("UDOLI")
 class RepositoryImpl
 @Inject constructor(
     private val dao: BookDao,
     private val mapper: BookEntityMapper,
+    private val dataSource: Fb2DataSource, // parser
 ) {
 
+    // добавить ури в базу
     private var bookUri: BookUri? = null
 
-    suspend fun addBook(context: Context, uri: Uri) {
-        val book = uri.toBook(context)
-        mapper.map(book, uri)?.let { item ->
-            dao.insert(item)
-        }
+    suspend fun addBookByUri(uri: Uri) {
+        val fictionBook = dataSource.importFromUri(uri)
+        val entity = mapper.fromParsed(fictionBook, uri)
+        dao.insert(entity)
     }
 
-    suspend fun getBooks(): List<BookUri> {
+    // region deprecated
+//    suspend fun addBook(context: Context, uri: Uri) {
+//        val book = uri.toBook(context)
+//        mapper.map(book, uri)?.let { item ->
+//            dao.insert(item)
+//        }
+//    }
+
+    suspend fun getBooksUri(): List<BookUri> {
         return dao.getAll()
     }
 
@@ -34,11 +42,11 @@ class RepositoryImpl
         bookUri = item
     }
 
-    fun getTheBook(context: Context): FB2Model? {
-//        val model = fb2.importFromUri()
-
-        return bookUri?.uri?.toUri().toBook(context)?.toFB2Model()
+    suspend fun getTheBook(): FictionBook? {
+        return bookUri?.uri?.toUri()?.let { dataSource.importFromUri(it).fb2 }
+//        return bookUri?.uri?.toUri().toBook(context)?.toFB2Model()
     }
+    // endregion
 
     /*
     // NEW
