@@ -16,22 +16,12 @@ class Fb2DataSource
 ) {
 
     suspend fun importFromUri(uri: Uri): Parsed = withContext(Dispatchers.IO) {
-        // Имя выходного файла жёстко задано — каждый вызов перезапишет "current.fb2".
-        // Это удобно для простоты, но плохо для многократных импортов/параллельности.
-
-        //         val outFile = File(context.cacheDir, "current.fb2")
         val out = File(context.cacheDir, "book_${System.currentTimeMillis()}.fb2")
-
-        // Открываем поток чтения из ContentResolver по переданному Uri.
-        // openInputStream может вернуть null (например, нет доступа) → тогда бросаем исключение.
         context.contentResolver.openInputStream(uri)?.use { input ->
-            // Открываем поток записи в наш временный файл.
             out.outputStream().use { output ->
-                //                input.copyTo(output)
                 output.write(input.readBytes())
             }
         } ?: error("Не удалось открыть выбранный файл")
-//        localPath = file.absolutePath,
         parse(out, uri)
     }
 

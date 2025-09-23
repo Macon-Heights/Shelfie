@@ -39,7 +39,7 @@ fun CatalogueScreen(
     vm: BaseCatalogueViewModel,
     navController: NavHostController? = null,
 ) {
-    // region fixme
+    // fixme это бы куда-нибудь вынести по-хорошему потом
     val context = LocalContext.current
     val picker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
@@ -56,7 +56,7 @@ fun CatalogueScreen(
         }
         vm.addBookByUri(uri, context)
     }
-    // endregion
+
     LaunchedEffect(true) { vm.loadBooks() }
     Box(
         modifier = Modifier
