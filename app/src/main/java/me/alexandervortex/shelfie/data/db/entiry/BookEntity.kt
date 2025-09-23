@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import me.alexandervortex.shelfie.data.db.dao.BOOK_TABLE
 
 @Entity(tableName = BOOK_TABLE)
-data class BookUri(
+data class BookEntity(
     @PrimaryKey
     val id: String,
 
