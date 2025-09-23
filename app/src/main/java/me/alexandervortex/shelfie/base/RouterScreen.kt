@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.navigation
+package me.alexandervortex.shelfie.base
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel

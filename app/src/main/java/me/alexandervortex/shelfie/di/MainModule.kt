@@ -21,7 +21,6 @@ const val BOOK_DB = "book_db"
 object MainModule {
 
     @Provides
-    @Singleton
     fun provideDataSource(
         @ApplicationContext context: Context,
     ): Fb2DataSource {
@@ -40,7 +39,9 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): BookDb {
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+    ): BookDb {
         return Room.databaseBuilder(
             context,
             BookDb::class.java,
@@ -49,8 +50,9 @@ object MainModule {
     }
 
     @Provides
-    fun provideDao(db: BookDb): BookDao {
-        return db.bookDao()
+    fun provideDao(
+        database: BookDb,
+    ): BookDao {
+        return database.bookDao()
     }
-
 }
