@@ -7,13 +7,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.model.FB2Model
 import me.alexandervortex.shelfie.data.model.toFB2Model
-import me.alexandervortex.shelfie.data.repository.RepositoryImpl
+import me.alexandervortex.shelfie.data.repository.Repository
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewerViewModel
 @Inject constructor(
-    private val repo: RepositoryImpl,
+    private val repo: Repository,
 ) : BaseViewerViewModel() {
 
     override val error = mutableStateOf("no error")

@@ -8,13 +8,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.data.repository.RepositoryImpl
+import me.alexandervortex.shelfie.data.repository.Repository
 import javax.inject.Inject
 
 @HiltViewModel
 class CatalogueViewModel
 @Inject constructor(
-    private val repository: RepositoryImpl,
+    private val repository: Repository,
 ) : BaseCatalogueViewModel() {
 
     override val books = mutableStateListOf<BookEntity>()
