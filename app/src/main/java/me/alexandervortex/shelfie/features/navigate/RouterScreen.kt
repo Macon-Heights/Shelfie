@@ -29,23 +29,8 @@ fun RouterScreen() {
 
             ViewerScreen(hiltViewModel<ViewerViewModel>(), it.getId())
         }
-        composable("catalogue") {
+        composable(Catalogue.route) {
             CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController)
         }
     }
 }
-
-data class Viewer(
-    val id: String,
-) {
-
-    val route = "viewer?id=${id}"
-    val uriPattern = "https://shelfie.com/book/${id}"
-
-    companion object {
-
-        val route = "viewer?id={id}"
-        val uriPattern = "https://shelfie.com/book/{id}"
-    }
-}
-
