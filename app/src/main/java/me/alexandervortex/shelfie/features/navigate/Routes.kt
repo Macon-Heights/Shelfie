@@ -1,5 +1,10 @@
 package me.alexandervortex.shelfie.features.navigate
 
+data object Catalogue {
+
+    val route = "catalogue"
+}
+
 data class Viewer(
     val id: String,
 ) {
@@ -12,9 +17,4 @@ data class Viewer(
         val route = "viewer?id={id}"
         val uriPattern = "https://shelfie.com/book/{id}"
     }
-}
-
-data object Catalogue {
-
-    val route = "catalogue"
 }
