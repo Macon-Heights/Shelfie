@@ -8,7 +8,7 @@ import javax.inject.Inject
 class BookEntityMapper
 @Inject constructor() {
 
-    fun fromParsed(book: Parsed, uri: Uri): BookEntity {
+    fun toEntity(book: Parsed, uri: Uri): BookEntity {
         return BookEntity(
             id = book.id,
             uri = uri.toString(),

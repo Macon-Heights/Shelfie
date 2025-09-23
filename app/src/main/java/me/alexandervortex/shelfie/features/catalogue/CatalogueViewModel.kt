@@ -32,7 +32,7 @@ class CatalogueViewModel
     override fun loadBooks() {
         viewModelScope.launch {
             books.clear()
-            books.addAll(repository.getBooksUri())
+            books.addAll(repository.getBookEntities())
         }
     }
 }
