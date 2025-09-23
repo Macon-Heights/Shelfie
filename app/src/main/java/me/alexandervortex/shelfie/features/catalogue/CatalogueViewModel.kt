@@ -17,7 +17,6 @@ class CatalogueViewModel
     private val repository: RepositoryImpl,
 ) : BaseCatalogueViewModel() {
 
-    // URIs
     override val books = mutableStateListOf<BookUri>()
 
     override fun addBookByUri(
@@ -38,7 +37,7 @@ class CatalogueViewModel
     }
 
     override fun setCurrentBook(item: BookUri) {
-        // замени потом на норм параметр в навигации
+        // fixme замени потом на норм параметр в навигации
         repository.saveTheBook(item)
     }
 }
