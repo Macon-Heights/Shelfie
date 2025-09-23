@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.viewer
 
-import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -20,5 +19,5 @@ class ViewerPreviewViewModel
         )
     )
 
-    override fun initScreenData(context: Context) {}
+    override fun initScreenData(id: String) {}
 }

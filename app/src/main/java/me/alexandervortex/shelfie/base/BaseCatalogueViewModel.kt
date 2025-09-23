@@ -13,6 +13,4 @@ abstract class BaseCatalogueViewModel : ViewModel() {
     abstract fun addBookByUri(uri: Uri, context: Context)
 
     abstract fun loadBooks()
-
-    abstract fun setCurrentBook(item: BookUri)
 }

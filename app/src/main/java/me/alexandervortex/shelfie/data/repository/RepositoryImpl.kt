@@ -28,11 +28,7 @@ class RepositoryImpl
         return dao.getAll()
     }
 
-    fun saveTheBook(item: BookUri) {
-        bookUri = item
-    }
-
-    suspend fun getTheBook(): FictionBook? {
-        return bookUri?.uri?.toUri()?.let { dataSource.importFromUri(it).fb2 }
+    suspend fun getBookById(id: String): FictionBook? {
+        return dao.getById(id)?.uri?.toUri()?.let { dataSource.importFromUri(it).fb2 }
     }
 }

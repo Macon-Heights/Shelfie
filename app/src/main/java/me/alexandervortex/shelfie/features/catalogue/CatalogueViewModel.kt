@@ -35,9 +35,4 @@ class CatalogueViewModel
             books.addAll(repository.getBooksUri())
         }
     }
-
-    override fun setCurrentBook(item: BookUri) {
-        // fixme замени потом на норм параметр в навигации
-        repository.saveTheBook(item)
-    }
 }
