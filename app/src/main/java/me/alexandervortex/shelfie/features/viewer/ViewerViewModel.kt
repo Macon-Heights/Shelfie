@@ -22,7 +22,7 @@ class ViewerViewModel
     override fun initScreenData(id: String) {
         viewModelScope.launch {
             try {
-                bookSample.value = repo.getBookById(id).toFB2Model()
+                bookSample.value = repo.getBookEntityById(id).toFB2Model()
                 error.value = "no error"
             } catch (e: Exception) {
                 error.value = e.localizedMessage ?: "unknown error"

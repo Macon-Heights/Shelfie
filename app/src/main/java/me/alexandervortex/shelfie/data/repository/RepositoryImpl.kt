@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.kursx.parser.fb2.FictionBook
 import me.alexandervortex.shelfie.data.datasource.Fb2DataSource
+import me.alexandervortex.shelfie.data.datasource.Parsed
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
@@ -17,16 +18,16 @@ class RepositoryImpl
 ) {
 
     suspend fun addBookByUri(uri: Uri) {
-        val fictionBook = dataSource.importFromUri(uri)
-        val entity = mapper.fromParsed(fictionBook, uri)
+        val fictionBook: Parsed = dataSource.importFromUri(uri)
+        val entity: BookEntity = mapper.toEntity(fictionBook, uri)
         dao.insert(entity)
     }
 
-    suspend fun getBooksUri(): List<BookEntity> {
+    suspend fun getBookEntities(): List<BookEntity> {
         return dao.getAll()
     }
 
-    suspend fun getBookById(id: String): FictionBook? {
+    suspend fun getBookEntityById(id: String): FictionBook? {
         return dao.getById(id)?.uri?.toUri()?.let { dataSource.importFromUri(it).fb2 }
     }
 }
