@@ -20,7 +20,6 @@ fun ViewerScreen(
     id: String,
 ) {
     LaunchedEffect(true) { viewModel.initScreenData(id) }
-
     LazyColumn(
         contentPadding = PaddingValues(32.dp),
         modifier = Modifier

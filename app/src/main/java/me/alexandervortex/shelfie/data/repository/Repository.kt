@@ -10,7 +10,7 @@ import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import javax.inject.Inject
 
-class RepositoryImpl
+class Repository
 @Inject constructor(
     private val dao: BookDao,
     private val mapper: BookEntityMapper,

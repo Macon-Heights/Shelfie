@@ -11,7 +11,7 @@ import me.alexandervortex.shelfie.data.datasource.Fb2DataSource
 import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.repository.RepositoryImpl
+import me.alexandervortex.shelfie.data.repository.Repository
 import javax.inject.Singleton
 
 const val BOOK_DB = "book_db"
@@ -33,8 +33,8 @@ object MainModule {
         dao: BookDao,
         mapper: BookEntityMapper,
         dataSource: Fb2DataSource,
-    ): RepositoryImpl {
-        return RepositoryImpl(dao, mapper, dataSource)
+    ): Repository {
+        return Repository(dao, mapper, dataSource)
     }
 
     @Provides
