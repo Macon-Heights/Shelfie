@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,7 @@ fun ViewerScreen(
     LazyColumn(
         contentPadding = PaddingValues(32.dp),
         modifier = Modifier
+            .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
         items(viewModel.bookSample.value?.list.orEmpty()) { line ->
