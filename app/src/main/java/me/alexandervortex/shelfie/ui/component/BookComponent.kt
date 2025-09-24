@@ -27,6 +27,7 @@ fun BookComponent(
 ) {
     val color = MaterialTheme.colorScheme.surfaceVariant
     val onColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val onColorForTitle = MaterialTheme.colorScheme.onSurface
 
     Column(
         modifier = modifier
@@ -36,9 +37,8 @@ fun BookComponent(
     ) {
         Text(
             model.title,
-            color = onColor,
+            color = onColorForTitle,
             fontSize = 18.sp,
-            fontWeight = FontWeight.Medium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Left
         )
