@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
-class Fb2DataSource
+class FileSystemDataSource
 @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {

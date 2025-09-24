@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.data.repository
 import android.net.Uri
 import androidx.core.net.toUri
 import com.kursx.parser.fb2.FictionBook
-import me.alexandervortex.shelfie.data.datasource.Fb2DataSource
+import me.alexandervortex.shelfie.data.datasource.FileSystemDataSource
 import me.alexandervortex.shelfie.data.datasource.Parsed
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
@@ -14,7 +14,7 @@ class Repository
 @Inject constructor(
     private val dao: BookDao,
     private val mapper: BookEntityMapper,
-    private val dataSource: Fb2DataSource,
+    private val dataSource: FileSystemDataSource,
 ) {
 
     suspend fun addBookByUri(uri: Uri) {
