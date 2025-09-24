@@ -2,7 +2,6 @@ package me.alexandervortex.shelfie.data.datasource
 
 import android.content.Context
 import android.net.Uri
-import androidx.core.net.toUri
 import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -15,36 +14,34 @@ class Fb2DataSource
     @ApplicationContext private val context: Context,
 ) {
 
-    suspend fun importFromUri(uri: Uri): Parsed = withContext(Dispatchers.IO) {
-        val out = File(context.cacheDir, "book_${System.currentTimeMillis()}.fb2")
-        context.contentResolver.openInputStream(uri)?.use { input ->
-            out.outputStream().use { output ->
-                output.write(input.readBytes())
-            }
-        } ?: error("Не удалось открыть выбранный файл")
-        parse(out, uri)
-    }
+    suspend fun importFromUri(uri: Uri): Parsed {
+        return withContext(Dispatchers.IO) {
+            val booksDir = File(context.filesDir, "books").apply { mkdirs() }
 
-    suspend fun importFromAssets(assetName: String): Parsed = withContext(Dispatchers.IO) {
-        val out = File(context.cacheDir, assetName)
-        context.assets.open(assetName).use { input ->
-            out.outputStream().use { it.write(input.readBytes()) }
+            val id = System.currentTimeMillis().toString()
+            val out = File(booksDir, "$id.fb2")
+
+            context.contentResolver.openInputStream(uri)?.use { input ->
+                out.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            } ?: error("Не удалось открыть выбранный файл")
+            parse(out, uri, id)
         }
-        parse(out, out.toUri())
     }
 
-    private fun parse(file: File, uri: Uri): Parsed {
+    private fun parse(file: File, uri: Uri, id: String): Parsed {
         val fb = FictionBook(file)
         val title = fb.description?.titleInfo?.bookTitle ?: file.nameWithoutExtension
         val author = fb.description?.titleInfo?.authors?.firstOrNull()?.fullName
 
         return Parsed(
+            id = id,
+            uri = uri,
+            fb2 = fb,
             localPath = file.absolutePath,
             title = title,
             author = author,
-            fb2 = fb,
-            uri = uri,
-            id = fb.body.toString()
         )
     }
 }
