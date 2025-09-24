@@ -2,10 +2,10 @@ package me.alexandervortex.shelfie.data.datasource
 
 import android.content.Context
 import android.net.Uri
-import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.alexandervortex.shelfie.data.mapper.BookModelMapper
 import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
@@ -13,6 +13,7 @@ import javax.inject.Inject
 class FileSystemDataSource
 @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val mapper: BookModelMapper,
 ) {
 
     suspend fun importFromUri(uri: Uri): BookModel {
@@ -27,22 +28,18 @@ class FileSystemDataSource
                     input.copyTo(output)
                 }
             } ?: error("Не удалось открыть выбранный файл")
-            parse(out, uri, id)
+            mapper.map(out, id)
         }
     }
 
-    private fun parse(file: File, uri: Uri, id: String): BookModel {
-        val fb = FictionBook(file)
-        val title = fb.description?.titleInfo?.bookTitle ?: file.nameWithoutExtension
-        val author = fb.description?.titleInfo?.authors?.firstOrNull()?.fullName
-
-        return BookModel(
-            id = id,
-            uri = uri,
-            fb2 = fb,
-            localPath = file.absolutePath,
-            title = title,
-            author = author,
-        )
+    suspend fun loadFromFile(
+        localPath: String,
+        id: String,
+    ): BookModel {
+        return withContext(Dispatchers.IO) {
+            val file = File(localPath)
+            require(file.exists()) { "Файл книги не найден: $localPath" }
+            mapper.map(file, id)
+        }
     }
 }
