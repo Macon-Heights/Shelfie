@@ -10,8 +10,8 @@ data class BookEntity(
     @PrimaryKey
     val id: String,
 
-    @ColumnInfo(name = "uri")
-    val uri: String,
+    @ColumnInfo(name = "localPath")
+    val localPath: String,
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -19,6 +19,6 @@ data class BookEntity(
     @ColumnInfo(name = "author")
     val author: String?,
 
-    @ColumnInfo(name = "localPath")
-    val localPath: String,
+    @ColumnInfo(name = "year")
+    val year: String,
 )
