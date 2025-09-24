@@ -6,6 +6,7 @@ import com.kursx.parser.fb2.FictionBook
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ class FileSystemDataSource
     @ApplicationContext private val context: Context,
 ) {
 
-    suspend fun importFromUri(uri: Uri): Parsed {
+    suspend fun importFromUri(uri: Uri): BookModel {
         return withContext(Dispatchers.IO) {
             val booksDir = File(context.filesDir, "books").apply { mkdirs() }
 
@@ -30,12 +31,12 @@ class FileSystemDataSource
         }
     }
 
-    private fun parse(file: File, uri: Uri, id: String): Parsed {
+    private fun parse(file: File, uri: Uri, id: String): BookModel {
         val fb = FictionBook(file)
         val title = fb.description?.titleInfo?.bookTitle ?: file.nameWithoutExtension
         val author = fb.description?.titleInfo?.authors?.firstOrNull()?.fullName
 
-        return Parsed(
+        return BookModel(
             id = id,
             uri = uri,
             fb2 = fb,
@@ -45,12 +46,3 @@ class FileSystemDataSource
         )
     }
 }
-
-data class Parsed(
-    val id: String,
-    val uri: Uri,
-    val fb2: FictionBook,
-    val localPath: String,
-    val title: String,
-    val author: String?,
-)
