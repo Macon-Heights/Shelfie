@@ -1,20 +1,19 @@
 package me.alexandervortex.shelfie.data.mapper
 
-import android.net.Uri
-import me.alexandervortex.shelfie.data.datasource.Parsed
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.model.BookModel
 import javax.inject.Inject
 
 class BookEntityMapper
 @Inject constructor() {
 
-    fun toEntity(book: Parsed, uri: Uri): BookEntity {
+    fun toEntity(model: BookModel): BookEntity {
         return BookEntity(
-            id = book.id,
-            uri = uri.toString(),
-            title = book.title,
-            author = book.author,
-            localPath = book.localPath
+            id = model.id,
+            localPath = model.localPath,
+            title = model.title,
+            author = model.author,
+            year = model.year,
         )
     }
 }
