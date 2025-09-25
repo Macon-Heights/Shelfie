@@ -54,10 +54,10 @@ fun CatalogueScreen(
         } catch (e: SecurityException) {
             /* провайдер мог не дать persist */
         }
-        vm.addBookByUri(uri, context)
+        vm.importFromUri(uri)
     }
 
-    LaunchedEffect(true) { vm.loadBooks() }
+    LaunchedEffect(true) { vm.getBookEntities() }
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)

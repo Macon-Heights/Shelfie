@@ -11,6 +11,7 @@ import me.alexandervortex.shelfie.data.datasource.FileSystemDataSource
 import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
+import me.alexandervortex.shelfie.data.mapper.BookModelMapper
 import me.alexandervortex.shelfie.data.repository.Repository
 import javax.inject.Singleton
 
@@ -23,8 +24,9 @@ object MainModule {
     @Provides
     fun provideDataSource(
         @ApplicationContext context: Context,
+        mapper: BookModelMapper,
     ): FileSystemDataSource {
-        return FileSystemDataSource(context)
+        return FileSystemDataSource(context, mapper)
     }
 
     @Provides

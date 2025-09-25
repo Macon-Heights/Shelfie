@@ -2,12 +2,12 @@ package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
-import me.alexandervortex.shelfie.data.model.FB2Model
+import me.alexandervortex.shelfie.data.model.BookModel
 
 abstract class BaseViewerViewModel : ViewModel() {
 
     abstract val error: MutableState<String>
-    abstract val bookSample: MutableState<FB2Model?>
+    abstract val bookSample: MutableState<BookModel?>
 
     abstract fun initScreenData(id: String)
 }

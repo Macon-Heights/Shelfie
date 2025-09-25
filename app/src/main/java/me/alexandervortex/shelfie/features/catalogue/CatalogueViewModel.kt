@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.catalogue
 
-import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
@@ -19,17 +18,14 @@ class CatalogueViewModel
 
     override val books = mutableStateListOf<BookEntity>()
 
-    override fun addBookByUri(
-        uri: Uri,
-        context: Context,
-    ) {
+    override fun importFromUri(uri: Uri) {
         viewModelScope.launch {
-            repository.addBookByUri(uri)
-            loadBooks()
+            repository.importFromUri(uri)
+            getBookEntities()
         }
     }
 
-    override fun loadBooks() {
+    override fun getBookEntities() {
         viewModelScope.launch {
             books.clear()
             books.addAll(repository.getBookEntities())

@@ -1,12 +1,11 @@
 package me.alexandervortex.shelfie.data.repository
 
 import android.net.Uri
-import androidx.core.net.toUri
-import com.kursx.parser.fb2.FictionBook
 import me.alexandervortex.shelfie.data.datasource.FileSystemDataSource
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
+import me.alexandervortex.shelfie.data.model.BookModel
 import javax.inject.Inject
 
 class Repository
@@ -16,9 +15,9 @@ class Repository
     private val dataSource: FileSystemDataSource,
 ) {
 
-    suspend fun addBookByUri(uri: Uri) {
-        val fictionBook = dataSource.importFromUri(uri)
-        val entity: BookEntity = mapper.toEntity(fictionBook, uri)
+    suspend fun importFromUri(uri: Uri) {
+        val bookModel = dataSource.importFromUri(uri)
+        val entity = mapper.toEntity(bookModel)
         dao.insert(entity)
     }
 
@@ -26,7 +25,10 @@ class Repository
         return dao.getAll()
     }
 
-    suspend fun getBookEntityById(id: String): FictionBook? {
-        return dao.getById(id)?.uri?.toUri()?.let { dataSource.importFromUri(it).fb2 }
+    suspend fun getBookModelById(id: String): BookModel? {
+        val entity = dao.getById(id)
+        return entity?.let {
+            dataSource.loadFile(entity.id, entity.localPath)
+        }
     }
 }

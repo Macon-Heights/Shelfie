@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.catalogue
 
-import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.toMutableStateList
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +13,7 @@ class CataloguePreviewViewModel
 
     override val books = getBooks().toMutableStateList()
 
-    override fun addBookByUri(uri: Uri, context: Context) {}
+    override fun importFromUri(uri: Uri) {}
 
-    override fun loadBooks() {}
+    override fun getBookEntities() {}
 }
