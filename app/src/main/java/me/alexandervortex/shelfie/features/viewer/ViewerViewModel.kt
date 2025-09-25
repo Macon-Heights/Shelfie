@@ -5,8 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.model.FB2Model
-import me.alexandervortex.shelfie.data.model.toFB2Model
+import me.alexandervortex.shelfie.data.model.BookModel
 import me.alexandervortex.shelfie.data.repository.Repository
 import javax.inject.Inject
 
@@ -17,12 +16,12 @@ class ViewerViewModel
 ) : BaseViewerViewModel() {
 
     override val error = mutableStateOf("no error")
-    override val bookSample: MutableState<FB2Model?> = mutableStateOf(null)
+    override val bookSample: MutableState<BookModel?> = mutableStateOf(null)
 
     override fun initScreenData(id: String) {
         viewModelScope.launch {
             try {
-                bookSample.value = repo.getBookEntityById(id).toFB2Model()
+                bookSample.value = repo.getBookModelById(id)
                 error.value = "no error"
             } catch (e: Exception) {
                 error.value = e.localizedMessage ?: "unknown error"

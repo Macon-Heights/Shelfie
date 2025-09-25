@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.base
 
-import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,7 @@ abstract class BaseCatalogueViewModel : ViewModel() {
 
     abstract val books: SnapshotStateList<BookEntity>
 
-    abstract fun addBookByUri(uri: Uri, context: Context)
+    abstract fun importFromUri(uri: Uri)
 
-    abstract fun loadBooks()
+    abstract fun getBookEntities()
 }

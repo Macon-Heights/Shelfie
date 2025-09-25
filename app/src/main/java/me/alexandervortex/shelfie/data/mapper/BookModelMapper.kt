@@ -17,6 +17,7 @@ class BookModelMapper
         val title = fictionBook.description.titleInfo.bookTitle
         val author = fictionBook.description.titleInfo.authors.firstOrNull()?.fullName
         val year = fictionBook.description.publishInfo.year
+        val sections = fictionBook.body.sections
 
         return BookModel(
             id = id,
@@ -24,7 +25,9 @@ class BookModelMapper
             title = title,
             author = author,
             year = year,
-            fb2 = fictionBook,
+            sections = sections.map { section ->
+                section.elements.map { it.text }
+            },
         )
     }
 }

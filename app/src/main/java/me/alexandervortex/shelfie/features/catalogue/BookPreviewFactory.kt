@@ -39,10 +39,10 @@ object BookPreviewFactory {
         ).map {
             BookEntity(
                 id = "thisisid",
-                uri = "",
+                localPath = "",
                 title = it.firstOrNull().orEmpty(),
                 author = it.lastOrNull(),
-                localPath = ""
+                year = "1001"
             )
         }
     }

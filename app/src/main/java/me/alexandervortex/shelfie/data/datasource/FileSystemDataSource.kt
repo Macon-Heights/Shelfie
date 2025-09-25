@@ -32,9 +32,9 @@ class FileSystemDataSource
         }
     }
 
-    suspend fun loadFromFile(
-        localPath: String,
+    suspend fun loadFile(
         id: String,
+        localPath: String,
     ): BookModel {
         return withContext(Dispatchers.IO) {
             val file = File(localPath)

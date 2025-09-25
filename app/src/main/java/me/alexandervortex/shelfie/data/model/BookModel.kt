@@ -1,7 +1,5 @@
 package me.alexandervortex.shelfie.data.model
 
-import com.kursx.parser.fb2.FictionBook
-
 // main book model for work
 data class BookModel(
     // for db and files
@@ -14,5 +12,5 @@ data class BookModel(
     val year: String,
 
     // entire data
-    val fb2: FictionBook,
+    val sections: List<List<String>>,
 )
