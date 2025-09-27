@@ -35,7 +35,9 @@ class BookModelMapper
 
     private fun mapSection(section: Section): SectionModel {
         return SectionModel(
-            section.elements.map { it.text }
+            section.elements.map {
+                "${it.text.replace("\n", " ")}\n\n\n"
+            }
         )
     }
 }
