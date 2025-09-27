@@ -4,7 +4,7 @@ import android.net.Uri
 import me.alexandervortex.shelfie.data.datasource.FileSystemDataSource
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
+import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.model.BookModel
 import javax.inject.Inject
 
