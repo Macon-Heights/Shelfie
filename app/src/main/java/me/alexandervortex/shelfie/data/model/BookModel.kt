@@ -14,7 +14,3 @@ data class BookModel(
     // entire data
     val sections: List<SectionModel>,
 )
-
-data class SectionModel(
-    val elements: List<String>,
-)
