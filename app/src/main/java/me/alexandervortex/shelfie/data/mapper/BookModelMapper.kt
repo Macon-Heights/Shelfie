@@ -1,7 +1,9 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import com.kursx.parser.fb2.FictionBook
+import com.kursx.parser.fb2.Section
 import me.alexandervortex.shelfie.data.model.BookModel
+import me.alexandervortex.shelfie.data.model.SectionModel
 import java.io.File
 import javax.inject.Inject
 
@@ -26,8 +28,14 @@ class BookModelMapper
             author = author,
             year = year,
             sections = sections.map { section ->
-                section.elements.map { it.text }
+                mapSection(section)
             },
+        )
+    }
+
+    private fun mapSection(section: Section): SectionModel {
+        return SectionModel(
+            section.elements.map { it.text }
         )
     }
 }

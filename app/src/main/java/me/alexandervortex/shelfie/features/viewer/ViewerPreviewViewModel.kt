@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import me.alexandervortex.shelfie.data.model.BookModel
+import me.alexandervortex.shelfie.data.model.SectionModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +21,12 @@ class ViewerPreviewViewModel
             title = "",
             author = "",
             year = "",
-            sections = listOf(LoremIpsum(1000).values.toList())
+            sections = listOf(
+                SectionModel(LoremIpsum(100).values.toList()),
+                SectionModel(LoremIpsum(100).values.toList()),
+                SectionModel(LoremIpsum(100).values.toList()),
+                SectionModel(LoremIpsum(100).values.toList()),
+            )
         )
     )
 

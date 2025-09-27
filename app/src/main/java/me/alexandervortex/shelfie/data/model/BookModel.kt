@@ -12,5 +12,9 @@ data class BookModel(
     val year: String,
 
     // entire data
-    val sections: List<List<String>>,
+    val sections: List<SectionModel>,
+)
+
+data class SectionModel(
+    val elements: List<String>,
 )
