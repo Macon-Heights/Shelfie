@@ -34,12 +34,12 @@ fun ViewerScreen(
         val sections: List<SectionModel> = viewModel.bookSample.value?.sections.orEmpty()
 
         items(sections) { section ->
-            section.elements.forEach { element ->
+            section.elements.forEachIndexed { i, element ->
                 Text(
                     textAlign = TextAlign.Justify,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.background(randomColor()),
-                    text = element
+                    color = MaterialTheme.colorScheme.background,
+                    modifier = Modifier.background(randomColor(i)),
+                    text = element,
                 )
             }
             Spacer(
@@ -52,17 +52,21 @@ fun ViewerScreen(
 
 }
 
-inline fun randomColor(): Color {
+fun getColors(): List<Color> {
     return listOf(
         Color.Red,
         Color.Green,
         Color.Blue,
-
         Color.Yellow,
         Color.Magenta,
         Color.Cyan,
         Color.Gray,
-    ).random()
+    )
+}
+
+inline fun randomColor(i: Int): Color {
+    val index = i % getColors().size
+    return getColors()[index]
 }
 
 @Composable
