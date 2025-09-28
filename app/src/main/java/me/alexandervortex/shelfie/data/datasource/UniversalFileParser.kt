@@ -37,7 +37,11 @@ class UniversalFileParser
         }
     }
 
-
+    /**
+     * тут мы берем файл по айди и пути
+     * делаем из него book model
+     * и возвращаем
+     */
     suspend fun getBookModelById(
         id: String,
         localPath: String,
