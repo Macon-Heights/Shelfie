@@ -5,7 +5,7 @@ import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.alexandervortex.shelfie.data.mapper.BookModelMapper
+import me.alexandervortex.shelfie.data.mapper.FictionBookParser
 import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
@@ -13,9 +13,14 @@ import javax.inject.Inject
 class UniversalFileParser
 @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val mapper: BookModelMapper,
+    private val fictionBookParser: FictionBookParser,
 ) {
 
+    /**
+     * тут мы должны решить
+     * какой парсер должен парсить нашу книгу
+     * должен ли файл быть обработан вообще (подходит ли он мне)
+     */
     suspend fun importFromUri(uri: Uri): BookModel {
         return withContext(Dispatchers.IO) {
             val booksDir = File(context.filesDir, "books").apply { mkdirs() }
@@ -28,9 +33,10 @@ class UniversalFileParser
                     input.copyTo(output)
                 }
             } ?: error("Не удалось открыть выбранный файл")
-            mapper.map(out, id)
+            fictionBookParser.map(out, id)
         }
     }
+
 
     suspend fun loadFile(
         id: String,
@@ -39,7 +45,7 @@ class UniversalFileParser
         return withContext(Dispatchers.IO) {
             val file = File(localPath)
             require(file.exists()) { "Файл книги не найден: $localPath" }
-            mapper.map(file, id)
+            fictionBookParser.map(file, id)
         }
     }
 }

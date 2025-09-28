@@ -11,7 +11,7 @@ import me.alexandervortex.shelfie.data.datasource.UniversalFileParser
 import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.mapper.BookModelMapper
+import me.alexandervortex.shelfie.data.mapper.FictionBookParser
 import me.alexandervortex.shelfie.data.repository.Repository
 import javax.inject.Singleton
 
@@ -24,7 +24,7 @@ object MainModule {
     @Provides
     fun provideDataSource(
         @ApplicationContext context: Context,
-        mapper: BookModelMapper,
+        mapper: FictionBookParser,
     ): UniversalFileParser {
         return UniversalFileParser(context, mapper)
     }
