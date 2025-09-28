@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import com.kursx.parser.fb2.Section
+import me.alexandervortex.shelfie.data.model.ElementModel
 import me.alexandervortex.shelfie.data.model.SectionModel
 import javax.inject.Inject
 
