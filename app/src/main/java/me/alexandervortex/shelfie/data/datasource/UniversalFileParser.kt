@@ -38,7 +38,7 @@ class UniversalFileParser
     }
 
 
-    suspend fun loadFile(
+    suspend fun getBookModelById(
         id: String,
         localPath: String,
     ): BookModel {

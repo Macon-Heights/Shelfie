@@ -16,7 +16,7 @@ interface BookDao {
     suspend fun getById(id: String): BookEntity?
 
     @Query("SELECT * FROM $BOOK_TABLE")
-    suspend fun getAll(): List<BookEntity>
+    suspend fun getBookEntities(): List<BookEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(book: BookEntity)
