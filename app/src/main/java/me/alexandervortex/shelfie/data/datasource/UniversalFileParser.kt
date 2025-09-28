@@ -5,7 +5,9 @@ import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.alexandervortex.shelfie.base.getFileExtension
 import me.alexandervortex.shelfie.data.mapper.FictionBookParser
+import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
@@ -16,24 +18,38 @@ class UniversalFileParser
     private val fictionBookParser: FictionBookParser,
 ) {
 
+    // пока только fb2
+    private val supportedExtensions = setOf("fb2")
+
     /**
      * тут мы должны решить
      * какой парсер должен парсить нашу книгу
      * должен ли файл быть обработан вообще (подходит ли он мне)
      */
-    suspend fun importFromUri(uri: Uri): BookModel {
+    suspend fun importFromUri(uri: Uri): BookModel? {
+
         return withContext(Dispatchers.IO) {
+            val extension = uri.getFileExtension()
+                ?: return@withContext null
+            if (extension !in supportedExtensions) {
+                return@withContext null
+            }
+
             val booksDir = File(context.filesDir, "books").apply { mkdirs() }
-
             val id = System.currentTimeMillis().toString()
-            val out = File(booksDir, "$id.fb2")
 
+            val outPutFile = File(booksDir, "$id.$extension")
             context.contentResolver.openInputStream(uri)?.use { input ->
-                out.outputStream().use { output ->
+                outPutFile.outputStream().use { output ->
                     input.copyTo(output)
                 }
             } ?: error("Не удалось открыть выбранный файл")
-            fictionBookParser.map(out, id)
+
+            val bookFile = BookFile(outPutFile)
+            when (extension) {
+                "fb2" -> fictionBookParser.parse(bookFile, id)
+                else -> null
+            }
         }
     }
 
@@ -41,6 +57,9 @@ class UniversalFileParser
      * тут мы берем файл по айди и пути
      * делаем из него book model
      * и возвращаем
+     *
+     * проверок не нужно
+     * сюда попали только валидные книги
      */
     suspend fun getBookModelById(
         id: String,
@@ -48,10 +67,11 @@ class UniversalFileParser
     ): BookModel? {
         return withContext(Dispatchers.IO) {
             val file = File(localPath)
+            val bookFile = BookFile(file)
             if (!file.exists()) {
                 return@withContext null
             }
-            fictionBookParser.map(file, id)
+            fictionBookParser.parse(bookFile, id)
         }
     }
 }
