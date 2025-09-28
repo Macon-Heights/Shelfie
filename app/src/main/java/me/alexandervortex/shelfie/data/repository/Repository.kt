@@ -23,15 +23,26 @@ class Repository
          */
         val bookModel = parser.importFromUri(uri)
 
-
+        /**
+         * book model -> database
+         * это справедливо для любой книги в любом формате
+         */
         val entity = mapper.toEntity(bookModel)
         dao.insert(entity)
     }
 
+    /**
+     * получаем список всех наших книг ( в папке и в бд)
+     * справедливо для любого типа книги
+     */
     suspend fun getBookEntities(): List<BookEntity> {
         return dao.getAll()
     }
 
+    /**
+     * получаем книгу по айди из бд + сам файл из папки
+     * справедливо для любого типа книги
+     */
     suspend fun getBookModelById(id: String): BookModel? {
         val entity = dao.getById(id)
         return entity?.let {
