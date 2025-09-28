@@ -45,10 +45,12 @@ class UniversalFileParser
     suspend fun getBookModelById(
         id: String,
         localPath: String,
-    ): BookModel {
+    ): BookModel? {
         return withContext(Dispatchers.IO) {
             val file = File(localPath)
-            require(file.exists()) { "Файл книги не найден: $localPath" }
+            if (!file.exists()) {
+                return@withContext null
+            }
             fictionBookParser.map(file, id)
         }
     }
