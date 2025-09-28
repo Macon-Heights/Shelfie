@@ -5,12 +5,13 @@ import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
 
+@Deprecated("GAVNO")
 class FictionBookParser
 @Inject constructor(
     private val sectionMapper: SectionModelMapper,
 ) {
 
-    fun map(
+    fun parse(
         file: File,
         id: String,
     ): BookModel {
