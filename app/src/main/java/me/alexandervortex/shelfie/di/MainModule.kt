@@ -12,7 +12,7 @@ import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.mapper.FictionBookParser
-import me.alexandervortex.shelfie.data.repository.Repository
+import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Singleton
 
 const val BOOK_DB = "book_db"
@@ -35,8 +35,8 @@ object MainModule {
         dao: BookDao,
         mapper: BookEntityMapper,
         dataSource: UniversalFileParser,
-    ): Repository {
-        return Repository(dao, mapper, dataSource)
+    ): BookRepository {
+        return BookRepository(dao, mapper, dataSource)
     }
 
     @Provides

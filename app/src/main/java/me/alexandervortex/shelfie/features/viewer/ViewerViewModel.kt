@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.model.BookModel
-import me.alexandervortex.shelfie.data.repository.Repository
+import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewerViewModel
 @Inject constructor(
-    private val repo: Repository,
+    private val repo: BookRepository,
 ) : BaseViewerViewModel() {
 
     override val error = mutableStateOf("no error")
