@@ -5,7 +5,7 @@ import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
 
-class BookModelMapper
+class FictionBookParser
 @Inject constructor(
     private val sectionMapper: SectionModelMapper,
 ) {
