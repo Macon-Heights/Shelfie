@@ -33,8 +33,12 @@ class BookRepository
          * book model -> database
          * это справедливо для любой книги в любом формате
          */
-        val entity = mapper.toEntity(bookModel)
-        dao.insert(entity)
+        val entity = bookModel?.let {
+            mapper.toEntity(it)
+
+        }
+
+        entity?.let { dao.insert(it) }
     }
 
     /**
