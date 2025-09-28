@@ -36,7 +36,7 @@ class Repository
      * справедливо для любого типа книги
      */
     suspend fun getBookEntities(): List<BookEntity> {
-        return dao.getAll()
+        return dao.getBookEntities()
     }
 
     /**
@@ -46,7 +46,7 @@ class Repository
     suspend fun getBookModelById(id: String): BookModel? {
         val entity = dao.getById(id)
         return entity?.let {
-            parser.loadFile(entity.id, entity.localPath)
+            parser.getBookModelById(entity.id, entity.localPath)
         }
     }
 }
