@@ -8,7 +8,13 @@ import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.model.BookModel
 import javax.inject.Inject
 
-class Repository
+/**
+ * Репозиторий книжек
+ * добавляет книжку
+ * получает список книжек
+ * получает книгу по айди
+ */
+class BookRepository
 @Inject constructor(
     private val dao: BookDao,
     private val mapper: BookEntityMapper,
