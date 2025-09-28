@@ -10,7 +10,7 @@ import me.alexandervortex.shelfie.data.model.BookModel
 import java.io.File
 import javax.inject.Inject
 
-class FileSystemDataSource
+class UniversalFileParser
 @Inject constructor(
     @ApplicationContext private val context: Context,
     private val mapper: BookModelMapper,
