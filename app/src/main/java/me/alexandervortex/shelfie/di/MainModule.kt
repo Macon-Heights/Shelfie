@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.alexandervortex.shelfie.data.datasource.FileSystemDataSource
+import me.alexandervortex.shelfie.data.datasource.UniversalFileParser
 import me.alexandervortex.shelfie.data.db.BookDb
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
@@ -25,8 +25,8 @@ object MainModule {
     fun provideDataSource(
         @ApplicationContext context: Context,
         mapper: BookModelMapper,
-    ): FileSystemDataSource {
-        return FileSystemDataSource(context, mapper)
+    ): UniversalFileParser {
+        return UniversalFileParser(context, mapper)
     }
 
     @Provides
@@ -34,7 +34,7 @@ object MainModule {
     fun provideRepo(
         dao: BookDao,
         mapper: BookEntityMapper,
-        dataSource: FileSystemDataSource,
+        dataSource: UniversalFileParser,
     ): Repository {
         return Repository(dao, mapper, dataSource)
     }
