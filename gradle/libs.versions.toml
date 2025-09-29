@@ -54,13 +54,10 @@ jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
 serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
 storage = { group = "com.anggrayudi", name = "storage", version.ref = "storage" }
 
-
+### Tests
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-
-#####
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
