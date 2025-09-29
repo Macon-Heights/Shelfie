@@ -49,16 +49,18 @@ hilt-nav-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", 
 ### Navigation
 nav-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navVersion" }
 
+### Parsers
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
+storage = { group = "com.anggrayudi", name = "storage", version.ref = "storage" }
+
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 #####
 
-# new things
-jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
-storage = { group = "com.anggrayudi", name = "storage", version.ref = "storage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

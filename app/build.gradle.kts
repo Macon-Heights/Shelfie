@@ -56,16 +56,13 @@ dependencies {
     ///// Navigation
     implementation(libs.nav.compose)
 
-    // =-=-=-=-=-=-=
 
-
-    // New things
+    ///// Parsers
     implementation(libs.jsoup)
     implementation(libs.serialization.core)
     implementation(libs.storage)
 
-    // FB2 Parser
-    implementation(files("../libs/fb2parser.jar"))
+    // =-=-=-=-=-=-=
 
     // Theme
     implementation(libs.androidx.material3)
