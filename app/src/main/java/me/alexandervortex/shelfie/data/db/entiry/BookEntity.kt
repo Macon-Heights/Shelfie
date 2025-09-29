@@ -20,5 +20,5 @@ data class BookEntity(
     val author: String?,
 
     @ColumnInfo(name = "year")
-    val year: String,
+    val year: String?,
 )
