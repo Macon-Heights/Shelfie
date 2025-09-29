@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,15 +43,33 @@ fun BookComponent(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Left
         )
-        model.author?.let {
-            Spacer(Modifier.size(8.dp))
-            Text(
-                color = onColor,
-                fontWeight = FontWeight.Light,
-                text = (it),
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            model.year?.let {
+                Text(
+                    color = onColor,
+                    fontWeight = FontWeight.Light,
+                    text = it,
+                    textAlign = TextAlign.End
+                )
+            }
+            Spacer(
+                Modifier
+                    .size(16.dp)
+                    .weight(1f)
             )
+            model.author?.let {
+                Text(
+                    color = onColor,
+                    fontWeight = FontWeight.Light,
+                    text = it,
+                    textAlign = TextAlign.End
+                )
+            }
+
         }
     }
 }
