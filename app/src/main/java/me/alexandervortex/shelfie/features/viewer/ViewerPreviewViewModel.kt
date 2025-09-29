@@ -3,8 +3,8 @@ package me.alexandervortex.shelfie.features.viewer
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import dagger.hilt.android.lifecycle.HiltViewModel
-import me.alexandervortex.shelfie.data.model.BookUi
-import me.alexandervortex.shelfie.data.model.SectionUi
+import me.alexandervortex.shelfie.ui.model.BookUi
+import me.alexandervortex.shelfie.ui.model.SectionUi
 import javax.inject.Inject
 
 @HiltViewModel
