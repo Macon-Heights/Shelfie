@@ -1,11 +1,11 @@
 package me.alexandervortex.shelfie.data.parser
 
 import android.util.Base64
-import me.alexandervortex.shelfie.data.model.BlockUi
+import me.alexandervortex.shelfie.ui.model.BlockUi
 import me.alexandervortex.shelfie.data.model.BookFile
-import me.alexandervortex.shelfie.data.model.BookUi
-import me.alexandervortex.shelfie.data.model.SectionUi
-import me.alexandervortex.shelfie.data.model.StanzaUi
+import me.alexandervortex.shelfie.ui.model.BookUi
+import me.alexandervortex.shelfie.ui.model.SectionUi
+import me.alexandervortex.shelfie.ui.model.StanzaUi
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser

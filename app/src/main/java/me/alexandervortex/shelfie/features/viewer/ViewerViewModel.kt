@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.model.BookUi
+import me.alexandervortex.shelfie.ui.model.BookUi
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Inject
 

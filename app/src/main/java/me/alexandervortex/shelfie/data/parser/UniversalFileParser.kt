@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.getFileExtension
 import me.alexandervortex.shelfie.data.model.BookFile
-import me.alexandervortex.shelfie.data.model.BookUi
+import me.alexandervortex.shelfie.ui.model.BookUi
 import java.io.File
 import javax.inject.Inject
 

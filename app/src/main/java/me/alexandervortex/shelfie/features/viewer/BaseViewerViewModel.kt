@@ -2,7 +2,7 @@ package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
-import me.alexandervortex.shelfie.data.model.BookUi
+import me.alexandervortex.shelfie.ui.model.BookUi
 
 abstract class BaseViewerViewModel : ViewModel() {
 

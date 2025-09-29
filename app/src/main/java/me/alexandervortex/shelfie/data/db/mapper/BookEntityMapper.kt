@@ -1,7 +1,7 @@
 package me.alexandervortex.shelfie.data.db.mapper
 
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.data.model.BookUi
+import me.alexandervortex.shelfie.ui.model.BookUi
 import javax.inject.Inject
 
 class BookEntityMapper

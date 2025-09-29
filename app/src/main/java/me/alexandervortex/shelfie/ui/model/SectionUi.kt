@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.model
+package me.alexandervortex.shelfie.ui.model
 
 // Глава или подраздел
 data class SectionUi(
