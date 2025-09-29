@@ -44,9 +44,10 @@ android {
 
 dependencies {
     // New things
-    implementation("org.jsoup:jsoup:1.18.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.8.1")
-    implementation("com.anggrayudi:storage:2.0.0")
+    implementation(libs.jsoup)
+    implementation(libs.serialization.core)
+    implementation(libs.storage)
+
 
     // Room
     implementation(libs.androidx.room.runtime)

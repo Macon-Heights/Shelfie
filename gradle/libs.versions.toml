@@ -16,6 +16,11 @@ navVersion = "2.7.7"
 hiltNavigationVersion = "1.2.0"
 roomRuntime = "2.8.0"
 
+# new things
+jsoup = "1.18.3"
+serialization = "1.8.1"
+storage = "2.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -43,6 +48,11 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", v
 # Navigation
 nav-version = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navVersion" }
 hilt-nav-version = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationVersion" }
+
+# new things
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
+storage = { group = "com.anggrayudi", name = "storage", version.ref = "storage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
