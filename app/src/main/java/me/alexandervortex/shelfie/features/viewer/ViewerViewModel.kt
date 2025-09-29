@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.model.BookModel
+import me.alexandervortex.shelfie.data.model.BookUi
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class ViewerViewModel
 ) : BaseViewerViewModel() {
 
     override val error = mutableStateOf("no error")
-    override val bookSample: MutableState<BookModel?> = mutableStateOf(null)
+    override val bookSample: MutableState<BookUi?> = mutableStateOf(null)
 
     override fun initScreenData(id: String) {
         viewModelScope.launch {
