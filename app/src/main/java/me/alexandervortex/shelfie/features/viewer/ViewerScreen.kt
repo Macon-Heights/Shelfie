@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.alexandervortex.shelfie.data.model.SectionModel
+import me.alexandervortex.shelfie.data.model.SectionUi
 
 @Composable
 fun ViewerScreen(
@@ -31,15 +31,16 @@ fun ViewerScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        val sections: List<SectionModel> = viewModel.bookSample.value?.sections.orEmpty()
+        // todo
+        val sections: List<SectionUi> = viewModel.bookSample.value?.sections.orEmpty()
 
         items(sections) { section ->
-            section.elements.forEachIndexed { i, element ->
+            section.blocks.forEachIndexed { i, element ->
                 Text(
                     textAlign = TextAlign.Justify,
                     color = MaterialTheme.colorScheme.background,
                     modifier = Modifier.background(randomColor(i)),
-                    text = element,
+                    text = element.toString(),
                 )
             }
             Spacer(
