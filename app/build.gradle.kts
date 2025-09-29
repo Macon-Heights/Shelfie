@@ -53,16 +53,16 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.nav.compose)
 
+    ///// Navigation
+    implementation(libs.nav.compose)
+
+    // =-=-=-=-=-=-=
+
+
     // New things
     implementation(libs.jsoup)
     implementation(libs.serialization.core)
     implementation(libs.storage)
-
-
-
-    // Navigation
-    implementation (libs.nav.version)
-
 
     // FB2 Parser
     implementation(files("../libs/fb2parser.jar"))
