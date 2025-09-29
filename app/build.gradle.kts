@@ -48,18 +48,21 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
 
+    ///// Hilt
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.nav.compose)
+
     // New things
     implementation(libs.jsoup)
     implementation(libs.serialization.core)
     implementation(libs.storage)
 
-    // Hilt
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
+
 
     // Navigation
     implementation (libs.nav.version)
-    implementation (libs.hilt.nav.version)
+
 
     // FB2 Parser
     implementation(files("../libs/fb2parser.jar"))
