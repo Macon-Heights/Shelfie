@@ -2,10 +2,9 @@ package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import dagger.hilt.android.lifecycle.HiltViewModel
-import me.alexandervortex.shelfie.data.model.BookModel
-import me.alexandervortex.shelfie.data.model.SectionModel
+import me.alexandervortex.shelfie.data.model.BookUi
+import me.alexandervortex.shelfie.data.model.SectionUi
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,19 +13,22 @@ class ViewerPreviewViewModel
 
     override val error: MutableState<String> = mutableStateOf("no error")
 
-    override val bookSample: MutableState<BookModel?> = mutableStateOf(
-        BookModel(
+    override val bookSample: MutableState<BookUi?> = mutableStateOf(
+        // todo
+        BookUi(
             id = "",
             localPath = "",
             title = "",
             author = "",
             year = "",
             sections = listOf(
-                SectionModel(LoremIpsum(100).values.toList()),
-                SectionModel(LoremIpsum(100).values.toList()),
-                SectionModel(LoremIpsum(100).values.toList()),
-                SectionModel(LoremIpsum(100).values.toList()),
-            )
+                SectionUi(
+                    title = "",
+                    blocks = listOf()
+                )
+            ),
+            coverImage = null,
+            annotation = null
         )
     )
 
