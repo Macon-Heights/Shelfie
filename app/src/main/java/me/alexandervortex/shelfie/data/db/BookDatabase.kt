@@ -6,7 +6,7 @@ import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 
 @Database(entities = [BookEntity::class], version = 1)
-abstract class BookDb : RoomDatabase() {
+abstract class BookDatabase : RoomDatabase() {
 
     abstract fun bookDao(): BookDao
 }

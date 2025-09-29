@@ -7,11 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.alexandervortex.shelfie.data.datasource.UniversalFileParser
-import me.alexandervortex.shelfie.data.db.BookDb
+import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.data.db.BookDatabase
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.mapper.FictionBookParser
+import me.alexandervortex.shelfie.data.parser.FictionBookParser
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Singleton
 
@@ -22,7 +22,7 @@ const val BOOK_DB = "book_db"
 object MainModule {
 
     @Provides
-    fun provideDataSource(
+    fun provideFictionBookParser(
         @ApplicationContext context: Context,
         mapper: FictionBookParser,
     ): UniversalFileParser {
@@ -31,29 +31,29 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun provideRepo(
+    fun provideBookRepository(
         dao: BookDao,
         mapper: BookEntityMapper,
-        dataSource: UniversalFileParser,
+        parser: UniversalFileParser,
     ): BookRepository {
-        return BookRepository(dao, mapper, dataSource)
+        return BookRepository(dao, mapper, parser)
     }
 
     @Provides
     @Singleton
-    fun provideDatabase(
+    fun provideBookDatabase(
         @ApplicationContext context: Context,
-    ): BookDb {
+    ): BookDatabase {
         return Room.databaseBuilder(
             context,
-            BookDb::class.java,
+            BookDatabase::class.java,
             BOOK_DB
         ).build()
     }
 
     @Provides
-    fun provideDao(
-        database: BookDb,
+    fun provideBookDao(
+        database: BookDatabase,
     ): BookDao {
         return database.bookDao()
     }

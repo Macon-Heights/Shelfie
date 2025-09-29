@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.mapper
+package me.alexandervortex.shelfie.data.parser
 
 import android.util.Base64
 import me.alexandervortex.shelfie.data.model.BlockUi

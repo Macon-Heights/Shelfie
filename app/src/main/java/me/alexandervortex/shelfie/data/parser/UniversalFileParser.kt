@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.datasource
+package me.alexandervortex.shelfie.data.parser
 
 import android.content.Context
 import android.net.Uri
@@ -6,7 +6,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.getFileExtension
-import me.alexandervortex.shelfie.data.mapper.FictionBookParser
 import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.data.model.BookUi
 import java.io.File
