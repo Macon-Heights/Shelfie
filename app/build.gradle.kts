@@ -48,7 +48,6 @@ dependencies {
     implementation(libs.serialization.core)
     implementation(libs.storage)
 
-
     // Room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
@@ -60,7 +59,6 @@ dependencies {
     // Navigation
     implementation (libs.nav.version)
     implementation (libs.hilt.nav.version)
-
 
     // FB2 Parser
     implementation(files("../libs/fb2parser.jar"))
