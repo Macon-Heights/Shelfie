@@ -1,18 +1,27 @@
 package me.alexandervortex.shelfie.ui.component.viewerui
 
-import androidx.compose.foundation.background
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import me.alexandervortex.shelfie.ui.model.BlockUi
 
 @Composable
-fun ImageComponent(model: BlockUi.Image) {
-    Text(
-        "_IMAGE_",
-        color = MaterialTheme.colorScheme.onBackground,
-        modifier = Modifier.background(Color.Red)
-    )
+fun ImageComponent(block: BlockUi.Image) {
+    val bitmap = remember(block.data) {
+        BitmapFactory.decodeByteArray(block.data, 0, block.data.size)
+    }
+
+    bitmap?.let {
+        Image(
+            bitmap = it.asImageBitmap(),
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.FillWidth
+        )
+    }
 }
