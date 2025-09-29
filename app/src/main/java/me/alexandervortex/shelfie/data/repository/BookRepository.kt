@@ -1,7 +1,7 @@
 package me.alexandervortex.shelfie.data.repository
 
 import android.net.Uri
-import me.alexandervortex.shelfie.data.datasource.UniversalFileParser
+import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
