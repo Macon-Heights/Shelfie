@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
 import javax.inject.Inject
 
-@Deprecated("GAVNO")
 class FictionBookParser
 @Inject constructor() {
 
