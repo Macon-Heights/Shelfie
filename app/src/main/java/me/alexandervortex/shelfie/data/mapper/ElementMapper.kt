@@ -9,8 +9,8 @@ class ElementMapper
 
     fun map(
         body: Element?,
-        binaries: Element?,
-    ): List<ElementUI> {
-        return emptyList()
+        binaries: Map<String, ByteArray>,
+    ): ElementUI? {
+        return null
     }
 }

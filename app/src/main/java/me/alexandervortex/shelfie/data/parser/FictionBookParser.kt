@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.data.parser
 
+import android.util.Base64
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.data.model.BookFile
@@ -24,16 +25,24 @@ class FictionBookParser
             "",
             Parser.xmlParser()
         )
-        val titleInfo = doc.selectFirst("description > title-info")
         val body = doc.selectFirst("body")
-        val binary = doc.selectFirst("binary")
+        val titleInfo = doc.selectFirst("description > title-info")
+        val binaries = doc.select("binary")
+            .associate {
+                val binaryId = it.attr("id")
+                val base64 = it.text().trim()
+                binaryId to Base64.decode(base64, Base64.DEFAULT)
+            }
+
         return BookUI(
             titleInfo = titleInfoMapper.map(
                 id,
                 file.path,
                 titleInfo
             ),
-            elements = elementMapper.map(body, binary)
+            elements = body?.children()?.mapNotNull { element ->
+                elementMapper.map(element, binaries)
+            }.orEmpty()
         )
     }
 }
