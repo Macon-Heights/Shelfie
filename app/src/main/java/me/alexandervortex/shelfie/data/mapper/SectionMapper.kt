@@ -4,7 +4,7 @@ import me.alexandervortex.shelfie.ui.model.ElementUI
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
-class ElementMapper
+class SectionMapper
 @Inject constructor() {
 
     fun map(
