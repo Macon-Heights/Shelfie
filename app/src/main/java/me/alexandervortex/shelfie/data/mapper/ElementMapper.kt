@@ -50,9 +50,11 @@ class ElementMapper
     private fun mapImage(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI {
+    ): ElementUI? {
         val ref = element.attr("xlink:href").removePrefix("#")
         val image = binaries[ref]
-        return ElementUI.ImageUI(image)
+        return image?.let {
+            ElementUI.ImageUI(it)
+        }
     }
 }
