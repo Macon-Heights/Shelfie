@@ -1,7 +1,7 @@
 package me.alexandervortex.shelfie.data.parser
 
 import android.util.Base64
-import me.alexandervortex.shelfie.data.mapper.SectionMapper
+import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class FictionBookParser
 @Inject constructor(
     private val titleInfoMapper: TitleInfoMapper,
-    private val sectionMapper: SectionMapper,
+    private val elementMapper: ElementMapper,
 ) {
 
     fun parse(
@@ -41,7 +41,7 @@ class FictionBookParser
                 titleInfo
             ),
             elements = body?.children()?.mapNotNull { element ->
-                sectionMapper.map(element, binaries)
+                elementMapper.map(element, binaries)
             }.orEmpty()
         )
     }
