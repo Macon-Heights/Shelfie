@@ -3,7 +3,8 @@ package me.alexandervortex.shelfie.data.parser
 import android.util.Base64
 import me.alexandervortex.shelfie.data.mapper.Fb2Mapper
 import me.alexandervortex.shelfie.data.model.BookFile
-import me.alexandervortex.shelfie.ui.model.BookUi
+import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.TitleInfoUI
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class FictionBookParser
     fun parse(
         file: BookFile,
         id: String,
-    ): BookUi {
+    ): BookUI {
 
         val localPath = file.path
 
@@ -54,16 +55,18 @@ class FictionBookParser
 
         val sections = doc.select("body > section").map { fb2mapper.mapSection(it, binaries) }
 
-        val book = BookUi(
-            id = id,
-            localPath = localPath,
-            year = year,
-            title = title,
-            author = author,
-            annotation = annotation,
-            coverImage = coverImage,
+        val book = BookUI(
+            titleInfo = TitleInfoUI(
+                id = id,
+                localPath = localPath,
+                year = year,
+                title = title,
+                author = author,
+                annotation = annotation,
+                coverImage = coverImage,
+                genre = "genre"
+            ),
             sections = sections,
-            genre = "asda"
         )
 
         return book
