@@ -5,15 +5,15 @@ sealed interface ElementUI {
     data class ContainerElementUI(
         val type: String?,
         val elements: List<ElementUI>,
-    )
+    ) : ElementUI
 
     data class TextUI(
-        val text: String,
+        val text: String?,
     ) : ElementUI
 
     data class ImageUI(
-        val image: ByteArray,
+        val image: ByteArray?,
     ) : ElementUI
 
-    data object EmptyLine
+    data object EmptyLine : ElementUI
 }
