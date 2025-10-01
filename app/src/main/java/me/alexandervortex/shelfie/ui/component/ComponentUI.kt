@@ -33,6 +33,7 @@ fun ComponentUI(element: ElementUI) {
             val bitmap = BitmapFactory.decodeByteArray(
                 element.image, 0, element.image.size
             )
+
             if (bitmap != null) {
                 Image(
                     contentScale = ContentScale.FillWidth,
