@@ -13,7 +13,7 @@ class BookEntityMapper
             localPath = model.titleInfo.localPath,
             title = model.titleInfo.title,
             author = model.titleInfo.author,
-            year = model.titleInfo.year,
+            year = model.titleInfo.date,
         )
     }
 }

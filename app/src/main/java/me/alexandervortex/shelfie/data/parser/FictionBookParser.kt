@@ -25,13 +25,15 @@ class FictionBookParser
             Parser.xmlParser()
         )
         val titleInfo = doc.selectFirst("description > title-info")
+        val body = doc.selectFirst("body")
+        val binary = doc.selectFirst("binary")
         return BookUI(
             titleInfo = titleInfoMapper.map(
                 id,
                 file.path,
                 titleInfo
             ),
-            elements = elementMapper.map()
+            elements = elementMapper.map(body, binary)
         )
     }
 }

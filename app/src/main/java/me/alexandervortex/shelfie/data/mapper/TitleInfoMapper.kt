@@ -16,11 +16,11 @@ class TitleInfoMapper
             id = id,
             localPath = localPath,
             title = titleInfo?.selectFirst("book-title")?.text()?.trim(),
-            year = titleInfo?.selectFirst("date")?.text()?.trim(),
+            date = titleInfo?.selectFirst("date")?.text()?.trim(),
             author = titleInfo?.selectFirst("author")?.let {
-                val first = it.selectFirst("first-name")?.text()?.trim().orEmpty()
-                val last = it.selectFirst("last-name")?.text()?.trim().orEmpty()
-                "$first $last"
+                val first = it.selectFirst("first-name")?.text()?.trim()
+                val last = it.selectFirst("last-name")?.text()?.trim()
+                "$first $last".trim()
             },
             annotation = titleInfo?.selectFirst("annotation")?.text()?.trim(),
             genre = titleInfo?.selectFirst("genre")?.text()?.trim(),

@@ -5,7 +5,7 @@ data class TitleInfoUI(
     val localPath: String,
 
     val title: String?,
-    val year: String?,
+    val date: String?,
     val author: String?,
     val annotation: String?,
     val genre: String?,
