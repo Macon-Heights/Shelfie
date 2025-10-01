@@ -10,19 +10,26 @@ class ElementMapper
     fun map(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ) {
-        when (element.tagName()) {
+    ): ElementUI? {
+        return when (element.tagName()) {
+            // done
+            "section" -> mapSection(element, binaries)
+            "image" -> mapImage(element, binaries)
+            "empty-line" -> ElementUI.EmptyLine
+
+            // needs work
             "title" -> mapTitle(element, binaries)
             "epigraph" -> mapEpigraph(element, binaries)
-            "image" -> mapImage(element, binaries)
+
             "annotation" -> mapAnnotation(element, binaries)
             "p" -> mapParagraph(element, binaries)
             "poem" -> mapPoem(element, binaries)
             "cite" -> mapCite(element, binaries)
             "table" -> mapTable(element)
             "subtitle" -> mapSubtitle(element, binaries)
-            "empty-line" -> ElementUI.EmptyLine
-            "section" -> mapSection(element, binaries)
+
+
+            else -> null
         }
     }
 
@@ -51,7 +58,11 @@ class ElementMapper
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUI.Section {
-        return ElementUI.Section
+        return ElementUI.Section(
+            elements = element.children().map { subsection ->
+                map(subsection, binaries)
+            }
+        )
     }
 
     private fun mapParagraph(
