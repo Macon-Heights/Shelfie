@@ -2,6 +2,10 @@ package me.alexandervortex.shelfie.ui.model
 
 sealed interface ElementUI {
 
+    data class Section(
+        val elements: List<ElementUI?>,
+    ) : ElementUI
+
     object Title : ElementUI
     object Epigraph : ElementUI
     data class Image(val data: ByteArray?) : ElementUI
@@ -15,5 +19,5 @@ sealed interface ElementUI {
     object Table : ElementUI
     object Subtitle : ElementUI
     object EmptyLine : ElementUI
-    object Section : ElementUI
+
 }
