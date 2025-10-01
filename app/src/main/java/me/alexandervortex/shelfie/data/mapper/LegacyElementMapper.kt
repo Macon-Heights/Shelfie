@@ -4,7 +4,8 @@ import me.alexandervortex.shelfie.ui.model.LegacyElementUI
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
-class ElementMapper
+@Deprecated("LEGACY")
+class LegacyElementMapper
 @Inject constructor() {
 
     fun map(
