@@ -15,13 +15,16 @@ class TitleInfoMapper
         return TitleInfoUI(
             id = id,
             localPath = localPath,
-            title = "",
-            year = "",
-            author = "",
-            annotation = "",
-            genre = "",
-            coverImage = null
+            title = titleInfo?.selectFirst("book-title")?.text()?.trim(),
+            year = titleInfo?.selectFirst("date")?.text()?.trim(),
+            author = titleInfo?.selectFirst("author")?.let {
+                val first = it.selectFirst("first-name")?.text()?.trim().orEmpty()
+                val last = it.selectFirst("last-name")?.text()?.trim().orEmpty()
+                "$first $last"
+            },
+            annotation = titleInfo?.selectFirst("annotation")?.text()?.trim(),
+            genre = titleInfo?.selectFirst("genre")?.text()?.trim(),
+            coverImage = null // todo later
         )
-        // todo titleinfo to variables
     }
 }

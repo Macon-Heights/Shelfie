@@ -11,7 +11,7 @@ import javax.inject.Inject
 class FictionBookParser
 @Inject constructor(
     private val titleInfoMapper: TitleInfoMapper,
-    private val elementMapper: ElementMapper
+    private val elementMapper: ElementMapper,
 ) {
 
     fun parse(
@@ -25,7 +25,6 @@ class FictionBookParser
             Parser.xmlParser()
         )
         val titleInfo = doc.selectFirst("description > title-info")
-
         return BookUI(
             titleInfo = titleInfoMapper.map(
                 id,
