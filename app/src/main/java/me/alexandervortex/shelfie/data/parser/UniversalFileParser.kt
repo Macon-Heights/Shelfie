@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.getFileExtension
 import me.alexandervortex.shelfie.data.model.BookFile
-import me.alexandervortex.shelfie.ui.model.BookUi
+import me.alexandervortex.shelfie.ui.model.BookUI
 import java.io.File
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class UniversalFileParser
      * какой парсер должен парсить нашу книгу
      * должен ли файл быть обработан вообще (подходит ли он мне)
      */
-    suspend fun importFromUri(uri: Uri): BookUi? {
+    suspend fun importFromUri(uri: Uri): BookUI? {
 
         return withContext(Dispatchers.IO) {
             val extension = uri.getFileExtension()
@@ -63,7 +63,7 @@ class UniversalFileParser
     suspend fun getBookModelById(
         id: String,
         localPath: String,
-    ): BookUi? {
+    ): BookUI? {
         return withContext(Dispatchers.IO) {
             val file = File(localPath)
             val bookFile = BookFile(file)

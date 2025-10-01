@@ -9,9 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import me.alexandervortex.shelfie.ui.component.viewerui.BlockComponent
 import me.alexandervortex.shelfie.ui.model.SectionUi
 
@@ -37,10 +35,4 @@ fun ViewerScreen(
         }
     }
 
-}
-
-@Composable
-@Preview
-fun ViewerScreen() {
-    ViewerScreen(hiltViewModel<ViewerPreviewViewModel>(), "id")
 }
