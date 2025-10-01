@@ -62,7 +62,8 @@ class FictionBookParser
             author = author,
             annotation = annotation,
             coverImage = coverImage,
-            sections = sections
+            sections = sections,
+            genre = "asda"
         )
 
         return book

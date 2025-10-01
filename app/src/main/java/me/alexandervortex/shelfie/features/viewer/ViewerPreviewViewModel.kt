@@ -25,7 +25,6 @@ class ViewerPreviewViewModel
                 SectionUi(
                     title = "",
                     blocks = listOf(),
-                    subsections = listOf()
                 )
             ),
             coverImage = null,
