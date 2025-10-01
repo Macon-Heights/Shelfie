@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +25,6 @@ fun ComponentUI(element: ElementUI) {
             textAlign = TextAlign.Justify,
             text = element.text,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.background(Color.DarkGray)
         )
 
         is ElementUI.ImageUI -> {
@@ -41,7 +39,7 @@ fun ComponentUI(element: ElementUI) {
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = 32.dp)
                 )
             }
         }
@@ -49,9 +47,10 @@ fun ComponentUI(element: ElementUI) {
         is ElementUI.EmptyLine -> {
             Spacer(
                 modifier = Modifier
+                    .padding(vertical = 32.dp)
+                    .background(MaterialTheme.colorScheme.onBackground)
                     .fillMaxWidth()
-                    .height(16.dp)
-                    .background(Color.Red)
+                    .height(2.dp)
             )
         }
 
