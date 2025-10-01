@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.ui.model.ElementUI
 
 @Composable
 fun ViewerScreen(

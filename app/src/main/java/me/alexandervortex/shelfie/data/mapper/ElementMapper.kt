@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.data.mapper
 
-import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.LegacyElementUI
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
@@ -10,12 +10,12 @@ class ElementMapper
     fun map(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI? {
+    ): LegacyElementUI? {
         return when (element.tagName()) {
             // done
             "section" -> mapSection(element, binaries)
             "image" -> mapImage(element, binaries)
-            "empty-line" -> ElementUI.EmptyLine
+            "empty-line" -> LegacyElementUI.EmptyLine
 
             // needs work
             "title" -> mapTitle(element, binaries)
@@ -36,29 +36,29 @@ class ElementMapper
     private fun mapAnnotation(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Annotation {
-        return ElementUI.Annotation
+    ): LegacyElementUI.Annotation {
+        return LegacyElementUI.Annotation
     }
 
     private fun mapEpigraph(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Epigraph {
-        return ElementUI.Epigraph
+    ): LegacyElementUI.Epigraph {
+        return LegacyElementUI.Epigraph
     }
 
     private fun mapSubtitle(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Subtitle {
-        return ElementUI.Subtitle
+    ): LegacyElementUI.Subtitle {
+        return LegacyElementUI.Subtitle
     }
 
     private fun mapSection(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Section {
-        return ElementUI.Section(
+    ): LegacyElementUI.Section {
+        return LegacyElementUI.Section(
             elements = element.children().map { subsection ->
                 map(subsection, binaries)
             }
@@ -68,9 +68,9 @@ class ElementMapper
     private fun mapParagraph(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Paragraph {
+    ): LegacyElementUI.Paragraph {
         // todo вложенные картинки могут быть, а может даже и другие теги
-        return ElementUI.Paragraph(
+        return LegacyElementUI.Paragraph(
             text = element.text().trim()
         )
     }
@@ -78,34 +78,34 @@ class ElementMapper
     private fun mapImage(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI {
+    ): LegacyElementUI {
         val ref = element.attr("xlink:href").removePrefix("#")
         val image = binaries[ref]
-        return ElementUI.Image(image)
+        return LegacyElementUI.Image(image)
     }
 
     private fun mapPoem(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Poem {
-        return ElementUI.Poem
+    ): LegacyElementUI.Poem {
+        return LegacyElementUI.Poem
     }
 
     private fun mapCite(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Cite {
-        return ElementUI.Cite
+    ): LegacyElementUI.Cite {
+        return LegacyElementUI.Cite
     }
 
-    private fun mapTable(element: Element): ElementUI.Table {
-        return ElementUI.Table
+    private fun mapTable(element: Element): LegacyElementUI.Table {
+        return LegacyElementUI.Table
     }
 
     private fun mapTitle(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI.Title {
-        return ElementUI.Title
+    ): LegacyElementUI.Title {
+        return LegacyElementUI.Title
     }
 }
