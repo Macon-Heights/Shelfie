@@ -7,10 +7,11 @@ data class BookUi(
     val localPath: String,
 
     // for grid view
-    val title: String,
+    val title: String?,
     val year: String?,
     val author: String?,
     val annotation: String?,
+    val genre: String?,
     val coverImage: ByteArray?,
 
     // book body

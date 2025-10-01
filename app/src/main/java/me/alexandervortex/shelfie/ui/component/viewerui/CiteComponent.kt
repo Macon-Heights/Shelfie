@@ -11,7 +11,9 @@ import me.alexandervortex.shelfie.ui.model.BlockUi
 @Composable
 fun CiteComponent(model: BlockUi.Cite) {
     Text(
-        "_CITE_", color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.background(
+        "_CITE_",
+        color = MaterialTheme.colorScheme.onBackground,
+        modifier = Modifier.background(
             Color.Red
         )
     )

@@ -8,6 +8,7 @@ fun BlockComponent(
     model: BlockUi,
 ) {
     when (model) {
+        is BlockUi.Subtitle -> SubtitleComponent(model)
         is BlockUi.Cite -> CiteComponent(model)
         BlockUi.EmptyLine -> EmptyLineComponent(model as? BlockUi.EmptyLine)
         is BlockUi.Image -> ImageComponent(model)

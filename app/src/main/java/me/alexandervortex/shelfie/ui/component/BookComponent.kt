@@ -36,13 +36,15 @@ fun BookComponent(
             .background(color)
             .padding(16.dp)
     ) {
-        Text(
-            model.title,
-            color = onColorForTitle,
-            fontSize = 18.sp,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Left
-        )
+        model.title?.let {
+            Text(
+                model.title,
+                color = onColorForTitle,
+                fontSize = 18.sp,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Left
+            )
+        }
         Row(
             Modifier
                 .fillMaxWidth()

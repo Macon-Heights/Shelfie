@@ -24,11 +24,13 @@ class ViewerPreviewViewModel
             sections = listOf(
                 SectionUi(
                     title = "",
-                    blocks = listOf()
+                    blocks = listOf(),
+                    subsections = listOf()
                 )
             ),
             coverImage = null,
-            annotation = null
+            annotation = null,
+            genre = null
         )
     )
 
