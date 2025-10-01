@@ -7,6 +7,8 @@ sealed class BlockUi {
         val text: String,
     ) : BlockUi()
 
+    data class Subtitle(val html: String) : BlockUi()
+
     data object EmptyLine : BlockUi()
 
     data class Poem(

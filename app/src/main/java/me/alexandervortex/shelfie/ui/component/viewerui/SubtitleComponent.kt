@@ -9,10 +9,10 @@ import androidx.compose.ui.graphics.Color
 import me.alexandervortex.shelfie.ui.model.BlockUi
 
 @Composable
-fun ParagraphComponent(model: BlockUi.Paragraph) {
+fun SubtitleComponent(model: BlockUi.Subtitle) {
     Text(
-        model.text,
+        "_SUBTITLE",
         color = MaterialTheme.colorScheme.onBackground,
-        modifier = Modifier.background(Color.DarkGray)
+        modifier = Modifier.background(Color.Red)
     )
 }

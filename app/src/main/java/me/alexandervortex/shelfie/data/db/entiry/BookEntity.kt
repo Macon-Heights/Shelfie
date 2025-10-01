@@ -14,7 +14,7 @@ data class BookEntity(
     val localPath: String,
 
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String?,
 
     @ColumnInfo(name = "author")
     val author: String?,
