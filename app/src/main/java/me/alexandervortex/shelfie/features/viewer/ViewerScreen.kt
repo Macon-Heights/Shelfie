@@ -4,14 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.ui.component.viewerui.BlockComponent
-import me.alexandervortex.shelfie.ui.model.SectionUi
+import me.alexandervortex.shelfie.ui.model.ElementUI
 
 @Composable
 fun ViewerScreen(
@@ -26,13 +24,12 @@ fun ViewerScreen(
             .background(MaterialTheme.colorScheme.background)
     ) {
         // todo
-        val sections: List<SectionUi> = viewModel.bookSample.value?.sections.orEmpty()
-
-        items(sections) { section ->
-            section.blocks.forEachIndexed { i, element ->
-                BlockComponent(element)
-            }
-        }
+//        val sections: List<ElementUI> = viewModel.bookSample.value?.sections.orEmpty()
+//        items(sections) { section ->
+//            section.blocks.forEachIndexed { i, element ->
+//                BlockComponent(element)
+//            }
+//        }
     }
 
 }
