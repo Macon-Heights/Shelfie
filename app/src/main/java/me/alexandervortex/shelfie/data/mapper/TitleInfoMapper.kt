@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.data.mapper
 
-import me.alexandervortex.shelfie.base.Lg
 import me.alexandervortex.shelfie.ui.model.TitleInfoUI
 import org.jsoup.nodes.Element
 import javax.inject.Inject
@@ -8,14 +7,11 @@ import javax.inject.Inject
 class TitleInfoMapper
 @Inject constructor() {
 
-    private val lg = Lg("TitleInfoMapper")
-
     fun map(
         id: String,
         localPath: String,
         titleInfo: Element?,
     ): TitleInfoUI {
-        lg.log("map start")
         val result = TitleInfoUI(
             id = id,
             localPath = localPath,
@@ -30,7 +26,6 @@ class TitleInfoMapper
             genre = titleInfo?.selectFirst("genre")?.text()?.trim(),
             coverImage = null // todo later
         )
-        lg.log("map end")
         return result
     }
 }
