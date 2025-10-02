@@ -45,7 +45,7 @@ class UniversalFileParser
 
             val bookFile = BookFile(outPutFile)
             when (extension) {
-                "fb2" -> fictionBookParser.parse(bookFile, id)
+                "fb2" -> fictionBookParser.parse(id, bookFile)
                 else -> null
             }
         }
