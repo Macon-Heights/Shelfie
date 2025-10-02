@@ -22,11 +22,17 @@ class ViewerViewModel
     fun initScreenData(id: String) {
         viewModelScope.launch {
             try {
-                bookSample.value = repo.getBookModelById(id)
+                bookSample.value = repo.getBookModelById(id) // тут BookUI уже с прогрессом
                 error.value = "no error"
             } catch (e: Exception) {
                 error.value = e.localizedMessage ?: "unknown error"
             }
+        }
+    }
+
+    fun saveProgress(bookId: String, index: Int, offset: Int) {
+        viewModelScope.launch {
+            repo.updateBookProgress(bookId, index, offset)
         }
     }
 }

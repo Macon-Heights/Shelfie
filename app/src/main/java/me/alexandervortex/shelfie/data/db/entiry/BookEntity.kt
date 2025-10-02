@@ -21,4 +21,10 @@ data class BookEntity(
 
     @ColumnInfo(name = "year")
     val year: String?,
+
+    @ColumnInfo(name = "scrollIndex")
+    val scrollIndex: Int = 0,
+
+    @ColumnInfo(name = "scrollOffset")
+    val scrollOffset: Int = 0,
 )

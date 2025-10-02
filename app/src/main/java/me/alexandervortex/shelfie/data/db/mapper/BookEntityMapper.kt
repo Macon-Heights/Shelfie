@@ -14,6 +14,8 @@ class BookEntityMapper
             title = model.titleInfo.title,
             author = model.titleInfo.author,
             year = model.titleInfo.date,
+            scrollOffset = model.progressOffset,
+            scrollIndex = model.progressIndex
         )
         return entity
     }
