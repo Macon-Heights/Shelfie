@@ -11,42 +11,37 @@ class ElementMapper
     fun map(
         element: Element?,
         binaries: Map<String, ByteArray>,
-    ): ElementUI? {
-        if (element == null) return null
+    ): List<ElementUI> {
+        if (element == null) return emptyList()
 
         if (element.childNodes().isEmpty()) {
-            return mapPrimitive(element, binaries)
+            return mapPrimitive(element, binaries)?.let { listOf(it) } ?: emptyList()
         }
 
-        val children = element.childNodes().mapNotNull { node ->
+        val children = element.childNodes().flatMap { node ->
             when (node) {
-                is Element -> map(node, binaries) // рекурсия
+                is Element -> map(node, binaries)
                 is TextNode -> node.text().trim()
                     .takeIf { it.isNotEmpty() }
-                    ?.let { ElementUI.TextUI(it) }
-
-                else -> null
+                    ?.let { listOf(ElementUI.TextUI(it)) }
+                    ?: emptyList()
+                else -> emptyList()
             }
         }
 
-        val result = ElementUI.ContainerElementUI(
-            type = element.tagName(),
-            elements = children
-        )
-        return result
+        return children
     }
 
     private fun mapPrimitive(
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUI? {
-        val result = when (element.tagName()) {
+        return when (element.tagName()) {
             "image" -> mapImage(element, binaries)
             "empty-line" -> ElementUI.EmptyLine
             "p", "v", "subtitle" -> ElementUI.TextUI(element.text().trim())
             else -> null
         }
-        return result
     }
 
     private fun mapImage(
@@ -55,9 +50,6 @@ class ElementMapper
     ): ElementUI? {
         val ref = element.attr("xlink:href").removePrefix("#")
         val image = binaries[ref]
-        val result = image?.let {
-            ElementUI.ImageUI(it)
-        }
-        return result
+        return image?.let { ElementUI.ImageUI(it) }
     }
 }

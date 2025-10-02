@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.ui.component
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -52,14 +51,6 @@ fun ComponentUI(element: ElementUI) {
                     .fillMaxWidth()
                     .height(2.dp)
             )
-        }
-
-        is ElementUI.ContainerElementUI -> {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                element.elements.forEach { child ->
-                    ComponentUI(child)
-                }
-            }
         }
     }
 }

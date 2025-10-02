@@ -40,9 +40,7 @@ class FictionBookParser
                 file.path,
                 titleInfo
             ),
-            elements = body?.children()?.mapNotNull { element ->
-                elementMapper.map(element, binaries)
-            }.orEmpty()
+            elements = body?.let { elementMapper.map(it, binaries) }.orEmpty()
         )
         return result
     }
