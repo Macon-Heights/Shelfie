@@ -1,7 +1,6 @@
 package me.alexandervortex.shelfie.data.parser
 
 import android.util.Base64
-import me.alexandervortex.shelfie.base.Lg
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.data.model.BookFile
