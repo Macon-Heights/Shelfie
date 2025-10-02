@@ -23,4 +23,7 @@ interface BookDao {
 
     @Delete
     suspend fun delete(user: BookEntity)
+
+    @Query("UPDATE $BOOK_TABLE SET scrollIndex = :index, scrollOffset = :offset WHERE id = :id")
+    suspend fun updateProgress(id: String, index: Int, offset: Int)
 }

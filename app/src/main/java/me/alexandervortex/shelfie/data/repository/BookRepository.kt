@@ -57,8 +57,17 @@ class BookRepository
     suspend fun getBookModelById(id: String): BookUI? {
         val entity = dao.getById(id)
         val result = entity?.let {
-            parser.getBookModelById(entity.id, entity.localPath)
+            parser.getBookModelById(
+                entity.id,
+                entity.localPath,
+                entity.scrollOffset,
+                entity.scrollIndex
+            )
         }
         return result
+    }
+
+    suspend fun updateBookProgress(id: String, index: Int, offset: Int) {
+        dao.updateProgress(id, index, offset)
     }
 }

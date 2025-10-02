@@ -21,6 +21,8 @@ class FictionBookParser
     fun parse(
         id: String,
         file: BookFile,
+        scrollOffset: Int,
+        scrollIndex: Int,
     ): BookUI {
         val doc: Document = Jsoup.parse(
             file.file,
@@ -35,7 +37,9 @@ class FictionBookParser
 
         val result = BookUI(
             titleInfo = titleInfoMapper.map(id, file.path, titleInfo),
-            elements = elementMapper.map(body, binaries)
+            elements = elementMapper.map(body, binaries),
+            progressIndex = scrollIndex,
+            progressOffset = scrollOffset
         )
         return result
     }

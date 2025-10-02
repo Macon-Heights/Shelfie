@@ -45,7 +45,7 @@ class UniversalFileParser
 
             val bookFile = BookFile(outPutFile)
             when (extension) {
-                "fb2" -> fictionBookParser.parse(id, bookFile)
+                "fb2" -> fictionBookParser.parse(id, bookFile, 0, 0)
                 else -> null
             }
         }
@@ -63,6 +63,8 @@ class UniversalFileParser
     suspend fun getBookModelById(
         id: String,
         localPath: String,
+        scrollOffset: Int,
+        scrollIndex: Int,
     ): BookUI? {
         val result = withContext(Dispatchers.IO) {
             val file = File(localPath)
@@ -70,7 +72,12 @@ class UniversalFileParser
             if (!file.exists()) {
                 return@withContext null
             }
-            fictionBookParser.parse(id, bookFile)
+            fictionBookParser.parse(
+                id,
+                bookFile,
+                scrollOffset,
+                scrollIndex
+            )
         }
         return result
     }
