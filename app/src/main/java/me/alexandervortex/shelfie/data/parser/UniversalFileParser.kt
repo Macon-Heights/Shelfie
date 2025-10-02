@@ -5,7 +5,6 @@ import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.alexandervortex.shelfie.base.Lg
 import me.alexandervortex.shelfie.base.getFileExtension
 import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -17,7 +16,6 @@ class UniversalFileParser
     @ApplicationContext private val context: Context,
     private val fictionBookParser: FictionBookParser,
 ) {
-
 
     // пока только fb2
     private val supportedExtensions = setOf("fb2")
