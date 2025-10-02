@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.data.mapper
 
+import me.alexandervortex.shelfie.base.Lg
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
@@ -7,7 +8,7 @@ import javax.inject.Inject
 
 class ElementMapper
 @Inject constructor() {
-
+    private val lg = Lg("ElementMapper")
     fun map(
         element: Element?,
         binaries: Map<String, ByteArray>,
