@@ -70,7 +70,7 @@ class UniversalFileParser
             if (!file.exists()) {
                 return@withContext null
             }
-            fictionBookParser.parse(bookFile, id)
+            fictionBookParser.parse(id, bookFile)
         }
         return result
     }
