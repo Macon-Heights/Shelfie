@@ -7,13 +7,16 @@ import javax.inject.Inject
 
 class TitleInfoMapper
 @Inject constructor() {
+
     private val lg = Lg("TitleInfoMapper")
+
     fun map(
         id: String,
         localPath: String,
         titleInfo: Element?,
     ): TitleInfoUI {
-        return TitleInfoUI(
+        lg.log("map start")
+        val result = TitleInfoUI(
             id = id,
             localPath = localPath,
             title = titleInfo?.selectFirst("book-title")?.text()?.trim(),
@@ -27,5 +30,7 @@ class TitleInfoMapper
             genre = titleInfo?.selectFirst("genre")?.text()?.trim(),
             coverImage = null // todo later
         )
+        lg.log("map end")
+        return result
     }
 }

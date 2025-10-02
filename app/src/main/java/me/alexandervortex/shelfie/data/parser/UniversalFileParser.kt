@@ -17,7 +17,9 @@ class UniversalFileParser
     @ApplicationContext private val context: Context,
     private val fictionBookParser: FictionBookParser,
 ) {
+
     private val lg = Lg("UniversalFileParser")
+
     // пока только fb2
     private val supportedExtensions = setOf("fb2")
 
@@ -27,8 +29,8 @@ class UniversalFileParser
      * должен ли файл быть обработан вообще (подходит ли он мне)
      */
     suspend fun importFromUri(uri: Uri): BookUI? {
-
-        return withContext(Dispatchers.IO) {
+        lg.log("importFromUri start")
+        val result = withContext(Dispatchers.IO) {
             val extension = uri.getFileExtension()
                 ?: return@withContext null
             if (extension !in supportedExtensions) {
@@ -51,6 +53,8 @@ class UniversalFileParser
                 else -> null
             }
         }
+        lg.log("importFromUri end")
+        return result
     }
 
     /**
@@ -65,7 +69,8 @@ class UniversalFileParser
         id: String,
         localPath: String,
     ): BookUI? {
-        return withContext(Dispatchers.IO) {
+        lg.log("getBookModelById start")
+        val result = withContext(Dispatchers.IO) {
             val file = File(localPath)
             val bookFile = BookFile(file)
             if (!file.exists()) {
@@ -73,5 +78,7 @@ class UniversalFileParser
             }
             fictionBookParser.parse(bookFile, id)
         }
+        lg.log("getBookModelById end")
+        return result
     }
 }
