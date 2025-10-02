@@ -15,7 +15,7 @@ import me.alexandervortex.shelfie.ui.model.ElementUI
 
 @Composable
 fun ViewerScreen(
-    viewModel: BaseViewerViewModel,
+    viewModel: ViewerViewModel,
     id: String,
 ) {
     LaunchedEffect(true) { viewModel.initScreenData(id) }
