@@ -16,12 +16,10 @@ class FictionBookParser
     private val elementMapper: ElementMapper,
 ) {
 
-    private val lg = Lg("FictionBookParser")
     fun parse(
         file: BookFile,
         id: String,
     ): BookUI {
-        lg.log("parse start")
         val doc = Jsoup.parse(
             file.file,
             null,
@@ -47,7 +45,6 @@ class FictionBookParser
                 elementMapper.map(element, binaries)
             }.orEmpty()
         )
-        lg.log("parse end")
         return result
     }
 }
