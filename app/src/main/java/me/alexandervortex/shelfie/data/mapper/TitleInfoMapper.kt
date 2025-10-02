@@ -1,12 +1,13 @@
 package me.alexandervortex.shelfie.data.mapper
 
+import me.alexandervortex.shelfie.base.Lg
 import me.alexandervortex.shelfie.ui.model.TitleInfoUI
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
 class TitleInfoMapper
 @Inject constructor() {
-
+    private val lg = Lg("TitleInfoMapper")
     fun map(
         id: String,
         localPath: String,

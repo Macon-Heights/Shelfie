@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.data.repository
 
 import android.net.Uri
+import me.alexandervortex.shelfie.base.Lg
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
@@ -20,6 +21,7 @@ class BookRepository
     private val mapper: BookEntityMapper,
     private val parser: UniversalFileParser,
 ) {
+    private val lg = Lg("BookRepository")
 
     suspend fun importFromUri(uri: Uri) {
 
