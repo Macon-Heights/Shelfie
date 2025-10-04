@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
@@ -32,7 +31,7 @@ fun FABComponent(
         }
     ) {
         Icon(
-            imageVector = IC_ADD,
+            imageVector = ic,
             "",
         )
     }

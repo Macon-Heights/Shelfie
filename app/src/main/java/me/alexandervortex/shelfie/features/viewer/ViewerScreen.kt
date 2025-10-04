@@ -4,14 +4,9 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -23,9 +18,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import me.alexandervortex.shelfie.ui.component.ComponentUI
+import me.alexandervortex.shelfie.ui.component.FABComponent
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ViewerScreen(
@@ -81,26 +76,11 @@ fun ViewerScreen(
         if (viewModel.error.value.isNotBlank()) {
             Toast.makeText(LocalContext.current, viewModel.error.value, Toast.LENGTH_SHORT).show()
         }
+
         // todo: отрефактоирть все, подписать комментов где надо
         // придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
-        Button(
-            colors = ButtonColors(
-                containerColor = getColors().primaryContainer,
-                contentColor = getColors().onPrimaryContainer,
-                disabledContainerColor = getColors().primaryContainer,
-                disabledContentColor = getColors().onPrimaryContainer,
-            ),
-            modifier = Modifier
-                .padding(16.dp)
-                .size(64.dp),
-            onClick = {
-                viewModel.togglePlayPause()
-            }
-        ) {
-            Icon(
-                imageVector = viewModel.buttonIcon?.value ?: IC_ADD,
-                "",
-            )
+        FABComponent(viewModel.buttonIcon?.value ?: IC_ADD) {
+            viewModel.togglePlayPause()
         }
     }
 }
