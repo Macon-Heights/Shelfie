@@ -9,5 +9,6 @@ data class TitleInfoUI(
     val author: String?,
     val annotation: String?,
     val genre: String?,
+    val lang: String?,
     val coverImage: ByteArray?,
 )
