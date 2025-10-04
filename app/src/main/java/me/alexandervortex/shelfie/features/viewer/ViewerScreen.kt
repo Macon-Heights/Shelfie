@@ -51,7 +51,7 @@ fun ViewerScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
-                viewModel.onDispose(
+                viewModel.saveScrollStateOnDispose(
                     bookId = id,
                     index = listState.firstVisibleItemIndex,
                     offset = listState.firstVisibleItemScrollOffset
@@ -85,6 +85,7 @@ fun ViewerScreen(
 
         // плей-пауза кнопка
         FABComponent(viewModel.buttonIcon?.value ?: IC_ADD) {
+            // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
             viewModel.togglePlayPause(
                 listState.firstVisibleItemIndex,
                 listState.firstVisibleItemScrollOffset
