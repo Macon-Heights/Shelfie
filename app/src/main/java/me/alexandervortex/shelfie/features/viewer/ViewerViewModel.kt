@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.features.viewer
 import android.app.Application
 import android.speech.tts.TextToSpeech
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.MutableState
@@ -16,6 +15,7 @@ import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 import java.util.Locale
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class ViewerViewModel
 
     val error = mutableStateOf("no error")
     val bookSample: MutableState<BookUI?> = mutableStateOf(null)
-    val buttonIcon: MutableState<ImageVector> = mutableStateOf(Icons.Default.PlayArrow)
+    val buttonIcon: MutableState<ImageVector> = mutableStateOf(IC_PLAY)
 
     private var tts: TextToSpeech? = null
     private var isSpeaking = mutableStateOf(false)

@@ -79,6 +79,8 @@ fun ViewerScreen(
         if (viewModel.error.value.isNotBlank()) {
             Toast.makeText(LocalContext.current, viewModel.error.value, Toast.LENGTH_SHORT).show()
         }
+        // todo: отрефактоирть все, подписать комментов где надо
+        // придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
         Button(
             colors = ButtonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
