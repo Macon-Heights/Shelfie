@@ -27,8 +27,8 @@ import me.alexandervortex.shelfie.ui.theme.IC_ADD
 
 @Composable
 fun ViewerScreen(
-    viewModel: ViewerViewModel,
     id: String,
+    viewModel: ViewerViewModel,
 ) {
     val listState = rememberLazyListState()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -40,7 +40,7 @@ fun ViewerScreen(
     // после загрузки книги → восстанавливаем позицию
     LaunchedEffect(book?.progressIndex, book?.progressOffset) {
         book?.let {
-            listState.scrollToItem(
+            listState.animateScrollToItem(
                 book.progressIndex,
                 book.progressOffset
             )
@@ -52,7 +52,7 @@ fun ViewerScreen(
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
                 viewModel.saveScrollStateOnDispose(
-                    bookId = id,
+                    id = id,
                     index = listState.firstVisibleItemIndex,
                     offset = listState.firstVisibleItemScrollOffset
                 )
@@ -69,6 +69,7 @@ fun ViewerScreen(
     ) {
         // элементы книги
         LazyColumn(
+            userScrollEnabled = viewModel.isScrollable.value,
             state = listState,
             contentPadding = PaddingValues(32.dp),
             modifier = Modifier.fillMaxSize()
@@ -85,6 +86,7 @@ fun ViewerScreen(
 
         // плей-пауза кнопка
         FABComponent(viewModel.buttonIcon?.value ?: IC_ADD) {
+            viewModel.isScrollable.value = !viewModel.isScrollable.value
             // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
             viewModel.togglePlayPause(
                 listState.firstVisibleItemIndex,

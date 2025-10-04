@@ -22,6 +22,7 @@ class ViewerViewModel
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
+    val isScrollable = mutableStateOf(true)
     val error = mutableStateOf("")
     val bookModel: MutableState<BookUI?> = mutableStateOf(null)
 
@@ -55,11 +56,12 @@ class ViewerViewModel
     }
 
     fun saveScrollStateOnDispose(
-        bookId: String,
-        index: Int, offset: Int,
+        id: String,
+        index: Int,
+        offset: Int,
     ) {
         viewModelScope.launch {
-            repo.saveCurrentBookProgress(bookId, index, offset)
+            repo.saveCurrentBookProgress(id, index, offset)
         }
     }
 
@@ -70,8 +72,9 @@ class ViewerViewModel
         val elements = bookModel.value?.elements
 
         val text = elements
-            ?.takeLast(elements.count() - index)
+            ?.subList(index, elements.lastIndex)
             ?.filterIsInstance<ElementUI.TextUI>()
+            ?.filter { it.text.isNotBlank() }
             ?.take(5)
             ?.joinToString(" ") { it.text }
 

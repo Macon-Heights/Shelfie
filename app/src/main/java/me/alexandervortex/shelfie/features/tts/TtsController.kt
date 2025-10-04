@@ -40,7 +40,12 @@ class TtsController(
             isSpeaking.value = false
             buttonIcon.value = IC_PLAY
         } else {
-            tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            tts?.speak(
+                text,
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                "utteranceId"
+            )
             isSpeaking.value = true
             buttonIcon.value = IC_PAUSE
         }
