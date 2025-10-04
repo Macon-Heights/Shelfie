@@ -31,7 +31,7 @@ class ViewerViewModel
 
     val buttonIcon get() = ttsController?.buttonIcon
 
-    fun initScreenData(id: String) {
+    fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
                 val result = repo.getBookModelById(id)
