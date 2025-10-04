@@ -25,7 +25,7 @@ class TtsController(
                 onError.invoke("Язык не поддерживается")
             }
         } else {
-            onError.invoke("Ошибка инициализации TTS")
+            onError("Ошибка инициализации TTS")
         }
     }
 
