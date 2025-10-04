@@ -67,7 +67,4 @@ fun ViewerScreen(
             ComponentUI(section)
         }
     }
-
-            modifier = Modifier.fillMaxSize()
-            modifier = Modifier.fillMaxSize()
 }
