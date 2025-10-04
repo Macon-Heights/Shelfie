@@ -16,15 +16,17 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewerViewModel @Inject constructor(
+class ViewerViewModel
+@Inject constructor(
     private val repo: BookRepository,
-    @ApplicationContext private val context: Context, // получаем контекст
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
+    val bookModel: MutableState<BookUI?> = mutableStateOf(null)
+
+    // needs work
     val error = mutableStateOf("")
 
-
-    val bookModel: MutableState<BookUI?> = mutableStateOf(null)
     private var ttsController: TtsController? = null
 
     val buttonIcon get() = ttsController?.buttonIcon
@@ -62,7 +64,7 @@ class ViewerViewModel @Inject constructor(
     }
 
     private fun getNewTts() {
-        ttsController =  TtsController(
+        ttsController = TtsController(
             context,
             bookModel.value?.titleInfo?.lang?.let { bookLang ->
                 Locale(bookLang)
