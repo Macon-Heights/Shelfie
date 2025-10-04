@@ -2,9 +2,6 @@ package me.alexandervortex.shelfie.features.viewer
 
 import android.app.Application
 import android.speech.tts.TextToSpeech
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Pause
-import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -15,6 +12,7 @@ import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 import java.util.Locale
 import javax.inject.Inject
@@ -81,11 +79,11 @@ class ViewerViewModel
         if (isSpeaking.value) {
             tts?.stop()
             isSpeaking.value = false
-            buttonIcon.value = Icons.Rounded.PlayArrow
+            buttonIcon.value = IC_PLAY
         } else {
             tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             isSpeaking.value = true
-            buttonIcon.value = Icons.Rounded.Pause
+            buttonIcon.value = IC_PAUSE
         }
     }
 }
