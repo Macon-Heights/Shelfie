@@ -53,6 +53,8 @@ class ViewerViewModel
         ) { error ->
             this.error.value = error
         }
+            bookModel = bookModel.value,
+            onError = { error -> this.error.value = error },
     }
 
     fun saveScrollStateOnDispose(
