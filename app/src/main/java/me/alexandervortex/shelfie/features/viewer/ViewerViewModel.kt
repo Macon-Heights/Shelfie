@@ -49,8 +49,14 @@ class ViewerViewModel
         }
     }
 
-    fun togglePlayPause() {
-        val text = bookModel.value?.elements
+    fun togglePlayPause(
+        index: Int,
+        offset: Int,
+    ) {
+        val elements = bookModel.value?.elements
+
+        val text = elements
+            ?.takeLast(elements.count() - index)
             ?.filterIsInstance<ElementUI.TextUI>()
             ?.take(5)
             ?.joinToString(" ") { it.text }

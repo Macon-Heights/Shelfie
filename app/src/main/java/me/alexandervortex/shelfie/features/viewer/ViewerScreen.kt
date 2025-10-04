@@ -22,7 +22,6 @@ import me.alexandervortex.shelfie.ui.component.FABComponent
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 
-
 // todo: отрефактоирть все, подписать комментов где надо
 // придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
 
@@ -40,7 +39,7 @@ fun ViewerScreen(
 
     // после загрузки книги → восстанавливаем позицию
     LaunchedEffect(book?.progressIndex, book?.progressOffset) {
-        if (book != null && book.progressIndex >= 0) {
+        book?.let {
             listState.scrollToItem(
                 book.progressIndex,
                 book.progressOffset
@@ -86,7 +85,10 @@ fun ViewerScreen(
 
         // плей-пауза кнопка
         FABComponent(viewModel.buttonIcon?.value ?: IC_ADD) {
-            viewModel.togglePlayPause()
+            viewModel.togglePlayPause(
+                listState.firstVisibleItemIndex,
+                listState.firstVisibleItemScrollOffset
+            )
         }
     }
     // endregion
