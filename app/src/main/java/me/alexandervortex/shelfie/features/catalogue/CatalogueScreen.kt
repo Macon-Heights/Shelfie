@@ -10,13 +10,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -27,16 +23,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.ui.component.BookComponent
+import me.alexandervortex.shelfie.ui.component.FABComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun CatalogueScreen(
     viewModel: BaseCatalogueViewModel,
     navController: NavHostController? = null,
 ) {
-    // fixme это бы куда-нибудь вынести по-хорошему потом
+    // region fixme это бы куда-нибудь вынести по-хорошему потом
     val context = LocalContext.current
     val picker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
@@ -53,6 +49,7 @@ fun CatalogueScreen(
         }
         viewModel.importFromUri(uri)
     }
+    // endregion
 
     LaunchedEffect(true) { viewModel.getBookEntities() }
     Box(
@@ -81,24 +78,8 @@ fun CatalogueScreen(
                 }
             }
         }
-        Button(
-            colors = ButtonColors(
-                containerColor = getColors().primaryContainer,
-                contentColor = getColors().onPrimaryContainer,
-                disabledContainerColor = getColors().primaryContainer,
-                disabledContentColor = getColors().onPrimaryContainer,
-            ),
-            modifier = Modifier
-                .padding(16.dp)
-                .size(64.dp),
-            onClick = {
-                picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
-            }
-        ) {
-            Icon(
-                imageVector = IC_ADD,
-                "",
-            )
+        FABComponent(IC_ADD) {
+            picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
         }
     }
 }
