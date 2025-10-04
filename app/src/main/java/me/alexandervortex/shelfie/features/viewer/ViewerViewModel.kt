@@ -22,30 +22,46 @@ class ViewerViewModel
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
+    val error = mutableStateOf("")
     val bookModel: MutableState<BookUI?> = mutableStateOf(null)
 
-    // needs work
-    val error = mutableStateOf("")
-
     private var ttsController: TtsController? = null
-
     val buttonIcon get() = ttsController?.buttonIcon
 
     fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
                 val result = repo.getBookModelById(id)
-                getNewTts()
                 bookModel.value = result
+                createTTSWithLocale()
             } catch (e: Exception) {
-                error.value = e.localizedMessage ?: "unknown error"
+                error.value = e.localizedMessage ?: "unknown viewmodel error"
             }
         }
     }
 
-    fun saveProgress(bookId: String, index: Int, offset: Int) {
+    private fun createTTSWithLocale() {
+        ttsController = TtsController(
+            context = context,
+            locale = bookModel.value
+                ?.titleInfo
+                ?.lang
+                ?.let { bookLang ->
+                    Locale(bookLang)
+                } ?: Locale.getDefault(),
+        ) { errMsg ->
+            error.value = errMsg
+        }
+    }
+
+    // needs work
+
+    fun onDispose(
+        bookId: String,
+        index: Int, offset: Int,
+    ) {
         viewModelScope.launch {
-            repo.updateBookProgress(bookId, index, offset)
+            repo.saveCurrentBookProgress(bookId, index, offset)
         }
     }
 
@@ -69,14 +85,4 @@ class ViewerViewModel
         super.onCleared()
     }
 
-    private fun getNewTts() {
-        ttsController = TtsController(
-            context,
-            bookModel.value?.titleInfo?.lang?.let { bookLang ->
-                Locale(bookLang)
-            } ?: Locale.getDefault(),
-        ) { errMsg ->
-            error.value = errMsg
-        }
-    }
 }
