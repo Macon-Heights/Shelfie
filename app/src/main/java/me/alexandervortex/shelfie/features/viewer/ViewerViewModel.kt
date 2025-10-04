@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.tts.TtsController
 import me.alexandervortex.shelfie.ui.model.BookUI
-import me.alexandervortex.shelfie.ui.model.ElementUI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,6 +47,10 @@ class ViewerViewModel
             context = context,
             bookModel = bookModel.value,
             onError = { error -> this.error.value = error },
+            onSentenceStart = { indexToScroll ->  // ✅ получаем сигнал от TTS
+                INDEX_TO_AUTO_SCROLL.value = indexToScroll // FIXME CHECK THAT
+            }
+        )
     }
 
     fun saveScrollStateOnDispose(
@@ -63,7 +66,6 @@ class ViewerViewModel
     fun togglePlayPause(
         indexToStartPlaying: Int,
     ) {
-
         ttsController?.togglePlayPause(indexToStartPlaying)
     }
 
