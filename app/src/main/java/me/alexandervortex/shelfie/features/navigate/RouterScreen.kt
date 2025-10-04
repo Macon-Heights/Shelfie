@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.navigate
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -18,23 +17,18 @@ fun RouterScreen() {
 
     NavHost(
         navController = navController,
-        startDestination = "catalogue"
+        startDestination = CatalogueRoute.route
     ) {
         composable(
-            route = Catalogue.route
-        ) {
-            CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController)
-        }
+            route = CatalogueRoute.route
+        ) { CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController) }
 
         composable(
-            route = Viewer.route,
+            route = ViewerRoute.route,
             arguments = listOf(getId()),
             deepLinks = listOf(navDeepLink {
-                uriPattern = Viewer.uriPattern
+                uriPattern = ViewerRoute.uriPattern
             }),
-        ) {
-
-            ViewerScreen(hiltViewModel<ViewerViewModel>(), it.getId())
-        }
+        ) { ViewerScreen(hiltViewModel<ViewerViewModel>(), it.getId()) }
     }
 }

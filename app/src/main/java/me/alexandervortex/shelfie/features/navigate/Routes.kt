@@ -1,11 +1,11 @@
 package me.alexandervortex.shelfie.features.navigate
 
-data object Catalogue {
+data object CatalogueRoute {
 
     val route = "catalogue"
 }
 
-data class Viewer(
+data class ViewerRoute(
     val id: String,
 ) {
 
