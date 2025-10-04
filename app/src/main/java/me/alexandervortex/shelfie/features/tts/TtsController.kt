@@ -17,22 +17,21 @@ class TtsController(
     private val isSpeaking = mutableStateOf(false)
 
     val buttonIcon = mutableStateOf(IC_PLAY)
-    val errorMessage = mutableStateOf("")
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(locale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                errorMessage.value = "Язык не поддерживается"
+                onError.invoke("Язык не поддерживается")
             }
         } else {
-            errorMessage.value = "Ошибка инициализации TTS"
+            onError.invoke("Ошибка инициализации TTS")
         }
     }
 
     fun togglePlayPause(text: String?) {
         if (text.isNullOrBlank()) {
-            errorMessage.value = "IS NULL OR BLANK ?!\nOMFG CRINGE"
+            onError.invoke("IS NULL OR BLANK ?!\nOMFG CRINGE")
         }
 
         if (isSpeaking.value) {

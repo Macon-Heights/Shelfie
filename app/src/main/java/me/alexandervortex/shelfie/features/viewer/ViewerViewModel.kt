@@ -50,8 +50,8 @@ class ViewerViewModel
                 ?.let { bookLang ->
                     Locale(bookLang)
                 } ?: Locale.getDefault(),
-        ) { errMsg ->
-            error.value = errMsg
+        ) { error ->
+            this.error.value = error
         }
     }
 
