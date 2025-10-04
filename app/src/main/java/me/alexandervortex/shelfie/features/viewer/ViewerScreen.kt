@@ -24,6 +24,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
@@ -97,7 +98,7 @@ fun ViewerScreen(
             }
         ) {
             Icon(
-                imageVector = viewModel.buttonIcon.value,
+                imageVector = viewModel.buttonIcon?.value ?: IC_ADD,
                 "",
             )
         }

@@ -23,21 +23,16 @@ class ViewerViewModel @Inject constructor(
 
     val error = mutableStateOf("")
     val bookSample: MutableState<BookUI?> = mutableStateOf(null)
+    private var ttsController: TtsController? = null
 
-    private val ttsController = TtsController(
-        context,
-        bookSample.value?.titleInfo?.lang?.let { bookLang ->
-            Locale(bookLang)
-        } ?: Locale.getDefault(),
-    ) { errMsg ->
-        error.value = errMsg
-    }
-    val buttonIcon get() = ttsController.buttonIcon
+    val buttonIcon get() = ttsController?.buttonIcon
 
     fun initScreenData(id: String) {
         viewModelScope.launch {
             try {
-                bookSample.value = repo.getBookModelById(id)
+                val result = repo.getBookModelById(id)
+                ttsController = getNewTts()
+                bookSample.value = result
             } catch (e: Exception) {
                 error.value = e.localizedMessage ?: "unknown error"
             }
@@ -56,12 +51,22 @@ class ViewerViewModel @Inject constructor(
             ?.take(5)
             ?.joinToString(" ") { it.text }
 
-        ttsController.togglePlayPause(text)
+        ttsController?.togglePlayPause(text)
     }
 
-    // noice
     override fun onCleared() {
-        ttsController.release()
+        ttsController?.release()
         super.onCleared()
+    }
+
+    private fun getNewTts(): TtsController {
+        return TtsController(
+            context,
+            bookSample.value?.titleInfo?.lang?.let { bookLang ->
+                Locale(bookLang)
+            } ?: Locale.getDefault(),
+        ) { errMsg ->
+            error.value = errMsg
+        }
     }
 }
