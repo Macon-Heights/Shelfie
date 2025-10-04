@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.features.navigate
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost

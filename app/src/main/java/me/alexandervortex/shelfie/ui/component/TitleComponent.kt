@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.ui.theme.getColors
 
 private const val size = 72
 private const val spacing = 16
@@ -18,7 +19,7 @@ fun TitleComponent(
 ) {
     text?.let {
         Text(
-            color = MaterialTheme.colorScheme.onBackground,
+            color = getColors().onBackground,
             text = text,
             modifier = modifier,
             fontSize = size.sp,
