@@ -37,7 +37,7 @@ class ViewerViewModel
                 INDEX_TO_AUTO_SCROLL.value = result?.progressIndex ?: 0
                 createTTSWithLocale()
             } catch (e: Exception) {
-                error.value = e.localizedMessage ?: "unknown viewmodel error"
+                errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
         }
     }
@@ -46,7 +46,9 @@ class ViewerViewModel
         ttsController = TtsController(
             context = context,
             bookModel = bookModel.value,
-            onError = { error -> this.error.value = error },
+            onError = { error ->
+                this.errorState.value = error
+            },
             scrollToIndex = { indexToScroll ->  // ✅ получаем сигнал от TTS
                 INDEX_TO_AUTO_SCROLL.value = indexToScroll // FIXME CHECK THAT
             }
