@@ -91,8 +91,7 @@ fun ViewerScreen(
             viewModel.isScrollable.value = !viewModel.isScrollable.value
             // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
             viewModel.togglePlayPause(
-                listState.firstVisibleItemIndex,
-                listState.firstVisibleItemScrollOffset
+                indexToStartPlaying = listState.firstVisibleItemIndex,
             )
         }
     }
