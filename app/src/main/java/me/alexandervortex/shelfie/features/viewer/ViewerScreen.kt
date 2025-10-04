@@ -65,6 +65,7 @@ fun ViewerScreen(
         val sections: List<ElementUI> = book?.elements.orEmpty()
         items(sections) { section ->
             ComponentUI(section)
+            modifier = Modifier.fillMaxSize()
         }
     }
 }
