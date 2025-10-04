@@ -58,10 +58,10 @@ class BookRepository
         val entity = dao.getById(id)
         val result = entity?.let {
             parser.getBookModelById(
-                entity.id,
-                entity.localPath,
-                entity.scrollOffset,
-                entity.scrollIndex
+                id = entity.id,
+                localPath = entity.localPath,
+                scrollOffset = entity.scrollOffset,
+                scrollIndex = entity.scrollIndex
             )
         }
         return result
