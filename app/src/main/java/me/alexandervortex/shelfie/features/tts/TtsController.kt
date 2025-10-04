@@ -36,9 +36,17 @@ class TtsController(
         }
     }
 
-    fun togglePlayPause(text: String?) {
-        if (text.isNullOrBlank()) {
+    fun togglePlayPause(indexToStartPlaying: Int) {
+        val text_to_speak = bookModel?.elements
+            ?.drop(indexToStartPlaying)
+            ?.filterIsInstance<ElementUI.TextUI>()
+            ?.map { it.text.trim() }
+            ?.filter { it.isNotBlank() }
+            ?: emptyList()
+
+        if (text_to_speak.isEmpty()) {
             onError.invoke("IS NULL OR BLANK ?!\nOMFG CRINGE")
+            return
         }
 
         if (isSpeaking.value) {
