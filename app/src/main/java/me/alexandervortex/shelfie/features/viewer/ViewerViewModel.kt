@@ -78,5 +78,4 @@ class ViewerViewModel
         ttsController?.release()
         super.onCleared()
     }
-
 }
