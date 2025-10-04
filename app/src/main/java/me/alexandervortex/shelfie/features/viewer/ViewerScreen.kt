@@ -68,4 +68,5 @@ fun ViewerScreen(
         }
     }
 
+            modifier = Modifier.fillMaxSize()
 }
