@@ -24,7 +24,7 @@ class ViewerViewModel
     application: Application,
 ) : AndroidViewModel(application), TextToSpeech.OnInitListener {
 
-    val error = mutableStateOf("no error")
+    val error = mutableStateOf("")
     val bookSample: MutableState<BookUI?> = mutableStateOf(null)
     val buttonIcon: MutableState<ImageVector> = mutableStateOf(IC_PLAY)
 
@@ -39,7 +39,6 @@ class ViewerViewModel
         viewModelScope.launch {
             try {
                 bookSample.value = repo.getBookModelById(id)
-                error.value = "no error"
             } catch (e: Exception) {
                 error.value = e.localizedMessage ?: "unknown error"
             }
