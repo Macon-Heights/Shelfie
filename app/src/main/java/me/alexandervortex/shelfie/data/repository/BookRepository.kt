@@ -67,7 +67,11 @@ class BookRepository
         return result
     }
 
-    suspend fun updateBookProgress(id: String, index: Int, offset: Int) {
+    suspend fun saveCurrentBookProgress(
+        id: String,
+        index: Int,
+        offset: Int,
+    ) {
         dao.updateProgress(id, index, offset)
     }
 }

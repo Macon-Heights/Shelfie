@@ -51,7 +51,7 @@ fun ViewerScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
-                viewModel.saveProgress(
+                viewModel.onDispose(
                     bookId = id,
                     index = listState.firstVisibleItemIndex,
                     offset = listState.firstVisibleItemScrollOffset
