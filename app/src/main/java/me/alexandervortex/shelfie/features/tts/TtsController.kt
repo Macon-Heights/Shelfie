@@ -9,7 +9,7 @@ import java.util.Locale
 
 class TtsController(
     context: Context,
-    private val locale: Locale,
+    private val bookModel: BookUI?,
     private val onError: (String) -> Unit,
 ) : TextToSpeech.OnInitListener {
 
@@ -19,6 +19,13 @@ class TtsController(
     val buttonIcon = mutableStateOf(IC_PLAY)
 
     override fun onInit(status: Int) {
+        tts?.setVoice(tts?.voices?.random())
+        val locale = bookModel?.titleInfo
+            ?.lang
+            ?.let { bookLang ->
+                Locale(bookLang)
+            } ?: Locale.getDefault()
+
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(locale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
