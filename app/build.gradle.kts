@@ -57,6 +57,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.icons)
 
     // Room
     implementation(libs.androidx.room.runtime)
