@@ -20,15 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.BookPreviewFactory
+import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun BookComponent(
     model: BookEntity,
     modifier: Modifier = Modifier,
 ) {
-    val color = MaterialTheme.colorScheme.surfaceVariant
-    val onColor = MaterialTheme.colorScheme.onSurfaceVariant
-    val onColorForTitle = MaterialTheme.colorScheme.onSurface
+    val color = getColors().surfaceVariant
+    val onColor = getColors().onSurfaceVariant
+    val onColorForTitle = getColors().onSurface
 
     Column(
         modifier = modifier
