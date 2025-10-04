@@ -3,6 +3,8 @@ package me.alexandervortex.shelfie.features.tts
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import androidx.compose.runtime.mutableStateOf
+import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 import java.util.Locale
@@ -11,6 +13,7 @@ class TtsController(
     context: Context,
     private val bookModel: BookUI?,
     private val onError: (String) -> Unit,
+    private val scrollToIndex: (Int) -> Unit, // ✅ новый колбэк
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
