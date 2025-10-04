@@ -19,12 +19,18 @@ import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
-fun ComponentUI(element: ElementUI) {
+fun ComponentUI(
+    element: ElementUI,
+    isHighlighted: Boolean = false,
+) {
     when (element) {
         is ElementUI.TextUI -> Text(
             textAlign = TextAlign.Justify,
             text = element.text,
-            color = getColors().onBackground,
+            color = if (isHighlighted)
+                MaterialTheme.colorScheme.primary
+            else
+                MaterialTheme.colorScheme.onBackground
         )
 
         is ElementUI.ImageUI -> {
