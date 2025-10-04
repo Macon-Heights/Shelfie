@@ -31,6 +31,7 @@ import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
+import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun CatalogueScreen(
@@ -58,7 +59,7 @@ fun CatalogueScreen(
     LaunchedEffect(true) { vm.getBookEntities() }
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(getColors().background)
             .fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
@@ -86,10 +87,10 @@ fun CatalogueScreen(
         }
         Button(
             colors = ButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = getColors().primaryContainer,
+                contentColor = getColors().onPrimaryContainer,
+                disabledContainerColor = getColors().primaryContainer,
+                disabledContentColor = getColors().onPrimaryContainer,
             ),
             modifier = Modifier
                 .padding(16.dp)

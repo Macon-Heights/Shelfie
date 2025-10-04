@@ -26,6 +26,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ViewerScreen(
@@ -66,7 +67,7 @@ fun ViewerScreen(
 
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(getColors().background)
             .fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
@@ -87,10 +88,10 @@ fun ViewerScreen(
         // придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
         Button(
             colors = ButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = getColors().primaryContainer,
+                contentColor = getColors().onPrimaryContainer,
+                disabledContainerColor = getColors().primaryContainer,
+                disabledContentColor = getColors().onPrimaryContainer,
             ),
             modifier = Modifier
                 .padding(16.dp)

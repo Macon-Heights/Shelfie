@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ComponentUI(element: ElementUI) {
@@ -23,7 +24,7 @@ fun ComponentUI(element: ElementUI) {
         is ElementUI.TextUI -> Text(
             textAlign = TextAlign.Justify,
             text = element.text,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = getColors().onBackground,
         )
 
         is ElementUI.ImageUI -> {
@@ -47,7 +48,7 @@ fun ComponentUI(element: ElementUI) {
             Spacer(
                 modifier = Modifier
                     .padding(vertical = 32.dp)
-                    .background(MaterialTheme.colorScheme.onBackground)
+                    .background(getColors().onBackground)
                     .fillMaxWidth()
                     .height(2.dp)
             )
