@@ -20,9 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ShelfieTheme {
-                Surface(
-                    modifier = Modifier.background(getColors().background)
-                ) {
+                Surface(modifier = Modifier.background(getColors().background)) {
                     RouterScreen()
                 }
             }
