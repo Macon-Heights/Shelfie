@@ -19,7 +19,6 @@ class TtsController(
     val buttonIcon = mutableStateOf(IC_PLAY)
     val errorMessage = mutableStateOf("")
 
-    // noice
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(locale)
@@ -31,7 +30,6 @@ class TtsController(
         }
     }
 
-    // noice
     fun togglePlayPause(text: String?) {
         if (text.isNullOrBlank()) {
             errorMessage.value = "IS NULL OR BLANK ?!\nOMFG CRINGE"
