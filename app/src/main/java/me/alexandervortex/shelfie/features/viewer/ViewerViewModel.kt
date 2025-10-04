@@ -21,7 +21,7 @@ class ViewerViewModel
 ) : ViewModel() {
 
     val isScrollable = mutableStateOf(true)
-    val error = mutableStateOf("")
+    val errorState = mutableStateOf("")
     val bookModel: MutableState<BookUI?> = mutableStateOf(null)
 
     val INDEX_TO_AUTO_SCROLL = mutableStateOf(0) // ✅ текущий читаемый элемент
