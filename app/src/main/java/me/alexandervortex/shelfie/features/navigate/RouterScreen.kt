@@ -29,6 +29,6 @@ fun RouterScreen() {
             deepLinks = listOf(navDeepLink {
                 uriPattern = ViewerRoute.uriPattern
             }),
-        ) { ViewerScreen(hiltViewModel<ViewerViewModel>(), it.getId()) }
+        ) { ViewerScreen(it.getId(), hiltViewModel<ViewerViewModel>()) }
     }
 }
