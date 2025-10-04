@@ -44,15 +44,6 @@ class ViewerViewModel
     private fun createTTSWithLocale() {
         ttsController = TtsController(
             context = context,
-            locale = bookModel.value
-                ?.titleInfo
-                ?.lang
-                ?.let { bookLang ->
-                    Locale(bookLang)
-                } ?: Locale.getDefault(),
-        ) { error ->
-            this.error.value = error
-        }
             bookModel = bookModel.value,
             onError = { error -> this.error.value = error },
     }
