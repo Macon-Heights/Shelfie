@@ -33,7 +33,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun CatalogueScreen(
-    vm: BaseCatalogueViewModel,
+    viewModel: BaseCatalogueViewModel,
     navController: NavHostController? = null,
 ) {
     // fixme это бы куда-нибудь вынести по-хорошему потом
@@ -51,10 +51,10 @@ fun CatalogueScreen(
         } catch (e: SecurityException) {
             /* провайдер мог не дать persist */
         }
-        vm.importFromUri(uri)
+        viewModel.importFromUri(uri)
     }
 
-    LaunchedEffect(true) { vm.getBookEntities() }
+    LaunchedEffect(true) { viewModel.getBookEntities() }
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
@@ -74,7 +74,7 @@ fun CatalogueScreen(
                 columns = StaggeredGridCells.Adaptive(180.dp),
                 modifier = Modifier,
             ) {
-                items(vm.books) { item ->
+                items(viewModel.books) { item ->
                     BookComponent(item, Modifier.clickable {
                         navController?.navigate("viewer?id=${item.id}")
                     })
@@ -106,5 +106,5 @@ fun CatalogueScreen(
 @Composable
 @Preview(showBackground = true)
 private fun CatalogueScreen() {
-    CatalogueScreen(vm = hiltViewModel<CataloguePreviewViewModel>())
+    CatalogueScreen(viewModel = hiltViewModel<CataloguePreviewViewModel>())
 }
