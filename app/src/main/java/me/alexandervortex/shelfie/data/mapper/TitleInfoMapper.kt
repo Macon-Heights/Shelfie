@@ -24,6 +24,7 @@ class TitleInfoMapper
             },
             annotation = titleInfo?.selectFirst("annotation")?.text()?.trim(),
             genre = titleInfo?.selectFirst("genre")?.text()?.trim(),
+            lang = titleInfo?.selectFirst("lang")?.text()?.trim(),
             coverImage = null // todo later
         )
         return result
