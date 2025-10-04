@@ -22,6 +22,10 @@ import me.alexandervortex.shelfie.ui.component.FABComponent
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 
+
+// todo: отрефактоирть все, подписать комментов где надо
+// придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
+
 @Composable
 fun ViewerScreen(
     viewModel: ViewerViewModel,
@@ -32,7 +36,7 @@ fun ViewerScreen(
     val book = viewModel.bookModel.value
 
     // загружаем книгу
-    LaunchedEffect(true) { viewModel.initScreenData(id) }
+    LaunchedEffect(true) { viewModel.loadCurrentBook(id) }
 
     // после загрузки книги → восстанавливаем позицию
     LaunchedEffect(book?.progressIndex, book?.progressOffset) {
@@ -59,10 +63,12 @@ fun ViewerScreen(
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
+    // region интерфейс
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
+        // элементы книги
         LazyColumn(
             state = listState,
             contentPadding = PaddingValues(32.dp),
@@ -73,14 +79,15 @@ fun ViewerScreen(
                 ComponentUI(section)
             }
         }
+        // показывалка ошибки
         if (viewModel.error.value.isNotBlank()) {
             Toast.makeText(LocalContext.current, viewModel.error.value, Toast.LENGTH_SHORT).show()
         }
 
-        // todo: отрефактоирть все, подписать комментов где надо
-        // придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
+        // плей-пауза кнопка
         FABComponent(viewModel.buttonIcon?.value ?: IC_ADD) {
             viewModel.togglePlayPause()
         }
     }
+    // endregion
 }
