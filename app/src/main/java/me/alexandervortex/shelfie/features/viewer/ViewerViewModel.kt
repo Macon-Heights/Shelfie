@@ -54,7 +54,7 @@ class ViewerViewModel
         }
     }
 
-    fun onDispose(
+    fun saveScrollStateOnDispose(
         bookId: String,
         index: Int, offset: Int,
     ) {
