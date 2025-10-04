@@ -22,7 +22,9 @@ class ViewerViewModel @Inject constructor(
 ) : ViewModel() {
 
     val error = mutableStateOf("")
-    val bookSample: MutableState<BookUI?> = mutableStateOf(null)
+
+
+    val bookModel: MutableState<BookUI?> = mutableStateOf(null)
     private var ttsController: TtsController? = null
 
     val buttonIcon get() = ttsController?.buttonIcon
@@ -31,8 +33,8 @@ class ViewerViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val result = repo.getBookModelById(id)
-                ttsController = getNewTts()
-                bookSample.value = result
+                getNewTts()
+                bookModel.value = result
             } catch (e: Exception) {
                 error.value = e.localizedMessage ?: "unknown error"
             }
@@ -46,7 +48,7 @@ class ViewerViewModel @Inject constructor(
     }
 
     fun togglePlayPause() {
-        val text = bookSample.value?.elements
+        val text = bookModel.value?.elements
             ?.filterIsInstance<ElementUI.TextUI>()
             ?.take(5)
             ?.joinToString(" ") { it.text }
@@ -59,10 +61,10 @@ class ViewerViewModel @Inject constructor(
         super.onCleared()
     }
 
-    private fun getNewTts(): TtsController {
-        return TtsController(
+    private fun getNewTts() {
+        ttsController =  TtsController(
             context,
-            bookSample.value?.titleInfo?.lang?.let { bookLang ->
+            bookModel.value?.titleInfo?.lang?.let { bookLang ->
                 Locale(bookLang)
             } ?: Locale.getDefault(),
         ) { errMsg ->

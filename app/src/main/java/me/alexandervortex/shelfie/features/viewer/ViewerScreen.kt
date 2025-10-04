@@ -29,7 +29,7 @@ fun ViewerScreen(
 ) {
     val listState = rememberLazyListState()
     val lifecycleOwner = LocalLifecycleOwner.current
-    val book = viewModel.bookSample.value
+    val book = viewModel.bookModel.value
 
     // загружаем книгу
     LaunchedEffect(true) { viewModel.initScreenData(id) }
