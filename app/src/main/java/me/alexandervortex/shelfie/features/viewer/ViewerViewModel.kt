@@ -59,7 +59,12 @@ class ViewerViewModel
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            val result = tts?.setLanguage(Locale("ru", "RU"))
+            val locale = bookSample.value?.titleInfo?.lang?.let { bookLang ->
+                Locale(bookLang)
+            } ?: Locale.getDefault()
+
+            val result = tts?.setLanguage(locale)
+
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 error.value = "Язык не поддерживается"
             }
