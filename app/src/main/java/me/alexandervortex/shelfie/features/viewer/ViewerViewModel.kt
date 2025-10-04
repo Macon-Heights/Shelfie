@@ -59,8 +59,7 @@ class ViewerViewModel
     }
 
     fun togglePlayPause(
-        index: Int,
-        offset: Int,
+        indexToStartPlaying: Int,
     ) {
         val elements = bookModel.value?.elements
 
