@@ -54,8 +54,6 @@ class ViewerViewModel
         }
     }
 
-    // needs work
-
     fun onDispose(
         bookId: String,
         index: Int, offset: Int,
