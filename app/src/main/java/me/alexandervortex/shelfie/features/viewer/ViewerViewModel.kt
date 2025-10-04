@@ -47,7 +47,7 @@ class ViewerViewModel
             context = context,
             bookModel = bookModel.value,
             onError = { error -> this.error.value = error },
-            onSentenceStart = { indexToScroll ->  // ✅ получаем сигнал от TTS
+            scrollToIndex = { indexToScroll ->  // ✅ получаем сигнал от TTS
                 INDEX_TO_AUTO_SCROLL.value = indexToScroll // FIXME CHECK THAT
             }
         )
