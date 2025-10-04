@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,12 +14,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -32,6 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
+import me.alexandervortex.shelfie.ui.theme.IC_ADD
+import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun CatalogueScreen(
@@ -58,9 +56,7 @@ fun CatalogueScreen(
 
     LaunchedEffect(true) { vm.getBookEntities() }
     Box(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
         Column(
@@ -87,10 +83,10 @@ fun CatalogueScreen(
         }
         Button(
             colors = ButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = getColors().primaryContainer,
+                contentColor = getColors().onPrimaryContainer,
+                disabledContainerColor = getColors().primaryContainer,
+                disabledContentColor = getColors().onPrimaryContainer,
             ),
             modifier = Modifier
                 .padding(16.dp)
@@ -100,7 +96,7 @@ fun CatalogueScreen(
             }
         ) {
             Icon(
-                imageVector = Icons.Default.Add,
+                imageVector = IC_ADD,
                 "",
             )
         }
