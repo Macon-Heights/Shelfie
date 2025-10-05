@@ -13,7 +13,7 @@ class TtsController(
     context: Context,
     private val bookModel: BookUI?,
     private val onAppError: (String) -> Unit,
-    private val scrollToIndex: (Int) -> Unit, // ✅ новый колбэк
+    private val scrollToIndex: (index: Int, partIndex: Int) -> Unit,
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
