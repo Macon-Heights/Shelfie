@@ -13,7 +13,7 @@ class TtsController(
     context: Context,
     private val bookModel: BookUI?,
     private val onAppError: (String) -> Unit,
-    private val scrollToIndex: (index: Int, partIndex: Int) -> Unit,
+    private val scrollToIndex: (index: Int?, partIndex: Int?) -> Unit,
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
@@ -39,7 +39,14 @@ class TtsController(
                 object : android.speech.tts.UtteranceProgressListener() {
 
                     override fun onStart(utteranceId: String?) {
-                        utteranceId?.toIntOrNull()?.let { scrollToIndex(it) }
+                        utteranceId?.let { id ->
+                            val indexOrNull = id.split("_").firstOrNull()
+                            val partIndexOrNull = id.split("_").lastOrNull()
+                            scrollToIndex(
+                                indexOrNull?.toIntOrNull(),
+                                partIndexOrNull?.toIntOrNull()
+                            )
+                        }
                     }
 
                     override fun onDone(utteranceId: String?) {}
@@ -49,7 +56,9 @@ class TtsController(
                     }
                 }
             )
-        } else { onAppError("Ошибка инициализации TTS") }
+        } else {
+            onAppError("Ошибка инициализации TTS")
+        }
     }
 
     fun togglePlayPause(indexToStartPlaying: Int) {
