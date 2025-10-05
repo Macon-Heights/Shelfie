@@ -21,7 +21,9 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 @Composable
 fun ComponentUI(
     element: ElementUI,
-    isHighlighted: Boolean = false,
+    currentIndex: Int,
+    elementIndex: Int,
+    partIndex: Int,
 ) {
     when (element) {
         is ElementUI.TextUI -> Text(
