@@ -17,31 +17,32 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
+import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
-
-// todo: отрефактоирть все, подписать комментов где надо
-// придумать алгоритм чтения того, где находится прогресс, а не сначала + что-то делать, когда будет двигаться скролл
 
 @Composable
 fun ViewerScreen(
     id: String,
     viewModel: ViewerBookViewModel,
+    ttsViewModel: TtsViewModel,
 ) {
     val listState = rememberLazyListState()
     val lifecycleOwner = LocalLifecycleOwner.current
     val book = viewModel.bookModel.value
 
     // загружаем книгу
-    LaunchedEffect(true) { viewModel.loadCurrentBook(id) }
+    LaunchedEffect(true) {
+        viewModel.loadCurrentBook(id)
+    }
 
-    // после загрузки книги → восстанавливаем позицию
-    LaunchedEffect(viewModel.INDEX_TO_AUTO_SCROLL.value) {
-        viewModel.INDEX_TO_AUTO_SCROLL.value.let {
+    LaunchedEffect(viewModel.bookModel.value) {
+        viewModel.bookModel.value?.let {
+            ttsViewModel.initTTSWithBook(it)
+            ttsViewModel.scrollElementIndex.value = it.progressIndex
             listState.animateScrollToItem(
-                viewModel.INDEX_TO_AUTO_SCROLL.value
+                ttsViewModel.scrollElementIndex.value
             )
         }
     }
@@ -68,7 +69,7 @@ fun ViewerScreen(
     ) {
         // элементы книги
         LazyColumn(
-            userScrollEnabled = viewModel.isScrollable.value,
+            userScrollEnabled = ttsViewModel.isScrollable.value,
             state = listState,
             contentPadding = PaddingValues(32.dp),
             modifier = Modifier.fillMaxSize()
@@ -78,25 +79,25 @@ fun ViewerScreen(
                 ComponentUI(
                     element = section,
                     elementIndex = index,
-                    currentIndex = viewModel.INDEX_TO_AUTO_SCROLL.value,
-                    partIndex = viewModel.PART_INDEX_TO_HIGHLIGHT.value
+                    currentIndex = ttsViewModel.scrollElementIndex.value,
+                    partIndex = ttsViewModel.scrollElementPart.value
                 )
             }
         }
         // показывалка ошибки
-        if (viewModel.errorState.value.isNotBlank()) {
+        if (viewModel.errorState.value.isNotBlank() || ttsViewModel.errorState.value.isNotBlank()) {
             Toast.makeText(
                 LocalContext.current,
-                viewModel.errorState.value,
+                viewModel.errorState.value.ifBlank { null } ?: ttsViewModel.errorState.value,
                 Toast.LENGTH_SHORT
             ).show()
         }
 
         // плей-пауза кнопка
-        ActionButtonComponent(viewModel.buttonIcon?.value ?: IC_ADD) {
-            viewModel.isScrollable.value = !viewModel.isScrollable.value
+        ActionButtonComponent(ttsViewModel.buttonIcon?.value ?: IC_ADD) {
+            ttsViewModel.isScrollable.value = !ttsViewModel.isScrollable.value
             // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
-            viewModel.togglePlayPause(
+            ttsViewModel.togglePlayPause(
                 indexToStartPlaying = listState.firstVisibleItemIndex,
             )
         }
