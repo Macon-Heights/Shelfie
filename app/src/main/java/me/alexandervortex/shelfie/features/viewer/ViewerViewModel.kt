@@ -46,7 +46,7 @@ class ViewerViewModel
         ttsController = TtsController(
             context = context,
             bookModel = bookModel.value,
-            onError = { error ->
+            onAppError = { error ->
                 this.errorState.value = error
             },
             scrollToIndex = { indexToScroll ->  // ✅ получаем сигнал от TTS

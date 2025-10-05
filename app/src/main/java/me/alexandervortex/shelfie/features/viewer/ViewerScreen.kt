@@ -1,17 +1,22 @@
 package me.alexandervortex.shelfie.features.viewer
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -38,11 +43,10 @@ fun ViewerScreen(
     LaunchedEffect(true) { viewModel.loadCurrentBook(id) }
 
     // после загрузки книги → восстанавливаем позицию
-    LaunchedEffect(book?.progressIndex, book?.progressOffset) {
-        book?.let {
+    LaunchedEffect(viewModel.INDEX_TO_AUTO_SCROLL.value) {
+        viewModel.INDEX_TO_AUTO_SCROLL.value.let {
             listState.animateScrollToItem(
-                book.progressIndex,
-                book.progressOffset
+                viewModel.INDEX_TO_AUTO_SCROLL.value
             )
         }
     }
@@ -67,6 +71,23 @@ fun ViewerScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
+        if (false) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Yellow)
+            ) {
+                val currentIndex = viewModel.INDEX_TO_AUTO_SCROLL.value
+                Text(color = Color.Black, text = currentIndex.toString())
+                Text(
+                    color = Color.Black,
+                    text = (viewModel.bookModel.value?.elements?.get(currentIndex) as? ElementUI.TextUI)
+                        ?.text
+                        ?.trim()
+                        .orEmpty()
+                )
+            }
+        }
         // элементы книги
         LazyColumn(
             userScrollEnabled = viewModel.isScrollable.value,
@@ -77,7 +98,7 @@ fun ViewerScreen(
             val sections: List<ElementUI> = book?.elements.orEmpty()
             itemsIndexed(sections) { index, section ->
                 ComponentUI(
-                    section, index == viewModel.CURRENT_INDEX.value
+                    section, index == viewModel.INDEX_TO_AUTO_SCROLL.value
                 )
             }
         }

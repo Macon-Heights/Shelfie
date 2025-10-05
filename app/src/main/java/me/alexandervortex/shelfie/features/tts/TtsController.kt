@@ -12,7 +12,7 @@ import java.util.Locale
 class TtsController(
     context: Context,
     private val bookModel: BookUI?,
-    private val onError: (String) -> Unit,
+    private val onAppError: (String) -> Unit,
     private val scrollToIndex: (Int) -> Unit, // ✅ новый колбэк
 ) : TextToSpeech.OnInitListener {
 
@@ -32,44 +32,81 @@ class TtsController(
         if (status == TextToSpeech.SUCCESS) {
             val result = tts?.setLanguage(locale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                onError.invoke("Язык не поддерживается")
+                onAppError("Язык не поддерживается")
             }
-        } else {
-            onError("Ошибка инициализации TTS")
-        }
+
+            tts?.setOnUtteranceProgressListener(
+                object : android.speech.tts.UtteranceProgressListener() {
+
+                    override fun onStart(utteranceId: String?) {
+                        utteranceId?.toIntOrNull()?.let { scrollToIndex(it) }
+                    }
+
+                    override fun onDone(utteranceId: String?) {}
+
+                    override fun onError(utteranceId: String?) {
+                        onAppError("Ошибка TTS utterance ${utteranceId.toString()}")
+                    }
+                }
+            )
+        } else { onAppError("Ошибка инициализации TTS") }
     }
 
     fun togglePlayPause(indexToStartPlaying: Int) {
-        val text_to_speak = bookModel?.elements
-            ?.drop(indexToStartPlaying)
-            ?.filterIsInstance<ElementUI.TextUI>()
-            ?.map { it.text.trim() }
-            ?.filter { it.isNotBlank() }
-            ?: emptyList()
-
-        if (text_to_speak.isEmpty()) {
-            onError.invoke("IS NULL OR BLANK ?!\nOMFG CRINGE")
-            return
-        }
-
         if (isSpeaking.value) {
-            tts?.stop()
-            isSpeaking.value = false
-            buttonIcon.value = IC_PLAY
+            stopSpeaking()
         } else {
-            tts?.speak(
-                text,
-                TextToSpeech.QUEUE_FLUSH,
-                null,
-                "utteranceId"
-            )
-            isSpeaking.value = true
-            buttonIcon.value = IC_PAUSE
+            startSpeaking(indexToStartPlaying)
         }
     }
 
     fun release() {
         tts?.stop()
         tts?.shutdown()
+    }
+
+    fun startSpeaking(indexToStartPlaying: Int) {
+        if (bookModel?.elements.isNullOrEmpty()) {
+            onAppError("BookModel elements are null or empty")
+            return
+        }
+
+        tts?.stop()
+        bookModel?.elements?.forEachIndexed { elementIndex, elementUI ->
+            if (
+                canISpeak(
+                    elementUI = elementUI,
+                    indexToStartPlaying = indexToStartPlaying,
+                    elementIndex = elementIndex
+                )
+            ) {
+                tts?.speak(
+                    (elementUI as ElementUI.TextUI).text.trim(),
+                    TextToSpeech.QUEUE_ADD,
+                    null,
+                    elementIndex.toString()
+                )
+            }
+        }
+        isSpeaking.value = true
+        buttonIcon.value = IC_PAUSE
+    }
+
+    fun stopSpeaking() {
+        tts?.stop()
+        isSpeaking.value = false
+        buttonIcon.value = IC_PLAY
+    }
+
+    private fun canISpeak(
+        elementUI: ElementUI,
+        indexToStartPlaying: Int,
+        elementIndex: Int,
+    ): Boolean {
+        return (
+            elementUI is ElementUI.TextUI
+                && elementIndex >= indexToStartPlaying // ✅ было наоборот
+                && elementUI.text.isNotBlank()
+            )
     }
 }
