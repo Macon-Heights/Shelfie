@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.catalogue
+package me.alexandervortex.shelfie.features.catalogue.base
 
 import android.net.Uri
 import androidx.compose.runtime.snapshots.SnapshotStateList

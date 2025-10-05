@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.catalogue
+package me.alexandervortex.shelfie.features.catalogue.preview
 
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 
