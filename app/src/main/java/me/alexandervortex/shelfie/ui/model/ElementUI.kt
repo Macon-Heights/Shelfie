@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.ui.model
 sealed interface ElementUI {
 
     data class TextUI(
-        val words: List<String>,
+        val parts: List<String>,
     ) : ElementUI
 
     data class ImageUI(

@@ -23,8 +23,11 @@ class ElementMapper
                 is Element -> map(node, binaries)
                 is TextNode -> node.text().trim()
                     .takeIf { it.isNotEmpty() }
-                    ?.let { listOf(ElementUI.TextUI(it)) }
+                    ?.let {
+                        listOf(ElementUI.TextUI(parts = it.split(".")))
+                    }
                     ?: emptyList()
+
                 else -> emptyList()
             }
         }
@@ -39,7 +42,10 @@ class ElementMapper
         return when (element.tagName()) {
             "image" -> mapImage(element, binaries)
             "empty-line" -> ElementUI.EmptyLine
-            "p", "v", "subtitle" -> ElementUI.TextUI(element.text().trim())
+            "p", "v", "subtitle" -> ElementUI.TextUI(
+                element.text().trim().split(".")
+            )
+
             else -> null
         }
     }

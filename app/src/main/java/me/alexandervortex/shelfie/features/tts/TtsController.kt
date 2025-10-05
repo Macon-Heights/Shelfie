@@ -39,9 +39,10 @@ class TtsController(
                 object : android.speech.tts.UtteranceProgressListener() {
 
                     override fun onStart(utteranceId: String?) {
+                        onAppError("--On Start ${utteranceId.toString()}")
                         utteranceId?.let { id ->
                             val indexOrNull = id.split("_").firstOrNull()
-                            val partIndexOrNull = id.split("_").lastOrNull()
+                            val partIndexOrNull = id.split("_").getOrNull(1)
                             scrollToIndex(
                                 indexOrNull?.toIntOrNull(),
                                 partIndexOrNull?.toIntOrNull()
@@ -74,47 +75,42 @@ class TtsController(
         tts?.shutdown()
     }
 
-    fun startSpeaking(indexToStartPlaying: Int) {
+    private fun startSpeaking(indexToStartPlaying: Int) {
         if (bookModel?.elements.isNullOrEmpty()) {
             onAppError("BookModel elements are null or empty")
             return
         }
 
         tts?.stop()
-        bookModel?.elements?.forEachIndexed { elementIndex, elementUI ->
-            if (
-                canISpeak(
-                    elementUI = elementUI,
-                    indexToStartPlaying = indexToStartPlaying,
-                    elementIndex = elementIndex
-                )
-            ) {
-                tts?.speak(
-                    (elementUI as ElementUI.TextUI).text.trim(),
-                    TextToSpeech.QUEUE_ADD,
-                    null,
-                    elementIndex.toString()
-                )
+        bookModel?.elements?.forEachIndexed { elementIndex, element ->
+            val currentSentences = (element as? ElementUI.TextUI)?.parts.orEmpty()
+
+            val isIndexNeeded = elementIndex >= indexToStartPlaying
+            val isTextUI = element is ElementUI.TextUI
+
+            if (isIndexNeeded && isTextUI) {
+                currentSentences.forEachIndexed { sentenceIndex, sentence ->
+                    val isNotEmpty = currentSentences.getOrNull(sentenceIndex)?.trim()
+                        ?.isNotBlank() == true
+
+                    if (isNotEmpty) {
+                        tts?.speak(
+                            sentence.trim(),
+                            TextToSpeech.QUEUE_ADD,
+                            null,
+                            "${elementIndex}_${sentenceIndex}"
+                        )
+                    }
+                    isSpeaking.value = true
+                    buttonIcon.value = IC_PAUSE
+                }
             }
         }
-        isSpeaking.value = true
-        buttonIcon.value = IC_PAUSE
     }
 
-    fun stopSpeaking() {
+    private fun stopSpeaking() {
         tts?.stop()
         isSpeaking.value = false
         buttonIcon.value = IC_PLAY
-    }
-
-    private fun canISpeak(
-        elementUI: ElementUI,
-        indexToStartPlaying: Int,
-        elementIndex: Int,
-    ): Boolean {
-        val isTextUI = elementUI is ElementUI.TextUI
-        val isCurrentIndex = elementIndex >= indexToStartPlaying
-        val isNotEmpty = (elementUI as? ElementUI.TextUI)?.text?.trim()?.isNotBlank() == true
-        return isTextUI && isCurrentIndex && isNotEmpty
     }
 }

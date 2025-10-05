@@ -13,7 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.getColors
@@ -26,14 +31,40 @@ fun ComponentUI(
     partIndex: Int,
 ) {
     when (element) {
-        is ElementUI.TextUI -> Text(
-            textAlign = TextAlign.Justify,
-            text = element.text,
-            color = if (isHighlighted)
-                MaterialTheme.colorScheme.primary
-            else
-                MaterialTheme.colorScheme.onBackground
-        )
+        is ElementUI.TextUI -> {
+            val styledText = buildAnnotatedString {
+                element.parts.forEachIndexed { wordIndex, word ->
+
+                    val isCurrentElement = elementIndex == currentIndex
+                    val isCurrentWord = wordIndex == partIndex
+                    val isHighlight = isCurrentElement && isCurrentWord
+
+                    val textColor = when {
+                        isHighlight -> MaterialTheme.colorScheme.background
+                        else -> MaterialTheme.colorScheme.onBackground
+                    }
+
+                    val bgColor = when {
+                        isHighlight -> MaterialTheme.colorScheme.onBackground
+                        else -> MaterialTheme.colorScheme.background
+                    }
+
+                    withStyle(
+                        style = SpanStyle(
+                            color = textColor,
+                            background = bgColor
+                        )
+                    ) { append(word) }
+                    append(". ")
+                }
+            }
+
+            Text(
+                text = styledText,
+                textAlign = TextAlign.Justify,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
 
         is ElementUI.ImageUI -> {
             val bitmap = BitmapFactory.decodeByteArray(
@@ -61,5 +92,22 @@ fun ComponentUI(
                     .height(2.dp)
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun TextUiPreview() {
+    MaterialTheme {
+        val words = LoremIpsum(500).values.toList()
+        val element = ElementUI.TextUI(
+            parts = words
+        )
+        ComponentUI(
+            element = element,
+            elementIndex = 0,
+            currentIndex = 0,
+            partIndex = 1
+        )
     }
 }
