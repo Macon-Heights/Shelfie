@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
 import javax.inject.Inject
 
 @HiltViewModel

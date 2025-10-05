@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.catalogue
+package me.alexandervortex.shelfie.features.catalogue.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size

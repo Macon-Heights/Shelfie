@@ -22,6 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
+import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
+import me.alexandervortex.shelfie.features.catalogue.preview.CataloguePreviewViewModel
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
