@@ -104,7 +104,11 @@ fun ViewerScreen(
         }
         // показывалка ошибки
         if (viewModel.errorState.value.isNotBlank()) {
-            Toast.makeText(LocalContext.current, viewModel.errorState.value, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                LocalContext.current,
+                viewModel.errorState.value,
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         // плей-пауза кнопка
