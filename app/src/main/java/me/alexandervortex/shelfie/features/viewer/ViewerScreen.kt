@@ -95,10 +95,13 @@ fun ViewerScreen(
             contentPadding = PaddingValues(32.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            val sections: List<ElementUI> = book?.elements.orEmpty()
-            itemsIndexed(sections) { index, section ->
+            val elements: List<ElementUI> = book?.elements.orEmpty()
+            itemsIndexed(elements) { index, element ->
                 ComponentUI(
-                    section, index == viewModel.INDEX_TO_AUTO_SCROLL.value
+                    element = element,
+                    elementIndex = index,
+                    currentIndex = viewModel.INDEX_TO_AUTO_SCROLL.value,
+                    partIndex = viewModel.PART_INDEX_TO_HIGHLIGHT.value
                 )
             }
         }
