@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.ui.component.BookComponent
-import me.alexandervortex.shelfie.ui.component.FABComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 
@@ -78,7 +77,7 @@ fun CatalogueScreen(
                 }
             }
         }
-        FABComponent(IC_ADD) {
+        ActionButtonComponent(IC_ADD) {
             picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
         }
     }
