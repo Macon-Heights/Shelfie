@@ -24,7 +24,8 @@ class ViewerViewModel
     val errorState = mutableStateOf("")
     val bookModel: MutableState<BookUI?> = mutableStateOf(null)
 
-    val INDEX_TO_AUTO_SCROLL = mutableStateOf(0) // ✅ текущий читаемый элемент
+    val INDEX_TO_AUTO_SCROLL = mutableStateOf(0)
+    val PART_INDEX_TO_HIGHLIGHT = mutableStateOf(0)
 
     private var ttsController: TtsController? = null
     val buttonIcon get() = ttsController?.buttonIcon // FIXME check taht
