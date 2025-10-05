@@ -71,20 +71,24 @@ fun ViewerScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
-        if (false) {
+        if (true) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Yellow)
             ) {
                 val currentIndex = viewModel.INDEX_TO_AUTO_SCROLL.value
-                Text(color = Color.Black, text = currentIndex.toString())
+                val currentPartIndex = viewModel.PART_INDEX_TO_HIGHLIGHT.value
+
+                Text(color = Color.Black, text = "${currentIndex}- ")
+                Text(color = Color.Black, text = " -${currentPartIndex}")
+
+                val currentItem = viewModel.bookModel.value?.elements?.getOrNull(currentIndex)
+                val currentPart = (currentItem as? ElementUI.TextUI)?.parts?.getOrNull(currentPartIndex)
+
                 Text(
                     color = Color.Black,
-                    text = (viewModel.bookModel.value?.elements?.get(currentIndex) as? ElementUI.TextUI)
-                        ?.text
-                        ?.trim()
-                        .orEmpty()
+                    text = currentPart?.trim().orEmpty()
                 )
             }
         }
