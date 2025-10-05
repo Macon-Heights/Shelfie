@@ -103,10 +103,9 @@ class TtsController(
         indexToStartPlaying: Int,
         elementIndex: Int,
     ): Boolean {
-        return (
-            elementUI is ElementUI.TextUI
-                && elementIndex >= indexToStartPlaying // ✅ было наоборот
-                && elementUI.text.isNotBlank()
-            )
+        val isTextUI = elementUI is ElementUI.TextUI
+        val isCurrentIndex = elementIndex >= indexToStartPlaying
+        val isNotEmpty = (elementUI as? ElementUI.TextUI)?.text?.trim()?.isNotBlank() == true
+        return isTextUI && isCurrentIndex && isNotEmpty
     }
 }
