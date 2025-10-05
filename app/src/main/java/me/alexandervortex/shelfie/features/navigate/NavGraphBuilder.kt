@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
+private const val ID = "id"
+
 fun NavGraphBuilder.getId(): NamedNavArgument {
     return navArgument(ID) { type = NavType.StringType }
 }
