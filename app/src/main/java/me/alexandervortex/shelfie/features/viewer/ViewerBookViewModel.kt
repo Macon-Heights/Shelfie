@@ -14,7 +14,7 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewerViewModel
+class ViewerBookViewModel
 @Inject constructor(
     private val repo: BookRepository,
     @ApplicationContext private val context: Context,

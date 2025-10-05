@@ -28,7 +28,7 @@ import me.alexandervortex.shelfie.ui.theme.IC_ADD
 @Composable
 fun ViewerScreen(
     id: String,
-    viewModel: ViewerViewModel,
+    viewModel: ViewerBookViewModel,
 ) {
     val listState = rememberLazyListState()
     val lifecycleOwner = LocalLifecycleOwner.current
