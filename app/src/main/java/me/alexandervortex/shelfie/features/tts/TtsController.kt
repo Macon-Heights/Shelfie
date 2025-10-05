@@ -39,7 +39,7 @@ class TtsController(
                 object : android.speech.tts.UtteranceProgressListener() {
 
                     override fun onStart(utteranceId: String?) {
-                        onAppError("--On Start ${utteranceId.toString()}")
+                        onAppError("-- onStart ${utteranceId.toString()}")
                         utteranceId?.let { id ->
                             val indexOrNull = id.split("_").firstOrNull()
                             val partIndexOrNull = id.split("_").getOrNull(1)
@@ -50,7 +50,9 @@ class TtsController(
                         }
                     }
 
-                    override fun onDone(utteranceId: String?) {}
+                    override fun onDone(utteranceId: String?) {
+                        onAppError("-- onDone ${utteranceId.toString()}")
+                    }
 
                     override fun onError(utteranceId: String?) {
                         onAppError("Ошибка TTS utterance ${utteranceId.toString()}")
@@ -100,9 +102,9 @@ class TtsController(
                             null,
                             "${elementIndex}_${sentenceIndex}"
                         )
+                        isSpeaking.value = true
+                        buttonIcon.value = IC_PAUSE
                     }
-                    isSpeaking.value = true
-                    buttonIcon.value = IC_PAUSE
                 }
             }
         }

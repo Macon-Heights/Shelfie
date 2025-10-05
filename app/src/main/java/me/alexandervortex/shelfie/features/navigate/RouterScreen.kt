@@ -8,8 +8,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
-import me.alexandervortex.shelfie.features.viewer.ViewerScreen
+import me.alexandervortex.shelfie.features.viewer.TtsViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerBookViewModel
+import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 
 @Composable
 fun RouterScreen() {
@@ -29,6 +30,12 @@ fun RouterScreen() {
             deepLinks = listOf(navDeepLink {
                 uriPattern = ViewerRoute.uriPattern
             }),
-        ) { ViewerScreen(it.getId(), hiltViewModel<ViewerBookViewModel>()) }
+        ) {
+            ViewerScreen(
+                it.getId(),
+                hiltViewModel<ViewerBookViewModel>(),
+                hiltViewModel<TtsViewModel>()
+            )
+        }
     }
 }

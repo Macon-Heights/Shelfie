@@ -1,15 +1,12 @@
 package me.alexandervortex.shelfie.features.viewer
 
-import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.tts.TtsController
 import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
@@ -17,45 +14,19 @@ import javax.inject.Inject
 class ViewerBookViewModel
 @Inject constructor(
     private val repo: BookRepository,
-    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    val isScrollable = mutableStateOf(true)
     val errorState = mutableStateOf("")
     val bookModel: MutableState<BookUI?> = mutableStateOf(null)
-
-    val INDEX_TO_AUTO_SCROLL = mutableStateOf(0)
-    val PART_INDEX_TO_HIGHLIGHT = mutableStateOf(0)
-
-    private var ttsController: TtsController? = null
-    val buttonIcon get() = ttsController?.buttonIcon // FIXME check taht
 
     fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
-                val result = repo.getBookModelById(id)
-                bookModel.value = result
-                INDEX_TO_AUTO_SCROLL.value = result?.progressIndex ?: 0
-                PART_INDEX_TO_HIGHLIGHT.value = 0
-                createTTSWithLocale()
+                bookModel.value = repo.getBookModelById(id)
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
         }
-    }
-
-    private fun createTTSWithLocale() {
-        ttsController = TtsController(
-            context = context,
-            bookModel = bookModel.value,
-            onAppError = { error ->
-                this.errorState.value = error
-            },
-            scrollToIndex = { index, partIndex ->
-                INDEX_TO_AUTO_SCROLL.value = index ?: 0
-                PART_INDEX_TO_HIGHLIGHT.value = partIndex ?: 0
-            }
-        )
     }
 
     fun saveScrollStateOnDispose(
@@ -66,16 +37,5 @@ class ViewerBookViewModel
         viewModelScope.launch {
             repo.saveCurrentBookProgress(id, index, offset)
         }
-    }
-
-    fun togglePlayPause(
-        indexToStartPlaying: Int,
-    ) {
-        ttsController?.togglePlayPause(indexToStartPlaying)
-    }
-
-    override fun onCleared() {
-        ttsController?.release()
-        super.onCleared()
     }
 }
