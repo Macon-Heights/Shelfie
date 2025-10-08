@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.base
+package me.alexandervortex.shelfie.base.ext
 
 import android.util.Base64
 import org.jsoup.nodes.Document

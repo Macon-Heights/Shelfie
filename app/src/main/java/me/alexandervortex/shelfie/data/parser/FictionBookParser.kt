@@ -1,8 +1,8 @@
 package me.alexandervortex.shelfie.data.parser
 
-import me.alexandervortex.shelfie.base.getBinaries
-import me.alexandervortex.shelfie.base.getBody
-import me.alexandervortex.shelfie.base.getTitleInfo
+import me.alexandervortex.shelfie.base.ext.getBinaries
+import me.alexandervortex.shelfie.base.ext.getBody
+import me.alexandervortex.shelfie.base.ext.getTitleInfo
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.data.model.BookFile
