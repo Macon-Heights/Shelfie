@@ -18,13 +18,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
-import me.alexandervortex.shelfie.features.catalogue.preview.CataloguePreviewViewModel
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
@@ -32,28 +29,35 @@ import me.alexandervortex.shelfie.ui.theme.IC_ADD
 @Composable
 fun CatalogueScreen(
     viewModel: BaseCatalogueViewModel,
-    navController: NavHostController? = null,
+    navController: NavHostController,
 ) {
-    // region fixme это бы куда-нибудь вынести по-хорошему потом
     val context = LocalContext.current
     val picker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         uri ?: return@rememberLauncherForActivityResult
-
-        try {
-            context.contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
-            )
-        } catch (e: SecurityException) {
-            /* провайдер мог не дать persist */
-        }
+        context.contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
         viewModel.importFromUri(uri)
     }
-    // endregion
 
     LaunchedEffect(true) { viewModel.getBookEntities() }
+    CatalogueScreenContent(
+        viewModel = viewModel,
+        navController = navController,
+        onFilePicked = {
+            picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
+        })
+}
+
+@Composable
+private fun CatalogueScreenContent(
+    viewModel: BaseCatalogueViewModel,
+    navController: NavHostController?,
+    onFilePicked: () -> Unit,
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
@@ -80,14 +84,6 @@ fun CatalogueScreen(
                 }
             }
         }
-        ActionButtonComponent(IC_ADD) {
-            picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
-        }
+        ActionButtonComponent(IC_ADD) { onFilePicked.invoke() }
     }
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun CatalogueScreen() {
-    CatalogueScreen(viewModel = hiltViewModel<CataloguePreviewViewModel>())
 }
