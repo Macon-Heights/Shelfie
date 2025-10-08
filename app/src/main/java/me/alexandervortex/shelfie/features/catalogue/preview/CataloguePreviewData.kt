@@ -2,7 +2,7 @@ package me.alexandervortex.shelfie.features.catalogue.preview
 
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 
-object BookPreviewFactory {
+object CataloguePreviewData {
 
     fun getBooks(): List<BookEntity> {
         return listOf(

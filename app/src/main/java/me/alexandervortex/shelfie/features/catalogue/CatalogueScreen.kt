@@ -7,26 +7,38 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
 import me.alexandervortex.shelfie.features.catalogue.model.CatalogueUiState
+import me.alexandervortex.shelfie.features.catalogue.preview.CataloguePreviewData.getBooks
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
+
+@Composable
+@Preview(showBackground = true)
+fun CatalogueScreenContentPreview() {
+    CatalogueScreenContent(
+        uiState = CatalogueUiState(getBooks().toMutableStateList()),
+        onAddClick = { },
+        onBookClick = { }
+    )
+}
 
 @Composable
 private fun CatalogueScreenContent(
@@ -38,26 +50,23 @@ private fun CatalogueScreenContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
-        Column(
-            Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxSize()
+
+        LazyColumn(
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp),
+            modifier = Modifier.fillMaxSize()
         ) {
+            item {
                 TitleComponent(
                     text = "Your\nBooks",
                     modifier = Modifier.padding(vertical = 128.dp)
                 )
-            LazyVerticalStaggeredGrid(
-                verticalItemSpacing = 8.dp,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                columns = StaggeredGridCells.Adaptive(180.dp),
-                modifier = Modifier,
-            ) {
-                items(uiState.bookEntities) { item ->
-                    BookComponent(
-                        item,
-                        Modifier.clickable { onBookClick.invoke(item) })
-                }
+            }
+            items(uiState.bookEntities) { item ->
+                BookComponent(
+                    item,
+                    Modifier.clickable { onBookClick.invoke(item) })
             }
         }
         ActionButtonComponent(IC_ADD, action = onAddClick)
