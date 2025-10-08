@@ -1,13 +1,13 @@
 package me.alexandervortex.shelfie.features.catalogue.base
 
 import android.net.Uri
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.features.catalogue.model.CatalogueUiState
 
 abstract class BaseCatalogueViewModel : ViewModel() {
 
-    abstract val books: SnapshotStateList<BookEntity>
+    abstract val uiState: MutableState<CatalogueUiState>
 
     abstract fun importFromUri(uri: Uri)
 
