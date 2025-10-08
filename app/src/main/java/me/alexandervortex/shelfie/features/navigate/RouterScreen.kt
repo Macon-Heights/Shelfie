@@ -22,7 +22,12 @@ fun RouterScreen() {
     ) {
         composable(
             route = CatalogueRoute.route
-        ) { CatalogueScreen(hiltViewModel<CatalogueViewModel>(), navController) }
+        ) {
+            CatalogueScreen(
+                viewModel = hiltViewModel<CatalogueViewModel>(),
+                navController = navController
+            )
+        }
 
         composable(
             route = ViewerRoute.route,
