@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
 import me.alexandervortex.shelfie.features.catalogue.model.CatalogueUiState
@@ -30,7 +31,7 @@ import me.alexandervortex.shelfie.ui.theme.IC_ADD
 @Composable
 private fun CatalogueScreenContent(
     uiState: CatalogueUiState,
-    onBookClick: (String) -> Unit,
+    onBookClick: (BookEntity) -> Unit,
     onAddClick: () -> Unit,
 ) {
     Box(
@@ -42,10 +43,10 @@ private fun CatalogueScreenContent(
                 .padding(horizontal = 16.dp)
                 .fillMaxSize()
         ) {
-            TitleComponent(
-                text = "Your\nBooks",
-                modifier = Modifier.padding(vertical = 128.dp)
-            )
+                TitleComponent(
+                    text = "Your\nBooks",
+                    modifier = Modifier.padding(vertical = 128.dp)
+                )
             LazyVerticalStaggeredGrid(
                 verticalItemSpacing = 8.dp,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -55,9 +56,7 @@ private fun CatalogueScreenContent(
                 items(uiState.bookEntities) { item ->
                     BookComponent(
                         item,
-                        Modifier.clickable {
-                            onBookClick.invoke(item.id)
-                        })
+                        Modifier.clickable { onBookClick.invoke(item) })
                 }
             }
         }
@@ -88,8 +87,8 @@ fun CatalogueScreen(
 
     CatalogueScreenContent(
         uiState = viewModel.uiState.value,
-        onBookClick = { bookId ->
-            navController.navigate("viewer?id=${bookId}")
+        onBookClick = { book ->
+            navController.navigate("viewer?id=${book.id}")
         },
         onAddClick = {
             picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
