@@ -22,15 +22,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
+import me.alexandervortex.shelfie.features.catalogue.model.CatalogueUiState
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 
 @Composable
 private fun CatalogueScreenContent(
-    viewModel: BaseCatalogueViewModel,
-    navController: NavHostController?,
-    onFilePicked: () -> Unit,
+    uiState: CatalogueUiState,
+    onBookClick: (String) -> Unit,
+    onAddClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -51,14 +52,16 @@ private fun CatalogueScreenContent(
                 columns = StaggeredGridCells.Adaptive(180.dp),
                 modifier = Modifier,
             ) {
-                items(viewModel.books) { item ->
-                    BookComponent(item, Modifier.clickable {
-                        navController?.navigate("viewer?id=${item.id}")
-                    })
+                items(uiState.bookEntities) { item ->
+                    BookComponent(
+                        item,
+                        Modifier.clickable {
+                            onBookClick.invoke(item.id)
+                        })
                 }
             }
         }
-        ActionButtonComponent(IC_ADD) { onFilePicked.invoke() }
+        ActionButtonComponent(IC_ADD, action = onAddClick)
     }
 }
 
@@ -72,19 +75,24 @@ fun CatalogueScreen(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         uri ?: return@rememberLauncherForActivityResult
-        context.contentResolver.takePersistableUriPermission(
-            uri,
-            Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
+        try {
+            context.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+        } catch (_: SecurityException) { }
         viewModel.importFromUri(uri)
     }
 
     LaunchedEffect(Unit) { viewModel.getBookEntities() }
 
     CatalogueScreenContent(
-        viewModel = viewModel,
-        navController = navController,
-        onFilePicked = {
+        uiState = viewModel.uiState.value,
+        onBookClick = { bookId ->
+            navController.navigate("viewer?id=${bookId}")
+        },
+        onAddClick = {
             picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
-        })
+        }
+    )
 }
