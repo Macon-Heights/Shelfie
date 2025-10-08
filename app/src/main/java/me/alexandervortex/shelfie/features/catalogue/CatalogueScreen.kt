@@ -27,32 +27,6 @@ import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 
 @Composable
-fun CatalogueScreen(
-    viewModel: BaseCatalogueViewModel,
-    navController: NavHostController,
-) {
-    val context = LocalContext.current
-    val picker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri: Uri? ->
-        uri ?: return@rememberLauncherForActivityResult
-        context.contentResolver.takePersistableUriPermission(
-            uri,
-            Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        viewModel.importFromUri(uri)
-    }
-
-    LaunchedEffect(true) { viewModel.getBookEntities() }
-    CatalogueScreenContent(
-        viewModel = viewModel,
-        navController = navController,
-        onFilePicked = {
-            picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
-        })
-}
-
-@Composable
 private fun CatalogueScreenContent(
     viewModel: BaseCatalogueViewModel,
     navController: NavHostController?,
@@ -86,4 +60,31 @@ private fun CatalogueScreenContent(
         }
         ActionButtonComponent(IC_ADD) { onFilePicked.invoke() }
     }
+}
+
+@Composable
+fun CatalogueScreen(
+    viewModel: BaseCatalogueViewModel,
+    navController: NavHostController,
+) {
+    val context = LocalContext.current
+    val picker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri: Uri? ->
+        uri ?: return@rememberLauncherForActivityResult
+        context.contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+        viewModel.importFromUri(uri)
+    }
+
+    LaunchedEffect(Unit) { viewModel.getBookEntities() }
+
+    CatalogueScreenContent(
+        viewModel = viewModel,
+        navController = navController,
+        onFilePicked = {
+            picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
+        })
 }
