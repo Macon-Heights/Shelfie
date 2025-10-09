@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
-import me.alexandervortex.shelfie.features.catalogue.model.CatalogueUiState
-import me.alexandervortex.shelfie.features.catalogue.preview.CataloguePreviewData.getBooks
+import me.alexandervortex.shelfie.features.catalogue.ui.component.ActionButtonComponent
+import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueUiState
+import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData.getBooks
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
@@ -110,7 +110,8 @@ fun CatalogueScreen(
                 uri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION
             )
-        } catch (_: SecurityException) { }
+        } catch (_: SecurityException) {
+        }
         viewModel.importFromUri(uri)
     }
 
