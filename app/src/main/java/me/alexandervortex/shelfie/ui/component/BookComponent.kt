@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.features.catalogue.preview.CataloguePreviewData
+import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
