@@ -8,8 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
-import me.alexandervortex.shelfie.features.catalogue.base.BaseCatalogueViewModel
 import me.alexandervortex.shelfie.features.catalogue.component.ActionButtonComponent
 import me.alexandervortex.shelfie.features.catalogue.model.CatalogueUiState
 import me.alexandervortex.shelfie.features.catalogue.preview.CataloguePreviewData.getBooks
@@ -58,12 +57,16 @@ private fun CatalogueScreenContent(
             modifier = Modifier.fillMaxSize()
         ) {
             item {
-                TitleComponent(
-                    text = "Your\nBooks",
-                    modifier = Modifier.padding(vertical = 128.dp)
-                )
+                Box(
+                    contentAlignment = Alignment.CenterEnd,
+                    modifier = Modifier.aspectRatio(1f)
+                ) {
+                    TitleComponent(
+                        text = "Your\nBooks"
+                    )
+                }
             }
-            items(uiState.bookEntities) { item ->
+            items(uiState.books) { item ->
                 BookComponent(
                     item,
                     Modifier.clickable { onBookClick.invoke(item) })
@@ -75,7 +78,7 @@ private fun CatalogueScreenContent(
 
 @Composable
 fun CatalogueScreen(
-    viewModel: BaseCatalogueViewModel,
+    viewModel: CatalogueViewModel,
     navController: NavHostController,
 ) {
     val context = LocalContext.current
