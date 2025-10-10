@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData
+import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
@@ -32,7 +33,12 @@ fun BookComponent(
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
+            .shadow(
+                elevation = 6.dp,
+                shape = SHAPE_M,
+                clip = false
+            )
+            .clip(SHAPE_M)
             .background(color)
             .padding(16.dp)
     ) {
