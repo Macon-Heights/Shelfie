@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -92,7 +93,15 @@ private fun CatalogueScreenContent(
                     })
             }
         }
-        ActionButtonComponent(IC_ADD, action = onAddClick)
+        ActionButtonComponent(
+            content = {
+                Icon(
+                    imageVector = IC_ADD,
+                    contentDescription = "",
+                )
+            },
+            action = onAddClick
+        )
     }
 }
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -94,13 +95,20 @@ fun ViewerScreen(
         }
 
         // плей-пауза кнопка
-        ActionButtonComponent(ttsViewModel.buttonIcon?.value ?: IC_ADD) {
-            ttsViewModel.isScrollable.value = !ttsViewModel.isScrollable.value
-            // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
-            ttsViewModel.togglePlayPause(
-                indexToStartPlaying = listState.firstVisibleItemIndex,
-            )
-        }
+        ActionButtonComponent(
+            content = {
+                Icon(
+                    imageVector = ttsViewModel.buttonIcon?.value ?: IC_ADD,
+                    contentDescription = "",
+                )
+            },
+            action = {
+                // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
+                ttsViewModel.togglePlayPause(
+                    indexToStartPlaying = listState.firstVisibleItemIndex,
+                )
+            }
+        )
     }
     // endregion
 }
