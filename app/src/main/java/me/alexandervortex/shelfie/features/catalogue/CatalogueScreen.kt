@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -32,17 +31,20 @@ import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueUiState
 import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData.getBooks
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
-@Preview(showBackground = true)
+@CombinedPreviews
 fun CatalogueScreenContentPreview() {
-    CatalogueScreenContent(
-        uiState = CatalogueUiState(getBooks().toMutableStateList()),
-        onAddClick = { },
-        onBookClick = { }
-    )
+    CombinedPreviews {
+        CatalogueScreenContent(
+            uiState = CatalogueUiState(getBooks().toMutableStateList()),
+            onAddClick = { },
+            onBookClick = { }
+        )
+    }
 }
 
 @Composable
@@ -55,7 +57,6 @@ private fun CatalogueScreenContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
-
         LazyColumn(
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -67,9 +68,7 @@ private fun CatalogueScreenContent(
                     contentAlignment = Alignment.CenterEnd,
                     modifier = Modifier.aspectRatio(1f)
                 ) {
-                    TitleComponent(
-                        text = "Your\nBooks"
-                    )
+                    TitleComponent(text = "Your\nBooks")
                 }
             }
             item {
@@ -87,8 +86,10 @@ private fun CatalogueScreenContent(
             }
             items(uiState.books) { item ->
                 BookComponent(
-                    item,
-                    Modifier.clickable { onBookClick.invoke(item) })
+                    model = item,
+                    modifier = Modifier.clickable {
+                        onBookClick.invoke(item)
+                    })
             }
         }
         ActionButtonComponent(IC_ADD, action = onAddClick)
