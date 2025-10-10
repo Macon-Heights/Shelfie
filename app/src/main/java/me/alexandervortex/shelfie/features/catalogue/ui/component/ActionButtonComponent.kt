@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.features.catalogue.CatalogueScreenContent
-import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueUiState
+import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueBooksState
 import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData.getBooks
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
@@ -25,7 +25,7 @@ private const val CONTENT_DESCRIPTION = ""
 fun CatalogueScreenContentPreview() {
     CombinedPreviews {
         CatalogueScreenContent(
-            uiState = CatalogueUiState(getBooks().toMutableStateList()),
+            uiState = CatalogueBooksState(getBooks().toMutableStateList()),
             onAddClick = { },
             onBookClick = { }
         )
@@ -43,7 +43,7 @@ fun ActionButtonComponent(
         disabledContainerColor = getColors().primaryContainer,
         disabledContentColor = getColors().onPrimaryContainer,
     )
-    
+
     Button(
         shape = SHAPE_M,
         colors = colors,

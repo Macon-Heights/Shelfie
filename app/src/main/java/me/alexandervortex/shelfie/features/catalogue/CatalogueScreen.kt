@@ -13,11 +13,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,8 +28,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.component.ActionButtonComponent
-import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueUiState
-import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData.getBooks
+import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueBooksState
+import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueLoadingState
+import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -41,7 +42,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 fun CatalogueScreenContentPreview() {
     CombinedPreviews {
         CatalogueScreenContent(
-            uiState = CatalogueUiState(getBooks().toMutableStateList()),
+            uiState = CatalogueLoadingState,
             onAddClick = { },
             onBookClick = { }
         )
@@ -50,7 +51,7 @@ fun CatalogueScreenContentPreview() {
 
 @Composable
 fun CatalogueScreenContent(
-    uiState: CatalogueUiState,
+    uiState: UIState,
     onBookClick: (BookEntity) -> Unit,
     onAddClick: () -> Unit,
 ) {
@@ -59,7 +60,7 @@ fun CatalogueScreenContent(
         contentAlignment = Alignment.BottomEnd
     ) {
         LazyColumn(
-            horizontalAlignment = Alignment.End,
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(16.dp),
             modifier = Modifier.fillMaxSize()
@@ -73,7 +74,7 @@ fun CatalogueScreenContent(
                 }
             }
             item {
-                if (uiState.books.isEmpty()) {
+                if (uiState is CatalogueBooksState && uiState.books.isEmpty()) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Start,
@@ -84,13 +85,18 @@ fun CatalogueScreenContent(
                         fontWeight = FontWeight.Thin,
                     )
                 }
+                if (uiState is CatalogueLoadingState) {
+                    CircularProgressIndicator()
+                }
             }
-            items(uiState.books) { item ->
-                BookComponent(
-                    model = item,
-                    modifier = Modifier.clickable {
-                        onBookClick.invoke(item)
-                    })
+            if (uiState is CatalogueBooksState) {
+                items(uiState.books) { item ->
+                    BookComponent(
+                        model = item,
+                        modifier = Modifier.clickable {
+                            onBookClick.invoke(item)
+                        })
+                }
             }
         }
         ActionButtonComponent(
