@@ -9,11 +9,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import me.alexandervortex.shelfie.ui.theme.ShelfieTheme
 import me.alexandervortex.shelfie.ui.theme.getColors
 
+private const val WIDTH = 300
+private const val HEIGHT = 900
+
 @Preview(
+    widthDp = WIDTH,
+    heightDp = HEIGHT,
     name = "Light Mode",
     showBackground = true
 )
 @Preview(
+    widthDp = WIDTH,
+    heightDp = HEIGHT,
     name = "Dark Mode",
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
