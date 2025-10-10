@@ -49,7 +49,7 @@ fun CatalogueScreenContentPreview() {
 }
 
 @Composable
-private fun CatalogueScreenContent(
+fun CatalogueScreenContent(
     uiState: CatalogueUiState,
     onBookClick: (BookEntity) -> Unit,
     onAddClick: () -> Unit,
