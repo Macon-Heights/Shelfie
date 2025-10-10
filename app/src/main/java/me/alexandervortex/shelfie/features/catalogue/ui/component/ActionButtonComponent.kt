@@ -7,15 +7,33 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.theme.IC_PLAY
+import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 private const val CONTENT_DESCRIPTION = ""
 
 @Composable
+@CombinedPreviews
+fun CatalogueScreenContentPreview() {
+    CombinedPreviews {
+        ActionButtonComponent(
+            content = {
+                Icon(
+                    imageVector = IC_PLAY,
+                    contentDescription = CONTENT_DESCRIPTION,
+                )
+            }, action = {}
+        )
+    }
+}
+
+@Composable
 fun ActionButtonComponent(
-    ic: ImageVector,
+    content: @Composable () -> Unit,
     action: (() -> Unit)? = {},
 ) {
     val colors = ButtonColors(
@@ -31,9 +49,6 @@ fun ActionButtonComponent(
             .size(64.dp),
         onClick = { action?.invoke() }
     ) {
-        Icon(
-            imageVector = ic,
-            contentDescription = CONTENT_DESCRIPTION,
-        )
+        content.invoke()
     }
 }
