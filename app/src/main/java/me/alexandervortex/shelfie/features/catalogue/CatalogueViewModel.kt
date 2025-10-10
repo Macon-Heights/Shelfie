@@ -1,13 +1,16 @@
 package me.alexandervortex.shelfie.features.catalogue
 
 import android.net.Uri
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueUiState
+import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueBooksState
+import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueLoadingState
+import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,7 +19,7 @@ class CatalogueViewModel
     private val bookRepository: BookRepository,
 ) : ViewModel() {
 
-    val uiState = mutableStateOf(CatalogueUiState(emptyList()))
+    val uiState: MutableState<UIState> = mutableStateOf(CatalogueLoadingState)
 
     fun importFromUri(uri: Uri) {
         viewModelScope.launch {
@@ -28,7 +31,8 @@ class CatalogueViewModel
     fun getBookEntities() {
         viewModelScope.launch {
             val newEntities = bookRepository.getBookEntities()
-            uiState.value = uiState.value.copy(books = newEntities)
+            val state = CatalogueBooksState(newEntities)
+            uiState.value = state
         }
     }
 }
