@@ -1,3 +1,4 @@
+// features/viewer/ViewerScreen.kt
 package me.alexandervortex.shelfie.features.viewer
 
 import android.widget.Toast
@@ -28,45 +29,21 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 fun ViewerScreen(
     id: String,
     viewModel: ViewerBookViewModel,
-    ttsViewModel: TtsViewModel,
+    ttsVm: TtsViewModel,   // ⬅️ новый VM
 ) {
     val context = LocalContext.current
     val listState = rememberLazyListState()
     val book = viewModel.bookModel.value
 
     // грузим книгу
-    LaunchedEffect(true) {
-        viewModel.loadCurrentBook(id)
-    }
-
-    LaunchedEffect(book) {
-        ttsViewModel.loadBook(book)
-    }
+    LaunchedEffect(true) { viewModel.loadCurrentBook(id) }
+    LaunchedEffect(book) { ttsVm.loadBook(book) }
 
     // state из сервиса реактивно
-    val serviceState by ttsViewModel.state.collectAsStateWithLifecycle()
+    val serviceState by ttsVm.state.collectAsStateWithLifecycle()
 
-    // OLD сохраняем прогресс при закрытии экрана
-   /* DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP) {
-                viewModel.saveScrollStateOnDispose(
-                    id = id,
-                    index = listState.firstVisibleItemIndex,
-                    offset = listState.firstVisibleItemScrollOffset
-                )
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }*/
-
-    // region интерфейс
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ) {
-        // элементы книги
+    // UI
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
         LazyColumn(
             userScrollEnabled = serviceState.isScrollable,
             state = listState,
@@ -83,16 +60,13 @@ fun ViewerScreen(
                 )
             }
         }
-        // показывалка ошибки
-        if (viewModel.errorState.value.isNotBlank() || serviceState.error.isNotBlank()) {
-            Toast.makeText(
-                LocalContext.current,
-                viewModel.errorState.value.ifBlank { null } ?: serviceState.error,
-                Toast.LENGTH_SHORT
-            ).show()
+
+        if (serviceState.error.isNotBlank()) {
+            LaunchedEffect(serviceState.error) {
+                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+            }
         }
 
-        // плей-пауза кнопка
         ActionButtonComponent(
             content = {
                 Icon(
@@ -101,12 +75,9 @@ fun ViewerScreen(
                 )
             },
             action = {
-                // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
-                ttsViewModel.togglePlayPause(
-                    listState.firstVisibleItemIndex
-                )
+                val topIndex = listState.firstVisibleItemIndex
+                ttsVm.togglePlayPause(topIndex)
             }
         )
     }
-    // endregion
 }
