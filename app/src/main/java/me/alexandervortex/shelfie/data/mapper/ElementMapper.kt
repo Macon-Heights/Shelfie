@@ -24,7 +24,7 @@ class ElementMapper
                 is TextNode -> node.text().trim()
                     .takeIf { it.isNotEmpty() }
                     ?.let {
-                        listOf(ElementUI.TextUI(parts = it.split(".")))
+                        listOf(ElementUI.TextUI(parts = it.split(". ")))
                     }
                     ?: emptyList()
 
@@ -43,7 +43,7 @@ class ElementMapper
             "image" -> mapImage(element, binaries)
             "empty-line" -> ElementUI.EmptyLine
             "p", "v", "subtitle" -> ElementUI.TextUI(
-                element.text().trim().split(".")
+                element.text().trim().split(". ")
             )
 
             else -> null
