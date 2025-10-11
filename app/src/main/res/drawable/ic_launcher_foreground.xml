@@ -7,7 +7,7 @@
   <group android:scaleX="0.55"
       android:scaleY="0.55"
       android:translateX="28.8"
-      android:translateY="28.8">>
+      android:translateY="28.8">
         
       <path android:fillColor="#D9D9D9" android:pathData="M22,18L54,18A6,6 0,0 1,60 24L60,24A6,6 0,0 1,54 30L22,30A6,6 0,0 1,16 24L16,24A6,6 0,0 1,22 18z"/>
         

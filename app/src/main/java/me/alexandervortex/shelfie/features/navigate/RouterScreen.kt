@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
+import me.alexandervortex.shelfie.features.mediaplayer.MockPlayerScreen
 import me.alexandervortex.shelfie.features.viewer.TtsViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerBookViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerScreen
@@ -18,8 +19,12 @@ fun RouterScreen() {
 
     NavHost(
         navController = navController,
-        startDestination = CatalogueRoute.route
+        startDestination = "media"
     ) {
+        composable("media") {
+            MockPlayerScreen()
+        }
+
         composable(
             route = CatalogueRoute.route
         ) {

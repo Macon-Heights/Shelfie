@@ -43,6 +43,9 @@ android {
 }
 
 dependencies {
+    // Media
+    implementation(libs.androidx.media)
+
     // Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
