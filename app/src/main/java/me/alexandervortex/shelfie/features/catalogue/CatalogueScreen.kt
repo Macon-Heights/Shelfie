@@ -29,8 +29,6 @@ import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.features.catalogue.ui.component.BookComponent
-import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueBooksState
-import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueLoadingState
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -42,7 +40,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 fun CatalogueScreenContentPreview() {
     CombinedPreviews {
         CatalogueScreenContent(
-            uiState = CatalogueLoadingState,
+            uiState = UIState.CatalogueLoadingState,
             onAddClick = { },
             onBookClick = { }
         )
@@ -74,7 +72,7 @@ fun CatalogueScreenContent(
                 }
             }
             item {
-                if (uiState is CatalogueBooksState && uiState.books.isEmpty()) {
+                if (uiState is UIState.CatalogueBooksState && uiState.books.isEmpty()) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Start,
@@ -85,11 +83,11 @@ fun CatalogueScreenContent(
                         fontWeight = FontWeight.Thin,
                     )
                 }
-                if (uiState is CatalogueLoadingState) {
+                if (uiState is UIState.CatalogueLoadingState) {
                     CircularProgressIndicator()
                 }
             }
-            if (uiState is CatalogueBooksState) {
+            if (uiState is UIState.CatalogueBooksState) {
                 items(uiState.books) { item ->
                     BookComponent(
                         model = item,

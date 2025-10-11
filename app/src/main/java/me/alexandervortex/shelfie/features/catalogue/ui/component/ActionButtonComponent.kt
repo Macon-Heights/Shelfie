@@ -4,16 +4,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.features.catalogue.CatalogueScreenContent
-import me.alexandervortex.shelfie.features.catalogue.ui.model.CatalogueBooksState
-import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData.getBooks
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 import me.alexandervortex.shelfie.ui.theme.getColors
@@ -22,12 +20,13 @@ private const val CONTENT_DESCRIPTION = ""
 
 @Composable
 @CombinedPreviews
-fun CatalogueScreenContentPreview() {
+fun ActionButtonComponentPreview() {
     CombinedPreviews {
-        CatalogueScreenContent(
-            uiState = CatalogueBooksState(getBooks().toMutableStateList()),
-            onAddClick = { },
-            onBookClick = { }
+        ActionButtonComponent(
+            content = {
+                Icon(imageVector = IC_ADD, contentDescription = "")
+            },
+            action = { }
         )
     }
 }
