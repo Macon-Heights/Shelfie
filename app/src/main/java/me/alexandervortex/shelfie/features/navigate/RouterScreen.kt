@@ -39,7 +39,6 @@ fun RouterScreen() {
             ViewerScreen(
                 it.getId(),
                 hiltViewModel<ViewerBookViewModel>(),
-                hiltViewModel<TtsViewModel>()
             )
         }
     }
