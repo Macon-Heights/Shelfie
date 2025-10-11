@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.tts
+package me.alexandervortex.shelfie.features.mediaplayer
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
