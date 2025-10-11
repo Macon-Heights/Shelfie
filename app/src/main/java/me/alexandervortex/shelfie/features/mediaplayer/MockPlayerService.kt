@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
@@ -89,18 +88,16 @@ class MockPlayerService : Service() {
     }
 
     private fun ensureNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val manager = getSystemService(NotificationManager::class.java)
-            if (manager.getNotificationChannel(CHANNEL_ID) == null) {
-                val channel = NotificationChannel(
-                    CHANNEL_ID,
-                    "Shelfie Mock Player",
-                    NotificationManager.IMPORTANCE_LOW
-                ).apply {
-                    description = "Playback controls"
-                }
-                manager.createNotificationChannel(channel)
+        val manager = getSystemService(NotificationManager::class.java)
+        if (manager.getNotificationChannel(CHANNEL_ID) == null) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "Shelfie Mock Player",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Playback controls"
             }
+            manager.createNotificationChannel(channel)
         }
     }
 }
