@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
+import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerBookViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 
@@ -36,9 +37,13 @@ fun RouterScreen() {
                 uriPattern = ViewerRoute.uriPattern
             }),
         ) {
+            val bookVm = hiltViewModel<ViewerBookViewModel>()
+            val ttsVm = hiltViewModel<TtsViewModel>() // 👈 добавляем вторую VM
+
             ViewerScreen(
-                it.getId(),
-                hiltViewModel<ViewerBookViewModel>(),
+                id = it.getId(),
+                viewModel = bookVm,
+                ttsViewModel = ttsVm // 👈 передаём новую VM
             )
         }
     }
