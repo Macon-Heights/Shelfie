@@ -1,5 +1,7 @@
 package me.alexandervortex.shelfie.features.mediaplayer
 
+// features/viewer/TtsServiceViewModel.kt
+
 import android.app.Application
 import android.content.ComponentName
 import android.content.Context
@@ -17,8 +19,7 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
 @HiltViewModel
-class TtsViewModel
-@Inject constructor(
+class TtsViewModel @Inject constructor(
     app: Application,
 ) : AndroidViewModel(app) {
 

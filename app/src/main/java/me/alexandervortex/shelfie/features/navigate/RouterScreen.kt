@@ -43,7 +43,7 @@ fun RouterScreen() {
             ViewerScreen(
                 id = it.getId(),
                 viewModel = bookVm,
-                ttsViewModel = ttsVm // 👈 передаём новую VM
+                ttsVm = ttsVm // 👈 передаём новую VM
             )
         }
     }
