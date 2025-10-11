@@ -9,19 +9,20 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.alexandervortex.shelfie.R
+import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
-import me.alexandervortex.shelfie.ui.theme.IC_ADD
+import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
+import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 
 @Composable
 fun ViewerScreen(
@@ -29,27 +30,24 @@ fun ViewerScreen(
     viewModel: ViewerBookViewModel,
     ttsViewModel: TtsViewModel,
 ) {
+    val context = LocalContext.current
     val listState = rememberLazyListState()
-    val lifecycleOwner = LocalLifecycleOwner.current
     val book = viewModel.bookModel.value
 
-    // загружаем книгу
+    // грузим книгу
     LaunchedEffect(true) {
         viewModel.loadCurrentBook(id)
     }
 
-    LaunchedEffect(viewModel.bookModel.value) {
-        viewModel.bookModel.value?.let {
-            ttsViewModel.initTTSWithBook(it)
-            ttsViewModel.scrollElementIndex.value = it.progressIndex
-            listState.animateScrollToItem(
-                ttsViewModel.scrollElementIndex.value
-            )
-        }
+    LaunchedEffect(book) {
+        ttsViewModel.loadBook(book)
     }
 
-    // сохраняем прогресс при закрытии экрана
-    DisposableEffect(lifecycleOwner) {
+    // state из сервиса реактивно
+    val serviceState by ttsViewModel.state.collectAsStateWithLifecycle()
+
+    // OLD сохраняем прогресс при закрытии экрана
+   /* DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
                 viewModel.saveScrollStateOnDispose(
@@ -61,7 +59,7 @@ fun ViewerScreen(
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }
+    }*/
 
     // region интерфейс
     Box(
@@ -70,7 +68,7 @@ fun ViewerScreen(
     ) {
         // элементы книги
         LazyColumn(
-            userScrollEnabled = ttsViewModel.isScrollable.value,
+            userScrollEnabled = serviceState.isScrollable,
             state = listState,
             contentPadding = PaddingValues(32.dp),
             modifier = Modifier.fillMaxSize()
@@ -80,16 +78,16 @@ fun ViewerScreen(
                 ComponentUI(
                     element = section,
                     elementIndex = index,
-                    currentIndex = ttsViewModel.scrollElementIndex.value,
-                    partIndex = ttsViewModel.scrollElementPart.value
+                    currentIndex = serviceState.index,
+                    partIndex = serviceState.part
                 )
             }
         }
         // показывалка ошибки
-        if (viewModel.errorState.value.isNotBlank() || ttsViewModel.errorState.value.isNotBlank()) {
+        if (viewModel.errorState.value.isNotBlank() || serviceState.error.isNotBlank()) {
             Toast.makeText(
                 LocalContext.current,
-                viewModel.errorState.value.ifBlank { null } ?: ttsViewModel.errorState.value,
+                viewModel.errorState.value.ifBlank { null } ?: serviceState.error,
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -98,14 +96,14 @@ fun ViewerScreen(
         ActionButtonComponent(
             content = {
                 Icon(
-                    imageVector = ttsViewModel.buttonIcon?.value ?: IC_ADD,
-                    contentDescription = "",
+                    imageVector = if (serviceState.buttonIconRes == R.drawable.ic_pause) IC_PAUSE else IC_PLAY,
+                    contentDescription = null
                 )
             },
             action = {
                 // начинаю воспроизведение с первого (второго-третьего? видимого элемента)
                 ttsViewModel.togglePlayPause(
-                    indexToStartPlaying = listState.firstVisibleItemIndex,
+                    listState.firstVisibleItemIndex
                 )
             }
         )

@@ -1,52 +1,62 @@
-package me.alexandervortex.shelfie.features.viewer
+package me.alexandervortex.shelfie.features.mediaplayer
 
+import android.app.Application
+import android.content.ComponentName
 import android.content.Context
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import me.alexandervortex.shelfie.features.tts.TtsController
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
 @HiltViewModel
 class TtsViewModel
 @Inject constructor(
-    @ApplicationContext private val context: Context,
-) : ViewModel() {
+    app: Application,
+) : AndroidViewModel(app) {
 
-    val isScrollable = mutableStateOf(true)
-    val errorState = mutableStateOf("")
+    private var service: MockPlayerService? = null
+    private val _state = MutableStateFlow(ServiceState())
+    val state: StateFlow<ServiceState> = _state.asStateFlow()
 
-    val scrollElementIndex = mutableStateOf(0)
-    val scrollElementPart = mutableStateOf(0)
-
-    private var ttsController: TtsController? = null
-    val buttonIcon get() = ttsController?.buttonIcon // FIXME check taht
-
-    fun initTTSWithBook(bookUI: BookUI) {
-        scrollElementIndex.value = bookUI.progressIndex
-        ttsController = TtsController(
-            context = context,
-            bookModel = bookUI,
-            onAppError = { error ->
-                this.errorState.value = error
-            },
-            scrollToIndex = { index, partIndex ->
-                scrollElementIndex.value = index ?: 0
-                scrollElementPart.value = partIndex ?: 0
+    private val conn = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+            service = (binder as? MockPlayerService.LocalBinder)?.getService()
+            // подписываемся на поток сервиса
+            viewModelScope.launch {
+                service!!.state.collect { _state.value = it }
             }
-        )
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            service = null
+        }
     }
 
-    fun togglePlayPause(
-        indexToStartPlaying: Int,
-    ) {
-        ttsController?.togglePlayPause(indexToStartPlaying)
+    init {
+        // bind к сервису
+        val ctx = getApplication<Application>()
+        ctx.bindService(Intent(ctx, MockPlayerService::class.java), conn, Context.BIND_AUTO_CREATE)
     }
 
     override fun onCleared() {
-        ttsController?.release()
         super.onCleared()
+        val ctx = getApplication<Application>()
+        runCatching { ctx.unbindService(conn) }
+    }
+
+    fun loadBook(book: BookUI?) {
+        service?.loadBook(book)
+    }
+
+    fun togglePlayPause(currentTopIndex: Int) {
+        service?.togglePlayPause(currentTopIndex)
     }
 }
