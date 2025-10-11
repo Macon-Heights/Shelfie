@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.component
+package me.alexandervortex.shelfie.features.catalogue.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
