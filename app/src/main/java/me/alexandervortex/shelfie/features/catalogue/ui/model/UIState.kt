@@ -4,10 +4,9 @@ import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 
 sealed interface UIState {
 
+    data object CatalogueLoadingState : UIState
+
+    data class CatalogueBooksState(
+        val books: List<BookEntity>,
+    ) : UIState
 }
-
-data object CatalogueLoadingState : UIState
-
-data class CatalogueBooksState(
-    val books: List<BookEntity>,
-) : UIState
