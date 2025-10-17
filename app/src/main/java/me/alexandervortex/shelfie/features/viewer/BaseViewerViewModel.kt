@@ -6,8 +6,13 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 
 abstract class BaseViewerViewModel : ViewModel() {
 
-    abstract val error: MutableState<String>
-    abstract val bookSample: MutableState<BookUI?>
+    abstract val errorState: MutableState<String>
+    abstract val bookModel: MutableState<BookUI?>
 
-    abstract fun initScreenData(id: String)
+    abstract fun loadCurrentBook(id: String)
+    abstract fun saveScrollStateOnDispose(
+        id: String,
+        index: Int,
+        offset: Int,
+    )
 }

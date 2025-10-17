@@ -2,7 +2,6 @@ package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,12 +13,12 @@ import javax.inject.Inject
 class ViewerBookViewModel
 @Inject constructor(
     private val repo: BookRepository,
-) : ViewModel() {
+) : BaseViewerViewModel() {
 
-    val errorState = mutableStateOf("")
-    val bookModel: MutableState<BookUI?> = mutableStateOf(null)
+    override val errorState = mutableStateOf("")
+    override val bookModel: MutableState<BookUI?> = mutableStateOf(null)
 
-    fun loadCurrentBook(id: String) {
+    override fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
                 bookModel.value = repo.getBookModelById(id)
@@ -29,7 +28,7 @@ class ViewerBookViewModel
         }
     }
 
-    fun saveScrollStateOnDispose(
+    override fun saveScrollStateOnDispose(
         id: String,
         index: Int,
         offset: Int,
