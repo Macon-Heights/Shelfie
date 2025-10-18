@@ -1,4 +1,3 @@
-// features/mediaplayer/MockPlayerService.kt
 package me.alexandervortex.shelfie.features.mediaplayer
 
 import android.app.Notification
@@ -105,12 +104,35 @@ class MockPlayerService : Service() {
     // ---- публичные команды (VM может дергать через binder)
     fun loadBook(book: BookUI?) = initTtsController(book)
     fun togglePlayPause(indexToStart: Int) {
+        Log.d(
+            "${TAG}_MockPlayer",
+            "togglePlayPause:${indexToStart}"
+        )
+        if (ttsController == null) {
+            Log.d(
+                "${TAG}_MockPlayer",
+                "ttsController == null:${indexToStart}"
+            )
+            _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
+            return
+        }
         updatePlayback(!_state.value.isPlaying, indexToStart)
     }
 
     // ---- приватная логика
     private fun initTtsController(bookUI: BookUI?) {
-        if (bookUI == null) return
+        Log.d(
+            "${TAG}_MockPlayer",
+            "initTtsController:${bookUI?.elements?.size}"
+        )
+        if (bookUI == null) {
+            Log.d(
+                "${TAG}_MockPlayer",
+                "bookUI == null:${bookUI}"
+            )
+            _state.update { it.copy(error = "Пустая книга") }
+            return
+        }
         currentBook = bookUI
         ttsController?.release()
 
@@ -146,6 +168,16 @@ class MockPlayerService : Service() {
     }
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
+        // если контроллера нет, выходим (доп. защита)
+        Log.d(
+            "${TAG}_MockPlayer",
+            "updatePlayback:${isPlaying}:{$indexToStartPlaying}"
+        )
+        val ctrl = ttsController ?: run {
+            _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
+            return
+        }
+
         _state.update {
             Log.d(
                 "${TAG}_MockPlayer",
@@ -153,11 +185,12 @@ class MockPlayerService : Service() {
             )
             it.copy(
                 isPlaying = isPlaying,
+                isScrollable = !isPlaying, // бонус: блокируем скролл во время чтения
                 buttonIconRes = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
             )
         }
         startForeground(1, buildNotification(isPlaying))
-        ttsController?.togglePlayPause(indexToStartPlaying)
+        ctrl.togglePlayPause(indexToStartPlaying)
     }
 
     private fun buildNotification(isPlaying: Boolean): Notification {

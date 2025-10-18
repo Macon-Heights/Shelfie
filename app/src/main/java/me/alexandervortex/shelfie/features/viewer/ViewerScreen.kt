@@ -30,7 +30,7 @@ const val TAG = "^_^"
 @Composable
 fun ViewerScreen(
     id: String,
-    viewModel: ViewerBookViewModel,
+    viewModel: BaseViewerViewModel,
     ttsVm: TtsViewModel,
 ) {
     val context = LocalContext.current
