@@ -48,16 +48,29 @@ class TtsViewModel @Inject constructor(
     }
 
     override fun onCleared() {
+        Log.d(
+            "${TAG}_TtsVm",
+            "onCleared"
+        )
         super.onCleared()
         val ctx = getApplication<Application>()
         runCatching { ctx.unbindService(conn) }
     }
 
     fun loadBook(book: BookUI?) {
+        Log.d(
+            "${TAG}_TtsVm",
+            "loadBook:${book?.elements?.size}"
+        )
+        lastBook = book
         service?.loadBook(book)
     }
 
     fun togglePlayPause(currentTopIndex: Int) {
+        Log.d(
+            "${TAG}_TtsVm",
+            "togglePlayPause:${currentTopIndex}"
+        )
         service?.togglePlayPause(currentTopIndex)
     }
 }
