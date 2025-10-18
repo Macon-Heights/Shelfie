@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.viewer
+package me.alexandervortex.shelfie.features._deprecated_viewer
 
 import android.util.Log
 import android.widget.Toast
