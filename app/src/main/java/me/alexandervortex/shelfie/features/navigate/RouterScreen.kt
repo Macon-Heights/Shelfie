@@ -6,11 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import me.alexandervortex.shelfie.features._deprecated_viewer.MockViewerViewModel
+import me.alexandervortex.shelfie.features._deprecated_viewer.ViewerScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
-import me.alexandervortex.shelfie.features.viewer.MockViewerViewModel
-import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 
 @Composable
 fun RouterScreen() {
