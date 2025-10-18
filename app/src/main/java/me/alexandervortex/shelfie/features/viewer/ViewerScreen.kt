@@ -21,7 +21,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.ComponentUI
@@ -117,7 +116,7 @@ fun ViewerScreen(
         ActionButtonComponent(
             content = {
                 Icon(
-                    imageVector = if (serviceState.buttonIconRes == R.drawable.ic_pause) IC_PAUSE else IC_PLAY,
+                    imageVector = if (serviceState.isPlaying) IC_PAUSE else IC_PLAY,
                     contentDescription = null
                 )
             },
