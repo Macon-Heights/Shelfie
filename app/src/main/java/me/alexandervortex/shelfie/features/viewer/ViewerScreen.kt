@@ -38,10 +38,28 @@ fun ViewerScreen(
     ttsVm: TtsViewModel,
 ) {
     val context = LocalContext.current
-    val listState = rememberLazyListState()
     val lifecycleOwner = LocalLifecycleOwner.current
-    val book = viewModel.bookModel.value
+    val serviceState by ttsVm.state.collectAsStateWithLifecycle()
+    val listState = rememberLazyListState()
 
+    // region errors
+    LaunchedEffect(serviceState.error) {
+        if (serviceState.error.isNotBlank()) {
+            Log.e("${TAG}_ViewerScreen", "service_error:${serviceState.error}")
+            Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    LaunchedEffect(serviceState.error) {
+        if (serviceState.error.isNotBlank()) {
+            Log.e("${TAG}_ViewerScreen", "viewModel_error:${viewModel.errorState}")
+            Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+        }
+    }
+    // endregion
+
+    // region init book & send to tts
+    val book = viewModel.bookModel.value
     LaunchedEffect(true) {
         Log.d("${TAG}_ViewerScreen", "loadCurrentBook:${id}")
         viewModel.loadCurrentBook(id)
@@ -49,19 +67,14 @@ fun ViewerScreen(
 
     LaunchedEffect(book) {
         Log.d("${TAG}_ViewerScreen", "loadBook:${book?.elements?.size}")
-        ttsVm.loadBook(book) // ttsViewModel.initTTSWithBook(it)
-//        ttsVm.state.value.index = book.progressIndex
-//        ttsVm.state.value.part = book.progressOffset
-
-        // old
-        viewModel.bookModel.value?.let {
+        book?.let {
+            ttsVm.loadBook(book)
             listState.animateScrollToItem(ttsVm.state.value.index)
         }
     }
+    // endregion
 
-    // state из сервиса реактивно
-    val serviceState by ttsVm.state.collectAsStateWithLifecycle()
-
+    // region save state onStop
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
@@ -71,15 +84,15 @@ fun ViewerScreen(
                     offset = listState.firstVisibleItemScrollOffset
                 )
             }
-
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
+    // endregion
 
-    // UI
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
         Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
+        // region UI
         LazyColumn(
             userScrollEnabled = serviceState.isScrollable,
             state = listState,
@@ -96,20 +109,7 @@ fun ViewerScreen(
                 )
             }
         }
-
-        LaunchedEffect(serviceState.error) {
-            if (serviceState.error.isNotBlank()) {
-                Log.e("${TAG}_ViewerScreen", "service_error:${serviceState.error}")
-                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        LaunchedEffect(serviceState.error) {
-            if (serviceState.error.isNotBlank()) {
-                Log.e("${TAG}_ViewerScreen", "viewModel_error:${viewModel.errorState}")
-                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
-            }
-        }
+        // endregion
 
         ActionButtonComponent(
             content = {
