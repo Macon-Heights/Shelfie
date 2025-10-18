@@ -37,6 +37,11 @@ class TtsViewModel @Inject constructor(
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d(
+                "${TAG}_TtsVm",
+                "onServiceDisconnected:${name}"
+            )
+            serviceJob?.cancel()
             service = null
         }
     }
