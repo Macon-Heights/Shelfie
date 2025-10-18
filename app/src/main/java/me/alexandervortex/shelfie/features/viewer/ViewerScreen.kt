@@ -1,6 +1,7 @@
 // features/viewer/ViewerScreen.kt
 package me.alexandervortex.shelfie.features.viewer
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,6 +26,8 @@ import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 
+const val TAG = "^_^"
+
 @Composable
 fun ViewerScreen(
     id: String,
@@ -44,6 +47,10 @@ fun ViewerScreen(
 
     // UI
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
+        Log.d(
+            "${TAG}_ViewerScreen",
+            "recomposition:${book?.elements?.size}"
+        )
         LazyColumn(
             userScrollEnabled = serviceState.isScrollable,
             state = listState,
@@ -76,6 +83,10 @@ fun ViewerScreen(
             },
             action = {
                 val topIndex = listState.firstVisibleItemIndex
+                Log.d(
+                    "${TAG}_ViewerScreen",
+                    "action_button_clicked:${topIndex}"
+                )
                 ttsVm.togglePlayPause(topIndex)
             }
         )
