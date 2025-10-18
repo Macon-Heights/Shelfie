@@ -1,4 +1,3 @@
-// features/viewer/ViewerScreen.kt
 package me.alexandervortex.shelfie.features.viewer
 
 import android.util.Log
@@ -39,8 +38,20 @@ fun ViewerScreen(
     val book = viewModel.bookModel.value
 
     // грузим книгу
-    LaunchedEffect(true) { viewModel.loadCurrentBook(id) }
-    LaunchedEffect(book) { ttsVm.loadBook(book) }
+    LaunchedEffect(true) {
+        Log.d(
+            "${TAG}_ViewerScreen",
+            "loadCurrentBook:${id}"
+        )
+        viewModel.loadCurrentBook(id)
+    }
+    LaunchedEffect(book) {
+        Log.d(
+            "${TAG}_ViewerScreen",
+            "loadBook:${book?.elements?.size}"
+        )
+        ttsVm.loadBook(book)
+    }
 
     // state из сервиса реактивно
     val serviceState by ttsVm.state.collectAsStateWithLifecycle()
@@ -68,9 +79,25 @@ fun ViewerScreen(
             }
         }
 
-        if (serviceState.error.isNotBlank()) {
             LaunchedEffect(serviceState.error) {
-                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+                if (serviceState.error.isNotBlank()) {
+                    Log.e(
+                        "${TAG}_ViewerScreen",
+                        "service_error:${serviceState.error}"
+                    )
+                    Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+
+            LaunchedEffect(serviceState.error) {
+                if (serviceState.error.isNotBlank()) {
+                    Log.e(
+                        "${TAG}_ViewerScreen",
+                        "viewModel_error:${viewModel.errorState}"
+                    )
+                    Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
             }
         }
 
