@@ -24,10 +24,12 @@ class TtsViewModel @Inject constructor(
     app: Application,
 ) : AndroidViewModel(app) {
 
+
+
     // тут IDE пишет что утечка контекста
     private var service: MockPlayerService? = null
     private var serviceJob: Job? = null
-    private var lastBook: BookUI? = null
+    private var bookUI: BookUI? = null
 
     private val _state = MutableStateFlow(ServiceState())
     val state: StateFlow<ServiceState> = _state.asStateFlow()
@@ -35,39 +37,27 @@ class TtsViewModel @Inject constructor(
     private val conn = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-            Log.d(
-                "${TAG}_TtsVm",
-                "onServiceConnected:${name?.className}:${binder?.isBinderAlive}"
-            )
+            Log.d("${TAG}_TtsVm", "onServiceConnected:${name?.className}:${binder?.isBinderAlive}")
             val newService = (binder as? MockPlayerService.LocalBinder)?.getService() ?: return
             service = newService
 
             serviceJob?.cancel()
             serviceJob = viewModelScope.launch {
                 newService.state.collect {
-                    Log.d(
-                        "${TAG}_TtsVm",
-                        "state_collect:${_state.value}:${it}"
-                    )
+                    Log.d("${TAG}_TtsVm", "state_collect:${_state.value}:${it}")
                     _state.value = it
                 }
             }
 
             // важное: пробуем догрузить последнюю книгу, если она уже известна
-            lastBook?.let {
-                Log.d(
-                    "${TAG}_TtsVm",
-                    "loadBook:${it}"
-                )
+            bookUI?.let {
+                Log.d("${TAG}_TtsVm", "loadBook:${it}")
                 newService.loadBook(it)
             }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            Log.d(
-                "${TAG}_TtsVm",
-                "onServiceDisconnected:${name}"
-            )
+            Log.d("${TAG}_TtsVm", "onServiceDisconnected:${name}")
             serviceJob?.cancel()
             service = null
         }
@@ -101,12 +91,10 @@ class TtsViewModel @Inject constructor(
         serviceJob?.cancel()
     }
 
-    fun loadBook(book: BookUI?) {
-        Log.d(
-            "${TAG}_TtsVm",
-            "loadBook:${book?.elements?.size}"
-        )
-        lastBook = book
+    fun loadBook(book: BookUI) {
+        Log.d("${TAG}_TtsVm", "loadBook:${book.elements.size}")
+        bookUI = book // with progress index
+//        _state.value = state.value.copy(index = book.progressIndex)
         service?.loadBook(book)
     }
 
