@@ -24,9 +24,6 @@ class TtsViewModel @Inject constructor(
     app: Application,
 ) : AndroidViewModel(app) {
 
-
-
-    // тут IDE пишет что утечка контекста
     private var service: MockPlayerService? = null
     private var serviceJob: Job? = null
     private var bookUI: BookUI? = null
@@ -34,12 +31,15 @@ class TtsViewModel @Inject constructor(
     private val _state = MutableStateFlow(ServiceState())
     val state: StateFlow<ServiceState> = _state.asStateFlow()
 
+    private var isBound = false
+
     private val conn = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             Log.d("${TAG}_TtsVm", "onServiceConnected:${name?.className}:${binder?.isBinderAlive}")
             val newService = (binder as? MockPlayerService.LocalBinder)?.getService() ?: return
             service = newService
+            isBound = true
 
             serviceJob?.cancel()
             serviceJob = viewModelScope.launch {
@@ -59,36 +59,37 @@ class TtsViewModel @Inject constructor(
         override fun onServiceDisconnected(name: ComponentName?) {
             Log.d("${TAG}_TtsVm", "onServiceDisconnected:${name}")
             serviceJob?.cancel()
+            serviceJob = null
             service = null
+            isBound = false
         }
     }
 
-    init {
-        Log.d(
-            "${TAG}_TtsVm",
-            "init"
-        )
-        val ctx = getApplication<Application>()
-        // гарантируем создание сервиса (и канал/foreground-ноти)
-        ctx.startService(Intent(ctx, MockPlayerService::class.java))
-        // и биндимся
-        ctx.bindService(Intent(ctx, MockPlayerService::class.java), conn, Context.BIND_AUTO_CREATE)
+    fun bindService(context: Context) {
+        if (isBound) return
+        val intent = Intent(context, MockPlayerService::class.java)
+        // гарантируем живой сервис
+        context.startForegroundService(intent)
+        context.bindService(intent, conn, Context.BIND_AUTO_CREATE)
+        isBound = true
     }
 
-    override fun onCleared() {
-        Log.d(
-            "${TAG}_TtsVm",
-            "onCleared"
-        )
-        super.onCleared()
+    /** вызывать при dispose или onStop */
+    fun unbindService(context: Context) {
+        if (!isBound) return
+        Log.d("${TAG}_TtsVm", "onCleared")
         runCatching {
             Log.d(
                 "${TAG}_TtsVm",
                 "runCatching"
             )
-            getApplication<Application>().unbindService(conn)
+            context.unbindService(conn)
         }
+            .onFailure { Log.e("${TAG}_TtsVm", "onCleared failed", it) }
         serviceJob?.cancel()
+        serviceJob = null
+        service = null
+        isBound = false
     }
 
     fun loadBook(book: BookUI) {
@@ -99,10 +100,7 @@ class TtsViewModel @Inject constructor(
     }
 
     fun togglePlayPause(currentTopIndex: Int) {
-        Log.d(
-            "${TAG}_TtsVm",
-            "togglePlayPause:${currentTopIndex}"
-        )
+        Log.d("${TAG}_TtsVm", "togglePlayPause:${currentTopIndex}")
         service?.togglePlayPause(currentTopIndex)
     }
 }
