@@ -70,19 +70,17 @@ fun ViewerScreen(
             }
         }
 
-        LaunchedEffect(serviceState.error) {
-            if (serviceState.error.isNotBlank()) {
+            LaunchedEffect(serviceState.error) {
+                if (serviceState.error.isNotBlank()) {
                 Log.e("${TAG}_ViewerScreen", "service_error:${serviceState.error}")
-                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+                }
             }
-        }
 
-
-
-        LaunchedEffect(serviceState.error) {
-            if (serviceState.error.isNotBlank()) {
+            LaunchedEffect(serviceState.error) {
+                if (serviceState.error.isNotBlank()) {
                 Log.e("${TAG}_ViewerScreen", "viewModel_error:${viewModel.errorState}")
-                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
             }
         }
 
