@@ -24,7 +24,7 @@ class TtsViewModel @Inject constructor(
     app: Application,
 ) : AndroidViewModel(app) {
 
-    private var service: MockPlayerService? = null
+    private var service: PlayerService? = null
     private var serviceJob: Job? = null
     private var bookUI: BookUI? = null
 
@@ -37,7 +37,7 @@ class TtsViewModel @Inject constructor(
 
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             Log.d("${TAG}_TtsVm", "onServiceConnected:${name?.className}:${binder?.isBinderAlive}")
-            val newService = (binder as? MockPlayerService.LocalBinder)?.getService() ?: return
+            val newService = (binder as? PlayerService.LocalBinder)?.getService() ?: return
             service = newService
             isBound = true
 
@@ -67,7 +67,7 @@ class TtsViewModel @Inject constructor(
 
     fun bindService(context: Context) {
         if (isBound) return
-        val intent = Intent(context, MockPlayerService::class.java)
+        val intent = Intent(context, PlayerService::class.java)
         // гарантируем живой сервис
         context.startForegroundService(intent)
         context.bindService(intent, conn, Context.BIND_AUTO_CREATE)
