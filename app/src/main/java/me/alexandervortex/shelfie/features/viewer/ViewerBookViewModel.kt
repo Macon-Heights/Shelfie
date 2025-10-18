@@ -21,7 +21,7 @@ class ViewerBookViewModel
     override fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
-                bookModel.value = repo.getBookModelById(id)
+                bookModel.value = repo.getBookModelById(id) // with offset
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
