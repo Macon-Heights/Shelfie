@@ -1,4 +1,3 @@
-// features/mediaplayer/TtsController.kt
 package me.alexandervortex.shelfie.features.mediaplayer
 
 import android.content.Context
@@ -47,12 +46,15 @@ class TtsController(
             tts?.setOnUtteranceProgressListener(object :
                 android.speech.tts.UtteranceProgressListener() {
                 override fun onStart(utteranceId: String?) {
-                    utteranceId?.let {
-                        val parts = it.split("_")
-                        scrollToIndex(
-                            parts.firstOrNull()?.toIntOrNull(),
-                            parts.getOrNull(1)?.toIntOrNull()
-                        )
+                    // формат: "el:part"
+                    Log.d(
+                        "${TAG}_TtsController",
+                        "onStart:$utteranceId"
+                    )
+                    utteranceId?.split(':')?.let { parts ->
+                        val el = parts.getOrNull(0)?.toIntOrNull()
+                        val part = parts.getOrNull(1)?.toIntOrNull()
+                        scrollToIndex(el, part)
                     }
                 }
 
@@ -98,7 +100,16 @@ class TtsController(
     }
 
     private fun startSpeaking(indexToStartPlaying: Int) {
-        if (bookModel?.elements.isNullOrEmpty()) {
+        Log.d(
+            "${TAG}_TtsController",
+            "startSpeaking:$indexToStartPlaying"
+        )
+        val elements = bookModel?.elements
+        if (elements.isNullOrEmpty()) {
+            Log.d(
+                "${TAG}_TtsController",
+                "BookModel elements are null or empty"
+            )
             onAppError("BookModel elements are null or empty")
             return
         }
@@ -107,17 +118,18 @@ class TtsController(
         buttonIcon.value = R.drawable.ic_pause
         onIconChanged(R.drawable.ic_pause)
 
-        bookModel?.elements?.forEachIndexed { elementIndex, element ->
+        // ВАШ ПОДХОД: добавляем все с нужного индекса (просто чуток надежнее id)
+        elements.forEachIndexed { elementIndex, element ->
             val textUi = element as? ElementUI.TextUI ?: return@forEachIndexed
-            textUi.parts.orEmpty().forEachIndexed { sentenceIndex, sentence ->
-                val isIndexNeeded = elementIndex >= indexToStartPlaying
-                val trimmed = sentence?.trim().orEmpty()
-                if (isIndexNeeded && trimmed.isNotBlank()) {
+            textUi.parts.forEachIndexed { sentenceIndex, sentence ->
+                val shouldEnqueue = elementIndex >= indexToStartPlaying
+                val trimmed = sentence.trim()
+                if (shouldEnqueue && trimmed.isNotBlank()) {
                     tts?.speak(
                         trimmed,
                         TextToSpeech.QUEUE_ADD,
-                        null,
-                        "${elementIndex}_${sentenceIndex}"
+                        /* params */ null,
+                        /* utteranceId */ "$elementIndex:$sentenceIndex"
                     )
                 }
             }
