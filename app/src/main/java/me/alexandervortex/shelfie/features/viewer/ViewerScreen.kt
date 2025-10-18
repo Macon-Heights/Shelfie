@@ -90,9 +90,12 @@ fun ViewerScreen(
     }
     // endregion
 
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
-        Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
+    ) {
         // region UI
+        Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
         LazyColumn(
             userScrollEnabled = serviceState.isScrollable,
             state = listState,
