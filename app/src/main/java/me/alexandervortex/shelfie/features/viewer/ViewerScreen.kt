@@ -31,25 +31,19 @@ const val TAG = "^_^"
 fun ViewerScreen(
     id: String,
     viewModel: ViewerBookViewModel,
-    ttsVm: TtsViewModel,   // ⬅️ новый VM
+    ttsVm: TtsViewModel,
 ) {
     val context = LocalContext.current
     val listState = rememberLazyListState()
     val book = viewModel.bookModel.value
 
-    // грузим книгу
     LaunchedEffect(true) {
-        Log.d(
-            "${TAG}_ViewerScreen",
-            "loadCurrentBook:${id}"
-        )
+        Log.d("${TAG}_ViewerScreen", "loadCurrentBook:${id}")
         viewModel.loadCurrentBook(id)
     }
+
     LaunchedEffect(book) {
-        Log.d(
-            "${TAG}_ViewerScreen",
-            "loadBook:${book?.elements?.size}"
-        )
+        Log.d("${TAG}_ViewerScreen", "loadBook:${book?.elements?.size}")
         ttsVm.loadBook(book)
     }
 
@@ -58,10 +52,7 @@ fun ViewerScreen(
 
     // UI
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
-        Log.d(
-            "${TAG}_ViewerScreen",
-            "recomposition:${book?.elements?.size}"
-        )
+        Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
         LazyColumn(
             userScrollEnabled = serviceState.isScrollable,
             state = listState,
@@ -79,25 +70,19 @@ fun ViewerScreen(
             }
         }
 
-            LaunchedEffect(serviceState.error) {
-                if (serviceState.error.isNotBlank()) {
-                    Log.e(
-                        "${TAG}_ViewerScreen",
-                        "service_error:${serviceState.error}"
-                    )
-                    Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
-                }
+        LaunchedEffect(serviceState.error) {
+            if (serviceState.error.isNotBlank()) {
+                Log.e("${TAG}_ViewerScreen", "service_error:${serviceState.error}")
+                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
             }
+        }
 
 
 
-            LaunchedEffect(serviceState.error) {
-                if (serviceState.error.isNotBlank()) {
-                    Log.e(
-                        "${TAG}_ViewerScreen",
-                        "viewModel_error:${viewModel.errorState}"
-                    )
-                    Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+        LaunchedEffect(serviceState.error) {
+            if (serviceState.error.isNotBlank()) {
+                Log.e("${TAG}_ViewerScreen", "viewModel_error:${viewModel.errorState}")
+                Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -110,10 +95,7 @@ fun ViewerScreen(
             },
             action = {
                 val topIndex = listState.firstVisibleItemIndex
-                Log.d(
-                    "${TAG}_ViewerScreen",
-                    "action_button_clicked:${topIndex}"
-                )
+                Log.d("${TAG}_ViewerScreen", "action_button_clicked:${topIndex}")
                 ttsVm.togglePlayPause(topIndex)
             }
         )
