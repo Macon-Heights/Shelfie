@@ -5,7 +5,7 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.viewer.TAG
+import me.alexandervortex.shelfie.features._deprecated_viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import java.util.Locale
