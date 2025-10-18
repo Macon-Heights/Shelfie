@@ -114,7 +114,13 @@ class MockPlayerService : Service() {
         currentBook = bookUI
         ttsController?.release()
 
-        _state.update { it.copy(index = bookUI.progressIndex, part = 0) }
+        _state.update {
+            Log.d(
+                "${TAG}_MockPlayer",
+                "_state.update:${bookUI.progressIndex}"
+            )
+            it.copy(index = bookUI.progressIndex, part = 0)
+        }
 
         ttsController = TtsController(
             context = this,
