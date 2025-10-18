@@ -25,7 +25,7 @@ import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 
 @AndroidEntryPoint
-class MockPlayerService : Service() {
+class PlayerService : Service() {
 
     // ---- публичный реактивный стейт
     private val _state = MutableStateFlow(ServiceState())
@@ -36,7 +36,7 @@ class MockPlayerService : Service() {
 
     inner class LocalBinder : Binder() {
 
-        fun getService(): MockPlayerService = this@MockPlayerService
+        fun getService(): PlayerService = this@PlayerService
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
@@ -193,7 +193,7 @@ class MockPlayerService : Service() {
         val icon = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
 
         val intent = PendingIntent.getService(
-            this, 0, Intent(this, MockPlayerService::class.java).setAction(action),
+            this, 0, Intent(this, PlayerService::class.java).setAction(action),
             PendingIntent.FLAG_IMMUTABLE
         )
 

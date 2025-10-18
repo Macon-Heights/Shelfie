@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".features.mediaplayer.MockPlayerService"
+            android:name=".features.mediaplayer.PlayerService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
     </application>
