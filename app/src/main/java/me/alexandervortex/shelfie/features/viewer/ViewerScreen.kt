@@ -59,9 +59,10 @@ fun ViewerScreen(
 
     // region init book & send to tts
     val book = viewModel.bookModel.value
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         Log.d("${TAG}_ViewerScreen", "loadCurrentBook:${id}")
         viewModel.loadCurrentBook(id)
+        ttsVm.bindService(context)
     }
 
     LaunchedEffect(book) {
@@ -85,7 +86,10 @@ fun ViewerScreen(
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            ttsVm.unbindService(context)
+        }
     }
     // endregion
 
