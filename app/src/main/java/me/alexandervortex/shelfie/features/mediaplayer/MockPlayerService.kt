@@ -11,7 +11,6 @@ import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
-import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -24,15 +23,6 @@ import kotlinx.coroutines.flow.update
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
-
-data class ServiceState(
-    val isPlaying: Boolean = false,
-    val isScrollable: Boolean = true,
-    val error: String = "",
-    val index: Int = 0,
-    val part: Int = 0,
-    @DrawableRes val buttonIconRes: Int = R.drawable.ic_play,
-)
 
 @AndroidEntryPoint
 class MockPlayerService : Service() {
