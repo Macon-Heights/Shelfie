@@ -5,6 +5,8 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import javax.inject.Inject
 
+const val SENTENCE_SEPARATOR = ". "
+
 class ElementMapper
 @Inject constructor() {
 
@@ -24,7 +26,13 @@ class ElementMapper
                 is TextNode -> node.text().trim()
                     .takeIf { it.isNotEmpty() }
                     ?.let {
-                        listOf(ElementUI.TextUI(parts = it.split(". ")))
+                        listOf(
+                            ElementUI.TextUI(
+                                parts = it.split(SENTENCE_SEPARATOR)
+                                    .map { it.trim() }
+                                    .filter { it.isNotBlank() }
+                            )
+                        )
                     }
                     ?: emptyList()
 
@@ -43,7 +51,9 @@ class ElementMapper
             "image" -> mapImage(element, binaries)
             "empty-line" -> ElementUI.EmptyLine
             "p", "v", "subtitle" -> ElementUI.TextUI(
-                element.text().trim().split(". ")
+                element.text().trim().split(SENTENCE_SEPARATOR)
+                    .map { it.trim() }
+                    .filter { it.isNotBlank() }
             )
 
             else -> null
