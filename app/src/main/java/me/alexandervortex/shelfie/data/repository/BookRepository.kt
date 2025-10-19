@@ -51,16 +51,7 @@ class BookRepository
      */
     suspend fun getBookEntities(): List<BookEntity> {
         val entities = dao.getBookEntities().toMutableList()
-        val element = BookEntity(
-            id = FAKE_BOOK_ID,
-            localPath = "fake_path",
-            title = "Mock Book",
-            author = "Sashke Vortex",
-            year = "2025",
-            scrollOffset = 0,
-            scrollIndex = 0
-        )
-        entities.add(element)
+        entities.add(getFakeBook())
         return entities
     }
 
