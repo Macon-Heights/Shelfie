@@ -43,6 +43,17 @@ fun ViewerScreen(
     val serviceState by ttsVm.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
+    // autoscroll
+    LaunchedEffect(serviceState.index, serviceState.part) {
+        if (serviceState.isPlaying) {
+            try {
+                listState.animateScrollToItem(serviceState.index)
+            } catch (e: Exception) {
+                Log.e(TAG, "scroll_to_index_failed:${serviceState.index}", e)
+            }
+        }
+    }
+
     // region errors
     LaunchedEffect(serviceState.error) {
         if (serviceState.error.isNotBlank()) {
