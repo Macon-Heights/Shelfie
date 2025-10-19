@@ -5,7 +5,7 @@ import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.features._deprecated_viewer.getBookUI
+import me.alexandervortex.shelfie.features.viewer.getBookUI
 import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 

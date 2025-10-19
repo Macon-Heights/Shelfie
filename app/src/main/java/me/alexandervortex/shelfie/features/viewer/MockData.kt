@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features._deprecated_viewer
+package me.alexandervortex.shelfie.features.viewer
 
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
