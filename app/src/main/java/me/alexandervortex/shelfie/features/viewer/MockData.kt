@@ -30,6 +30,7 @@ private fun getTitleInfo(): TitleInfoUI {
 private fun getElements(): List<ElementUI> {
     return listOf(
 
+        ElementUI.EmptyLine,
         ElementUI.TextUI(
             parts = listOf(
                 "1. Солнце встаёт над рекой голубой,\n",
@@ -38,7 +39,9 @@ private fun getElements(): List<ElementUI> {
                 "4. День обещает быть добрым нам.\n"
             )
         ),
-
+        ElementUI.EmptyLine,
+        ElementUI.EmptyLine,
+        ElementUI.EmptyLine,
         ElementUI.TextUI(
             parts = listOf(
                 "1. Вечер ложится на крыши домов,\n",
