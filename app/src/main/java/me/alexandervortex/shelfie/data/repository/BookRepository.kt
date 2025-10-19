@@ -5,6 +5,7 @@ import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.features._deprecated_viewer.getBookUI
 import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
@@ -14,6 +15,9 @@ import javax.inject.Inject
  * получает список книжек
  * получает книгу по айди
  */
+
+private const val FAKE_BOOK_ID = "fake_book_id"
+
 class BookRepository
 @Inject constructor(
     private val dao: BookDao,
@@ -46,8 +50,30 @@ class BookRepository
      * справедливо для любого типа книги
      */
     suspend fun getBookEntities(): List<BookEntity> {
-        val entities = dao.getBookEntities()
+        val entities = dao.getBookEntities().toMutableList()
+        val element = BookEntity(
+            id = FAKE_BOOK_ID,
+            localPath = "fake_path",
+            title = "Mock Book",
+            author = "Sashke Vortex",
+            year = "2025",
+            scrollOffset = 0,
+            scrollIndex = 0
+        )
+        entities.add(element)
         return entities
+    }
+
+    private fun getFakeBook(): BookEntity {
+        return BookEntity(
+            id = FAKE_BOOK_ID,
+            localPath = "fake_path",
+            title = "Mock Book",
+            author = "Sashke Vortex",
+            year = "2025",
+            scrollOffset = 0,
+            scrollIndex = 0
+        )
     }
 
     /**
@@ -55,6 +81,8 @@ class BookRepository
      * справедливо для любого типа книги
      */
     suspend fun getBookModelById(id: String): BookUI? {
+        if (id == FAKE_BOOK_ID) return getBookUI()
+
         val entity = dao.getById(id)
         val result = entity?.let {
             parser.getBookModelById(
