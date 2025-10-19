@@ -20,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.getColors
 
@@ -60,6 +61,8 @@ fun ComponentUI(
             }
 
             Text(
+                fontSize = 32.sp,
+                lineHeight = 32.sp,
                 text = styledText,
                 textAlign = TextAlign.Justify,
                 modifier = Modifier.fillMaxWidth()
