@@ -47,7 +47,7 @@ fun ViewerScreen(
     LaunchedEffect(serviceState.index, serviceState.part) {
         if (serviceState.isPlaying) {
             try {
-                listState.animateScrollToItem(serviceState.index)
+                listState.animateScrollToItem(serviceState.index, scrollOffset = -320)
             } catch (e: Exception) {
                 Log.e(TAG, "scroll_to_index_failed:${serviceState.index}", e)
             }
@@ -82,7 +82,7 @@ fun ViewerScreen(
         Log.d("${TAG}_ViewerScreen", "loadBook:${book?.elements?.size}")
         book?.let {
             ttsVm.loadBook(book)
-            listState.animateScrollToItem(ttsVm.state.value.index)
+            listState.animateScrollToItem(ttsVm.state.value.index, scrollOffset = -320)
         }
     }
     // endregion
