@@ -22,7 +22,7 @@ class ViewerBookViewModel
     fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
-                bookModel.value = repo.getBookModelById(id) // with offset
+                bookModel.value = repo.getBookModelById(id)
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
