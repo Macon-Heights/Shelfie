@@ -20,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.data.mapper.SENTENCE_SEPARATOR
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.theme.getColors
 
@@ -55,7 +56,7 @@ fun ComponentUI(
                             background = bgColor
                         )
                     ) { append(word) }
-                    append(". ")
+                    append(SENTENCE_SEPARATOR)
                 }
             }
 
