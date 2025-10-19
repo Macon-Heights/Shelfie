@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.features.mediaplayer
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features._deprecated_viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -19,38 +18,29 @@ class TtsController(
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
-    private val isSpeaking = mutableStateOf(false)
+    private var isSpeaking = false
 
-    // опционально оставляю, если ты где-то ещё читаешь
-    val buttonIcon = mutableStateOf(R.drawable.ic_play)
+    // текущие позиции
+    private var currentElement = 0
+    private var currentPart = 0
 
     override fun onInit(status: Int) {
-        Log.d(
-            "${TAG}TtsController",
-            "onInit:$status"
-        )
+        Log.d("${TAG}TtsController", "onInit:$status")
         val locale = bookModel?.titleInfo?.lang?.let(::Locale) ?: Locale.getDefault()
         if (status == TextToSpeech.SUCCESS) {
-            Log.d(
-                "${TAG}_TtsController",
-                "TextToSpeech.SUCCESS"
-            )
+            Log.d("${TAG}_TtsController", "TextToSpeech.SUCCESS")
             val result = tts?.setLanguage(locale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 onAppError("Язык не поддерживается")
-                Log.e(
-                    "${TAG}_TtsController",
-                    "Язык не поддерживается"
-                )
+                Log.e("${TAG}_TtsController", "Язык не поддерживается")
             }
+            tts?.setSpeechRate(2f)
+            tts?.setPitch(0.8f)
             tts?.setOnUtteranceProgressListener(object :
                 android.speech.tts.UtteranceProgressListener() {
                 override fun onStart(utteranceId: String?) {
                     // формат: "el:part"
-                    Log.d(
-                        "${TAG}_TtsController",
-                        "onStart:$utteranceId"
-                    )
+                    Log.d("${TAG}_TtsController", "onStart:$utteranceId")
                     utteranceId?.split(':')?.let { parts ->
                         val el = parts.getOrNull(0)?.toIntOrNull()
                         val part = parts.getOrNull(1)?.toIntOrNull()
@@ -59,91 +49,83 @@ class TtsController(
                 }
 
                 override fun onDone(utteranceId: String?) {
-                    Log.d(
-                        "${TAG}_TtsController",
-                        "onDone:$utteranceId"
-                    )
+                    Log.d("${TAG}_TtsController", "onDone:$utteranceId")
+                    if (isSpeaking) speakNext()
                 }
 
                 override fun onError(utteranceId: String?) {
-                    Log.d(
-                        "${TAG}_TtsController",
-                        "Ошибка TTS: $utteranceId"
-                    )
+                    Log.d("${TAG}_TtsController", "Ошибка TTS: $utteranceId")
                     onAppError("Ошибка TTS: $utteranceId")
                 }
             })
         } else {
-            Log.d(
-                "${TAG}_TtsController",
-                "Ошибка инициализации TTS"
-            )
+            Log.d("${TAG}_TtsController", "Ошибка инициализации TTS")
             onAppError("Ошибка инициализации TTS")
         }
     }
 
     fun togglePlayPause(indexToStartPlaying: Int) {
-        Log.d(
-            "${TAG}_TtsController",
-            "togglePlayPause:${indexToStartPlaying}:${isSpeaking.value}"
-        )
-        if (isSpeaking.value) stopSpeaking() else startSpeaking(indexToStartPlaying)
+        Log.d("${TAG}_TtsController", "togglePlayPause:${indexToStartPlaying}:${isSpeaking}")
+        if (isSpeaking) stopSpeaking() else startSpeaking(indexToStartPlaying)
     }
 
     fun release() {
-        Log.d(
-            "${TAG}_TtsController",
-            "release"
-        )
+        Log.d("${TAG}_TtsController", "release")
         tts?.stop()
         tts?.shutdown()
     }
 
-    private fun startSpeaking(indexToStartPlaying: Int) {
-        Log.d(
-            "${TAG}_TtsController",
-            "startSpeaking:$indexToStartPlaying"
-        )
-        val elements = bookModel?.elements
-        if (elements.isNullOrEmpty()) {
+    private fun startSpeaking(startIndex: Int) {
+        Log.d("${TAG}_TtsController", "startSpeaking:$startIndex")
+        val elements = bookModel?.elements ?: return
+        if (elements.isEmpty()) {
             Log.d(
                 "${TAG}_TtsController",
                 "BookModel elements are null or empty"
             )
-            onAppError("BookModel elements are null or empty")
+            onAppError("Пустая книга")
             return
         }
-        tts?.stop()
-        isSpeaking.value = true
-        buttonIcon.value = R.drawable.ic_pause
+
+        isSpeaking = true
         onIconChanged(R.drawable.ic_pause)
-
-        // ВАШ ПОДХОД: добавляем все с нужного индекса (просто чуток надежнее id)
-        elements.forEachIndexed { elementIndex, element ->
-            val textUi = element as? ElementUI.TextUI ?: return@forEachIndexed
-            textUi.parts.forEachIndexed { sentenceIndex, sentence ->
-                val shouldEnqueue = elementIndex >= indexToStartPlaying
-                val trimmed = sentence.trim()
-                if (shouldEnqueue && trimmed.isNotBlank()) {
-                    tts?.speak(
-                        trimmed,
-                        TextToSpeech.QUEUE_ADD,
-                        /* params */ null,
-                        /* utteranceId */ "$elementIndex:$sentenceIndex"
-                    )
-                }
-            }
-        }
-    }
-
-    private fun stopSpeaking() {
-        Log.d(
-            "${TAG}_TtsController",
-            "stopSpeaking"
-        )
+        currentElement = startIndex
+        currentPart = 0
         tts?.stop()
-        isSpeaking.value = false
-        buttonIcon.value = R.drawable.ic_play
-        onIconChanged(R.drawable.ic_play)
+        speakNext()
     }
+
+    private fun speakNext() {
+        val elements = bookModel?.elements ?: return stopSpeaking()
+        if (currentElement >= elements.size) return stopSpeaking()
+
+        val textUi = elements[currentElement] as? ElementUI.TextUI ?: run {
+            currentElement++
+            return speakNext()
+        }
+
+        val parts = textUi.parts
+        if (currentPart >= parts.size) {
+            currentElement++
+            currentPart = 0
+            return speakNext()
+        }
+
+        val sentence = parts[currentPart].trim()
+        if (sentence.isBlank()) {
+            currentPart++
+            return speakNext()
+        }
+
+        val utteranceId = "$currentElement:$currentPart"
+        currentPart++
+        tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
+    }
+
+private fun stopSpeaking() {
+    Log.d("${TAG}_TtsController", "stopSpeaking")
+    tts?.stop()
+    isSpeaking = false
+    onIconChanged(R.drawable.ic_play)
+}
 }
