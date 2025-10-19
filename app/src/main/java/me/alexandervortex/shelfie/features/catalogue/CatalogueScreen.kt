@@ -40,7 +40,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 fun CatalogueScreenContentPreview() {
     CombinedPreviews {
         CatalogueScreenContent(
-            uiState = UIState.CatalogueLoadingState,
+            uiState = UIState.CatalogueBooksState(),
             onAddClick = { },
             onBookClick = { }
         )
