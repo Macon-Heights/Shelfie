@@ -2,11 +2,10 @@ package me.alexandervortex.shelfie.ui.component
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,11 +17,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.data.mapper.SENTENCE_SEPARATOR
+import me.alexandervortex.shelfie.features.viewer.getBookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ComponentUI(
@@ -87,28 +85,22 @@ fun ComponentUI(
         is ElementUI.EmptyLine -> {
             Spacer(
                 modifier = Modifier
-                    .padding(vertical = 32.dp)
-                    .background(getColors().onBackground)
+                    .size(64.dp)
                     .fillMaxWidth()
-                    .height(2.dp)
             )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun TextUiPreview() {
     MaterialTheme {
-        val words = LoremIpsum(500).values.toList()
-        val element = ElementUI.TextUI(
-            parts = words
-        )
         ComponentUI(
-            element = element,
+            element = getBookUI().elements.first(),
             elementIndex = 0,
-            currentIndex = 0,
-            partIndex = 1
+            currentIndex = 2,
+            partIndex = 3
         )
     }
 }
