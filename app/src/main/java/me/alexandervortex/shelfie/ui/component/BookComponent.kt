@@ -3,7 +3,9 @@ package me.alexandervortex.shelfie.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,6 +38,15 @@ fun BookComponent(
             .background(color)
             .padding(16.dp)
     ) {
+        model.title?.let {
+            Text(
+                it,
+                color = onColorForTitle,
+            )
+        }
+
+        Spacer(Modifier.size(16.dp))
+
         model.id.let {
             Text(
                 "id: $it",
@@ -43,12 +54,7 @@ fun BookComponent(
 
                 )
         }
-        model.title?.let {
-            Text(
-                "title: ${it}",
-                color = onColorForTitle,
-            )
-        }
+
         model.author?.let {
             Text(
                 "author: ${it}",
