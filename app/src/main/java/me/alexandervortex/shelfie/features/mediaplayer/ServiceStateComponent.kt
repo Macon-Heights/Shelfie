@@ -23,7 +23,6 @@ fun ServiceStateComponent(serviceState: ServiceState) {
             .padding(8.dp)
     ) {
         Text("isPlaying = ${serviceState.isPlaying}")
-        Text("isScrollable = ${serviceState.isScrollable}")
         Text("error = ${serviceState.error}")
         Text("index = ${serviceState.index}")
         Text("part = ${serviceState.part}")

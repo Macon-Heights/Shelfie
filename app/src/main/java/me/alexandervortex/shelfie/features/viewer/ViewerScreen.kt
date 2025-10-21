@@ -113,7 +113,7 @@ fun ViewerScreen(
         // region UI
         Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
         LazyColumn(
-            userScrollEnabled = serviceState.isScrollable,
+            userScrollEnabled = !serviceState.isPlaying,
             state = listState,
             contentPadding = PaddingValues(32.dp),
             modifier = Modifier.fillMaxSize()
@@ -130,7 +130,7 @@ fun ViewerScreen(
             }
         }
         // endregion
-
+        ServiceStateComponent(serviceState)
         ActionButtonComponent(
             content = {
                 Icon(
