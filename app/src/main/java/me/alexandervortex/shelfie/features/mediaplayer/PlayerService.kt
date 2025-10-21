@@ -175,7 +175,6 @@ class PlayerService : Service() {
             )
             it.copy(
                 isPlaying = isPlaying,
-                isScrollable = !isPlaying, // бонус: блокируем скролл во время чтения
                 buttonIconRes = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
             )
         }

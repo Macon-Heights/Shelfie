@@ -5,7 +5,6 @@ import me.alexandervortex.shelfie.R
 
 data class ServiceState(
     val isPlaying: Boolean = false,
-    val isScrollable: Boolean = true,
     val error: String = "",
     val index: Int = 0,
     val part: Int = 0,
