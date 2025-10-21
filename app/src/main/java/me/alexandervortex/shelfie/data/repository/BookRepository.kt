@@ -25,7 +25,7 @@ class BookRepository
     private val parser: UniversalFileParser,
 ) {
 
-    var currentBook: BookUI? = null
+    var screenBook: BookUI? = null
 
     suspend fun importFromUri(uri: Uri) {
         /**
@@ -88,7 +88,7 @@ class BookRepository
                 )
             }
         }
-        currentBook = result
+        screenBook = result
         return result
     }
 
