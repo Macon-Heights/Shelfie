@@ -25,6 +25,8 @@ class BookRepository
     private val parser: UniversalFileParser,
 ) {
 
+    var currentBook: BookUI? = null
+
     suspend fun importFromUri(uri: Uri) {
         /**
          * uri -> universal parser -> book model
@@ -72,17 +74,21 @@ class BookRepository
      * справедливо для любого типа книги
      */
     suspend fun getBookModelById(id: String): BookUI? {
-        if (id == FAKE_BOOK_ID) return getBookUI()
 
         val entity = dao.getById(id)
-        val result = entity?.let {
-            parser.getBookModelById(
-                id = entity.id,
-                localPath = entity.localPath,
-                scrollOffset = entity.scrollOffset,
-                scrollIndex = entity.scrollIndex
-            )
+        val result = if (id == FAKE_BOOK_ID) {
+            getBookUI()
+        } else {
+            entity?.let {
+                parser.getBookModelById(
+                    id = entity.id,
+                    localPath = entity.localPath,
+                    scrollOffset = entity.scrollOffset,
+                    scrollIndex = entity.scrollIndex
+                )
+            }
         }
+        currentBook = result
         return result
     }
 
