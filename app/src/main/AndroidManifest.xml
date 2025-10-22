@@ -30,6 +30,10 @@
             android:name=".features.mediaplayer.PlayerService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
-    </application>
 
+        <service
+            android:name=".features.mediaviewer.MediaService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+    </application>
 </manifest>
