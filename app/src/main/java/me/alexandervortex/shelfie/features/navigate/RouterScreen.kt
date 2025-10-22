@@ -9,6 +9,8 @@ import androidx.navigation.navDeepLink
 import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
+import me.alexandervortex.shelfie.features.mediaviewer.MediaViewerScreen
+import me.alexandervortex.shelfie.features.mediaviewer.MediaViewerViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerBookViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 
@@ -43,6 +45,22 @@ fun RouterScreen() {
             ViewerScreen(
                 id = it.getId(),
                 viewModel = bookVm,
+                ttsVm = ttsVm
+            )
+        }
+
+        composable(
+            route = MediaViewerRoute.route,
+            arguments = listOf(getId()),
+            deepLinks = listOf(navDeepLink {
+                uriPattern = MediaViewerRoute.uriPattern
+            }),
+        ) {
+
+            val ttsVm = hiltViewModel<MediaViewerViewModel>()
+
+            MediaViewerScreen(
+                id = it.getId(),
                 ttsVm = ttsVm
             )
         }

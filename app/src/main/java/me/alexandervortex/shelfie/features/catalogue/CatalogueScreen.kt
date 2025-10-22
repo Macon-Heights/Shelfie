@@ -134,7 +134,7 @@ fun CatalogueScreen(
     CatalogueScreenContent(
         uiState = viewModel.uiState.value,
         onBookClick = { book ->
-            navController.navigate("viewer?id=${book.id}")
+            navController.navigate("mviewer?id=${book.id}")
         },
         onAddClick = {
             picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
