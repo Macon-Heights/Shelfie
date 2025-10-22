@@ -10,11 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.features.mediaviewer.MediaServiceState
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
-fun ServiceStateComponent(serviceState: ServiceState) {
+fun ServiceStateComponent(serviceState: MediaServiceState) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,6 +33,6 @@ fun ServiceStateComponent(serviceState: ServiceState) {
 @Preview
 @Composable
 fun ServiceStateComponentPreview() {
-    val state = ServiceState.playingState()
+    val state = MediaServiceState.playingState()
     ServiceStateComponent(state)
 }

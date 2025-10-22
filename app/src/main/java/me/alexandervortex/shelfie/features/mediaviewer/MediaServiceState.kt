@@ -2,7 +2,6 @@ package me.alexandervortex.shelfie.features.mediaviewer
 
 import androidx.annotation.DrawableRes
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.mediaplayer.ServiceState
 
 data class MediaServiceState(
     val isPlaying: Boolean = false,
@@ -15,8 +14,8 @@ data class MediaServiceState(
 
     companion object {
 
-        fun playingState(): ServiceState {
-            return ServiceState(
+        fun playingState(): MediaServiceState {
+            return MediaServiceState(
                 isPlaying = true,
                 error = "",
                 index = 0,
@@ -24,8 +23,8 @@ data class MediaServiceState(
             )
         }
 
-        fun pausedState(): ServiceState {
-            return ServiceState(
+        fun pausedState(): MediaServiceState {
+            return MediaServiceState(
                 isPlaying = false,
                 error = "",
                 index = 0,
@@ -33,8 +32,8 @@ data class MediaServiceState(
             )
         }
 
-        fun nullState(): ServiceState {
-            return ServiceState(
+        fun nullState(): MediaServiceState {
+            return MediaServiceState(
                 isPlaying = true,
                 error = "",
                 index = 0,
@@ -42,8 +41,8 @@ data class MediaServiceState(
             )
         }
 
-        fun errorState(): ServiceState {
-            return ServiceState(
+        fun errorState(): MediaServiceState {
+            return MediaServiceState(
                 isPlaying = true,
                 error = "",
                 index = 0,

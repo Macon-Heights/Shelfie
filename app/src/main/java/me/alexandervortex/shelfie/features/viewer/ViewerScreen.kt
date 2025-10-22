@@ -23,7 +23,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.alexandervortex.shelfie.features.mediaplayer.ServiceStateComponent
 import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.ComponentUI
@@ -137,7 +136,7 @@ fun ViewerScreen(
             }
         }
         // endregion
-        ServiceStateComponent(serviceState)
+//        ServiceStateComponent(serviceState) deprecated entire file, needs remove
         ActionButtonComponent(
             content = {
                 Icon(
