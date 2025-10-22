@@ -20,6 +20,7 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
 @HiltViewModel
+@Deprecated("GAVNO")
 class TtsViewModel @Inject constructor(
     app: Application,
 ) : AndroidViewModel(app) {
