@@ -98,6 +98,10 @@ class PlayerService : Service() {
             "${TAG}_MockPlayer",
             "togglePlayPause:${indexToStart}"
         )
+        if (ttsController == null && currentBook != null) {
+            Log.d("${TAG}_MockPlayer", "ttsController == null, but have book -> reinit")
+            initTtsController(currentBook)
+        }
         if (ttsController == null) {
             Log.d(
                 "${TAG}_MockPlayer",
@@ -231,6 +235,8 @@ class PlayerService : Service() {
             nm.createNotificationChannel(ch)
         }
     }
+
+    fun getCurrentBook(): BookUI? = currentBook
 
     companion object {
 
