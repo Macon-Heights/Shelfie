@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.features.mediaplayer.ServiceState
 import me.alexandervortex.shelfie.features.mediaplayer.ServiceStateComponent
 import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
@@ -27,7 +26,7 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 @Composable
 fun MediaViewerContent(
     book: BookUI?,
-    serviceState: ServiceState,
+    serviceState: MediaServiceState,
     listState: LazyListState,
     playPauseAction: () -> Unit,
 ) {

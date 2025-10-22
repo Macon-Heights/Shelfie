@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.mediaplayer.ServiceState
 import me.alexandervortex.shelfie.features.mediaplayer.ShelfieTtsHolder
 import me.alexandervortex.shelfie.features.mediaplayer.TtsController
 import me.alexandervortex.shelfie.features.viewer.TAG
@@ -31,7 +30,7 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 class MediaService : Service() {
 
     // ---- публичный реактивный стейт
-    private val _state = MutableStateFlow(ServiceState())
+    private val _state = MutableStateFlow(MediaServiceState())
     val state = _state.asStateFlow()
 
     // binder для связи с VM
@@ -96,6 +95,7 @@ class MediaService : Service() {
 
     // ---- публичные команды (VM может дергать через binder)
     fun loadBook(book: BookUI?) = initTtsController(book)
+
     fun togglePlayPause(indexToStart: Int) {
         Log.d(
             "${TAG}_MockPlayer",
