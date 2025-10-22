@@ -23,6 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.alexandervortex.shelfie.features.mediaplayer.ServiceStateComponent
 import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.ComponentUI
@@ -81,8 +82,13 @@ fun ViewerScreen(
     LaunchedEffect(book) {
         Log.d("${TAG}_ViewerScreen", "loadBook:${book?.elements?.size}")
         book?.let {
-            ttsVm.loadBook(book)
-            listState.animateScrollToItem(ttsVm.state.value.index, scrollOffset = -320)
+            // 🔹 только если сервис не играет — подгружаем книгу
+            if (!serviceState.isPlaying) {
+                ttsVm.loadBook(book)
+                listState.animateScrollToItem(ttsVm.state.value.index, scrollOffset = -320)
+            } else {
+                Log.d("${TAG}_ViewerScreen", "serviceAlreadyPlaying:skipLoad")
+            }
         }
     }
     // endregion

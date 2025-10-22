@@ -49,6 +49,23 @@ class TtsViewModel @Inject constructor(
                 }
             }
 
+            // 🧩 новый кусок: восстанавливаем книгу если уже есть
+            if (bookUI == null) {
+                runCatching {
+                    val restored = newService.getCurrentBook()
+                    if (restored != null) {
+                        Log.d("${TAG}_TtsVm", "restoredBookFromService:${restored.titleInfo.title}")
+                        bookUI = restored
+                    }
+                }
+            }
+
+            // 🧩 не грузим книгу повторно, если она уже в сервисе
+            if (bookUI != null && newService.getCurrentBook() == null) {
+                Log.d("${TAG}_TtsVm", "loadBookIntoService:${bookUI?.titleInfo?.title}")
+                newService.loadBook(bookUI)
+            }
+
             // важное: пробуем догрузить последнюю книгу, если она уже известна
             bookUI?.let {
                 Log.d("${TAG}_TtsVm", "loadBook:${it}")
