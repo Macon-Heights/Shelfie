@@ -18,3 +18,17 @@ data class ViewerRoute(
         val uriPattern = "https://shelfie.com/book/{id}"
     }
 }
+
+data class MediaViewerRoute(
+    val id: String,
+) {
+
+    val route = "mviewer?id=${id}"
+    val uriPattern = "https://shelfie.com/book/${id}"
+
+    companion object {
+
+        val route = "mviewer?id={id}"
+        val uriPattern = "https://shelfie.com/book/{id}"
+    }
+}
