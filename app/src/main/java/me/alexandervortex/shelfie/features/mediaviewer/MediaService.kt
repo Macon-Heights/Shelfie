@@ -149,7 +149,7 @@ class MediaService : Service() {
         ttsController = TtsController(
             context = this,
             bookModel = bookUI,
-            onAppError = { msg -> _state.update { it.copy(error = msg) } },
+            errorAction = { msg -> _state.update { it.copy(error = msg) } },
             scrollToIndex = { idx, part ->
                 Log.d(
                     "${TAG}_MockPlayer",
