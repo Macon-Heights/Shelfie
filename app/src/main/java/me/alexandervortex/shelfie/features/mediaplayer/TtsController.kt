@@ -64,7 +64,11 @@ class TtsController(
 
     fun togglePlayPause(indexToStartPlaying: Int) {
         Log.d("${TAG}_TtsController", "togglePlayPause:${indexToStartPlaying}:${isSpeaking}")
-        if (isSpeaking) stopSpeaking() else startSpeaking(indexToStartPlaying)
+        if (isSpeaking) {
+            stopSpeaking()
+        } else {
+            startSpeaking(indexToStartPlaying)
+        }
     }
 
     fun release() {
