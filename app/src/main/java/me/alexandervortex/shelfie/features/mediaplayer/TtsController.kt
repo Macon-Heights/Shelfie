@@ -24,42 +24,44 @@ class TtsController(
 
     override fun onInit(status: Int) {
         Log.d("${TAG}TtsController", "onInit:$status")
-        if (status == TextToSpeech.SUCCESS) {
-            val locale = bookModel?.titleInfo?.lang?.let(::Locale) ?: Locale.getDefault()
-            Log.d("${TAG}_TtsController", "TextToSpeech.SUCCESS")
-            val result = tts?.setLanguage(locale)
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                onAppError("Язык не поддерживается")
-                Log.e("${TAG}_TtsController", "Язык не поддерживается")
-            }
-            tts?.setSpeechRate(2f)
-            tts?.setPitch(0.8f)
-            tts?.setOnUtteranceProgressListener(object :
-                android.speech.tts.UtteranceProgressListener() {
-                override fun onStart(utteranceId: String?) {
-                    // формат: "el:part"
-                    Log.d("${TAG}_TtsController", "onStart:$utteranceId")
-                    utteranceId?.split(':')?.let { parts ->
-                        val el = parts.getOrNull(0)?.toIntOrNull()
-                        val part = parts.getOrNull(1)?.toIntOrNull()
-                        scrollToIndex(el, part)
-                    }
-                }
 
-                override fun onDone(utteranceId: String?) {
-                    Log.d("${TAG}_TtsController", "onDone:$utteranceId")
-                    if (isSpeaking) speakNext()
-                }
-
-                override fun onError(utteranceId: String?) {
-                    Log.d("${TAG}_TtsController", "Ошибка TTS: $utteranceId")
-                    onAppError("Ошибка TTS: $utteranceId")
-                }
-            })
-        } else {
+        if (status != TextToSpeech.SUCCESS) {
             Log.d("${TAG}_TtsController", "Ошибка инициализации TTS")
             onAppError("Ошибка инициализации TTS")
+            return
         }
+
+        val locale = bookModel?.titleInfo?.lang?.let(::Locale) ?: Locale.getDefault()
+        Log.d("${TAG}_TtsController", "TextToSpeech.SUCCESS")
+        val result = tts?.setLanguage(locale)
+        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            onAppError("Язык не поддерживается")
+            Log.e("${TAG}_TtsController", "Язык не поддерживается")
+        }
+        tts?.setSpeechRate(2f)
+        tts?.setPitch(0.8f)
+        tts?.setOnUtteranceProgressListener(object :
+            android.speech.tts.UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                // формат: "el:part"
+                Log.d("${TAG}_TtsController", "onStart:$utteranceId")
+                utteranceId?.split(':')?.let { parts ->
+                    val el = parts.getOrNull(0)?.toIntOrNull()
+                    val part = parts.getOrNull(1)?.toIntOrNull()
+                    scrollToIndex(el, part)
+                }
+            }
+
+            override fun onDone(utteranceId: String?) {
+                Log.d("${TAG}_TtsController", "onDone:$utteranceId")
+                if (isSpeaking) speakNext()
+            }
+
+            override fun onError(utteranceId: String?) {
+                Log.d("${TAG}_TtsController", "Ошибка TTS: $utteranceId")
+                onAppError("Ошибка TTS: $utteranceId")
+            }
+        })
     }
 
     fun togglePlayPause(indexToStartPlaying: Int) {
@@ -79,12 +81,9 @@ class TtsController(
 
     private fun startSpeaking(startIndex: Int) {
         Log.d("${TAG}_TtsController", "startSpeaking:$startIndex")
-        val elements = bookModel?.elements ?: return
+        val elements = bookModel?.elements.orEmpty()
         if (elements.isEmpty()) {
-            Log.d(
-                "${TAG}_TtsController",
-                "BookModel elements are null or empty"
-            )
+            Log.d("${TAG}_TtsController", "BookModel elements are null or empty")
             onAppError("Пустая книга")
             return
         }
