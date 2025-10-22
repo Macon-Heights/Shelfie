@@ -149,7 +149,7 @@ class PlayerService : Service() {
                 )
                 _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }
             },
-            onIconChanged = { iconRes ->
+            onStateChanged = { iconRes ->
                 Log.d(
                     "${TAG}_MockPlayer",
                     "onIconChanged:${iconRes}"
