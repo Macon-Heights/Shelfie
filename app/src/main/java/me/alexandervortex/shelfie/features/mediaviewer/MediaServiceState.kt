@@ -1,15 +1,13 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
-import androidx.annotation.DrawableRes
-import me.alexandervortex.shelfie.R
-
 data class MediaServiceState(
     val isPlaying: Boolean = false,
     val error: String = "",
+
+    // todo book
     val index: Int = 0,
     val part: Int = 0,
-    @DrawableRes
-    val buttonIconRes: Int = R.drawable.ic_play,
+// todo   val buttonIconRes: Int = R.drawable.ic_play,
 ) {
 
     companion object {

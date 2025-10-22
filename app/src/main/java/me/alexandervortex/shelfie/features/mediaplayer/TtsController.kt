@@ -14,7 +14,7 @@ class TtsController(
     private val bookModel: BookUI?,
     private val onAppError: (String) -> Unit,
     private val scrollToIndex: (index: Int?, partIndex: Int?) -> Unit,
-    private val onIconChanged: (Int) -> Unit = {},
+    private val onStateChanged: (Int) -> Unit = {},
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
@@ -88,7 +88,7 @@ class TtsController(
         }
 
         isSpeaking = true
-        onIconChanged(R.drawable.ic_pause)
+        onStateChanged(R.drawable.ic_pause)
         currentElement = startIndex
         currentPart = 0
         tts?.stop()
@@ -122,10 +122,10 @@ class TtsController(
         tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
     }
 
-private fun stopSpeaking() {
-    Log.d("${TAG}_TtsController", "stopSpeaking")
-    tts?.stop()
-    isSpeaking = false
-    onIconChanged(R.drawable.ic_play)
-}
+    private fun stopSpeaking() {
+        Log.d("${TAG}_TtsController", "stopSpeaking")
+        tts?.stop()
+        isSpeaking = false
+        onStateChanged(R.drawable.ic_play)
+    }
 }
