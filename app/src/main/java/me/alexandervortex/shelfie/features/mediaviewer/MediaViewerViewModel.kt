@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.mediaplayer.PlayerService
 import me.alexandervortex.shelfie.features.mediaplayer.ServiceState
 import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -30,13 +29,15 @@ class MediaViewerViewModel
 ) : ViewModel() {
 
     val errorState = mutableStateOf("")
-    val bookUI: MutableState<BookUI?> = mutableStateOf(null)
 
     private var service: MediaService? = null
     private var serviceJob: Job? = null
-    private var isBound = false
+    val bookUI: MutableState<BookUI?> = mutableStateOf(null)
+
     private val _state = MutableStateFlow(ServiceState())
     val state: StateFlow<ServiceState> = _state.asStateFlow()
+
+    private var isBound = false
 
     private val conn = object : ServiceConnection {
 
@@ -49,7 +50,7 @@ class MediaViewerViewModel
             service = newService
             isBound = true
 
-            serviceJob?.cancel() // check later
+            serviceJob?.cancel() // check later // MB WE NEED IS_ACTIVE
             serviceJob = viewModelScope.launch {
                 newService.state.collect {
                     Log.d("${TAG}_MediaViewerViewModel", "state_collect:${_state.value}:${it}")
@@ -69,7 +70,7 @@ class MediaViewerViewModel
 
     fun bindService(context: Context) {
         if (isBound) return
-        val intent = Intent(context, PlayerService::class.java)
+        val intent = Intent(context, MediaService::class.java)
         // гарантируем живой сервис
         context.startForegroundService(intent)
         context.bindService(intent, conn, Context.BIND_AUTO_CREATE)
@@ -137,16 +138,8 @@ class MediaViewerViewModel
 
     fun togglePlayPause(currentTopIndex: Int) {
         Log.d("${TAG}_MediaViewerViewModel", "togglePlayPause:${currentTopIndex}")
-        // BUT
-        // I NEED TO CREATE SERVICE AND ADD BOOK ?
+        // потом можно в кнопку передавать сразу и все
         service?.loadBook(bookUI.value)
         service?.togglePlayPause(currentTopIndex)
-    }
-
-    fun loadBook(book: BookUI) {
-        Log.d("${TAG}_MediaViewerViewModel", "loadBook:${book.elements.size}")
-        bookUI = book // with progress index
-//        _state.value = state.value.copy(index = book.progressIndex)
-
     }
 }
