@@ -2,6 +2,8 @@ package me.alexandervortex.shelfie.features.mediaplayer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -16,17 +18,26 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ServiceStateComponent(serviceState: MediaServiceState) {
-    Column(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(SHAPE_S)
             .background(getColors().surface)
             .padding(8.dp)
     ) {
-        Text("isPlaying = ${serviceState.isPlaying}")
-        Text("error = ${serviceState.error}")
-        Text("index = ${serviceState.index}")
-        Text("part = ${serviceState.part}")
+        Column {
+            Text("isPlaying = ${serviceState.isPlaying}")
+            Text(" ")
+            Text("index = ${serviceState.index}")
+            Text("part = ${serviceState.part}")
+        }
+        Spacer(Modifier.weight(1f))
+        Column {
+            Text("title = ${serviceState.title}")
+            Text("author = ${serviceState.author}")
+            Text(" ")
+            Text("error = ${serviceState.error}")
+        }
     }
 }
 
