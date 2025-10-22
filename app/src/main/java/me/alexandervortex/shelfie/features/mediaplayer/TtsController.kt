@@ -19,8 +19,7 @@ class TtsController(
     private var tts: TextToSpeech? = TextToSpeech(context, this)
     private var isSpeaking = false
 
-    // текущие позиции
-    private var currentElement = 0
+    private var currentIndex = 0
     private var currentPart = 0
 
     override fun onInit(status: Int) {
@@ -96,16 +95,16 @@ class TtsController(
 
     private fun speakNext() {
         val elements = bookModel?.elements ?: return stopSpeaking()
-        if (currentElement >= elements.size) return stopSpeaking()
+        if (currentIndex >= elements.size) return stopSpeaking()
 
-        val textUi = elements[currentElement] as? ElementUI.TextUI ?: run {
-            currentElement++
+        val textUi = elements[currentIndex] as? ElementUI.TextUI ?: run {
+            currentIndex++
             return speakNext()
         }
 
         val parts = textUi.parts
         if (currentPart >= parts.size) {
-            currentElement++
+            currentIndex++
             currentPart = 0
             return speakNext()
         }
@@ -116,7 +115,7 @@ class TtsController(
             return speakNext()
         }
 
-        val utteranceId = "$currentElement:$currentPart"
+        val utteranceId = "$currentIndex:$currentPart"
         currentPart++
         tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
     }
