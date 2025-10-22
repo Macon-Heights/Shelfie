@@ -24,8 +24,8 @@ class TtsController(
 
     override fun onInit(status: Int) {
         Log.d("${TAG}TtsController", "onInit:$status")
-        val locale = bookModel?.titleInfo?.lang?.let(::Locale) ?: Locale.getDefault()
         if (status == TextToSpeech.SUCCESS) {
+            val locale = bookModel?.titleInfo?.lang?.let(::Locale) ?: Locale.getDefault()
             Log.d("${TAG}_TtsController", "TextToSpeech.SUCCESS")
             val result = tts?.setLanguage(locale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -87,7 +87,7 @@ class TtsController(
 
         isSpeaking = true
         onStateChanged(isSpeaking)
-//   todo wtf     currentElement = startIndex ???
+        currentIndex = startIndex
         currentPart = 0
         tts?.stop()
         speakNext()
