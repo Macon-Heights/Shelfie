@@ -154,7 +154,7 @@ class PlayerService : Service() {
                     "${TAG}_MockPlayer",
                     "onIconChanged:${iconRes}"
                 )
-                _state.update { it.copy(buttonIconRes = iconRes) }
+                _state.update { it.copy(iconRes) }
                 // синхронизируем плитку в шторке
                 startForeground(1, buildNotification(_state.value.isPlaying))
             }
@@ -209,12 +209,12 @@ class PlayerService : Service() {
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     resources,
-                    R.drawable.ic_launcher_foreground
+                    R.drawable.ic_service
                 )
             )
             .addAction(NotificationCompat.Action(icon, label, intent))
             .setStyle(style)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_service)
             .setOnlyAlertOnce(true)          // вернул твою OLD строку
             .setOngoing(isPlaying)
             .build()

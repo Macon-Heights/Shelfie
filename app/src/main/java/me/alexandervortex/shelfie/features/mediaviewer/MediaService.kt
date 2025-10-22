@@ -26,6 +26,11 @@ import me.alexandervortex.shelfie.features.mediaplayer.TtsController
 import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 
+private const val CHANNEL_ID = "mock_player"
+private const val ACTION_PLAY = "action_play"
+private const val ACTION_PAUSE = "action_pause"
+private const val ACTION_LOAD_BOOK = "action_load_book"
+
 @AndroidEntryPoint
 class MediaService : Service() {
 
@@ -152,14 +157,9 @@ class MediaService : Service() {
                 )
                 _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }
             },
-            onStateChanged = { iconRes ->
-                Log.d(
-                    "${TAG}_MockPlayer",
-                    "onIconChanged:${iconRes}"
-                )
-                _state.update {
-//            todo        it.copy(buttonIconRes = iconRes)
-                }
+            onStateChanged = { isPlaying ->
+                Log.d("${TAG}_MockPlayer", "onStateChanged:${isPlaying}")
+                _state.update { it.copy(isPlaying = isPlaying) }
                 // синхронизируем плитку в шторке
                 startForeground(1, buildNotification(_state.value.isPlaying))
             }
@@ -168,36 +168,24 @@ class MediaService : Service() {
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
         // если контроллера нет, выходим (доп. защита)
-        Log.d(
-            "${TAG}_MockPlayer",
-            "updatePlayback:${isPlaying}:{$indexToStartPlaying}"
-        )
+        Log.d("${TAG}_MockPlayer", "updatePlayback:${isPlaying}:{$indexToStartPlaying}")
         val ctrl = ttsController ?: run {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
         }
 
         _state.update {
-            Log.d(
-                "${TAG}_MockPlayer",
-                "_state.update_:${isPlaying}"
-            )
-            it.copy(
-                isPlaying = isPlaying,
-                buttonIconRes = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
-            )
+            Log.d("${TAG}_MockPlayer", "_state.update_:${isPlaying}")
+            it.copy(isPlaying = isPlaying)
         }
         startForeground(1, buildNotification(isPlaying))
         ctrl.togglePlayPause(indexToStartPlaying)
     }
 
     private fun buildNotification(isPlaying: Boolean): Notification {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "buildNotification:${isPlaying}"
-        )
+        Log.d("${TAG}_MockPlayer", "buildNotification:${isPlaying}")
         val action = if (isPlaying) ACTION_PAUSE else ACTION_PLAY
-        val label = if (isPlaying) "Pause" else "Play"
+        val label = if (isPlaying) "паусе" else "плау"
         val icon = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
 
         val intent = PendingIntent.getService(
@@ -214,13 +202,13 @@ class MediaService : Service() {
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     resources,
-                    R.drawable.ic_launcher_foreground
+                    R.drawable.ic_service
                 )
             )
             .addAction(NotificationCompat.Action(icon, label, intent))
             .setStyle(style)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setOnlyAlertOnce(true)          // вернул твою OLD строку
+//            .setSmallIcon(R.drawable.ic_service)
+            .setOnlyAlertOnce(true)
             .setOngoing(isPlaying)
             .build()
     }
@@ -239,15 +227,5 @@ class MediaService : Service() {
             ).apply { description = "Playback controls" } // вернул твою OLD строку
             nm.createNotificationChannel(ch)
         }
-    }
-
-    fun getCurrentBook(): BookUI? = currentBook
-
-    companion object {
-
-        const val CHANNEL_ID = "mock_player"
-        const val ACTION_PLAY = "action_play"
-        const val ACTION_PAUSE = "action_pause"
-        const val ACTION_LOAD_BOOK = "action_load_book"
     }
 }

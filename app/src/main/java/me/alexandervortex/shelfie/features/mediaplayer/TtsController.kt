@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.features.mediaplayer
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
@@ -14,7 +13,7 @@ class TtsController(
     private val bookModel: BookUI?,
     private val onAppError: (String) -> Unit,
     private val scrollToIndex: (index: Int?, partIndex: Int?) -> Unit,
-    private val onStateChanged: (Int) -> Unit = {},
+    private val onStateChanged: (Boolean) -> Unit = {},
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
@@ -88,8 +87,8 @@ class TtsController(
         }
 
         isSpeaking = true
-        onStateChanged(R.drawable.ic_pause)
-        currentElement = startIndex
+        onStateChanged(isSpeaking)
+//   todo wtf     currentElement = startIndex ???
         currentPart = 0
         tts?.stop()
         speakNext()
@@ -126,6 +125,6 @@ class TtsController(
         Log.d("${TAG}_TtsController", "stopSpeaking")
         tts?.stop()
         isSpeaking = false
-        onStateChanged(R.drawable.ic_play)
+        onStateChanged(isSpeaking)
     }
 }
