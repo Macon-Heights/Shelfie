@@ -34,6 +34,7 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 const val TAG = "^_^"
 
 @Composable
+@Deprecated("GAVNO")
 fun ViewerScreen(
     id: String,
     viewModel: ViewerBookViewModel,

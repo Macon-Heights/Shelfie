@@ -11,6 +11,7 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
 @HiltViewModel
+@Deprecated("GAVNO")
 class ViewerBookViewModel
 @Inject constructor(
     private val repo: BookRepository,
