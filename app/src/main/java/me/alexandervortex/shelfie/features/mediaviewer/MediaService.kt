@@ -54,7 +54,7 @@ class MediaService : Service() {
 
     // TTS
     private var ttsController: TtsController? = null
-    private var currentBook: BookUI? = null
+    private var playingBook: BookUI? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -106,9 +106,9 @@ class MediaService : Service() {
             "${TAG}_MockPlayer",
             "togglePlayPause:${indexToStart}"
         )
-        if (ttsController == null && currentBook != null) {
+        if (ttsController == null && playingBook != null) {
             Log.d("${TAG}_MockPlayer", "ttsController == null, but have book -> reinit")
-            initTtsController(currentBook)
+            initTtsController(playingBook)
         }
         if (ttsController == null) {
             Log.d(
@@ -118,7 +118,7 @@ class MediaService : Service() {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
         }
-        updatePlayback(!_state.value.isPlaying, indexToStart)
+        updatePlayback(!_state.value.isPlaying, indexToStart)//
     }
 
     // ---- приватная логика
@@ -135,7 +135,7 @@ class MediaService : Service() {
             _state.update { it.copy(error = "Пустая книга") }
             return
         }
-        currentBook = bookUI
+        playingBook = bookUI
         ttsController?.release()
 
         _state.update {
@@ -159,7 +159,9 @@ class MediaService : Service() {
             },
             onStateChanged = { isPlaying ->
                 Log.d("${TAG}_MockPlayer", "onStateChanged:${isPlaying}")
-                _state.update { it.copy(isPlaying = isPlaying) }
+                _state.update {
+                    it.copy(isPlaying = isPlaying)
+                }
                 // синхронизируем плитку в шторке
                 startForeground(1, buildNotification(_state.value.isPlaying))
             }
