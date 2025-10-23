@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaplayer
+package me.alexandervortex.shelfie.features.mediaviewer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.features.mediaviewer.MediaServiceState
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 import me.alexandervortex.shelfie.ui.theme.getColors
 

@@ -25,6 +25,7 @@ import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 
 @AndroidEntryPoint
+@Deprecated("GAVNO")
 class PlayerService : Service() {
 
     // ---- публичный реактивный стейт
