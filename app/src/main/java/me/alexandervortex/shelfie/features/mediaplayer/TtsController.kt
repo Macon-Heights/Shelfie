@@ -53,7 +53,7 @@ class TtsController(
             Log.e("${TAG}_TtsController", "Язык не поддерживается")
         }
 
-        tts?.setSpeechRate(2f)
+        tts?.setSpeechRate(4f)
         tts?.setPitch(0.8f)
         initListener()
     }
