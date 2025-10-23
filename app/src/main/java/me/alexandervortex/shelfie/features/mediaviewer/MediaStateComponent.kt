@@ -1,9 +1,11 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -26,48 +28,76 @@ fun ServiceStateComponent(
     state: MediaServiceState,
     playPauseAction: () -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .shadow(
-                elevation = 6.dp,
-                shape = SHAPE_M,
-                clip = false
-            )
-            .clip(SHAPE_M)
-            .background(getColors().primary)
-            .padding(16.dp)
-    ) {
-        Column(
-            Modifier.weight(1f)
-        ) {
-            Text(if (state.isPlaying) "is playing" else "STOPPED", color = getColors().onPrimary)
-            Text("${state.index}:${state.part}", color = getColors().onPrimary)
-        }
-        ActionButtonComponent(
-            content = {
-                Icon(
-                    imageVector = if (state.isPlaying) IC_PAUSE else IC_PLAY,
-                    contentDescription = null
+    if (state.isPlaying) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .padding(16.dp)
+                .shadow(
+                    elevation = 6.dp,
+                    shape = SHAPE_M,
+                    clip = false
                 )
-            },
-            action = { playPauseAction.invoke() }
-        )
-        Column(
-            Modifier.weight(1f),
-            horizontalAlignment = Alignment.End
+                .clip(SHAPE_M)
+                .background(getColors().primary)
+                .padding(16.dp)
         ) {
-            Text(
-                color = getColors().onPrimary,
-                textAlign = TextAlign.End,
-                text = state.title.toString()
+            Column(
+                Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "is playing",
+                    color = getColors().onPrimary
+                )
+                Text("${state.index}:${state.part}", color = getColors().onPrimary)
+            }
+
+            ActionButtonComponent(
+                content = {
+                    Icon(
+                        imageVector = IC_PAUSE,
+                        contentDescription = null
+                    )
+                },
+                action = { playPauseAction.invoke() }
             )
-            Text(
-                color = getColors().onPrimary,
-                textAlign = TextAlign.End,
-                text = state.author.toString()
+            Column(
+                Modifier.weight(1f),
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(
+                    color = getColors().onPrimary,
+                    textAlign = TextAlign.End,
+                    text = state.title.toString()
+                )
+                Text(
+                    color = getColors().onPrimary,
+                    textAlign = TextAlign.End,
+                    text = state.author.toString()
+                )
+            }
+        }
+    } else {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .padding(32.dp)
+        ) {
+            Box(Modifier.weight(1f))
+
+            ActionButtonComponent(
+                content = {
+                    Icon(
+                        imageVector = IC_PLAY,
+                        contentDescription = null
+                    )
+                },
+                action = { playPauseAction.invoke() }
             )
+
+            Box(Modifier.weight(1f))
         }
     }
 }
@@ -75,7 +105,7 @@ fun ServiceStateComponent(
 @Preview
 @Composable
 fun ServiceStateComponentPreview() {
-    val state = MediaServiceState.playingState().copy(
+    val state = MediaServiceState.pausedState().copy(
         author = "Sashke",
         title = "Blahblah"
     )
