@@ -187,8 +187,8 @@ class MediaService : Service() {
             .setMediaSession(mediaSession.sessionToken)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Shelfie Reader")
-            .setContentText("Now reading...")
+            .setContentTitle(state.value.title)
+            .setContentText(state.value.author)
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     resources,
@@ -197,7 +197,7 @@ class MediaService : Service() {
             )
             .addAction(NotificationCompat.Action(icon, label, intent))
             .setStyle(style)
-//            .setSmallIcon(R.drawable.ic_service)
+            .setSmallIcon(R.drawable.ic_service)
             .setOnlyAlertOnce(true)
             .setOngoing(isPlaying)
             .build()
