@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.ui.component
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -47,7 +46,6 @@ fun ActionButtonComponent(
         shape = SHAPE_M,
         colors = colors,
         modifier = Modifier
-            .padding(32.dp)
             .size(64.dp)
             .shadow(
                 elevation = 8.dp,
