@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 
 @AndroidEntryPoint
@@ -53,10 +51,6 @@ class PlayerService : Service() {
     override fun onCreate() {
         super.onCreate()
         ensureNotificationChannel()
-        Log.d(
-            "${TAG}_MockPlayer",
-            "onCreate"
-        )
         mediaSession = MediaSessionCompat(this, "ShelfieTTS").apply {
             setCallback(object : MediaSessionCompat.Callback() {
                 override fun onPlay() = updatePlayback(true, _state.value.index)
@@ -69,10 +63,6 @@ class PlayerService : Service() {
     }
 
     override fun onDestroy() {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "onDestroy"
-        )
         super.onDestroy()
         ttsController?.release()
         mediaSession.release()
@@ -80,10 +70,6 @@ class PlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "onStartCommand:${intent?.action}:${_state.value.index}"
-        )
         when (intent?.action) {
             ACTION_PLAY -> updatePlayback(true, _state.value.index)
             ACTION_PAUSE -> updatePlayback(false, _state.value.index)
@@ -95,19 +81,10 @@ class PlayerService : Service() {
     // ---- публичные команды (VM может дергать через binder)
     fun loadBook(book: BookUI?) = initTtsController(book)
     fun togglePlayPause(indexToStart: Int) {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "togglePlayPause:${indexToStart}"
-        )
         if (ttsController == null && currentBook != null) {
-            Log.d("${TAG}_MockPlayer", "ttsController == null, but have book -> reinit")
             initTtsController(currentBook)
         }
         if (ttsController == null) {
-            Log.d(
-                "${TAG}_MockPlayer",
-                "ttsController == null:${indexToStart}"
-            )
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
         }
@@ -116,15 +93,7 @@ class PlayerService : Service() {
 
     // ---- приватная логика
     private fun initTtsController(bookUI: BookUI?) {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "initTtsController:${bookUI?.elements?.size}"
-        )
         if (bookUI == null) {
-            Log.d(
-                "${TAG}_MockPlayer",
-                "bookUI == null:${bookUI}"
-            )
             _state.update { it.copy(error = "Пустая книга") }
             return
         }
@@ -132,10 +101,6 @@ class PlayerService : Service() {
         ttsController?.release()
 
         _state.update {
-            Log.d(
-                "${TAG}_MockPlayer",
-                "_state.update:${bookUI.progressIndex}"
-            )
             it.copy(index = bookUI.progressIndex, part = 0)
         }
 
@@ -144,17 +109,9 @@ class PlayerService : Service() {
             bookModel = bookUI,
             errorAction = { msg -> _state.update { it.copy(error = msg) } },
             scrollToIndex = { idx, part ->
-                Log.d(
-                    "${TAG}_MockPlayer",
-                    "scrollToIndex:${idx}:${part}"
-                )
                 _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }
             },
             onStateChanged = { iconRes ->
-                Log.d(
-                    "${TAG}_MockPlayer",
-                    "onIconChanged:${iconRes}"
-                )
                 _state.update { it.copy(iconRes) }
                 // синхронизируем плитку в шторке
                 startForeground(1, buildNotification(_state.value.isPlaying))
@@ -164,20 +121,12 @@ class PlayerService : Service() {
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
         // если контроллера нет, выходим (доп. защита)
-        Log.d(
-            "${TAG}_MockPlayer",
-            "updatePlayback:${isPlaying}:{$indexToStartPlaying}"
-        )
         val ctrl = ttsController ?: run {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
         }
 
         _state.update {
-            Log.d(
-                "${TAG}_MockPlayer",
-                "_state.update_:${isPlaying}"
-            )
             it.copy(
                 isPlaying = isPlaying,
                 buttonIconRes = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
@@ -188,10 +137,6 @@ class PlayerService : Service() {
     }
 
     private fun buildNotification(isPlaying: Boolean): Notification {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "buildNotification:${isPlaying}"
-        )
         val action = if (isPlaying) ACTION_PAUSE else ACTION_PLAY
         val label = if (isPlaying) "Pause" else "Play"
         val icon = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
@@ -222,10 +167,6 @@ class PlayerService : Service() {
     }
 
     private fun ensureNotificationChannel() {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "ensureNotificationChannel"
-        )
         val nm = getSystemService(NotificationManager::class.java)
         if (nm.getNotificationChannel(CHANNEL_ID) == null) {
             val ch = NotificationChannel(

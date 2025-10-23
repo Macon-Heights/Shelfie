@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -12,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.alexandervortex.shelfie.features.viewer.TAG
 
 /*
     Это только плеер, листалка будет отдельным компонентом положена сверху
@@ -35,13 +33,11 @@ fun MediaViewerScreen(
     // подскроллить под место
     // region book work
     LaunchedEffect(Unit) {
-        Log.d("${TAG}_MediaViewerScreen", "loadCurrentBook:${id}")
         ttsVm.loadCurrentBook(id)
         ttsVm.bindService(context)
     }
 
     LaunchedEffect(book) {
-        Log.d("${TAG}_MediaViewerScreen", "loadBook:${book?.elements?.size}")
         book?.let {
             // fixme:  ttsVm.loadBook(book) ??? WHY??
             listState.scrollToItem(
@@ -56,14 +52,12 @@ fun MediaViewerScreen(
     // region errors
     LaunchedEffect(serviceState.error) {
         if (serviceState.error.isNotBlank()) {
-            Log.e("${TAG}_MediaViewerScreen", "service_error:${serviceState.error}")
             Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
         }
     }
 
     LaunchedEffect(serviceState.error) {
         if (serviceState.error.isNotBlank()) {
-            Log.e("${TAG}_MediaViewerScreen", "viewModel_error:${ttsVm.errorState}")
             Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
         }
     }
@@ -96,7 +90,7 @@ fun MediaViewerScreen(
             try {
                 listState.animateScrollToItem(serviceState.index, scrollOffset = 0)
             } catch (e: Exception) {
-                Log.e(TAG, "scroll_to_index_failed:${serviceState.index}", e)
+
             }
         }
     }
@@ -104,7 +98,6 @@ fun MediaViewerScreen(
 
     MediaViewerContent(book, serviceState, listState) {
         val topIndex = listState.firstVisibleItemIndex
-        Log.d("${TAG}_ViewerScreen", "action_button_clicked:${topIndex}")
         ttsVm.togglePlayPause(topIndex)
     }
 }
