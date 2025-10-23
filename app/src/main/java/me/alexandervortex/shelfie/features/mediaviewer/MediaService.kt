@@ -82,7 +82,7 @@ class MediaService : Service() {
         when (intent?.action) {
             ACTION_PLAY -> updatePlayback(true, _state.value.index)
             ACTION_PAUSE -> updatePlayback(false, _state.value.index)
-            ACTION_LOAD_BOOK -> initTtsController(ShelfieTtsHolder.currentBook)
+            ACTION_LOAD_BOOK -> initTtsController(ShelfieTtsHolder.currentBook) // fixme currentBook not from here
         }
         return START_STICKY
     }

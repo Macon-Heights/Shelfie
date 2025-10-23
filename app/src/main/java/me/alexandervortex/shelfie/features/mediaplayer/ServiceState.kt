@@ -3,6 +3,7 @@ package me.alexandervortex.shelfie.features.mediaplayer
 import androidx.annotation.DrawableRes
 import me.alexandervortex.shelfie.R
 
+@Deprecated("GAVNO")
 data class ServiceState(
     val isPlaying: Boolean = false,
     val error: String = "",
