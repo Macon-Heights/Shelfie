@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
@@ -30,7 +28,6 @@ fun MediaViewerContent(
         contentAlignment = Alignment.BottomEnd
     ) {
         // region UI
-        Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
         LazyColumn(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,

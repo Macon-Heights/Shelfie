@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
@@ -63,10 +61,6 @@ class MediaViewerViewModel
     private val conn = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-            Log.d(
-                "${TAG}_MediaViewerViewModel",
-                "onServiceConnected:${name?.className}:${binder?.isBinderAlive}"
-            )
             val newService = (binder as? MediaService.LocalBinder)?.getService() ?: return
             service = newService
             isBound = true
@@ -74,14 +68,12 @@ class MediaViewerViewModel
             serviceJob?.cancel() // check later // MB WE NEED IS_ACTIVE
             serviceJob = viewModelScope.launch {
                 newService.state.collect {
-                    Log.d("${TAG}_MediaViewerViewModel", "state_collect:${_state.value}:${it}")
                     _state.value = it
                 }
             }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            Log.d("${TAG}_MediaViewerViewModel", "onServiceDisconnected:${name}")
             serviceJob?.cancel()
             serviceJob = null
             service = null
@@ -101,14 +93,9 @@ class MediaViewerViewModel
     /** вызывать при dispose или onStop */
     fun unbindService(context: Context) {
         if (!isBound) return
-        Log.d("${TAG}_MediaViewerViewModel", "unbindService")
         runCatching {
-            Log.d(
-                "${TAG}_MediaViewerViewModel",
-                "runCatching"
-            )
             context.unbindService(conn)
-        }.onFailure { Log.e("${TAG}_MediaViewerViewModel", "unbindService failed", it) }
+        }
         serviceJob?.cancel()
         serviceJob = null
         service = null
@@ -137,7 +124,6 @@ class MediaViewerViewModel
     }
 
     fun togglePlayPause(currentTopIndex: Int) {
-        Log.d("${TAG}_MediaViewerViewModel", "togglePlayPause:${currentTopIndex}")
         // потом можно в кнопку передавать сразу и все
         // fixme service?.loadBook(bookUI.value)
         service?.togglePlayPause(currentTopIndex)

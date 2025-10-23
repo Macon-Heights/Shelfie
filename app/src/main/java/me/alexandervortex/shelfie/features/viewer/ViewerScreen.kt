@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.viewer
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -50,7 +49,7 @@ fun ViewerScreen(
             try {
                 listState.animateScrollToItem(serviceState.index, scrollOffset = -320)
             } catch (e: Exception) {
-                Log.e(TAG, "scroll_to_index_failed:${serviceState.index}", e)
+
             }
         }
     }
@@ -58,14 +57,12 @@ fun ViewerScreen(
     // region errors
     LaunchedEffect(serviceState.error) {
         if (serviceState.error.isNotBlank()) {
-            Log.e("${TAG}_ViewerScreen", "service_error:${serviceState.error}")
             Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
         }
     }
 
     LaunchedEffect(serviceState.error) {
         if (serviceState.error.isNotBlank()) {
-            Log.e("${TAG}_ViewerScreen", "viewModel_error:${viewModel.errorState}")
             Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
         }
     }
@@ -74,20 +71,18 @@ fun ViewerScreen(
     // region init book & send to tts
     val book = viewModel.bookModel.value
     LaunchedEffect(Unit) {
-        Log.d("${TAG}_ViewerScreen", "loadCurrentBook:${id}")
         viewModel.loadCurrentBook(id)
         ttsVm.bindService(context)
     }
 
     LaunchedEffect(book) {
-        Log.d("${TAG}_ViewerScreen", "loadBook:${book?.elements?.size}")
         book?.let {
             // 🔹 только если сервис не играет — подгружаем книгу
             if (!serviceState.isPlaying) {
                 ttsVm.loadBook(book)
                 listState.animateScrollToItem(ttsVm.state.value.index, scrollOffset = -320)
             } else {
-                Log.d("${TAG}_ViewerScreen", "serviceAlreadyPlaying:skipLoad")
+
             }
         }
     }
@@ -117,7 +112,6 @@ fun ViewerScreen(
         contentAlignment = Alignment.BottomEnd
     ) {
         // region UI
-        Log.d("${TAG}_ViewerScreen", "recomposition:${book?.elements?.size}")
         LazyColumn(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,
@@ -146,7 +140,6 @@ fun ViewerScreen(
             },
             action = {
                 val topIndex = listState.firstVisibleItemIndex
-                Log.d("${TAG}_ViewerScreen", "action_button_clicked:${topIndex}")
                 ttsVm.togglePlayPause(topIndex)
             }
         )
