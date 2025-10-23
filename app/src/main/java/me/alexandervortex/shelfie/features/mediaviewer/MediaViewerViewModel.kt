@@ -106,7 +106,9 @@ class MediaViewerViewModel
         viewModelScope.launch {
             try {
                 bookUI.value = repo.getBookModelById(id)
-                service?.loadBook(bookUI.value) // fixme
+                if (service?.state?.value?.isPlaying == false) {
+                    service?.loadBook(bookUI.value) // fixme
+                }
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
@@ -126,6 +128,7 @@ class MediaViewerViewModel
     fun togglePlayPause(currentTopIndex: Int) {
         // потом можно в кнопку передавать сразу и все
         // fixme service?.loadBook(bookUI.value)
+
         service?.togglePlayPause(currentTopIndex)
     }
 }
