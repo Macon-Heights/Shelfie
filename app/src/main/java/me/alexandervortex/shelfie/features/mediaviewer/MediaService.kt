@@ -109,10 +109,7 @@ class MediaService : Service() {
 
     // ---- приватная логика
     private fun initTtsController(bookUI: BookUI?) {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "initTtsController:${bookUI?.elements?.size}"
-        )
+        Log.d("${TAG}_MockPlayer", "initTtsController:${bookUI?.elements?.size}")
         if (bookUI == null) {
             Log.d(
                 "${TAG}_MockPlayer",
@@ -129,7 +126,12 @@ class MediaService : Service() {
                 "${TAG}_MockPlayer",
                 "_state.update:${bookUI.progressIndex}"
             )
-            it.copy(index = bookUI.progressIndex, part = 0)
+            it.copy(
+                index = bookUI.progressIndex,
+                part = 0,
+                author = bookUI.titleInfo.author,
+                title = bookUI.titleInfo.title
+            )
         }
 
         ttsController = TtsController(
