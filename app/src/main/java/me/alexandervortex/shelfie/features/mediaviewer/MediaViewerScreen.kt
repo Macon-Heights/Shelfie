@@ -44,7 +44,7 @@ fun MediaViewerScreen(
         Log.d("${TAG}_MediaViewerScreen", "loadBook:${book?.elements?.size}")
         book?.let {
             // fixme:  ttsVm.loadBook(book) ??? WHY??
-            listState.animateScrollToItem(
+            listState.scrollToItem(
                 index = ttsVm.state.value.index,
                 scrollOffset = -320
             )
