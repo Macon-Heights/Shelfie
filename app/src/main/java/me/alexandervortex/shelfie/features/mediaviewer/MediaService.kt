@@ -74,17 +74,6 @@ class MediaService : Service() {
         startForeground(1, buildNotification(isPlaying = false))
     }
 
-    override fun onDestroy() {
-        Log.d(
-            "${TAG}_MockPlayer",
-            "onDestroy"
-        )
-        super.onDestroy()
-        ttsController?.release()
-        mediaSession.release()
-        scope.cancel()
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(
             "${TAG}_MockPlayer",
@@ -111,10 +100,7 @@ class MediaService : Service() {
             initTtsController(playingBook)
         }
         if (ttsController == null) {
-            Log.d(
-                "${TAG}_MockPlayer",
-                "ttsController == null:${indexToStart}"
-            )
+            Log.d("${TAG}_MockPlayer", "ttsController == null:${indexToStart}")
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
         }
@@ -229,5 +215,13 @@ class MediaService : Service() {
             ).apply { description = "Playback controls" } // вернул твою OLD строку
             nm.createNotificationChannel(ch)
         }
+    }
+
+    override fun onDestroy() {
+        Log.d("${TAG}_MockPlayer", "onDestroy")
+        super.onDestroy()
+        ttsController?.release()
+        mediaSession.release()
+        scope.cancel()
     }
 }
