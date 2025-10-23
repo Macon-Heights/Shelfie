@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAY
-import me.alexandervortex.shelfie.ui.theme.SHAPE_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 import me.alexandervortex.shelfie.ui.theme.getColors
 
@@ -30,21 +29,21 @@ fun ServiceStateComponent(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(16.dp)
             .shadow(
                 elevation = 6.dp,
                 shape = SHAPE_M,
                 clip = false
             )
-            .clip(SHAPE_L)
-            .background(getColors().primaryContainer)
+            .clip(SHAPE_M)
+            .background(getColors().primary)
             .padding(16.dp)
     ) {
-        Column {
-            Text("isPlaying = ${state.isPlaying}")
-            Text(" ")
-            Text("index = ${state.index}")
-            Text("part = ${state.part}")
+        Column(
+            Modifier.weight(1f)
+        ) {
+            Text(if (state.isPlaying) "is playing" else "STOPPED", color = getColors().onPrimary)
+            Text("${state.index}:${state.part}", color = getColors().onPrimary)
         }
         ActionButtonComponent(
             content = {
@@ -55,11 +54,20 @@ fun ServiceStateComponent(
             },
             action = { playPauseAction.invoke() }
         )
-        Column(horizontalAlignment = Alignment.End) {
-            Text(textAlign = TextAlign.End, text = "title = ${state.title}")
-            Text(textAlign = TextAlign.End, text = "author = ${state.author}")
-            Text(textAlign = TextAlign.End, text = " ")
-            Text(textAlign = TextAlign.End, text = "error = ${state.error}")
+        Column(
+            Modifier.weight(1f),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                color = getColors().onPrimary,
+                textAlign = TextAlign.End,
+                text = state.title.toString()
+            )
+            Text(
+                color = getColors().onPrimary,
+                textAlign = TextAlign.End,
+                text = state.author.toString()
+            )
         }
     }
 }
@@ -67,6 +75,9 @@ fun ServiceStateComponent(
 @Preview
 @Composable
 fun ServiceStateComponentPreview() {
-    val state = MediaServiceState.playingState()
+    val state = MediaServiceState.playingState().copy(
+        author = "Sashke",
+        title = "Blahblah"
+    )
     ServiceStateComponent(state) { }
 }
