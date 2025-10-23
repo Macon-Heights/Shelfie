@@ -9,18 +9,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.features.viewer.TAG
-import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
-import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
-import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 
 @Composable
 fun MediaViewerContent(
@@ -53,15 +49,8 @@ fun MediaViewerContent(
             }
         }
         // endregion
-        ServiceStateComponent(serviceState)
-        ActionButtonComponent(
-            content = {
-                Icon(
-                    imageVector = if (serviceState.isPlaying) IC_PAUSE else IC_PLAY,
-                    contentDescription = null
-                )
-            },
-            action = { playPauseAction.invoke() }
-        )
+        ServiceStateComponent(serviceState) {
+            playPauseAction.invoke()
+        }
     }
 }
