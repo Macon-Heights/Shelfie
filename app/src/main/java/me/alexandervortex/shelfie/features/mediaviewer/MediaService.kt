@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.mediaplayer.ShelfieTtsHolder
 import me.alexandervortex.shelfie.features.mediaplayer.TtsController
 import me.alexandervortex.shelfie.features.viewer.TAG
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -29,7 +28,6 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 private const val CHANNEL_ID = "mock_player"
 private const val ACTION_PLAY = "action_play"
 private const val ACTION_PAUSE = "action_pause"
-private const val ACTION_LOAD_BOOK = "action_load_book"
 
 @AndroidEntryPoint
 class MediaService : Service() {
@@ -82,7 +80,6 @@ class MediaService : Service() {
         when (intent?.action) {
             ACTION_PLAY -> updatePlayback(true, _state.value.index)
             ACTION_PAUSE -> updatePlayback(false, _state.value.index)
-            ACTION_LOAD_BOOK -> initTtsController(ShelfieTtsHolder.currentBook) // fixme currentBook not from here
         }
         return START_STICKY
     }
