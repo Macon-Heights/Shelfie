@@ -46,7 +46,7 @@ fun MediaViewerScreen(
             // fixme:  ttsVm.loadBook(book) ??? WHY??
             listState.scrollToItem(
                 index = ttsVm.state.value.index,
-                scrollOffset = -320
+                scrollOffset = 0
             )
         }
     }
@@ -94,7 +94,7 @@ fun MediaViewerScreen(
     LaunchedEffect(serviceState.index, serviceState.part) {
         if (serviceState.isPlaying) {
             try {
-                listState.animateScrollToItem(serviceState.index, scrollOffset = -320)
+                listState.animateScrollToItem(serviceState.index, scrollOffset = 0)
             } catch (e: Exception) {
                 Log.e(TAG, "scroll_to_index_failed:${serviceState.index}", e)
             }
