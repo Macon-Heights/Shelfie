@@ -30,16 +30,17 @@ class BookRepository
          * эта часть понятна и логична и пусть остается так
          */
         val bookModel = parser.importFromUri(uri)
+            ?: throw Exception("Книга не поддерживается.\nТолько FB2 формат.")
 
         /**
          * book model -> database
          * это справедливо для любой книги в любом формате
          */
-        val entity = bookModel?.let {
+        val entity = bookModel.let {
             mapper.toEntity(it)
         }
 
-        entity?.let {
+        entity.let {
             dao.insert(it)
         }
     }
