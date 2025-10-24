@@ -46,7 +46,7 @@ class TtsController(
             errorAction("Язык не поддерживается")
         }
 
-        tts?.setSpeechRate(4f)
+        tts?.setSpeechRate(1f)
         tts?.setPitch(0.8f)
         initListener()
     }

@@ -19,10 +19,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 import me.alexandervortex.shelfie.ui.theme.IC_SPEED
@@ -48,7 +48,7 @@ fun ServiceStateComponent(
                 clip = false
             )
             .clip(SHAPE_M)
-            .background(getColors().primaryContainer)
+            .background(getColors().surfaceVariant)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -57,27 +57,27 @@ fun ServiceStateComponent(
         ) {
             Text(
                 text = state.title.orEmpty(),
-                color = getColors().onPrimaryContainer,
+                color = getColors().onSurfaceVariant,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(Modifier.size(8.dp))
             Text(
-                color = getColors().onPrimaryContainer,
+                color = getColors().onSurfaceVariant,
                 fontWeight = FontWeight.Light,
                 text = state.author.orEmpty(),
             )
             Spacer(Modifier.size(8.dp))
             Row {
                 Text(
-                    color = getColors().onPrimaryContainer,
+                    color = getColors().onSurfaceVariant,
                     fontWeight = FontWeight.Light,
                     text = "30min",
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
-                    color = getColors().onPrimaryContainer,
+                    color = getColors().onSurfaceVariant,
                     fontWeight = FontWeight.Light,
                     text = "x1.2",
                 )
@@ -98,10 +98,10 @@ fun ServiceStateComponent(
             shape = SHAPE_M,
             contentPadding = PaddingValues(0.dp),
             colors = ButtonColors(
-                containerColor = getColors().primary,
-                contentColor = getColors().onPrimary,
-                disabledContainerColor = getColors().primary,
-                disabledContentColor = getColors().onPrimary,
+                containerColor = getColors().surfaceContainerHigh,
+                contentColor = getColors().onSurface,
+                disabledContainerColor = getColors().surfaceContainerHigh,
+                disabledContentColor = getColors().onSurface,
             ),
             modifier = Modifier
                 .size(48.dp)
@@ -123,10 +123,10 @@ fun ServiceStateComponent(
             shape = SHAPE_M,
             contentPadding = PaddingValues(0.dp),
             colors = ButtonColors(
-                containerColor = getColors().primary,
-                contentColor = getColors().onPrimary,
-                disabledContainerColor = getColors().primary,
-                disabledContentColor = getColors().onPrimary,
+                containerColor = getColors().surfaceContainerHigh,
+                contentColor = getColors().onSurface,
+                disabledContainerColor = getColors().surfaceContainerHigh,
+                disabledContentColor = getColors().onSurface
             ),
             modifier = Modifier
                 .size(48.dp)
@@ -146,12 +146,14 @@ fun ServiceStateComponent(
     }
 }
 
-@Preview
+@CombinedPreviews
 @Composable
 fun ServiceStateComponentPreview() {
-    val state = MediaServiceState.pausedState().copy(
-        author = "Sashke",
-        title = "Blahblah"
-    )
-    ServiceStateComponent(state, {}, {}, {})
+    CombinedPreviews {
+        val state = MediaServiceState.pausedState().copy(
+            author = "Sashke",
+            title = "Blahblah"
+        )
+        ServiceStateComponent(state, {}, {}, {})
+    }
 }
