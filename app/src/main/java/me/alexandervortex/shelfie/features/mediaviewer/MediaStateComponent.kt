@@ -18,11 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
+import me.alexandervortex.shelfie.ui.theme.IC_PLAY
 import me.alexandervortex.shelfie.ui.theme.IC_SPEED
 import me.alexandervortex.shelfie.ui.theme.IC_TIMER
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
@@ -33,6 +35,8 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 fun ServiceStateComponent(
     state: MediaServiceState,
     playPauseAction: () -> Unit,
+    timerAction: () -> Unit,
+    speedAction: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -63,12 +67,27 @@ fun ServiceStateComponent(
                 fontWeight = FontWeight.Light,
                 text = state.author.orEmpty(),
             )
+            Spacer(Modifier.size(8.dp))
+            Row {
+                Text(
+                    color = getColors().onPrimaryContainer,
+                    fontWeight = FontWeight.Light,
+                    text = "30min",
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
+                    color = getColors().onPrimaryContainer,
+                    fontWeight = FontWeight.Light,
+                    text = "x1.2",
+                )
+            }
         }
         Spacer(Modifier.size(16.dp))
         ActionButtonComponent(
             content = {
                 Icon(
-                    imageVector = IC_PAUSE,
+                    imageVector = if (state.isPlaying) IC_PAUSE else IC_PLAY,
                     contentDescription = null
                 )
             },
@@ -92,9 +111,7 @@ fun ServiceStateComponent(
                     clip = false
                 )
                 .clip(SHAPE_L),
-            onClick = {
-
-            }
+            onClick = { speedAction.invoke() }
         ) {
             Icon(
                 imageVector = IC_SPEED,
@@ -119,9 +136,7 @@ fun ServiceStateComponent(
                     clip = false
                 )
                 .clip(SHAPE_L),
-            onClick = {
-
-            }
+            onClick = { timerAction.invoke() }
         ) {
             Icon(
                 imageVector = IC_TIMER,
@@ -138,5 +153,5 @@ fun ServiceStateComponentPreview() {
         author = "Sashke",
         title = "Blahblah"
     )
-    ServiceStateComponent(state) { }
+    ServiceStateComponent(state, {}, {}, {})
 }

@@ -46,8 +46,15 @@ fun MediaViewerContent(
             }
         }
         // endregion
-        ServiceStateComponent(serviceState) {
-            playPauseAction.invoke()
-        }
+        ServiceStateComponent(
+            state = serviceState, playPauseAction = {
+                playPauseAction.invoke()
+            },
+            timerAction = {
+
+            },
+            speedAction = {
+                
+            })
     }
 }
