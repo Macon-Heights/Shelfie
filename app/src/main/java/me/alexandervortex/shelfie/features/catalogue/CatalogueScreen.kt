@@ -142,6 +142,7 @@ fun CatalogueScreen(
     LaunchedEffect(viewModel.error.value) {
         if (viewModel.error.value.isNullOrBlank().not()) {
             Toast.makeText(context, viewModel.error.value, Toast.LENGTH_LONG).show()
+            viewModel.error.value = null
         }
     }
 
