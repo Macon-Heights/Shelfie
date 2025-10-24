@@ -16,10 +16,10 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.data.mapper.SENTENCE_SEPARATOR
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
 fun ComponentUI(
@@ -38,12 +38,12 @@ fun ComponentUI(
                     val isHighlight = isCurrentElement && isCurrentWord
 
                     val textColor = when {
-                        isHighlight -> MaterialTheme.colorScheme.background
+                        isHighlight -> MaterialTheme.colorScheme.onSecondaryContainer
                         else -> MaterialTheme.colorScheme.onBackground
                     }
 
                     val bgColor = when {
-                        isHighlight -> MaterialTheme.colorScheme.onBackground
+                        isHighlight -> MaterialTheme.colorScheme.secondaryContainer
                         else -> MaterialTheme.colorScheme.background
                     }
 
@@ -91,15 +91,15 @@ fun ComponentUI(
     }
 }
 
-@Preview(showBackground = true)
+@CombinedPreviews
 @Composable
 fun TextUiPreview() {
-    MaterialTheme {
+    CombinedPreviews {
         ComponentUI(
             element = getBookUI().elements.first(),
             elementIndex = 0,
-            currentIndex = 2,
-            partIndex = 3
+            currentIndex = 0,
+            partIndex = 2
         )
     }
 }

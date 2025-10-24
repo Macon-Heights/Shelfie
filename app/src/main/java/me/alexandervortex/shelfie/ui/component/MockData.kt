@@ -29,8 +29,6 @@ private fun getTitleInfo(): TitleInfoUI {
 
 private fun getElements(): List<ElementUI> {
     return listOf(
-
-        ElementUI.EmptyLine,
         ElementUI.TextUI(
             parts = listOf(
                 "1. Солнце встаёт над рекой голубой,\n",
