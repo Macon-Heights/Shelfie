@@ -79,9 +79,9 @@ fun CatalogueScreenContent(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Start,
                         color = getColors().onBackground,
-                        text = "Here is no books yet.\n\nAdd your first book.",
+                        text = stringResource(R.string.catalogue_empty),
                         fontSize = 32.sp,
-                        lineHeight = 32.sp,
+                        lineHeight = 56.sp,
                         fontWeight = FontWeight.Thin,
                     )
                 }
