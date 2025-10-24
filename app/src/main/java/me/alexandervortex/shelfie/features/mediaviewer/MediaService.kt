@@ -80,8 +80,6 @@ class MediaService : Service() {
             playingBook?.let {
                 initTtsController(it)
             }
-        }
-        if (ttsController == null) {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
         }
