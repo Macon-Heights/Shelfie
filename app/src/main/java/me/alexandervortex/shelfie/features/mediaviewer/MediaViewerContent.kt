@@ -22,6 +22,8 @@ fun MediaViewerContent(
     serviceState: MediaServiceState,
     listState: LazyListState,
     playPauseAction: () -> Unit,
+    timerAction: () -> Unit,
+    speedAction: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -47,14 +49,10 @@ fun MediaViewerContent(
         }
         // endregion
         ServiceStateComponent(
-            state = serviceState, playPauseAction = {
-                playPauseAction.invoke()
-            },
-            timerAction = {
-
-            },
-            speedAction = {
-                
-            })
+            state = serviceState,
+            playPauseAction = { playPauseAction.invoke() },
+            timerAction = { timerAction.invoke() },
+            speedAction = { speedAction.invoke() }
+        )
     }
 }

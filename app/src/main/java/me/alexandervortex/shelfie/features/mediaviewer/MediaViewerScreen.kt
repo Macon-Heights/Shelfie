@@ -96,8 +96,19 @@ fun MediaViewerScreen(
     }
     // endregion
 
-    MediaViewerContent(book, serviceState, listState) {
-        val topIndex = listState.firstVisibleItemIndex
-        ttsVm.togglePlayPause(topIndex)
-    }
+    MediaViewerContent(
+        book = book,
+        serviceState = serviceState,
+        listState = listState,
+        playPauseAction = {
+            val topIndex = listState.firstVisibleItemIndex
+            ttsVm.togglePlayPause(topIndex)
+        },
+        timerAction = {
+
+        },
+        speedAction = {
+
+        }
+    )
 }
