@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.viewer
+package me.alexandervortex.shelfie.ui.component
 
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
