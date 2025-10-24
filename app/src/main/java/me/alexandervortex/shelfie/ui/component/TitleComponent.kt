@@ -11,8 +11,8 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.ui.theme.getColors
 
-private const val size = 72
-private const val spacing = 16
+private const val size = 64
+private const val spacing = 8
 
 @Composable
 fun TitleComponent(
