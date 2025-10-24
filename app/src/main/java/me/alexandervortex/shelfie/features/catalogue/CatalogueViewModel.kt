@@ -18,10 +18,15 @@ class CatalogueViewModel
 ) : ViewModel() {
 
     val uiState: MutableState<UIState> = mutableStateOf(UIState.CatalogueLoadingState)
+    val error: MutableState<String?> = mutableStateOf(null)
 
     fun importFromUri(uri: Uri) {
         viewModelScope.launch {
-            bookRepository.importFromUri(uri)
+            try {
+                bookRepository.importFromUri(uri)
+            } catch (e: Exception) {
+                error.value = e.localizedMessage
+            }
             getBookEntities()
         }
     }
