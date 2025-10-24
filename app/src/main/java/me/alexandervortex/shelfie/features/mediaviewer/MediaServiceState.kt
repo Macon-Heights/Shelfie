@@ -4,6 +4,9 @@ data class MediaServiceState(
     val isPlaying: Boolean = false,
     val error: String = "",
 
+    val speed: Float = 1f,
+    val timer: Int = 0,
+
     val index: Int = 0,
     val part: Int = 0,
 
