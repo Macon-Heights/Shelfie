@@ -19,7 +19,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.data.mapper.SENTENCE_SEPARATOR
-import me.alexandervortex.shelfie.features.viewer.getBookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 
 @Composable
