@@ -26,8 +26,8 @@ import me.alexandervortex.shelfie.features.mediaplayer.TtsViewModel
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
-import me.alexandervortex.shelfie.ui.theme.IC_PAUSE
-import me.alexandervortex.shelfie.ui.theme.IC_PLAY
+import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PAUSE
+import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PLAY
 
 const val TAG = "^_^"
 
@@ -134,7 +134,7 @@ fun ViewerScreen(
         ActionButtonComponent(
             content = {
                 Icon(
-                    imageVector = if (serviceState.isPlaying) IC_PAUSE else IC_PLAY,
+                    imageVector = if (serviceState.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY,
                     contentDescription = null
                 )
             },

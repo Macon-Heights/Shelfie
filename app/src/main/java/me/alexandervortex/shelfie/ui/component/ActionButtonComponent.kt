@@ -40,10 +40,10 @@ fun ActionButtonComponent(
         contentPadding = PaddingValues(0.dp),
         shape = SHAPE_M,
         colors = ButtonColors(
-            containerColor = getColors().surfaceContainerHigh,
-            contentColor = getColors().onSurface,
-            disabledContainerColor = getColors().surfaceContainerHigh,
-            disabledContentColor = getColors().onSurface
+            containerColor = getColors().primaryContainer,
+            contentColor = getColors().onPrimaryContainer,
+            disabledContainerColor = getColors().primaryContainer,
+            disabledContentColor = getColors().onPrimaryContainer
         ),
         modifier = modifier
             .size(64.dp)
