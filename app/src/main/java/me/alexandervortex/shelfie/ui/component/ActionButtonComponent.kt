@@ -31,6 +31,7 @@ fun ActionButtonComponentPreview() {
 
 @Composable
 fun ActionButtonComponent(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
     action: (() -> Unit)? = {},
 ) {
@@ -44,7 +45,7 @@ fun ActionButtonComponent(
             disabledContainerColor = getColors().surfaceContainerHigh,
             disabledContentColor = getColors().onSurface
         ),
-        modifier = Modifier
+        modifier = modifier
             .size(64.dp)
             .shadow(
                 elevation = 8.dp,
