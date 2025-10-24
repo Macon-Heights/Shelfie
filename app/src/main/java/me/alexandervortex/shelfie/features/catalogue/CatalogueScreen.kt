@@ -21,11 +21,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
@@ -68,7 +70,7 @@ fun CatalogueScreenContent(
                     contentAlignment = Alignment.CenterEnd,
                     modifier = Modifier.aspectRatio(1f)
                 ) {
-                    TitleComponent(text = "Your\nBooks")
+                    TitleComponent(text = stringResource(R.string.catalogue_title))
                 }
             }
             item {

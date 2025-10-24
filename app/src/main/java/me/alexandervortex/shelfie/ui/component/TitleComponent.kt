@@ -3,10 +3,12 @@ package me.alexandervortex.shelfie.ui.component
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.ui.theme.getColors
 
 private const val size = 72
@@ -34,5 +36,5 @@ fun TitleComponent(
 @Composable
 @Preview
 fun TitleComponent() {
-    TitleComponent("Your\nBooks")
+    TitleComponent(stringResource(R.string.catalogue_title))
 }
