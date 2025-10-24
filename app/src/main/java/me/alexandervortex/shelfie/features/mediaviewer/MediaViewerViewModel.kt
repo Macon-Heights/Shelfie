@@ -124,9 +124,6 @@ class MediaViewerViewModel
     }
 
     fun togglePlayPause(currentTopIndex: Int) {
-        // потом можно в кнопку передавать сразу и все
-        // fixme service?.loadBook(bookUI.value)
-
         service?.togglePlayPause(currentTopIndex)
     }
 }
