@@ -71,6 +71,13 @@ class MediaViewerViewModel
                     _state.value = it
                 }
             }
+
+            // 💾 Передаём callback для сохранения прогресса
+            newService.setOnSaveProgressListener { bookId, index, offset ->
+                viewModelScope.launch {
+                    repo.saveCurrentBookProgress(bookId, index, offset)
+                }
+            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -118,6 +125,7 @@ class MediaViewerViewModel
         index: Int,
         offset: Int,
     ) {
+        // а вот мое сохранение в бд из ui
         viewModelScope.launch {
             repo.saveCurrentBookProgress(id, index, offset)
         }

@@ -43,6 +43,12 @@ class MediaService : Service() {
         fun getService(): MediaService = this@MediaService
     }
 
+    private var onSaveProgress: ((bookId: String, index: Int, offset: Int) -> Unit)? = null
+
+    fun setOnSaveProgressListener(listener: (bookId: String, index: Int, offset: Int) -> Unit) {
+        onSaveProgress = listener
+    }
+
     override fun onBind(intent: Intent?): IBinder = binder
 
     // infra
@@ -59,7 +65,9 @@ class MediaService : Service() {
         mediaSession = MediaSessionCompat(this, "ShelfieTTS").apply {
             setCallback(object : MediaSessionCompat.Callback() {
                 override fun onPlay() = updatePlayback(true, _state.value.index)
-                override fun onPause() = updatePlayback(false, _state.value.index)
+                override fun onPause() =
+                    updatePlayback(false, _state.value.index)
+
             })
             isActive = true
         }
@@ -146,6 +154,13 @@ class MediaService : Service() {
     }
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
+        if (!isPlaying) {
+            playingBook?.let { book ->
+                val idx = _state.value.index
+                val offset = _state.value.part
+                onSaveProgress?.invoke(book.titleInfo.id, idx, offset)
+            }
+        }
         // если контроллера нет, выходим (доп. защита)
         val ctrl = ttsController ?: run {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
