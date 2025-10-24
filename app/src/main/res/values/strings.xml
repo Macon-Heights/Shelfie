@@ -2,4 +2,6 @@
     <string name="app_name">Shelfai</string>
     <string name="catalogue_title">Your\nBooks</string>
     <string name="catalogue_empty">Here is no books yet.\nAdd your first book.</string>
+    <string name="catalogue_section">Section</string>
+
 </resources>
