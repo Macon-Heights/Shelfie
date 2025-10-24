@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -18,12 +19,14 @@ import me.alexandervortex.shelfie.ui.model.ElementUI
 
 @Composable
 fun MediaViewerContent(
+    isMenu: Boolean,
     book: BookUI?,
     serviceState: MediaServiceState,
     listState: LazyListState,
     playPauseAction: () -> Unit,
     timerAction: () -> Unit,
     speedAction: () -> Unit,
+    textAction: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -34,7 +37,11 @@ fun MediaViewerContent(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,
             contentPadding = PaddingValues(32.dp),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable {
+                    textAction.invoke()
+                }
         ) {
             val sections: List<ElementUI> = book?.elements.orEmpty()
             itemsIndexed(sections) { index, section ->
@@ -48,11 +55,13 @@ fun MediaViewerContent(
             }
         }
         // endregion
-        ServiceStateComponent(
-            state = serviceState,
-            playPauseAction = { playPauseAction.invoke() },
-            timerAction = { timerAction.invoke() },
-            speedAction = { speedAction.invoke() }
-        )
+        if (isMenu) {
+            ServiceStateComponent(
+                state = serviceState,
+                playPauseAction = { playPauseAction.invoke() },
+                timerAction = { timerAction.invoke() },
+                speedAction = { speedAction.invoke() }
+            )
+        }
     }
 }
