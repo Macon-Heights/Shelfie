@@ -6,6 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -27,6 +30,8 @@ fun MediaViewerScreen(
     val serviceState by ttsVm.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     val book = ttsVm.bookUI.value
+
+    var isMenu by remember { mutableStateOf(false) }
 
     // загрузить книг
     // подключиться к сервису
@@ -96,6 +101,7 @@ fun MediaViewerScreen(
     // endregion
 
     MediaViewerContent(
+        isMenu = isMenu,
         book = book,
         serviceState = serviceState,
         listState = listState,
@@ -108,6 +114,9 @@ fun MediaViewerScreen(
         },
         speedAction = {
 
+        },
+        textAction = {
+            isMenu = !isMenu
         }
     )
 }
