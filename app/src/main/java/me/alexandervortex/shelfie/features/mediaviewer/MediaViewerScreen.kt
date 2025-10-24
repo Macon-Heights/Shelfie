@@ -39,7 +39,6 @@ fun MediaViewerScreen(
 
     LaunchedEffect(book) {
         book?.let {
-            // fixme:  ttsVm.loadBook(book) ??? WHY??
             listState.scrollToItem(
                 index = ttsVm.state.value.index,
                 scrollOffset = 0

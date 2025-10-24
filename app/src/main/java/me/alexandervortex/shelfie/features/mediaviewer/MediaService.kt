@@ -19,6 +19,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.mediaplayer.TtsController
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -74,12 +75,11 @@ class MediaService : Service() {
         return START_STICKY
     }
 
-    // ---- публичные команды (VM может дергать через binder)
-    fun loadBook(book: BookUI?) = initTtsController(book)
-
     fun togglePlayPause(indexToStart: Int) {
-        if (ttsController == null && playingBook != null) {
-            initTtsController(playingBook)
+        if (ttsController == null) {
+            playingBook?.let {
+                initTtsController(it)
+            }
         }
         if (ttsController == null) {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
@@ -88,12 +88,36 @@ class MediaService : Service() {
         updatePlayback(!_state.value.isPlaying, indexToStart)//
     }
 
-    // ---- приватная логика
-    private fun initTtsController(bookUI: BookUI?) {
-        if (bookUI == null) {
+    fun loadBook(book: BookUI?) {
+        if (book == null) {
             _state.update { it.copy(error = "Пустая книга") }
             return
         }
+
+        if (playingBook == null) {
+            initTtsController(book)
+            return
+        }
+
+        scope.launch {
+            ttsController?.release()
+
+            _state.update {
+                it.copy(
+                    isPlaying = false,
+                    index = book.progressIndex,
+                    part = 0,
+                    title = book.titleInfo.title,
+                    author = book.titleInfo.author,
+                    error = ""
+                )
+            }
+            playingBook = book
+            initTtsController(book)
+        }
+    }
+
+    private fun initTtsController(bookUI: BookUI) {
         playingBook = bookUI
         ttsController?.release()
 

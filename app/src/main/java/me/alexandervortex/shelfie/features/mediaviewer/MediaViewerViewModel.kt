@@ -106,9 +106,7 @@ class MediaViewerViewModel
         viewModelScope.launch {
             try {
                 bookUI.value = repo.getBookModelById(id)
-                if (service?.state?.value?.isPlaying == false) {
-                    service?.loadBook(bookUI.value) // fixme
-                }
+                service?.loadBook(bookUI.value)
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
