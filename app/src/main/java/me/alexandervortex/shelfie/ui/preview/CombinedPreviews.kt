@@ -14,7 +14,8 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 @Preview(
     name = "Dark Mode",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    fontScale = 3f
 )
 annotation class CombinedPreviews
 
