@@ -75,7 +75,12 @@ class MediaViewerViewModel
             // 💾 Передаём callback для сохранения прогресса
             newService.setOnSaveProgressListener { bookId, index, offset ->
                 viewModelScope.launch {
-                    repo.saveCurrentBookProgress(bookId, index, offset)
+                    repo.saveCurrentBookProgress(
+                        bookId,
+                        index,
+                        offset,
+                        bookUI.value?.elements?.size ?: 0
+                    )
                 }
             }
         }
@@ -109,11 +114,12 @@ class MediaViewerViewModel
         isBound = false
     }
 
-    fun loadCurrentBook(id: String) {
+    fun loadCurrentBook(id: String, needToUpdate: Boolean) {
         viewModelScope.launch {
             try {
                 bookUI.value = repo.getBookModelById(id)
                 service?.loadBook(bookUI.value)
+
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
@@ -125,9 +131,13 @@ class MediaViewerViewModel
         index: Int,
         offset: Int,
     ) {
-        // а вот мое сохранение в бд из ui
         viewModelScope.launch {
-            repo.saveCurrentBookProgress(id, index, offset)
+            repo.saveCurrentBookProgress(
+                id,
+                index,
+                offset,
+                bookUI.value?.elements?.size ?: 0
+            )
         }
     }
 
