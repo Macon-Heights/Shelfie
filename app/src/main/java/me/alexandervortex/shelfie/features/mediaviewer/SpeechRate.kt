@@ -2,7 +2,7 @@ package me.alexandervortex.shelfie.features.mediaviewer
 
 enum class SpeechRate(val speed: Float, val text: String) {
 
-    DEFAULT(1f, "1x"),
+    DEFAULT(1f, " "),
     FAST(1.5f, "1.5x"),
     FASTEST(2f, "2x");
 

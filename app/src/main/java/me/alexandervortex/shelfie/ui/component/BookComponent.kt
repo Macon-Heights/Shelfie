@@ -31,7 +31,7 @@ fun BookComponent(
     modifier: Modifier = Modifier,
 ) {
     val color = getColors().surfaceVariant
-    val onColor = getColors().onSurfaceVariant
+    val onColor = getColors().onSurface
     val onColorForTitle = getColors().onSurface
     Column(
         modifier = modifier

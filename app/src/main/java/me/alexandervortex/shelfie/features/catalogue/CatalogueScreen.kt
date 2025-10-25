@@ -34,6 +34,7 @@ import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
+import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
 import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
@@ -106,6 +107,12 @@ fun CatalogueScreenContent(
                 }
             }
         }
+        RoundButton(
+            modifier = Modifier.padding(32.dp),
+            icon = IC_ADD,
+            action = onAddClick,
+            isPrimary = true
+        )
         ActionButtonComponent(
             modifier = Modifier.padding(32.dp),
             content = {

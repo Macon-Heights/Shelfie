@@ -39,43 +39,28 @@ fun MediaStateComponent(
     nextAction: () -> Unit,
 ) {
 
-    Column(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-//            .padding(bottom = 12.dp)
-//            .padding(8.dp)
             .shadow(
                 elevation = 6.dp,
                 shape = SHAPE_TOP_L,
                 clip = false
             )
             .clip(SHAPE_TOP_L)
-            .background(getColors().surfaceBright)
-//            .padding(16.dp),
+            .background(getColors().primaryContainer)
+            .padding(12.dp)
+            .padding(bottom = 4.dp),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            fontSize = 14.sp,
-            lineHeight = 14.sp,
-            text = state.title.orEmpty(),
-            color = getColors().onSurface,
-        )
-        ProgressLine()
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
+        val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
 
-            ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
-            ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
-            RoundButton(playPauseIcon, true) { playPauseAction.invoke() }
-            ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
-            ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
-        }
+        ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
+        ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
+        RoundButton(icon = playPauseIcon, isPrimary = true) { playPauseAction.invoke() }
+        ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
+        ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
     }
 }
 
@@ -88,10 +73,13 @@ private fun ButtonWithLabel(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        RoundButton(playPauseIcon) { playPauseAction.invoke() }
+        RoundButton(icon = playPauseIcon) { playPauseAction.invoke() }
         if (text.isNullOrEmpty().not()) {
             Spacer(Modifier.size(8.dp))
-            Text(text = text.orEmpty(), fontSize = 14.sp, lineHeight = 14.sp)
+            Text(
+                color = getColors().onPrimaryContainer,
+                text = text.orEmpty(), fontSize = 14.sp, lineHeight = 14.sp
+            )
         }
     }
 }
@@ -106,6 +94,7 @@ fun MediaViewerPreview2() {
             book = bookUI,
             serviceState = MediaServiceState.playingState()
                 .copy(
+                    title = "Title",
                     speed = SpeechRate.FAST,
                     timer = TimerValue.MIN_20
                 ),
