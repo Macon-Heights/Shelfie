@@ -27,6 +27,7 @@ import me.alexandervortex.shelfie.ui.model.BookUI
 private const val CHANNEL_ID = "mock_player"
 private const val ACTION_PLAY = "action_play"
 private const val ACTION_PAUSE = "action_pause"
+private const val ACTION_SPEED = "action_speed"
 
 @AndroidEntryPoint
 class MediaService : Service() {
@@ -79,6 +80,7 @@ class MediaService : Service() {
         when (intent?.action) {
             ACTION_PLAY -> updatePlayback(true, _state.value.index)
             ACTION_PAUSE -> updatePlayback(false, _state.value.index)
+            ACTION_SPEED -> clickSpeed()
         }
         return START_STICKY
     }
@@ -197,6 +199,16 @@ class MediaService : Service() {
                 BitmapFactory.decodeResource(
                     resources,
                     R.drawable.ic_service
+                )
+            )
+            .addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_speed,
+                    label,
+                    PendingIntent.getService(
+                        this, 0, Intent(this, MediaService::class.java).setAction(ACTION_SPEED),
+                        PendingIntent.FLAG_IMMUTABLE
+                    )
                 )
             )
             .addAction(NotificationCompat.Action(icon, label, intent))
