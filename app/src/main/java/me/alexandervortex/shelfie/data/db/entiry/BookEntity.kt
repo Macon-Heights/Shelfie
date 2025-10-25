@@ -27,4 +27,7 @@ data class BookEntity(
 
     @ColumnInfo(name = "scrollOffset")
     val scrollOffset: Int = 0,
+
+    @ColumnInfo(name = "elements") // новое поле
+    val elements: Int = 0,
 )

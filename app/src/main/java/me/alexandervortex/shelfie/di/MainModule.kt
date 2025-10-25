@@ -7,11 +7,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.db.BookDatabase
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.FictionBookParser
+import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Singleton
 
@@ -48,7 +48,8 @@ object MainModule {
             context,
             BookDatabase::class.java,
             BOOK_DB
-        ).build()
+        ).addMigrations(BookDatabase.MIGRATION_1_2)
+            .build()
     }
 
     @Provides
