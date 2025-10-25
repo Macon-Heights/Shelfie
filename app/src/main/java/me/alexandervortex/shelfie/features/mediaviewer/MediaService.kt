@@ -158,18 +158,14 @@ class MediaService : Service() {
                 }
                 // синхронизируем плитку в шторке
                 startForeground(1, buildNotification(_state.value.isPlaying))
+            },
+            saveScrollState = { id, index, offset ->
+                onSaveProgress?.invoke(id, index, offset)
             }
         )
     }
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
-        if (!isPlaying) {
-            playingBook?.let { book ->
-                val idx = _state.value.index
-                val offset = _state.value.part
-                onSaveProgress?.invoke(book.titleInfo.id, idx, offset)
-            }
-        }
         // если контроллера нет, выходим (доп. защита)
         val ctrl = ttsController ?: run {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
