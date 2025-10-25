@@ -228,14 +228,14 @@ class MediaService : Service() {
     }
 
     fun clickSpeed() {
-        // todo
+        ttsController?.updateSpeechRate()
     }
 
     fun clickNext() {
-        // todo
+//        ttsController.changePlayPosition(-1)
     }
 
     fun clickPrev() {
-        // todo
+//        ttsController.changePlayPosition(-1)
     }
 }

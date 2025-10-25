@@ -3,6 +3,7 @@ package me.alexandervortex.shelfie.features.mediaplayer
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import me.alexandervortex.shelfie.features.mediaviewer.SpeechRate
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import java.util.Locale
@@ -17,7 +18,7 @@ class TtsController(
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
     private var isSpeaking = false
-    private var speechRate = 1f
+    private var speechRate = SpeechRate.DEFAULT
     private var currentIndex = 0
     private var currentPart = 0
 
@@ -87,7 +88,6 @@ class TtsController(
     }
 
     private fun speakNext() {
-        tts?.setSpeechRate(speechRate)
         val elements = bookModel?.elements ?: return stopSpeaking()
         if (currentIndex >= elements.size) return stopSpeaking()
 
@@ -111,6 +111,7 @@ class TtsController(
 
         val utteranceId = "$currentIndex:$currentPart"
         currentPart++
+        tts?.setSpeechRate(speechRate.speed)
         tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
     }
 
@@ -118,5 +119,13 @@ class TtsController(
         tts?.stop()
         isSpeaking = false
         onStateChanged(isSpeaking)
+    }
+
+    fun changePlayPosition(i: Int) {
+        //
+    }
+
+    fun updateSpeechRate() {
+        speechRate = speechRate.getNext()
     }
 }
