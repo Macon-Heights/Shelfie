@@ -22,8 +22,6 @@ class BookRepository
     private val parser: UniversalFileParser,
 ) {
 
-    var screenBook: BookUI? = null
-
     suspend fun importFromUri(uri: Uri) {
         /**
          * uri -> universal parser -> book model
@@ -69,7 +67,6 @@ class BookRepository
                 scrollIndex = entity.scrollIndex
             )
         }
-        screenBook = result
         return result
     }
 
@@ -77,7 +74,8 @@ class BookRepository
         id: String,
         index: Int,
         offset: Int,
+        elements: Int,
     ) {
-        dao.updateProgress(id, index, offset)
+        dao.updateProgress(id, index, offset, elements)
     }
 }
