@@ -48,7 +48,7 @@ object MainModule {
             context,
             BookDatabase::class.java,
             BOOK_DB
-        ).addMigrations(BookDatabase.MIGRATION_1_2)
+        ).addMigrations(BookDatabase.MIGRATION_2_3)
             .build()
     }
 
