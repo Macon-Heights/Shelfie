@@ -14,8 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.ui.component.ComponentUI
+import me.alexandervortex.shelfie.ui.component.getBookUI
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
 fun MediaViewerContent(
@@ -68,5 +70,20 @@ fun MediaViewerContent(
                 nextAction = { nextAction.invoke() }
             )
         }
+    }
+}
+
+@CombinedPreviews
+@Composable
+fun MediaViewerPreview() {
+    CombinedPreviews {
+        val bookUI = getBookUI()
+        MediaViewerContent(
+            isMenu = true,
+            book = bookUI,
+            serviceState = MediaServiceState.playingState(),
+            listState = LazyListState(),
+            {}, {}, {}, {}, {}, {},
+        )
     }
 }
