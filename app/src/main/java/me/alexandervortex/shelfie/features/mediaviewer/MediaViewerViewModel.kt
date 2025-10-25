@@ -114,7 +114,7 @@ class MediaViewerViewModel
         isBound = false
     }
 
-    fun loadCurrentBook(id: String, needToUpdate: Boolean) {
+    fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
                 bookUI.value = repo.getBookModelById(id)

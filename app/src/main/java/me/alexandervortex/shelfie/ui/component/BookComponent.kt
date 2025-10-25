@@ -75,7 +75,7 @@ fun BookComponent(
         }
         if (model.scrollIndex > 0) {
             Spacer(Modifier.size(8.dp))
-            ProgressLine()
+            ProgressLine(model.scrollIndex, model.elements)
         }
     }
 }
