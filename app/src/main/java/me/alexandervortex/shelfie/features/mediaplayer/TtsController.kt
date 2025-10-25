@@ -17,7 +17,7 @@ class TtsController(
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
     private var isSpeaking = false
-
+    private var speechRate = 1f
     private var currentIndex = 0
     private var currentPart = 0
 
@@ -45,9 +45,6 @@ class TtsController(
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             errorAction("Язык не поддерживается")
         }
-
-        tts?.setSpeechRate(1f)
-        tts?.setPitch(0.8f)
         initListener()
     }
 
@@ -90,6 +87,7 @@ class TtsController(
     }
 
     private fun speakNext() {
+        tts?.setSpeechRate(speechRate)
         val elements = bookModel?.elements ?: return stopSpeaking()
         if (currentIndex >= elements.size) return stopSpeaking()
 

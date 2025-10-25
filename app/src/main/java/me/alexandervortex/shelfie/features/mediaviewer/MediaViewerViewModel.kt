@@ -134,4 +134,20 @@ class MediaViewerViewModel
     fun togglePlayPause(currentTopIndex: Int) {
         service?.togglePlayPause(currentTopIndex)
     }
+
+    fun clickTimer() {
+        service?.clickTimer()
+    }
+
+    fun clickSpeed() {
+        service?.clickSpeed()
+    }
+
+    fun clickNext() {
+        service?.clickNext()
+    }
+
+    fun clickPrev() {
+        service?.clickPrev()
+    }
 }

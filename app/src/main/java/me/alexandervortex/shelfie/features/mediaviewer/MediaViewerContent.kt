@@ -26,6 +26,8 @@ fun MediaViewerContent(
     playPauseAction: () -> Unit,
     timerAction: () -> Unit,
     speedAction: () -> Unit,
+    prevAction: () -> Unit,
+    nextAction: () -> Unit,
     textAction: () -> Unit,
 ) {
     Box(
@@ -61,7 +63,9 @@ fun MediaViewerContent(
                 state = serviceState,
                 playPauseAction = { playPauseAction.invoke() },
                 timerAction = { timerAction.invoke() },
-                speedAction = { speedAction.invoke() }
+                speedAction = { speedAction.invoke() },
+                prevAction = { prevAction.invoke() },
+                nextAction = { nextAction.invoke() }
             )
         }
     }

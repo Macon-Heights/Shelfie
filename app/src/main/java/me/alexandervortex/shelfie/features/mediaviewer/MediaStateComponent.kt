@@ -41,6 +41,8 @@ fun ServiceStateComponent(
     playPauseAction: () -> Unit,
     timerAction: () -> Unit,
     speedAction: () -> Unit,
+    prevAction: () -> Unit,
+    nextAction: () -> Unit,
 ) {
 
     Column(
@@ -54,7 +56,7 @@ fun ServiceStateComponent(
                 clip = false
             )
             .clip(SHAPE_L)
-            .background(getColors().surfaceContainer)
+            .background(getColors().surfaceBright)
             .padding(8.dp),
     ) {
         Text(
@@ -76,9 +78,9 @@ fun ServiceStateComponent(
         ) {
             val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
             RoundButton(IC_PLAYER_TIMER) { timerAction.invoke() }
-            RoundButton(IC_PLAYER_PREV) {}
+            RoundButton(IC_PLAYER_PREV) { prevAction.invoke() }
             RoundButton(playPauseIcon, true) { playPauseAction.invoke() }
-            RoundButton(IC_PLAYER_NEXT) {}
+            RoundButton(IC_PLAYER_NEXT) { nextAction.invoke() }
             RoundButton(IC_PLAYER_SPEED) { speedAction.invoke() }
         }
     }
@@ -143,6 +145,6 @@ fun ServiceStateComponentPreview() {
             author = "Sashke",
             title = "Blahblah"
         )
-        ServiceStateComponent(state, {}, {}, {})
+        ServiceStateComponent(state, {}, {}, {}, {}, {})
     }
 }

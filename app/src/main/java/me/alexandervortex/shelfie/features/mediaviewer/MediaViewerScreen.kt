@@ -110,13 +110,19 @@ fun MediaViewerScreen(
             ttsVm.togglePlayPause(topIndex)
         },
         timerAction = {
-
+            ttsVm.clickTimer()
         },
         speedAction = {
-
+            ttsVm.clickSpeed()
         },
         textAction = {
             isMenu = !isMenu
+        },
+        nextAction = {
+            ttsVm.clickNext()
+        },
+        prevAction = {
+            ttsVm.clickPrev()
         }
     )
 }
