@@ -31,7 +31,7 @@ fun MediaViewerScreen(
     val listState = rememberLazyListState()
     val book = ttsVm.bookUI.value
 
-    var isMenu by remember { mutableStateOf(false) }
+    var isMenu by remember { mutableStateOf(true) }
 
     // загрузить книг
     // подключиться к сервису
