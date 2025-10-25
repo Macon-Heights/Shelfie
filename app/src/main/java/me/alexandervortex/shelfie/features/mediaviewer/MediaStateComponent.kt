@@ -79,12 +79,15 @@ fun MediaStateComponent(
 
 @CombinedPreviews
 @Composable
-fun ServiceStateComponentPreview() {
+fun MediaViewerPreview2() {
     CombinedPreviews {
-        val state = MediaServiceState.pausedState().copy(
-            author = "Sashke",
-            title = "Blahblah"
+        val bookUI = getBookUI()
+        MediaViewerContent(
+            isMenu = true,
+            book = bookUI,
+            serviceState = MediaServiceState.playingState(),
+            listState = LazyListState(),
+            {}, {}, {}, {}, {}, {},
         )
-        MediaStateComponent(state, {}, {}, {}, {}, {})
     }
 }
