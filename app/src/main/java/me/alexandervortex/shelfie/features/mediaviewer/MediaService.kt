@@ -65,9 +65,13 @@ class MediaService : Service() {
         ensureNotificationChannel()
         mediaSession = MediaSessionCompat(this, "ShelfieTTS").apply {
             setCallback(object : MediaSessionCompat.Callback() {
-                override fun onPlay() = updatePlayback(true, _state.value.index)
-                override fun onPause() =
-                    updatePlayback(false, _state.value.index)
+                override fun onPlay() = updatePlayback(
+                    true, _state.value.index
+                )
+
+                override fun onPause() = updatePlayback(
+                    false, _state.value.index
+                )
 
             })
             isActive = true
