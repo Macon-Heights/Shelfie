@@ -5,7 +5,7 @@ data class MediaServiceState(
     val error: String = "",
 
     val speed: SpeechRate = SpeechRate.DEFAULT,
-    val timer: Int = 0,
+    val timer: TimerValue = TimerValue.OFF,
 
     val index: Int = 0,
     val part: Int = 0,
