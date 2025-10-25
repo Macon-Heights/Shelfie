@@ -36,22 +36,23 @@ fun MediaViewerContent(
         LazyColumn(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,
-            contentPadding = PaddingValues(32.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable {
-                    textAction.invoke()
-                }
+            contentPadding = PaddingValues(16.dp),
+            modifier = Modifier.fillMaxSize()
         ) {
             val sections: List<ElementUI> = book?.elements.orEmpty()
             itemsIndexed(sections) { index, section ->
                 ComponentUI(
+                    modifier = Modifier.clickable { textAction.invoke() },
                     element = section,
                     elementIndex = index,
                     currentIndex = serviceState.index,
                     partIndex = serviceState.part
                 )
-                Spacer(Modifier.size(32.dp))
+                Spacer(
+                    modifier = Modifier
+                        .size(16.dp)
+                        .clickable { textAction.invoke() },
+                )
             }
         }
         // endregion

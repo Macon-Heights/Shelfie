@@ -23,6 +23,7 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
 fun ComponentUI(
+    modifier: Modifier = Modifier,
     element: ElementUI,
     currentIndex: Int,
     elementIndex: Int,
@@ -60,7 +61,7 @@ fun ComponentUI(
             Text(
                 text = styledText,
                 textAlign = TextAlign.Justify,
-                modifier = Modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth()
             )
         }
 
@@ -74,7 +75,7 @@ fun ComponentUI(
                     contentScale = ContentScale.FillWidth,
                     bitmap = bitmap.asImageBitmap(),
                     contentDescription = null,
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .padding(vertical = 32.dp)
                 )
@@ -83,7 +84,7 @@ fun ComponentUI(
 
         is ElementUI.EmptyLine -> {
             Spacer(
-                modifier = Modifier
+                modifier = modifier
                     .size(64.dp)
                     .fillMaxWidth()
             )
