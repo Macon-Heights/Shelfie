@@ -222,4 +222,20 @@ class MediaService : Service() {
         mediaSession.release()
         scope.cancel()
     }
+
+    fun clickTimer() {
+        // todo
+    }
+
+    fun clickSpeed() {
+        // todo
+    }
+
+    fun clickNext() {
+        // todo
+    }
+
+    fun clickPrev() {
+        // todo
+    }
 }
