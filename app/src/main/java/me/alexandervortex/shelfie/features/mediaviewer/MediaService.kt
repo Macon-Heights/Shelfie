@@ -132,7 +132,10 @@ class MediaService : Service() {
                 index = bookUI.progressIndex,
                 part = 0,
                 author = bookUI.titleInfo.author,
-                title = bookUI.titleInfo.title
+                title = bookUI.titleInfo.title,
+                speed = SpeechRate.DEFAULT,
+                isPlaying = false,
+                timer = 0
             )
         }
 
