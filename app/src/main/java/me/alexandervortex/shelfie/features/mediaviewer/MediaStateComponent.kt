@@ -69,8 +69,9 @@ fun MediaStateComponent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
+
             ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
-            ButtonWithLabel(IC_PLAYER_TIMER, "30m") { timerAction.invoke() }
+            ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
             RoundButton(playPauseIcon, true) { playPauseAction.invoke() }
             ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
             ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
@@ -103,7 +104,11 @@ fun MediaViewerPreview2() {
         MediaViewerContent(
             isMenu = true,
             book = bookUI,
-            serviceState = MediaServiceState.playingState().copy(speed = SpeechRate.FAST),
+            serviceState = MediaServiceState.playingState()
+                .copy(
+                    speed = SpeechRate.FAST,
+                    timer = TimerValue.MIN_20
+                ),
             listState = LazyListState(),
             {}, {}, {}, {}, {}, {},
         )

@@ -239,7 +239,10 @@ class MediaService : Service() {
     }
 
     fun clickTimer() {
-        // todo
+        _state.update {
+            it.copy(timer = it.timer.getNext())
+        }
+        ttsController?.updateTimer(state.value.timer)
     }
 
     fun clickSpeed() {

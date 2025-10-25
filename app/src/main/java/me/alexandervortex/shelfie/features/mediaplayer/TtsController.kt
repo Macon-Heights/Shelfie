@@ -4,9 +4,11 @@ import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import me.alexandervortex.shelfie.features.mediaviewer.SpeechRate
+import me.alexandervortex.shelfie.features.mediaviewer.TimerValue
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class TtsController(
     context: Context,
@@ -14,10 +16,12 @@ class TtsController(
     private val errorAction: (String) -> Unit,
     private val scrollToIndex: (index: Int?, partIndex: Int?) -> Unit,
     private val onStateChanged: (Boolean) -> Unit = {},
+    private val saveScrollState: (String, Int, Int) -> Unit = { _, _, _ -> },
 ) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
     private var isSpeaking = false
+    private var stoppingTime: Long? = null
     private var currentIndex = 0
     private var currentPart = 0
 
@@ -87,6 +91,12 @@ class TtsController(
     }
 
     private fun speakNext() {
+        val stopAt = stoppingTime
+        if (stopAt != null && System.currentTimeMillis() >= stopAt) {
+            stopSpeaking()
+            return
+        }
+
         val elements = bookModel?.elements ?: return stopSpeaking()
         if (currentIndex >= elements.size) return stopSpeaking()
 
@@ -117,9 +127,26 @@ class TtsController(
         tts?.stop()
         isSpeaking = false
         onStateChanged(isSpeaking)
+        bookModel?.let {
+            saveScrollState.invoke(
+                bookModel.titleInfo.id,
+                currentIndex,
+                currentPart
+            )
+        }
     }
 
     fun updateSpeechRate(speed: SpeechRate) {
         tts?.setSpeechRate(speed.speed)
+    }
+
+    fun updateTimer(timer: TimerValue) {
+        if (timer == TimerValue.OFF) {
+            stoppingTime = null
+            return
+        }
+
+        val now = System.currentTimeMillis()
+        stoppingTime = now + TimeUnit.MINUTES.toMillis(timer.mins.toLong())
     }
 }
