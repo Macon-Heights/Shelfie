@@ -93,6 +93,14 @@ class TtsController(
     private fun speakNext() {
         val stopAt = stoppingTime
         if (stopAt != null && System.currentTimeMillis() >= stopAt) {
+            bookModel?.let {
+                saveScrollState.invoke(
+                    it.titleInfo.id,
+                    currentIndex,
+                    currentPart
+                )
+            }
+
             stopSpeaking()
             return
         }
@@ -127,13 +135,6 @@ class TtsController(
         tts?.stop()
         isSpeaking = false
         onStateChanged(isSpeaking)
-        bookModel?.let {
-            saveScrollState.invoke(
-                bookModel.titleInfo.id,
-                currentIndex,
-                currentPart
-            )
-        }
     }
 
     fun updateSpeechRate(speed: SpeechRate) {
