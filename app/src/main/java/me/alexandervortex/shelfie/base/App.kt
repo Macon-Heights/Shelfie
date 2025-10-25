@@ -1,7 +1,6 @@
 package me.alexandervortex.shelfie.base
 
 import android.app.Application
-import android.net.Uri
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -14,4 +13,11 @@ class App : Application()
  * - Немного разделил классы
  * - Добавил UniversalParser (пока работающий по-старому)
  * - Все скомпилилось, я молодец
+ *
+ * 1.1
+ * - Все парсится (хоть и не очень пока красиво, с игнором шрифтов)
+ * - Работает сервис, в котором крутится ТТС
+ * - Есть медиаплеер в шторке
+ * - Работают кнопки таймер, скроость, некст, прев
+ *
  */
