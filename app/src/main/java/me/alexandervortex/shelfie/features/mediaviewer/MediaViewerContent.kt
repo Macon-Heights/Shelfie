@@ -59,7 +59,7 @@ fun MediaViewerContent(
         }
         // endregion
         if (isMenu) {
-            ServiceStateComponent(
+            MediaStateComponent(
                 state = serviceState,
                 playPauseAction = { playPauseAction.invoke() },
                 timerAction = { timerAction.invoke() },
