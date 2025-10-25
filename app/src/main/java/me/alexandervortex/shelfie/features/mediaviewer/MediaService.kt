@@ -141,7 +141,7 @@ class MediaService : Service() {
                 title = bookUI.titleInfo.title,
                 speed = SpeechRate.DEFAULT,
                 isPlaying = false,
-                timer = 0
+                timer = TimerValue.OFF
             )
         }
 
