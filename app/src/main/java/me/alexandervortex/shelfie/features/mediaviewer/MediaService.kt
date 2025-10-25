@@ -228,7 +228,10 @@ class MediaService : Service() {
     }
 
     fun clickSpeed() {
-        ttsController?.updateSpeechRate()
+        ttsController?.updateSpeechRate(state.value.speed)
+        _state.update {
+            it.copy(speed = it.speed.getNext())
+        }
     }
 
     fun clickNext() {

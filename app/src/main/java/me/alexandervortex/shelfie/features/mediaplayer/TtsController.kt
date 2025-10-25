@@ -18,7 +18,6 @@ class TtsController(
 
     private var tts: TextToSpeech? = TextToSpeech(context, this)
     private var isSpeaking = false
-    private var speechRate = SpeechRate.DEFAULT
     private var currentIndex = 0
     private var currentPart = 0
 
@@ -111,7 +110,6 @@ class TtsController(
 
         val utteranceId = "$currentIndex:$currentPart"
         currentPart++
-        tts?.setSpeechRate(speechRate.speed)
         tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
     }
 
@@ -121,11 +119,7 @@ class TtsController(
         onStateChanged(isSpeaking)
     }
 
-    fun changePlayPosition(i: Int) {
-        //
-    }
-
-    fun updateSpeechRate() {
-        speechRate = speechRate.getNext()
+    fun updateSpeechRate(speed: SpeechRate) {
+        tts?.setSpeechRate(speed.speed)
     }
 }
