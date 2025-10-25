@@ -253,10 +253,10 @@ class MediaService : Service() {
     }
 
     fun clickNext() {
-//        ttsController.changePlayPosition(-1)
+        ttsController?.changePlayPosition(+1)
     }
 
     fun clickPrev() {
-//        ttsController.changePlayPosition(-1)
+        ttsController?.changePlayPosition(-1)
     }
 }

@@ -90,6 +90,31 @@ class TtsController(
         speakNext()
     }
 
+    fun changePlayPosition(step: Int) {
+        val elements = bookModel?.elements.orEmpty()
+        if (elements.isEmpty()) return
+
+        // Останавливаем текущее чтение
+        tts?.stop()
+
+        // Меняем текущий индекс
+        currentIndex = (currentIndex + step).coerceIn(0, elements.lastIndex)
+        currentPart = 0
+
+        // Сохраняем прогресс
+        bookModel?.let {
+            saveScrollState.invoke(it.titleInfo.id, currentIndex, currentPart)
+        }
+
+        // Если уже играем — продолжаем с нового места
+        if (isSpeaking) {
+            speakNext()
+        } else {
+            // Если пауза — просто обновляем позицию на экране
+            scrollToIndex(currentIndex, currentPart)
+        }
+    }
+
     private fun speakNext() {
         val stopAt = stoppingTime
         if (stopAt != null && System.currentTimeMillis() >= stopAt) {
