@@ -2,14 +2,12 @@ package me.alexandervortex.shelfie.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -45,33 +43,22 @@ fun BookComponent(
     ) {
         model.title?.let {
             Text(
-                model.title,
+                text = it,
                 color = onColorForTitle,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Left
             )
         }
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        ) {
-            Spacer(
-                Modifier
-                    .size(16.dp)
-                    .weight(1f)
+        Spacer(Modifier.size(4.dp))
+        model.author?.let {
+            Text(
+                text = it,
+                color = onColor,
+                fontWeight = FontWeight.Light,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.End
             )
-            model.author?.let {
-                Text(
-                    color = onColor,
-                    fontWeight = FontWeight.Light,
-                    text = it,
-                    textAlign = TextAlign.End
-                )
-            }
-
         }
         if (model.scrollIndex > 0) {
             Spacer(Modifier.size(8.dp))

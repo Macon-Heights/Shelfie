@@ -47,7 +47,7 @@ fun ProgressLine(scrollIndex: Int, elements: Int) {
 private fun BookComponentWithLine() {
     val model = CataloguePreviewData.getBooks().random()
     val kek = model.copy(
-        scrollIndex = 50,
+        scrollIndex = 20,
         elements = 100
     )
     CombinedPreviews {
