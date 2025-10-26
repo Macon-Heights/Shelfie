@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,7 +34,6 @@ import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
-import me.alexandervortex.shelfie.ui.component.ActionButtonComponent
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -112,16 +110,6 @@ fun CatalogueScreenContent(
             icon = IC_ADD,
             action = onAddClick,
             isPrimary = true
-        )
-        ActionButtonComponent(
-            modifier = Modifier.padding(32.dp),
-            content = {
-                Icon(
-                    imageVector = IC_ADD,
-                    contentDescription = "",
-                )
-            },
-            action = onAddClick
         )
     }
 }

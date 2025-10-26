@@ -49,7 +49,7 @@ fun MediaStateComponent(
                 clip = false
             )
             .clip(SHAPE_TOP_L)
-            .background(getColors().primaryContainer)
+            .background(getColors().surfaceVariant)
             .padding(12.dp)
             .padding(bottom = 4.dp),
     ) {
