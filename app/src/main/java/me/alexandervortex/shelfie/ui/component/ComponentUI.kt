@@ -39,12 +39,12 @@ fun ComponentUI(
                     val isHighlight = isCurrentElement && isCurrentWord
 
                     val textColor = when {
-                        isHighlight -> MaterialTheme.colorScheme.onSecondaryContainer
+                        isHighlight -> MaterialTheme.colorScheme.onPrimaryContainer
                         else -> MaterialTheme.colorScheme.onBackground
                     }
 
                     val bgColor = when {
-                        isHighlight -> MaterialTheme.colorScheme.secondaryContainer
+                        isHighlight -> MaterialTheme.colorScheme.primaryContainer
                         else -> MaterialTheme.colorScheme.background
                     }
 

@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -31,13 +30,13 @@ fun ProgressLine(scrollIndex: Int, elements: Int) {
                     .fillMaxSize()
                     .weight(scrollIndex.toFloat())
                     .clip(SHAPE_S)
-                    .background(getColors().primary)
+                    .background(getColors().onSurfaceVariant)
             )
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .weight((elements - scrollIndex).toFloat())
-                    .background(getColors().primaryContainer)
+                    .background(getColors().onSurfaceVariant.copy(alpha = 0.3f))
             )
         }
     }
@@ -45,16 +44,13 @@ fun ProgressLine(scrollIndex: Int, elements: Int) {
 
 @Composable
 @CombinedPreviews
-fun BookComponent2() {
+private fun BookComponentWithLine() {
     val model = CataloguePreviewData.getBooks().random()
-    val kek = BookEntity(
-        id = "thisisid",
-        localPath = "",
-        title = "Harry Potter and the Sorcerer's Stone",
-        author = "J.K. Rowling Rowling",
-        year = "1001",
+    val kek = model.copy(
         scrollIndex = 50,
         elements = 100
     )
-    BookComponent(kek)
+    CombinedPreviews {
+        BookComponent(kek)
+    }
 }

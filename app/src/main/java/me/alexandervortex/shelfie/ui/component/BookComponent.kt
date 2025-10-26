@@ -30,7 +30,7 @@ fun BookComponent(
     modifier: Modifier = Modifier,
 ) {
     val color = getColors().surfaceVariant
-    val onColor = getColors().onSurface
+    val onColor = getColors().onSurfaceVariant
     val onColorForTitle = getColors().onSurface
     Column(
         modifier = modifier
@@ -90,7 +90,8 @@ fun BookComponent() {
         title = "Harry Potter and the Sorcerer's Stone",
         author = "J.K. Rowling Rowling",
         year = "1001",
-        scrollIndex = 46
+        scrollIndex = 46,
+        elements = 100
     )
     BookComponent(kek)
 }
