@@ -32,6 +32,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 @Composable
 fun MediaStateComponent(
     state: MediaServiceState,
+    elements: Int,
     playPauseAction: () -> Unit,
     timerAction: () -> Unit,
     speedAction: () -> Unit,
@@ -39,7 +40,7 @@ fun MediaStateComponent(
     nextAction: () -> Unit,
 ) {
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
@@ -51,16 +52,21 @@ fun MediaStateComponent(
             .background(getColors().primaryContainer)
             .padding(12.dp)
             .padding(bottom = 4.dp),
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
 
-        ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
-        ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
-        RoundButton(icon = playPauseIcon, isPrimary = true) { playPauseAction.invoke() }
-        ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
-        ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
+            ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
+            ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
+            RoundButton(icon = playPauseIcon, isPrimary = true) { playPauseAction.invoke() }
+            ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
+            ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
+        }
+        ProgressLine(state.index, elements)
     }
 }
 
@@ -80,6 +86,7 @@ private fun ButtonWithLabel(
                 color = getColors().onPrimaryContainer,
                 text = text.orEmpty(), fontSize = 14.sp, lineHeight = 14.sp
             )
+            Spacer(Modifier.size(8.dp))
         }
     }
 }
@@ -96,7 +103,8 @@ fun MediaViewerPreview2() {
                 .copy(
                     title = "Title",
                     speed = SpeechRate.FAST,
-                    timer = TimerValue.MIN_20
+                    timer = TimerValue.MIN_20,
+                    index = 5,
                 ),
             listState = LazyListState(),
             {}, {}, {}, {}, {}, {},

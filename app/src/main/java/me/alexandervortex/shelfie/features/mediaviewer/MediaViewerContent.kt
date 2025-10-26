@@ -63,6 +63,7 @@ fun MediaViewerContent(
         if (isMenu) {
             MediaStateComponent(
                 state = serviceState,
+                elements = book?.elements?.size ?: 0,
                 playPauseAction = { playPauseAction.invoke() },
                 timerAction = { timerAction.invoke() },
                 speedAction = { speedAction.invoke() },
