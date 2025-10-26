@@ -35,6 +35,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 @Composable
 fun MediaStateComponent(
     state: MediaServiceState,
+    index: Int,
     elements: Int,
     playPauseAction: () -> Unit,
     timerAction: () -> Unit,
@@ -70,7 +71,7 @@ fun MediaStateComponent(
             ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
             ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
         }
-        ProgressLine(state.index, elements)
+        ProgressLine(index, elements)
     }
 }
 
