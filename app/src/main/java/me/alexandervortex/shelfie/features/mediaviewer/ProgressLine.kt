@@ -19,7 +19,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ProgressLine(scrollIndex: Int, elements: Int) {
-    if (scrollIndex > 0 && elements > 0) {
+    if (scrollIndex > 0 && elements > 0 && scrollIndex <= elements) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
