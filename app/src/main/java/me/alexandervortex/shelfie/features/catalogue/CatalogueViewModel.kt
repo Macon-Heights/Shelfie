@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import me.alexandervortex.shelfie.base.ext.toBookComponentModel
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import javax.inject.Inject
@@ -33,8 +34,8 @@ class CatalogueViewModel
 
     fun getBookEntities() {
         viewModelScope.launch {
-            val newEntities = bookRepository.getBookEntities()
-            val state = UIState.CatalogueBooksState(newEntities)
+            val components = bookRepository.getBookEntities().map { it.toBookComponentModel() }
+            val state = UIState.CatalogueBooksState(components)
             uiState.value = state
         }
     }

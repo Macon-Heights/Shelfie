@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
 import me.alexandervortex.shelfie.ui.component.BookComponent
+import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
@@ -55,7 +55,7 @@ fun CatalogueScreenContentPreview() {
 @Composable
 fun CatalogueScreenContent(
     uiState: UIState,
-    onBookClick: (BookEntity) -> Unit,
+    onBookClick: (BookComponentModel) -> Unit,
     onAddClick: () -> Unit,
 ) {
     Box(

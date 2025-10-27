@@ -1,10 +1,10 @@
 package me.alexandervortex.shelfie.features.catalogue.ui.preview
 
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.ui.component.BookComponentModel
 
 object CataloguePreviewData {
 
-    fun getBooks(): List<BookEntity> {
+    fun getBooks(): List<BookComponentModel> {
         return listOf(
             listOf("1984", "George Orwell"),
             listOf("To Kill a Mockingbird", "Harper Lee"),
@@ -37,12 +37,13 @@ object CataloguePreviewData {
             listOf("Frankenstein", "Mary Shelley"),
             listOf("The Shining", "Stephen King")
         ).map {
-            BookEntity(
+            BookComponentModel(
                 id = "thisisid",
                 localPath = "",
                 title = it.firstOrNull().orEmpty(),
                 author = it.lastOrNull(),
-                year = "1001"
+                year = "1001",
+                isChecked = listOf(true, false).random()
             )
         }
     }
