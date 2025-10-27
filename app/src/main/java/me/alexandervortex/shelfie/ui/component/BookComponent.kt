@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -30,9 +29,8 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun BookComponent(
-    model: BookEntity,
+    model: BookComponentModel,
     modifier: Modifier = Modifier,
-    isChecked: Boolean? = null, // я начал делать, но заплутал чуть чуть в логике
 ) {
     val color = getColors().surfaceVariant
     val onColor = getColors().onSurfaceVariant
@@ -40,10 +38,10 @@ fun BookComponent(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (isChecked != null) {
+        model.isChecked?.let {
             Image(
                 modifier = Modifier.size(32.dp),
-                imageVector = if (isChecked) IC_CHECK else IC_UNCHECK,
+                imageVector = if (it) IC_CHECK else IC_UNCHECK,
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(getColors().primary)
             )
@@ -89,18 +87,19 @@ fun BookComponent(
 
 @Composable
 @CombinedPreviews
-fun BookComponent() {
+fun BookComponentPreview() {
     val model = CataloguePreviewData.getBooks().random()
-    val kek = BookEntity(
+    val kek = BookComponentModel(
         id = "thisisid",
         localPath = "",
         title = "Harry Potter and the Sorcerer's Stone",
         author = "J.K. Rowling Rowling",
         year = "1001",
         scrollIndex = 46,
-        elements = 100
+        elements = 100,
+        isChecked = false,
     )
     CombinedPreviews {
-        BookComponent(kek, isChecked = false)
+        BookComponent(kek, Modifier)
     }
 }
