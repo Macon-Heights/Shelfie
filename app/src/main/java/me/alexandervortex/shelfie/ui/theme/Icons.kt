@@ -18,7 +18,7 @@ private val icons = Icons.Outlined
 val IC_ADD = icons.Add
 
 // Remove
-val ID_DELETE = icons.DeleteForever
+val IC_DELETE = icons.DeleteForever
 val IC_CHECK = icons.CheckCircle
 val IC_UNCHECK = icons.Circle
 

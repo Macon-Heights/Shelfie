@@ -2,7 +2,7 @@ package me.alexandervortex.shelfie.ui.component
 
 data class BookComponentModel(
     // UI
-    val isChecked: Boolean?,
+    val isChecked: Boolean,
     // Book Entity
     val id: String,
     val localPath: String,

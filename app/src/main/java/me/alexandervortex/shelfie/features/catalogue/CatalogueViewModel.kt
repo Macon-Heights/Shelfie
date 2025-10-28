@@ -20,6 +20,7 @@ class CatalogueViewModel
 
     val uiState: MutableState<UIState> = mutableStateOf(UIState.CatalogueLoadingState)
     val error: MutableState<String?> = mutableStateOf(null)
+    val isRemoveMode: MutableState<Boolean> = mutableStateOf(false)
 
     fun importFromUri(uri: Uri) {
         viewModelScope.launch {
@@ -42,18 +43,19 @@ class CatalogueViewModel
 
     fun checkBook(id: String) {
         (uiState.value as? UIState.CatalogueBooksState)?.let { state ->
-            val newBooks = state.books.map { book ->
+            val books = state.books.map { book ->
                 if (book.id == id) {
-                    book.copy(isChecked = true)
+                    book.copy(isChecked = !book.isChecked)
                 } else {
-                    book.copy(isChecked = false)
+                    book
                 }
             }
-            uiState.value = state.copy(books = newBooks)
+            uiState.value = state.copy(books = books)
         }
     }
 
     fun removeChecked() {
+        isRemoveMode.value = false
         val checkedBooks = (uiState.value as? UIState.CatalogueBooksState)
             ?.books
             ?.filter { it.isChecked == true }

@@ -29,6 +29,7 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun BookComponent(
+    isRemoveMode: Boolean,
     model: BookComponentModel,
     modifier: Modifier = Modifier,
 ) {
@@ -38,10 +39,10 @@ fun BookComponent(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        model.isChecked?.let {
+        if (isRemoveMode) {
             Image(
                 modifier = Modifier.size(32.dp),
-                imageVector = if (it) IC_CHECK else IC_UNCHECK,
+                imageVector = if (model.isChecked) IC_CHECK else IC_UNCHECK,
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(getColors().primary)
             )
@@ -100,6 +101,6 @@ fun BookComponentPreview() {
         isChecked = false,
     )
     CombinedPreviews {
-        BookComponent(kek, Modifier)
+        BookComponent(false, kek, Modifier)
     }
 }
