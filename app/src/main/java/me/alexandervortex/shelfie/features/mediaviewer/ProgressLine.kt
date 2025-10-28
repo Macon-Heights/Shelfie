@@ -51,6 +51,6 @@ private fun BookComponentWithLine() {
         elements = 100
     )
     CombinedPreviews {
-        BookComponent(kek)
+        BookComponent(false, kek)
     }
 }

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package me.alexandervortex.shelfie.features.catalogue
 
 import android.content.Intent
@@ -5,7 +7,8 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,85 +37,10 @@ import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
 import me.alexandervortex.shelfie.ui.component.BookComponent
-import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.component.TitleComponent
-import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
+import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 import me.alexandervortex.shelfie.ui.theme.getColors
-
-@Composable
-@CombinedPreviews
-fun CatalogueScreenContentPreview() {
-    CombinedPreviews {
-        CatalogueScreenContent(
-            uiState = UIState.CatalogueBooksState(),
-            onAddClick = { },
-            onBookClick = { }
-        )
-    }
-}
-
-@Composable
-fun CatalogueScreenContent(
-    uiState: UIState,
-    onBookClick: (BookComponentModel) -> Unit,
-    onAddClick: () -> Unit,
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ) {
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            item {
-                Box(
-                    contentAlignment = Alignment.CenterEnd,
-                    modifier = Modifier.aspectRatio(1f)
-                ) {
-                    TitleComponent(text = stringResource(R.string.catalogue_title))
-                }
-            }
-            item {
-                if (uiState is UIState.CatalogueBooksState && uiState.books.isEmpty()) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start,
-                        color = getColors().onBackground,
-                        text = stringResource(R.string.catalogue_empty),
-                        fontSize = 32.sp,
-                        lineHeight = 56.sp,
-                        fontWeight = FontWeight.Thin,
-                    )
-                }
-                if (uiState is UIState.CatalogueLoadingState) {
-                    CircularProgressIndicator()
-                }
-            }
-            if (uiState is UIState.CatalogueBooksState) {
-                items(uiState.books) { item ->
-                    BookComponent(
-                        model = item,
-                        modifier = Modifier.clickable {
-                            onBookClick.invoke(item)
-                        })
-                }
-                item {
-                    Spacer(Modifier.height(96.dp))
-                }
-            }
-        }
-        RoundButton(
-            modifier = Modifier.padding(32.dp),
-            icon = IC_ADD,
-            action = onAddClick,
-            isPrimary = true
-        )
-    }
-}
 
 @Composable
 fun CatalogueScreen(
@@ -143,13 +71,83 @@ fun CatalogueScreen(
 
     LaunchedEffect(Unit) { viewModel.getBookEntities() }
 
-    CatalogueScreenContent(
-        uiState = viewModel.uiState.value,
-        onBookClick = { book ->
-            navController.navigate("mviewer?id=${book.id}")
-        },
-        onAddClick = {
-            picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        val books = (viewModel.uiState.value as? UIState.CatalogueBooksState)
+            ?.books.orEmpty()
+
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            item {
+                Box(
+                    contentAlignment = Alignment.CenterEnd,
+                    modifier = Modifier.aspectRatio(1f)
+                ) {
+                    TitleComponent(text = stringResource(R.string.catalogue_title))
+                }
+            }
+            item {
+                if (books.isEmpty()) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Start,
+                        color = getColors().onBackground,
+                        text = stringResource(R.string.catalogue_empty),
+                        fontSize = 32.sp,
+                        lineHeight = 56.sp,
+                        fontWeight = FontWeight.Thin,
+                    )
+                }
+                if (viewModel.uiState.value is UIState.CatalogueLoadingState) {
+                    CircularProgressIndicator()
+                }
+            }
+            if (viewModel.uiState.value is UIState.CatalogueBooksState) {
+                items(books) { book ->
+                    BookComponent(
+                        isRemoveMode = viewModel.isRemoveMode.value,
+                        model = book,
+                        modifier = Modifier.combinedClickable(
+                            onClick = {
+                                if (viewModel.isRemoveMode.value) {
+                                    viewModel.checkBook(book.id)
+                                } else {
+                                    navController.navigate("mviewer?id=${book.id}")
+                                }
+                            },
+                            onLongClick = {
+                                viewModel.isRemoveMode.value = !viewModel.isRemoveMode.value
+                                viewModel.checkBook(book.id)
+                            }
+                        )
+                    )
+                }
+                item {
+                    Spacer(Modifier.height(96.dp))
+                }
+            }
         }
-    )
+        RoundButton(
+            modifier = Modifier.padding(32.dp),
+            icon = if (viewModel.isRemoveMode.value) {
+                IC_DELETE
+            } else {
+                IC_ADD
+            },
+            action = {
+                if (viewModel.isRemoveMode.value) {
+                    viewModel.removeChecked()
+                } else {
+                    picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
+                }
+            },
+            isPrimary = true
+        )
+    }
 }

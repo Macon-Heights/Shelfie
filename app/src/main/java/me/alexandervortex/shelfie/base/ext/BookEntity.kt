@@ -5,7 +5,7 @@ import me.alexandervortex.shelfie.ui.component.BookComponentModel
 
 fun BookEntity.toBookComponentModel(): BookComponentModel {
     return BookComponentModel(
-        isChecked = null,
+        isChecked = false,
         id = id,
         localPath = localPath,
         title = title,
