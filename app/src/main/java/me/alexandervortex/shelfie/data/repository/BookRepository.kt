@@ -5,6 +5,7 @@ import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entiry.BookEntity
 import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.model.BookUI
 import javax.inject.Inject
 
@@ -77,5 +78,17 @@ class BookRepository
         elements: Int,
     ) {
         dao.updateProgress(id, index, offset, elements)
+    }
+
+    fun removeChecked(books: List<BookComponentModel>) {
+        books.forEach {
+            removeBook(it)
+        }
+    }
+
+    private fun removeBook(it: BookComponentModel) {
+        // todo:
+        //        dao.remove(it.id)
+        // file repo.remove(file(it.localpath))
     }
 }
