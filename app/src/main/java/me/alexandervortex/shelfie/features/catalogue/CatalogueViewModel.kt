@@ -39,4 +39,25 @@ class CatalogueViewModel
             uiState.value = state
         }
     }
+
+    fun checkBook(id: String) {
+        (uiState.value as? UIState.CatalogueBooksState)?.let { state ->
+            val newBooks = state.books.map { book ->
+                if (book.id == id) {
+                    book.copy(isChecked = true)
+                } else {
+                    book.copy(isChecked = false)
+                }
+            }
+            uiState.value = state.copy(books = newBooks)
+        }
+    }
+
+    fun removeChecked() {
+        val checkedBooks = (uiState.value as? UIState.CatalogueBooksState)
+            ?.books
+            ?.filter { it.isChecked == true }
+            .orEmpty()
+        bookRepository.removeChecked(checkedBooks)
+    }
 }
