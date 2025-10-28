@@ -15,11 +15,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
-/*
-    Это только плеер, листалка будет отдельным компонентом положена сверху
-*/
-
-
 @Composable
 fun MediaViewerScreen(
     id: String,
@@ -33,10 +28,6 @@ fun MediaViewerScreen(
 
     var isMenu by remember { mutableStateOf(true) }
 
-    // загрузить книг
-    // подключиться к сервису
-    // подскроллить под место
-    // region book work
     LaunchedEffect(Unit) {
         ttsVm.loadCurrentBook(id)
         ttsVm.bindService(context)
@@ -50,25 +41,19 @@ fun MediaViewerScreen(
             )
         }
     }
-    // endregion
-
-    // показать тост если ошибка есть в вм или сервисе
-    // region errors
-    LaunchedEffect(serviceState.error) {
-        if (serviceState.error.isNotBlank()) {
-            Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     LaunchedEffect(serviceState.error) {
         if (serviceState.error.isNotBlank()) {
             Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
         }
     }
-    // endregion
 
-    // по выходу с экрана сохраняю прогресс (надо сохранять еще по паузе в сервисе)
-    // region save state onStop
+    LaunchedEffect(serviceState.error) {
+        if (serviceState.error.isNotBlank()) {
+            Toast.makeText(context, serviceState.error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
@@ -85,10 +70,7 @@ fun MediaViewerScreen(
             ttsVm.unbindService(context)
         }
     }
-    // endregion
 
-    // скроллим туда где идет воспроизведение
-    // region autoscroll
     LaunchedEffect(serviceState.index, serviceState.part) {
         if (serviceState.isPlaying) {
             try {
@@ -98,7 +80,6 @@ fun MediaViewerScreen(
             }
         }
     }
-    // endregion
 
     MediaViewerContent(
         isMenu = isMenu,

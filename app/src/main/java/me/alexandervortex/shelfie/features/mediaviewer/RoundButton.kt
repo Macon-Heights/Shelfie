@@ -33,7 +33,12 @@ fun MediaViewerPreview32() {
                     timer = TimerValue.MIN_20
                 ),
             listState = LazyListState(),
-            {}, {}, {}, {}, {}, {},
+            nextAction = {},
+            textAction = {},
+            prevAction = {},
+            timerAction = {},
+            speedAction = {},
+            playPauseAction = {},
         )
     }
 }

@@ -31,8 +31,11 @@ junitVersion = "4.13.2"
 agpVersion = "8.10.1"
 kotlinVersion = "2.0.21"
 kspVersion = "2.0.21-1.0.25"
+datastoreVersion = "1.1.1"
 
 [libraries]
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastoreVersion" }
+
 ### Media
 androidx-media = { module = "androidx.media:media", version.ref = "mediaVersion" }
 

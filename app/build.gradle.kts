@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.datastore.preferences)
+
     // Media
     implementation(libs.androidx.media)
 

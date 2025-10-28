@@ -112,7 +112,12 @@ fun MediaViewerPreview2() {
                     index = 5,
                 ),
             listState = LazyListState(),
-            {}, {}, {}, {}, {}, {},
+            nextAction = {},
+            prevAction = {},
+            textAction = {},
+            speedAction = {},
+            timerAction = {},
+            playPauseAction = {}
         )
     }
 }
