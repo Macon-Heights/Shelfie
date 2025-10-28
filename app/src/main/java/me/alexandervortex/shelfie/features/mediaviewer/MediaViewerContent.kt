@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.features.mediaviewer
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -36,7 +39,6 @@ fun MediaViewerContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
     ) {
-        // region UI
         LazyColumn(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,
@@ -59,18 +61,41 @@ fun MediaViewerContent(
                 )
             }
         }
-        // endregion
-        if (isMenu) {
-            MediaStateComponent(
-                state = serviceState,
-                index = listState.firstVisibleItemIndex,
-                elements = book?.elements?.size ?: 0,
-                playPauseAction = { playPauseAction.invoke() },
-                timerAction = { timerAction.invoke() },
-                speedAction = { speedAction.invoke() },
-                prevAction = { prevAction.invoke() },
-                nextAction = { nextAction.invoke() }
-            )
+        Column {
+            val scrollIndex = remember { mutableIntStateOf(listState.firstVisibleItemIndex) }
+            if (isMenu) {
+                /*
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .shadow(
+                            elevation = 6.dp,
+                            shape = SHAPE_L,
+                            clip = false
+                        )
+                        .clip(SHAPE_L)
+                        .background(getColors().surfaceVariant)
+                        .padding(12.dp)
+                ) {
+                    Text("Шрифт: 18")
+                    Text("Высота: 18")
+                    Text("Паддинг: 18")
+                    Text("Таймер: 18")
+                    Text("Скорость: 18")
+                }
+                */
+                MediaStateComponent(
+                    state = serviceState,
+                    index = scrollIndex.value,
+                    elements = book?.elements?.size ?: 0,
+                    playPauseAction = { playPauseAction.invoke() },
+                    timerAction = { timerAction.invoke() },
+                    speedAction = { speedAction.invoke() },
+                    prevAction = { prevAction.invoke() },
+                    nextAction = { nextAction.invoke() }
+                )
+            }
         }
     }
 }
@@ -85,7 +110,12 @@ fun MediaViewerPreview() {
             book = bookUI,
             serviceState = MediaServiceState.playingState(),
             listState = LazyListState(),
-            {}, {}, {}, {}, {}, {},
+            nextAction = {},
+            playPauseAction = {},
+            prevAction = {},
+            textAction = {},
+            speedAction = {},
+            timerAction = {},
         )
     }
 }
