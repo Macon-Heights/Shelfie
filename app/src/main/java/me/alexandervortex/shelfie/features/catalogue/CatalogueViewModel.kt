@@ -55,11 +55,14 @@ class CatalogueViewModel
     }
 
     fun removeChecked() {
-        isRemoveMode.value = false
-        val checkedBooks = (uiState.value as? UIState.CatalogueBooksState)
-            ?.books
-            ?.filter { it.isChecked == true }
-            .orEmpty()
-        bookRepository.removeChecked(checkedBooks)
+        viewModelScope.launch {
+            isRemoveMode.value = false
+            val checkedBooks = (uiState.value as? UIState.CatalogueBooksState)
+                ?.books
+                ?.filter { it.isChecked }
+                .orEmpty()
+            bookRepository.removeChecked(checkedBooks)
+            getBookEntities()
+        }
     }
 }

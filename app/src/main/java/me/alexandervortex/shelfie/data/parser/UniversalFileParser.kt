@@ -81,4 +81,19 @@ class UniversalFileParser
         }
         return result
     }
+
+    suspend fun removeBooksByPath(paths: List<String>) {
+        withContext(Dispatchers.IO) {
+            paths.forEach { path ->
+                try {
+                    val file = File(path)
+                    if (file.exists()) {
+                        file.delete()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
 }

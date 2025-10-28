@@ -80,15 +80,8 @@ class BookRepository
         dao.updateProgress(id, index, offset, elements)
     }
 
-    fun removeChecked(books: List<BookComponentModel>) {
-        books.forEach {
-            removeBook(it)
-        }
-    }
-
-    private fun removeBook(it: BookComponentModel) {
-        // todo:
-        //        dao.remove(it.id)
-        // file repo.remove(file(it.localpath))
+    suspend fun removeChecked(books: List<BookComponentModel>) {
+        dao.removeBooks(books.map { it.id })
+        parser.removeBooksByPath(books.map { it.localPath })
     }
 }
