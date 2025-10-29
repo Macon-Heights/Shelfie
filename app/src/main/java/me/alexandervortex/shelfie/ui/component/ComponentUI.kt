@@ -17,6 +17,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.data.mapper.SENTENCE_SEPARATOR
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -60,6 +61,8 @@ fun ComponentUI(
 
             Text(
                 text = styledText,
+                fontSize = 16.sp,
+                lineHeight = 32.sp,
                 textAlign = TextAlign.Justify,
                 modifier = modifier.fillMaxWidth()
             )

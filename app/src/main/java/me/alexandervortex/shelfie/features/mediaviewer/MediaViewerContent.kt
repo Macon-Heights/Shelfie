@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,7 +40,7 @@ fun MediaViewerContent(
         LazyColumn(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(24.dp),
             modifier = Modifier.fillMaxSize()
         ) {
             val sections: List<ElementUI> = book?.elements.orEmpty()
@@ -56,13 +54,12 @@ fun MediaViewerContent(
                 )
                 Spacer(
                     modifier = Modifier
-                        .size(16.dp)
+                        .size(48.dp)
                         .clickable { textAction.invoke() },
                 )
             }
         }
         Column {
-            val scrollIndex = remember { mutableIntStateOf(listState.firstVisibleItemIndex) }
             if (isMenu) {
                 /*
                 Column(
@@ -87,7 +84,7 @@ fun MediaViewerContent(
                 */
                 MediaStateComponent(
                     state = serviceState,
-                    index = scrollIndex.value,
+                    index = listState.firstVisibleItemIndex,
                     elements = book?.elements?.size ?: 0,
                     playPauseAction = { playPauseAction.invoke() },
                     timerAction = { timerAction.invoke() },
