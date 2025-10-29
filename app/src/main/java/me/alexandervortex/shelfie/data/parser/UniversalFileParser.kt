@@ -5,7 +5,7 @@ import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.alexandervortex.shelfie.base.ext.getFileExtension
+import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
 import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.ui.model.BookUI
 import java.io.File
@@ -27,7 +27,7 @@ class UniversalFileParser
      */
     suspend fun importFromUri(uri: Uri): BookUI? {
         val result = withContext(Dispatchers.IO) {
-            val extension = uri.getFileExtension()
+            val extension = uri.safeGetFileExtension(context)
                 ?: return@withContext null
             if (extension !in supportedExtensions) {
                 return@withContext null
