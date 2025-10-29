@@ -4,12 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 
-fun Uri.getFileExtension(): String? {
-    val name = lastPathSegment ?: return null
-    val extension = name.substringAfterLast('.', "").lowercase()
-    return extension.ifBlank { null }
-}
-
 fun Uri.safeGetFileExtension(context: Context): String? {
     // 1. пробуем MIME type (например "application/x-fictionbook+xml")
     val mime = context.contentResolver.getType(this)
