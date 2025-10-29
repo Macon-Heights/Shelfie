@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.db.entiry
+package me.alexandervortex.shelfie.data.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -28,6 +28,6 @@ data class BookEntity(
     @ColumnInfo(name = "scrollOffset")
     val scrollOffset: Int = 0,
 
-    @ColumnInfo(name = "elements") // новое поле
+    @ColumnInfo(name = "elements") // v3
     val elements: Int = 0,
 )

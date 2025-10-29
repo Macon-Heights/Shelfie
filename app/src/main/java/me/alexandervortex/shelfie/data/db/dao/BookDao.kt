@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entity.BookEntity
 
 const val BOOK_TABLE = "book_table"
 

@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.base.ext
 
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entity.BookEntity
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 
 fun BookEntity.toBookComponentModel(): BookComponentModel {
