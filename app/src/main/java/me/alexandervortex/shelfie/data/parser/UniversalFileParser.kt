@@ -6,7 +6,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
-import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.ui.model.BookUI
 import java.io.File
 import javax.inject.Inject
@@ -43,9 +42,8 @@ class UniversalFileParser
                 }
             } ?: error("Не удалось открыть выбранный файл")
 
-            val bookFile = BookFile(outPutFile)
             when (extension) {
-                "fb2" -> fictionBookParser.parse(id, bookFile, 0, 0)
+                "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
                 else -> null
             }
         }
@@ -68,13 +66,12 @@ class UniversalFileParser
     ): BookUI? {
         val result = withContext(Dispatchers.IO) {
             val file = File(localPath)
-            val bookFile = BookFile(file)
             if (!file.exists()) {
                 return@withContext null
             }
             fictionBookParser.parse(
                 id,
-                bookFile,
+                file,
                 scrollOffset,
                 scrollIndex
             )

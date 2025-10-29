@@ -5,11 +5,11 @@ import me.alexandervortex.shelfie.base.ext.getBody
 import me.alexandervortex.shelfie.base.ext.getTitleInfo
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
-import me.alexandervortex.shelfie.data.model.BookFile
 import me.alexandervortex.shelfie.ui.model.BookUI
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.parser.Parser
+import java.io.File
 import javax.inject.Inject
 
 class FictionBookParser
@@ -20,12 +20,12 @@ class FictionBookParser
 
     fun parse(
         id: String,
-        file: BookFile,
+        file: File,
         scrollOffset: Int,
         scrollIndex: Int,
     ): BookUI {
         val doc: Document = Jsoup.parse(
-            file.file,
+            file,
             null,
             "",
             Parser.xmlParser()
