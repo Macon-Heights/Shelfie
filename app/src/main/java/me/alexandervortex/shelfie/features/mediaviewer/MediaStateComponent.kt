@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyListState
@@ -56,7 +58,7 @@ fun MediaStateComponent(
             .background(getColors().surfaceVariant)
             .padding(top = 12.dp)
             .padding(horizontal = 12.dp)
-            .windowInsetsPadding(WindowInsets.navigationBars)
+            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -72,6 +74,7 @@ fun MediaStateComponent(
             ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
         }
         ProgressLine(index, elements)
+        Spacer(Modifier.size(8.dp))
     }
 }
 
@@ -109,7 +112,7 @@ fun MediaViewerPreview2() {
                     title = "Title",
                     speed = SpeechRate.FAST,
                     timer = TimerValue.MIN_20,
-                    index = 5,
+                    index = 3,
                 ),
             listState = LazyListState(),
             nextAction = {},
