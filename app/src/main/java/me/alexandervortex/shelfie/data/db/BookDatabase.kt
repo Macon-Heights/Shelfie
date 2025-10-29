@@ -6,7 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.alexandervortex.shelfie.data.db.dao.BOOK_TABLE
 import me.alexandervortex.shelfie.data.db.dao.BookDao
-import me.alexandervortex.shelfie.data.db.entiry.BookEntity
+import me.alexandervortex.shelfie.data.db.entity.BookEntity
 
 @Database(entities = [BookEntity::class], version = 3)
 abstract class BookDatabase : RoomDatabase() {
@@ -15,7 +15,7 @@ abstract class BookDatabase : RoomDatabase() {
 
     companion object {
 
-        private val NEW_FIELD = "elements"
+        private const val NEW_FIELD = "elements"
         val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE $BOOK_TABLE ADD COLUMN $NEW_FIELD INTEGER NOT NULL DEFAULT 0")
