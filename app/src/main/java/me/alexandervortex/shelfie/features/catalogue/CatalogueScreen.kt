@@ -41,6 +41,7 @@ import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
 import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
+import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
@@ -123,7 +124,7 @@ fun CatalogueScreen(
                                 if (viewModel.isRemoveMode.value) {
                                     viewModel.checkBook(book.id)
                                 } else {
-                                    navController.navigate("mviewer?id=${book.id}")
+                                    navController.navigate(MediaViewerRoute(book.id).route)
                                 }
                             },
                             onLongClick = {
