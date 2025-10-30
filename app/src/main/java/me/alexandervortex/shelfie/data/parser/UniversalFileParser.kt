@@ -38,14 +38,12 @@ class UniversalFileParser
                 }
             } ?: error("Не удалось открыть выбранный файл")
 
+            // если это ZIP — пробуем извлечь первый fb2/pdf/epub
             val finalFile = if (extension == "zip") {
-                val extracted = extractFirstSupportedFileFromZip(outPutFile, booksDir, id)
-                // если успешно извлекли — можно безопасно удалить исходный архив
-                if (extracted != null && outPutFile.exists()) {
-                    outPutFile.delete()
-                    Log.d("^_^_Parser", "Deleted source ZIP after extraction: ${outPutFile.name}")
-                }
-                extracted?.also { extension = it.extension }
+                extractFirstSupportedFileFromZip(outPutFile, booksDir, id)
+                    ?.also { extracted ->
+                        extension = extracted.extension
+                    }
             } else outPutFile
 
             // если после извлечения всё ещё неизвестный формат — выходим
@@ -97,51 +95,27 @@ class UniversalFileParser
     /** Извлекает первый fb2/pdf/epub-файл из zip */
     private fun extractFirstSupportedFileFromZip(zipFile: File, booksDir: File, id: String): File? {
         val allowed = listOf("fb2", "epub", "pdf")
-        try {
+        return try {
             ZipInputStream(zipFile.inputStream()).use { zip ->
                 var entry = zip.nextEntry
                 while (entry != null) {
-                    val name = decodeEntryNameSafely(entry.name)
+                    val name = entry.name.lowercase()
                     val ext = allowed.firstOrNull { name.endsWith(".$it") }
                     if (ext != null) {
                         val extracted = File(booksDir, "$id.$ext")
                         FileOutputStream(extracted).use { output ->
                             zip.copyTo(output)
                         }
-                        Log.d("^_^_Parser", "Extracted from ZIP: $name")
+                        Log.d("^_^_Parser", "Extracted from ZIP: ${entry.name}")
                         return extracted
                     }
                     entry = zip.nextEntry
                 }
             }
+            null
         } catch (e: Exception) {
             Log.e("^_^_Parser", "extractFromZip failed: ${e.message}", e)
-        }
-        return null
-    }
-
-    /**
-     * Безопасно декодирует имя zip-файла, чтобы не упасть на MALFORMED[1].
-     * Пробует UTF-8 → CP866 → Windows-1251.
-     */
-    private fun decodeEntryNameSafely(rawName: String?): String {
-        if (rawName == null) return ""
-        return try {
-            // если имя читается без ошибок — используем как есть
-            rawName.lowercase()
-        } catch (e: IllegalArgumentException) {
-            try {
-                val bytes = rawName.toByteArray(Charsets.ISO_8859_1)
-                String(bytes, charset("CP866")).lowercase()
-            } catch (e2: Exception) {
-                try {
-                    val bytes = rawName.toByteArray(Charsets.ISO_8859_1)
-                    String(bytes, charset("windows-1251")).lowercase()
-                } catch (e3: Exception) {
-                    Log.e("^_^_Parser", "Failed to decode zip entry name", e3)
-                    ""
-                }
-            }
+            null
         }
     }
     // endregion
