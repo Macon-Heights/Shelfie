@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData
+import me.alexandervortex.shelfie.features.mvi.catalogue.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S

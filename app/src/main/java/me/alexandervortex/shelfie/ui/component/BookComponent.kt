@@ -19,8 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.alexandervortex.shelfie.features.catalogue.ui.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
+import me.alexandervortex.shelfie.features.mvi.catalogue.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
 import me.alexandervortex.shelfie.ui.theme.IC_UNCHECK

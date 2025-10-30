@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,25 +57,32 @@ fun CatalogueScreenContent(
             modifier = Modifier.fillMaxSize()
         ) {
             item {
-                TitleComponent(text = stringResource(R.string.catalogue_title))
+                Box(
+                    contentAlignment = Alignment.CenterEnd,
+                    modifier = Modifier.aspectRatio(1f)
+                ) {
+                    TitleComponent(text = stringResource(R.string.catalogue_title))
+                }
             }
             when {
                 state.isLoading -> item { CircularProgressIndicator() }
                 state.books.isEmpty() -> item {
                     Text(
-                        text = stringResource(R.string.catalogue_empty),
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Start,
                         color = getColors().onBackground,
-                        fontSize = 24.sp,
-                        lineHeight = 40.sp,
-                        textAlign = TextAlign.Center
+                        text = stringResource(R.string.catalogue_empty),
+                        fontSize = 32.sp,
+                        lineHeight = 56.sp,
+                        fontWeight = FontWeight.Thin,
                     )
                 }
 
                 else -> {
                     items(state.books) { book ->
                         BookComponent(
-                            model = book,
                             isRemoveMode = state.isRemoveMode,
+                            model = book,
                             modifier = Modifier.combinedClickable(
                                 onClick = { onBookClick(book) },
                                 onLongClick = { onBookLongClick(book) }
@@ -87,7 +97,11 @@ fun CatalogueScreenContent(
         RoundButton(
             modifier = Modifier
                 .padding(32.dp)
-                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
+                .windowInsetsPadding(
+                WindowInsets.safeDrawing.only(
+                WindowInsetsSides.Bottom
+                )
+                ),
             icon = if (state.isRemoveMode) IC_DELETE else IC_ADD,
             action = if (state.isRemoveMode) onDeleteClick else onAddClick,
             isPrimary = true
