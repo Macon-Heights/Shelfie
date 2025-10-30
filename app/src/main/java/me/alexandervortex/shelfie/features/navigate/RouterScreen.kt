@@ -6,10 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import me.alexandervortex.shelfie.features.catalogue.CatalogueScreen
-import me.alexandervortex.shelfie.features.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.mediaviewer.MediaViewerScreen
 import me.alexandervortex.shelfie.features.mediaviewer.MediaViewerViewModel
+import me.alexandervortex.shelfie.features.mvi.catalogue.CatalogueScreen
+import me.alexandervortex.shelfie.features.mvi.catalogue.CatalogueViewModel
 
 @Composable
 fun RouterScreen() {
@@ -28,7 +28,6 @@ fun RouterScreen() {
                 navController = navController
             )
         }
-
 
         composable(
             route = MediaViewerRoute.route,
