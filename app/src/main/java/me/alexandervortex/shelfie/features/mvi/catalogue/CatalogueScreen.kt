@@ -2,51 +2,20 @@
 
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
+import CatalogueIntent
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.catalogue.ui.model.UIState
-import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
 import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
-import me.alexandervortex.shelfie.ui.component.BookComponent
-import me.alexandervortex.shelfie.ui.component.TitleComponent
-import me.alexandervortex.shelfie.ui.theme.IC_ADD
-import me.alexandervortex.shelfie.ui.theme.IC_DELETE
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun CatalogueScreen(
@@ -54,6 +23,21 @@ fun CatalogueScreen(
     navController: NavHostController,
 ) {
     val context = LocalContext.current
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    // Одноразовые эффекты (тосты, навигация)
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is CatalogueEffect.ShowToast ->
+                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+
+                is CatalogueEffect.NavigateTo ->
+                    navController.navigate(effect.route)
+            }
+        }
+    }
+
     val picker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
@@ -65,101 +49,19 @@ fun CatalogueScreen(
             )
         } catch (_: SecurityException) {
         }
-        viewModel.importFromUri(uri)
+        viewModel.onIntent(CatalogueIntent.ImportBook(uri))
     }
 
-    LaunchedEffect(viewModel.error.value) {
-        if (viewModel.error.value.isNullOrBlank().not()) {
-            Toast.makeText(context, viewModel.error.value, Toast.LENGTH_LONG).show()
-            viewModel.error.value = null
-        }
-    }
-
-    LaunchedEffect(Unit) { viewModel.getBookEntities() }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ) {
-        val books = (viewModel.uiState.value as? UIState.CatalogueBooksState)
-            ?.books.orEmpty()
-
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            item {
-                Box(
-                    contentAlignment = Alignment.CenterEnd,
-                    modifier = Modifier.aspectRatio(1f)
-                ) {
-                    TitleComponent(text = stringResource(R.string.catalogue_title))
-                }
-            }
-            item {
-                if (books.isEmpty()) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start,
-                        color = getColors().onBackground,
-                        text = stringResource(R.string.catalogue_empty),
-                        fontSize = 32.sp,
-                        lineHeight = 56.sp,
-                        fontWeight = FontWeight.Thin,
-                    )
-                }
-                if (viewModel.uiState.value is UIState.CatalogueLoadingState) {
-                    CircularProgressIndicator()
-                }
-            }
-            if (viewModel.uiState.value is UIState.CatalogueBooksState) {
-                items(books) { book ->
-                    BookComponent(
-                        isRemoveMode = viewModel.isRemoveMode.value,
-                        model = book,
-                        modifier = Modifier.combinedClickable(
-                            onClick = {
-                                if (viewModel.isRemoveMode.value) {
-                                    viewModel.checkBook(book.id)
-                                } else {
-                                    navController.navigate(MediaViewerRoute(book.id).route)
-                                }
-                            },
-                            onLongClick = {
-                                viewModel.isRemoveMode.value = !viewModel.isRemoveMode.value
-                                viewModel.checkBook(book.id)
-                            }
-                        )
-                    )
-                }
-                item {
-                    Spacer(Modifier.height(96.dp))
-                }
-            }
-        }
-        RoundButton(
-            modifier = Modifier
-                .padding(32.dp)
-                .windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Bottom
-                    )
-                ),
-            icon = if (viewModel.isRemoveMode.value) {
-                IC_DELETE
-            } else {
-                IC_ADD
-            },
-            action = {
-                if (viewModel.isRemoveMode.value) {
-                    viewModel.removeChecked()
-                } else {
-                    picker.launch(arrayOf("text/*", "application/*", "application/octet-stream"))
-                }
-            },
-            isPrimary = true
-        )
-    }
+    CatalogueScreenContent(
+        state = state,
+        onBookClick = { book ->
+            if (state.isRemoveMode)
+                viewModel.onIntent(CatalogueIntent.ToggleBookCheck(book.id))
+            else
+                navController.navigate(MediaViewerRoute(book.id).route)
+        },
+        onBookLongClick = { viewModel.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
+        onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
+        onDeleteClick = { viewModel.onIntent(CatalogueIntent.RemoveChecked) }
+    )
 }
