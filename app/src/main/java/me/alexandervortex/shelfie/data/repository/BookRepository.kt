@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.data.repository
 import android.net.Uri
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
-import me.alexandervortex.shelfie.data.db.mapper.BookEntityMapper
+import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.model.BookUI

@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.db.mapper
+package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
 import me.alexandervortex.shelfie.ui.model.BookUI
@@ -14,8 +14,9 @@ class BookEntityMapper
             title = model.titleInfo.title,
             author = model.titleInfo.author,
             year = model.titleInfo.date,
+            scrollIndex = model.progressIndex,
             scrollOffset = model.progressOffset,
-            scrollIndex = model.progressIndex
+            elements = model.elements.size
         )
         return entity
     }
