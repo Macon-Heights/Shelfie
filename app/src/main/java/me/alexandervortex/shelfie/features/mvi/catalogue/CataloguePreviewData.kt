@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.catalogue.ui.preview
+package me.alexandervortex.shelfie.features.mvi.catalogue
 
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 
@@ -38,12 +38,14 @@ object CataloguePreviewData {
             listOf("The Shining", "Stephen King")
         ).map {
             BookComponentModel(
-                id = "thisisid",
-                localPath = "",
+                id = "id",
+                localPath = "path",
                 title = it.firstOrNull().orEmpty(),
                 author = it.lastOrNull(),
                 year = "1001",
-                isChecked = listOf(true, false).random()
+                isChecked = listOf(true, false).random(),
+                scrollIndex = 9,
+                elements = 20
             )
         }
     }

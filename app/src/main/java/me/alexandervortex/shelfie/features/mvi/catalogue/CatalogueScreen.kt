@@ -35,7 +35,7 @@ fun CatalogueScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is CatalogueEffect.ShowToast ->
-                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, effect.message, Toast.LENGTH_LONG).show()
 
                 is CatalogueEffect.NavigateTo ->
                     navController.navigate(effect.route)
