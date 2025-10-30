@@ -25,6 +25,11 @@ fun CatalogueScreen(
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    // Запускаем загрузку книг при первом рендере
+    LaunchedEffect(Unit) {
+        viewModel.onIntent(CatalogueIntent.LoadBooks)
+    }
+
     // Одноразовые эффекты (тосты, навигация)
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
