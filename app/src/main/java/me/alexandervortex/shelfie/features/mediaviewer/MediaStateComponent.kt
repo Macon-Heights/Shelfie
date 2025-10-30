@@ -91,7 +91,7 @@ private fun ButtonWithLabel(
         if (text.isNullOrEmpty().not()) {
             Spacer(Modifier.size(8.dp))
             Text(
-                color = getColors().onPrimaryContainer,
+                color = getColors().onSurfaceVariant,
                 text = text.orEmpty(), fontSize = 14.sp, lineHeight = 14.sp
             )
             Spacer(Modifier.size(8.dp))
