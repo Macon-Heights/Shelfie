@@ -93,17 +93,15 @@ class UniversalFileParser
         }
     }
 
-    ROLLBACK ME
-
     // region helpers
     /** Извлекает первый fb2/pdf/epub-файл из zip */
     private fun extractFirstSupportedFileFromZip(zipFile: File, booksDir: File, id: String): File? {
         val allowed = listOf("fb2", "epub", "pdf")
         try {
             ZipInputStream(zipFile.inputStream()).use { zip ->
-                var entry = runCatching { zip.nextEntry }.getOrNull()
+                var entry = zip.nextEntry
                 while (entry != null) {
-                    val name = runCatching { decodeEntryNameSafely(entry!!.name) }.getOrDefault("")
+                    val name = decodeEntryNameSafely(entry.name)
                     val ext = allowed.firstOrNull { name.endsWith(".$it") }
                     if (ext != null) {
                         val extracted = File(booksDir, "$id.$ext")
@@ -113,24 +111,8 @@ class UniversalFileParser
                         Log.d("^_^_Parser", "Extracted from ZIP: $name")
                         return extracted
                     }
-                    entry = runCatching { zip.nextEntry }.getOrNull()
+                    entry = zip.nextEntry
                 }
-            }
-        } catch (e: IllegalArgumentException) {
-            // 💡 fallback: читаем без имён (например, win-1251 архива)
-            Log.e("^_^_Parser", "Malformed ZIP, retrying fallback mode", e)
-            try {
-                ZipInputStream(zipFile.inputStream()).use { zip ->
-                    val entry = runCatching { zip.nextEntry }.getOrNull() ?: return null
-                    val extracted = File(booksDir, "$id.fb2")
-                    FileOutputStream(extracted).use { output ->
-                        zip.copyTo(output)
-                    }
-                    Log.d("^_^_Parser", "Fallback extracted unnamed fb2 file")
-                    return extracted
-                }
-            } catch (e2: Exception) {
-                Log.e("^_^_Parser", "Fallback failed: ${e2.message}", e2)
             }
         } catch (e: Exception) {
             Log.e("^_^_Parser", "extractFromZip failed: ${e.message}", e)
