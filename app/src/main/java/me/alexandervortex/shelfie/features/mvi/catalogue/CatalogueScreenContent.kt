@@ -67,17 +67,7 @@ fun CatalogueScreenContent(
             }
             when {
                 state.isLoading -> item { CircularProgressIndicator() }
-                state.books.isEmpty() -> item {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start,
-                        color = getColors().onBackground,
-                        text = stringResource(R.string.catalogue_empty),
-                        fontSize = 32.sp,
-                        lineHeight = 56.sp,
-                        fontWeight = FontWeight.Thin,
-                    )
-                }
+                state.books.isEmpty() -> item { EmptyList(R.string.catalogue_empty) }
 
                 else -> {
                     items(state.books) { book ->
