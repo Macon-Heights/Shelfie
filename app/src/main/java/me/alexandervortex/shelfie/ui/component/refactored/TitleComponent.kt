@@ -1,7 +1,12 @@
 package me.alexandervortex.shelfie.ui.component.refactored
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +33,7 @@ fun TitleComponent(
             color = getColors().onBackground,
             text = text,
             modifier = modifier
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
                 .padding(vertical = 64.dp)
                 .fillMaxWidth(),
             fontSize = size.sp,
