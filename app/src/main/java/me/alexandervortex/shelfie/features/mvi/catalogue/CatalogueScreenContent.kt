@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -48,7 +48,7 @@ fun CatalogueScreenContent(
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp),
             modifier = Modifier.fillMaxSize()
         ) {
             item { TitleComponent(text = stringResource(R.string.catalogue_title)) }
@@ -69,7 +69,19 @@ fun CatalogueScreenContent(
                     }
                 }
             }
-            item { Spacer(Modifier.height(96.dp)) }
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 64.dp)
+                        .padding(bottom = 32.dp)
+                        .windowInsetsPadding(
+                            WindowInsets.safeDrawing.only(
+                                WindowInsetsSides.Bottom
+                            )
+                        )
+                )
+            }
         }
 
         RoundButton(
