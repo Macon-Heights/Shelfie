@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.catalogue
+package me.alexandervortex.shelfie.features.mvi.catalogue.preview
 
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 
