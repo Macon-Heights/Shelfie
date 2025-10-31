@@ -25,9 +25,6 @@ fun CatalogueScreen(
 
     LaunchedEffect(Unit) {
         viewModel.onIntent(CatalogueIntent.LoadBooks)
-    }
-
-    LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 is CatalogueEffect.ShowToast ->
@@ -49,6 +46,7 @@ fun CatalogueScreen(
                 Intent.FLAG_GRANT_READ_URI_PERMISSION
             )
         } catch (_: SecurityException) {
+
         }
         viewModel.onIntent(CatalogueIntent.ImportBook(uri))
     }
