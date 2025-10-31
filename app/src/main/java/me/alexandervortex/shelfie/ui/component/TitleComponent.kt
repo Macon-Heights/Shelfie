@@ -1,7 +1,10 @@
 package me.alexandervortex.shelfie.ui.component
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,16 +23,21 @@ fun TitleComponent(
     modifier: Modifier = Modifier,
 ) {
     text?.let {
-        Text(
-            textAlign = TextAlign.End,
-            color = getColors().onBackground,
-            text = text,
-            modifier = modifier,
-            fontSize = size.sp,
-            lineHeight = size.sp,
-            letterSpacing = spacing.sp,
-            fontWeight = FontWeight.Thin,
-        )
+        Box(
+            contentAlignment = Alignment.CenterEnd,
+            modifier = Modifier.aspectRatio(1f)
+        ) {
+            Text(
+                textAlign = TextAlign.End,
+                color = getColors().onBackground,
+                text = text,
+                modifier = modifier,
+                fontSize = size.sp,
+                lineHeight = size.sp,
+                letterSpacing = spacing.sp,
+                fontWeight = FontWeight.Thin,
+            )
+        }
     }
 }
 
