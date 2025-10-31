@@ -1,20 +1,18 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
-import CatalogueIntent
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
+import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
 
 @Composable

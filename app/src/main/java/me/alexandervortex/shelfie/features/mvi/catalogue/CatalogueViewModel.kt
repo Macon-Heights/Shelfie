@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
-import CatalogueIntent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +12,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.base.ext.toBookComponentModel
 import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
+import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
+import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,3 +1,5 @@
+package me.alexandervortex.shelfie.features.mvi.catalogue.mvi
+
 import android.net.Uri
 
 sealed interface CatalogueIntent {

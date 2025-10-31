@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
+import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.component.TitleComponent
