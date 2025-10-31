@@ -28,7 +28,7 @@ import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.component.EmptyList
-import me.alexandervortex.shelfie.ui.component.TitleComponent
+import me.alexandervortex.shelfie.ui.component.refactored.TitleComponent
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 
