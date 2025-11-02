@@ -42,7 +42,12 @@ android {
     }
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 dependencies {
+    // Settings
     implementation(libs.androidx.datastore.preferences)
 
     // Media
@@ -82,4 +87,7 @@ dependencies {
 
     // Test
     testImplementation(libs.junit)
+    testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.framework)
 }
