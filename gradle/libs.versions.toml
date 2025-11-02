@@ -24,16 +24,24 @@ serializationVersion = "1.8.1"
 storageVersion = "2.0.0"
 
 ### Tests
+kotestVersion = "5.9.1"
 junitVersion = "4.13.2"
 
-###
+### Settings
+datastoreVersion = "1.1.7"
 
+###
 agpVersion = "8.10.1"
 kotlinVersion = "2.0.21"
 kspVersion = "2.0.21-1.0.25"
-datastoreVersion = "1.1.1"
 
 [libraries]
+### Kotest
+kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotestVersion" }
+kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotestVersion" }
+kotest-framework = { group = "io.kotest", name = "kotest-framework-engine", version.ref = "kotestVersion" }
+
+### Settings
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastoreVersion" }
 
 ### Media
