@@ -3,16 +3,16 @@ package me.alexandervortex.shelfie.base
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-fun BehaviorSpec.transformerTest(
-    value: Any,
+fun <T> BehaviorSpec.transformerTest(
+    expected: T,
     name: String,
-    function: () -> Any,
+    function: () -> T,
 ) {
     Given(name) {
-        When("do") {
-            val result = function.invoke()
-            Then("done") {
-                result shouldBe value
+        When("transform") {
+            val actual = function.invoke()
+            Then("compare result") {
+                actual shouldBe expected
             }
         }
     }

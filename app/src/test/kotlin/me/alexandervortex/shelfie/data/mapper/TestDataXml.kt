@@ -12,9 +12,9 @@ object TestDataXml {
 
     fun binaries(): Map<String, ByteArray> {
         return mapOf(
-            "img1.jpg" to "img1".toByteArray(),
-            "img2.jpg" to "img2".toByteArray(),
-            "img3.jpg" to "img3".toByteArray()
+            "_1.jpg" to "_1.jpg".toByteArray(),
+            "_2.jpg" to "_2.jpg".toByteArray(),
+            "_3.jpg" to "_3.jpg".toByteArray()
         )
     }
 
