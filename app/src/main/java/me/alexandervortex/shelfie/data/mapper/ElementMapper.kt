@@ -36,12 +36,10 @@ class ElementMapper @Inject constructor() {
                 when (node) {
                     is Element -> map(node, binaries) // прыгаем в рекурсию
                     is TextNode -> node.text()
-                        .takeIf { it.isNotEmpty() }
+                        .takeIf { it.trim().isNotEmpty() }
                         ?.let {
                             listOf(
-                                ElementUI.TextUI(
-                                    parts = listOf(StyledText(TextStyle.Normal, it))
-                                )
+                                ElementUI.TextUI(parts = listOf(StyledText(TextStyle.Normal, it)))
                             )
                         }
                         ?: emptyList()

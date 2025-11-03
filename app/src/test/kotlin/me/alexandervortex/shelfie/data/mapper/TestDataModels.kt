@@ -1,6 +1,8 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.StyledText
+import me.alexandervortex.shelfie.ui.model.TextStyle
 
 object TestDataModels {
 
@@ -10,7 +12,9 @@ object TestDataModels {
 
     fun elementsText(): List<ElementUI> {
         return listOf(
-            ElementUI.TextUI(listOf("sashka have keked 3 times")),
+            ElementUI.TextUI(
+                listOf(StyledText(TextStyle.Normal, "sashka have keked 3 times"))
+            ),
         )
     }
 }
