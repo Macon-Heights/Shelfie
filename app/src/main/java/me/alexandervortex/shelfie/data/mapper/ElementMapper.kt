@@ -16,8 +16,8 @@ class ElementMapper
     ): List<ElementUI> {
         if (element == null) return emptyList()
 
-        if (element.childNodes().isEmpty()) {
-            return mapPrimitive(element, binaries)?.let { listOf(it) } ?: emptyList()
+        if (element.isPrimitive()) {
+            return primitive(element, binaries).orEmpty()
         }
 
         val children = element.childNodes().flatMap { node ->
@@ -43,7 +43,7 @@ class ElementMapper
         return children
     }
 
-    private fun mapPrimitive(
+    private fun primitive(
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUI? {
