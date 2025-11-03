@@ -5,10 +5,10 @@ import io.kotest.matchers.shouldBe
 
 fun BehaviorSpec.transformerTest(
     value: Any,
+    name: String,
     function: () -> Any,
 ) {
-    val className = value.javaClass.name.split(".").last()
-    Given("$className transform") {
+    Given(name) {
         When("do") {
             val result = function.invoke()
             Then("done") {
