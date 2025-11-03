@@ -7,10 +7,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import javax.inject.Inject
 
-const val SENTENCE_SEPARATOR = ". "
-
-class ElementMapper
-@Inject constructor() {
+class ElementMapper @Inject constructor() {
 
     fun map(
         element: Element?,
@@ -18,8 +15,9 @@ class ElementMapper
     ): List<ElementUI> {
         if (element == null) return emptyList()
 
-        if (element.isPrimitive()) {
-            return primitive(element, binaries).orEmpty()
+        // Примитивные блоки (<image>, <empty-line>, <p>)
+        if (element.isPrimitiveTag()) {
+            return mapPrimitive(element, binaries).orEmpty()
         }
 
         val children = element.childNodes().flatMap { node ->
