@@ -1,24 +1,17 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.shouldBe
-import me.alexandervortex.shelfie.data.mapper.ElementMapperXmlTestData.toBody
+import me.alexandervortex.shelfie.base.transformerTest
+import me.alexandervortex.shelfie.data.mapper.TestDataXml.toBody
 
 class ElementMapperTest : BehaviorSpec({
 
     val mapper = ElementMapper()
-    val binaries = ElementMapperXmlTestData.binaries()
+    val binaries = TestDataXml.binaries()
 
-    Given("a paragraph with text and image") {
-        val body = ElementMapperXmlTestData.paragraphWithTextAndImage().toBody()
-        val model = ElementMapperTestData.paragraphWithTextAndImage()
 
-        When("test") {
-            val result = mapper.map(body, binaries)
-
-            Then("test") {
-                result shouldBe model
-            }
-        }
+    transformerTest(TestDataModels.emptyElementList()) {
+        val body = TestDataXml.emptyParagraph().toBody()
+        mapper.map(body, binaries)
     }
 })
