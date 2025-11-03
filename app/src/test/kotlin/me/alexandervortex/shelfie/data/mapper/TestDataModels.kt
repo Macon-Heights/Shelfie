@@ -2,7 +2,7 @@ package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.ui.model.ElementUI
 
-object ElementMapperTestData {
+object TestDataModels {
 
     fun paragraphWithTextAndImage(): List<ElementUI> {
         return listOf(
@@ -10,5 +10,9 @@ object ElementMapperTestData {
             ElementUI.ImageUI("img1".toByteArray()),
             ElementUI.TextUI(listOf("После картинки — текст.")),
         )
+    }
+
+    fun emptyElementList(): List<ElementUI> {
+        return emptyList()
     }
 }
