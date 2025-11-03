@@ -4,7 +4,7 @@ import me.alexandervortex.shelfie.base.ext.getBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-object ElementMapperXmlTestData {
+object TestDataXml {
 
     fun String?.toBody(): Element? {
         return this?.let { Jsoup.parse(it).getBody() }
