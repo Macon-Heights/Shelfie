@@ -4,6 +4,7 @@ import me.alexandervortex.shelfie.base.ext.isPrimitive
 import me.alexandervortex.shelfie.base.ext.orEmpty
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import org.jsoup.nodes.Element
+import org.jsoup.nodes.TextNode
 import javax.inject.Inject
 
 const val SENTENCE_SEPARATOR = ". "
@@ -21,27 +22,27 @@ class ElementMapper
             return primitive(element, binaries).orEmpty()
         }
 
-        /*        val children = element.childNodes().flatMap { node ->
-                    when (node) {
-                        is Element -> map(node, binaries)
-                        is TextNode -> node.text().trim()
-                            .takeIf { it.isNotEmpty() }
-                            ?.let {
-                                listOf(
-                                    ElementUI.TextUI(
-                                        parts = it.split(SENTENCE_SEPARATOR)
-                                            .map { it.trim() }
-                                            .filter { it.isNotBlank() }
-                                    )
-                                )
-                            }
-                            ?: emptyList()
-
-                        else -> emptyList()
+        val children = element.childNodes().flatMap { node ->
+            when (node) {
+                is Element -> map(node, binaries)
+                is TextNode -> node.text().trim()
+                    .takeIf { it.isNotEmpty() }
+                    ?.let {
+                        listOf(
+                            ElementUI.TextUI(
+                                parts = it.split(SENTENCE_SEPARATOR)
+                                    .map { it.trim() }
+                                    .filter { it.isNotBlank() }
+                            )
+                        )
                     }
-                }*/
+                    ?: emptyList()
 
-        return emptyList()
+                else -> emptyList()
+            }
+        }
+
+        return children
     }
 
     private fun primitive(
