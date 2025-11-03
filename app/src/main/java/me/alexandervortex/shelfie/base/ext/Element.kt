@@ -10,3 +10,10 @@ fun Element.isPrimitive(): Boolean {
 fun ElementUI?.orEmpty(): List<ElementUI> {
     return this?.let { listOf(it) } ?: emptyList()
 }
+
+fun Element.isPrimitiveTag(): Boolean {
+    return when (tagName()) {
+        "image", "empty-line", "p", "v", "subtitle" -> true
+        else -> false
+    }
+}
