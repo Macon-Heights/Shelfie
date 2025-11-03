@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.base.ext
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import org.jsoup.nodes.Element
 
-fun Element.isPrimitive(): Boolean {
+fun Element.isNoChildren(): Boolean {
     return this.childNodes().isEmpty()
 }
 

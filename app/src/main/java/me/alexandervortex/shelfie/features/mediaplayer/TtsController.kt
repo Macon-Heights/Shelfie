@@ -145,7 +145,7 @@ class TtsController(
             return speakNext()
         }
 
-        val sentence = parts[currentPart].trim()
+        val sentence = parts[currentPart].text.trim()
         if (sentence.isBlank()) {
             currentPart++
             return speakNext()
