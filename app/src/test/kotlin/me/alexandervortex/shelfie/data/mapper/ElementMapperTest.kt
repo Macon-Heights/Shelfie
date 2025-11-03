@@ -6,9 +6,10 @@ import io.kotest.data.headers
 import io.kotest.data.row
 import io.kotest.data.table
 import me.alexandervortex.shelfie.base.transformerTest
-import me.alexandervortex.shelfie.data.mapper.TestDataModels.emptyElementList
-import me.alexandervortex.shelfie.data.mapper.TestDataXml.emptyParagraph
-import me.alexandervortex.shelfie.data.mapper.TestDataXml.toBody
+import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsEmpty
+import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsText
+import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphEmpty
+import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphWithText
 
 class ElementMapperTest : BehaviorSpec({
 
@@ -17,11 +18,13 @@ class ElementMapperTest : BehaviorSpec({
 
     forAll(
         table(
-            headers("xml", "model"),
-            row(emptyParagraph().toBody(), emptyElementList())
+            headers("xml", "model", "name"),
+            row(paragraphEmpty(), elementsEmpty(), "elements empty"),
+            row(paragraphWithText(), elementsText(), "elements text")
         )
-    ) { xml, model ->
-        transformerTest(model) {
+    ) { xml, model, name ->
+
+        transformerTest(model, name) {
             mapper.map(xml, binaries)
         }
     }

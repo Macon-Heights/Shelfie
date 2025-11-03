@@ -18,27 +18,15 @@ object TestDataXml {
         )
     }
 
-    fun paragraphWithTextAndImage() = """
-        <body>
-            <p>
-                Перед картинкой — текст.
-                <image l:href="#img01.jpg"/>
-                После картинки — текст.
-            </p>
-        </body>
-    """.trimIndent()
-
-    fun nestedStyles() = """
-        <body>
-            <p>
-                Это <strong>жирный и <i>курсив внутри жирного</i></strong>, а это <u>подчёркнутый</u>.
-            </p>
-        </body>
-    """.trimIndent()
-
-    fun emptyParagraph() = """
+    fun paragraphEmpty() = """
         <body>
             <p>   </p>
         </body>
-    """.trimIndent()
+    """.trimIndent().toBody()
+
+    fun paragraphWithText() = """
+        <body>
+            <p>sashka have keked 3 times</p>
+        </body>
+    """.trimIndent().toBody()
 }
