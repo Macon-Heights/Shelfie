@@ -87,7 +87,7 @@ fun ComponentUI(
             Spacer(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp)
+                    .padding(vertical = 16.dp)
             )
         }
     }
