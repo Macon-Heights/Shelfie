@@ -2,11 +2,9 @@ package me.alexandervortex.shelfie.ui.component
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +19,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.composeSpanStyle
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
@@ -33,36 +32,35 @@ fun ComponentUI(
 ) {
     when (element) {
         is ElementUI.TextUI -> {
+            val linkColor = MaterialTheme.colorScheme.primary
+
             val styledText = buildAnnotatedString {
                 element.parts.forEachIndexed { wordIndex, word ->
-
                     val isCurrentElement = elementIndex == currentIndex
                     val isCurrentWord = wordIndex == partIndex
                     val isHighlight = isCurrentElement && isCurrentWord
 
-                    val textColor = when {
-                        isHighlight -> MaterialTheme.colorScheme.onPrimaryContainer
-                        else -> MaterialTheme.colorScheme.onBackground
-                    }
+                    val baseTextColor = if (isHighlight)
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else
+                        MaterialTheme.colorScheme.onBackground
 
-                    val bgColor = when {
-                        isHighlight -> MaterialTheme.colorScheme.primaryContainer
-                        else -> MaterialTheme.colorScheme.background
-                    }
+                    val baseBgColor = if (isHighlight)
+                        MaterialTheme.colorScheme.primaryContainer
+                    else
+                        Color.Transparent
 
-                    withStyle(
-                        style = SpanStyle(
-                            color = textColor,
-                            background = bgColor
-                        )
-                    ) { append(word.text) }
+                    val span = composeSpanStyle(word.styles, linkColor)
+                        .merge(SpanStyle(color = baseTextColor, background = baseBgColor))
+
+                    withStyle(span) { append(word.text) }
                 }
             }
 
             Text(
                 text = styledText,
                 fontSize = 16.sp,
-                lineHeight = 32.sp,
+                lineHeight = 28.sp,
                 textAlign = TextAlign.Justify,
                 modifier = modifier.fillMaxWidth()
             )
@@ -73,14 +71,14 @@ fun ComponentUI(
                 element.image, 0, element.image.size
             )
 
-            if (bitmap != null) {
+            bitmap?.let {
                 Image(
-                    contentScale = ContentScale.FillWidth,
                     bitmap = bitmap.asImageBitmap(),
                     contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(vertical = 32.dp)
+                        .padding(vertical = 16.dp)
                 )
             }
         }
@@ -88,9 +86,8 @@ fun ComponentUI(
         is ElementUI.EmptyLineUI -> {
             Spacer(
                 modifier = modifier
-                    .background(Color.Yellow)
-                    .size(64.dp)
                     .fillMaxWidth()
+                    .padding(vertical = 12.dp)
             )
         }
     }
