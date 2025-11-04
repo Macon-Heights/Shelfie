@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.data.mapper
 
-import me.alexandervortex.shelfie.base.ext.isNoChildren
 import me.alexandervortex.shelfie.base.ext.orEmpty
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.model.StyledText
@@ -9,16 +8,31 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import javax.inject.Inject
 
+// todo в самом конце склеить все EmptyLine которые идут подряд друг за другом
+
 class ElementMapper @Inject constructor() {
 
     fun map(
         element: Element?,
         binaries: Map<String, ByteArray>,
+        styles: Set<TextStyle> = emptySet(),
     ): List<ElementUI> {
         if (element == null) return emptyList()
 
-        if (element.isNoChildren()) {
-            return primitive(element, binaries).orEmpty()
+        when (element.tagName()) {
+            "image" -> {
+                return image(element, binaries).orEmpty()
+            }
+
+            "empty-line" -> {
+                return listOf(ElementUI.EmptyLineUI)
+            }
+
+            else -> if (element.text().trim().isNotEmpty()) {
+                ElementUI.TextUI(
+                    listOf(StyledText(styles, element.text())),
+                )
+            }
         }
 
         /*
@@ -31,12 +45,12 @@ class ElementMapper @Inject constructor() {
         val children = element.childNodes()
             .flatMap { node ->
                 when (node) {
-                    is Element -> map(node, binaries) // прыгаем в рекурсию
+                    is Element -> map(node, binaries, styles) // прыгаем в рекурсию
                     is TextNode -> node.text()
                         .takeIf { it.trim().isNotEmpty() }
                         ?.let {
                             listOf(
-                                ElementUI.TextUI(parts = listOf(StyledText(TextStyle.Normal, it)))
+                                ElementUI.TextUI(parts = listOf(StyledText(styles, it)))
                             )
                         }
                         ?: emptyList()
@@ -48,29 +62,8 @@ class ElementMapper @Inject constructor() {
         return children
     }
 
-    private fun primitive(
-        element: Element,
-        binaries: Map<String, ByteArray>,
-    ): ElementUI? {
-
-        return when (element.tagName()) {
-            "image" -> getImage(element, binaries)
-            "empty-line" -> ElementUI.EmptyLineUI
-            else -> { // "p", "v", "subtitle" ?? какие еще теги стоит обработать
-                if (element.text().trim().isEmpty()) {
-                    // element.tagName.toTextStyle
-                    ElementUI.TextUI(
-                        listOf(StyledText(TextStyle.fromTag(element.tag()), element.text()))
-                    )
-                } else {
-                    null
-                }
-            }
-        }
-    }
-
     // its fine
-    private fun getImage(
+    private fun image(
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUI? {
