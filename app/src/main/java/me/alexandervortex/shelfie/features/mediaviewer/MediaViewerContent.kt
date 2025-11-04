@@ -54,7 +54,7 @@ fun MediaViewerContent(
                 )
                 Spacer(
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(32.dp)
                         .clickable { textAction.invoke() },
                 )
             }
