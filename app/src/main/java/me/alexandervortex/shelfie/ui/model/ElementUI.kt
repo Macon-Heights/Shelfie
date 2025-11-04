@@ -20,6 +20,6 @@ sealed interface ElementUI {
 }
 
 data class StyledText(
-    val style: TextStyle, // enum later
+    val styles: Set<TextStyle>, // enum later
     val text: String,
 )

@@ -14,7 +14,10 @@ object TestDataModels {
         return listOf(
             ElementUI.TextUI(
                 listOf(
-                    StyledText(TextStyle.Normal, "sashka have keked 3 times")
+                    StyledText(
+                        setOf(TextStyle.Normal),
+                        "sashka have keked 3 times"
+                    )
                 )
             ),
         )
@@ -24,11 +27,16 @@ object TestDataModels {
         return listOf(
             ElementUI.TextUI(
                 listOf(
-                    StyledText(TextStyle.Normal, "He apiti atu ki enei, kaua e meinga hei ritenga wehewehe te mea i whakakaupapatia na runga i nga whakahaere ture, i nga mana whanui ranei o te ao kua whakawhiwhia ki tetahi whenua ki tetahi wahanga whenua ranei no reira nei tetahi tangata, ahakoa taua wahanga whenua he whai mana motuhake, kei raro ranei i te Kaitiakitanga, he takiwa whenua ranei kahore nei ona Mana Kawanatanga Motuhake, kei raro ranei i tetahi atu ritenga whakawhaiti i tona mana motuhake."),
-                    StyledText(TextStyle.Strikethrough, "Rarangi 3"),
-                    StyledText(TextStyle.Normal, " 3 times")
+                    StyledText(
+                        setOf(),
+                        "He apiti atu ki enei, kaua e meinga hei ritenga wehewehe te mea i whakakaupapatia na runga i nga whakahaere ture, i nga mana whanui ranei o te ao kua whakawhiwhia ki tetahi whenua ki tetahi wahanga whenua ranei no reira nei tetahi tangata, ahakoa taua wahanga whenua he whai mana motuhake, kei raro ranei i te Kaitiakitanga, he takiwa whenua ranei kahore nei ona Mana Kawanatanga Motuhake, kei raro ranei i tetahi atu ritenga whakawhaiti i tona mana motuhake."
+                    ),
+                    StyledText(
+                        setOf(TextStyle.Bold),
+                        "Rarangi 3"
+                    )
                 )
-            ),
+            )
         )
     }
 }
