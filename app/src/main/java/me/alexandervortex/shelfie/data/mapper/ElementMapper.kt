@@ -17,19 +17,16 @@ class ElementMapper @Inject constructor() {
     ): List<ElementUI> {
         if (element == null) return emptyList()
 
-        // Блоки без вложенности
-        // Сюда же мы будем попадать рекурсивно, когда дойдем до конца ветки
         if (element.isNoChildren()) {
             return primitive(element, binaries).orEmpty()
         }
 
-        // допустим <p>
-        //
-        // Этотекст
-        // <strong>asd<strong>
-        // и еще текст
-        //
-        // <p>
+        /*
+        <p>
+            <strong>Infogrid Pacific</strong> - Element (TextNode) -> StyledText
+            Pte. Ltd.  - TextNode -> StyledText
+        </p>
+         */
 
         val children = element.childNodes()
             .flatMap { node ->
@@ -55,22 +52,31 @@ class ElementMapper @Inject constructor() {
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUI? {
-        return when (element.tagName()) {
-            "image" -> mapImage(element, binaries)
-            "empty-line" -> ElementUI.EmptyLineUI
-            "p", "v", "subtitle" -> ElementUI.TextUI( // какие еще теги стоит обработать
-                listOf(StyledText(TextStyle.Normal, element.text()))
-            )
 
-            else -> null
+        return when (element.tagName()) {
+            "image" -> getImage(element, binaries)
+            "empty-line" -> ElementUI.EmptyLineUI
+            else -> { // "p", "v", "subtitle" ?? какие еще теги стоит обработать
+                if (element.text().trim().isEmpty()) {
+                    // element.tagName.toTextStyle
+                    ElementUI.TextUI(
+                        listOf(StyledText(TextStyle.fromTag(element.tag()), element.text()))
+                    )
+                } else {
+                    null
+                }
+            }
         }
     }
 
-    private fun mapImage(
+    // its fine
+    private fun getImage(
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUI? {
-        val ref = element.attr("xlink:href").removePrefix("#")
+        val KEY = "xlink:href"
+        val SHARP = "#"
+        val ref = element.attr(KEY).removePrefix(SHARP)
         val image = binaries[ref]
         return image?.let { ElementUI.ImageUI(it) }
     }
