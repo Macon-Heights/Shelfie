@@ -15,7 +15,7 @@ object TestDataModels {
             ElementUI.TextUI(
                 listOf(
                     StyledText(
-                        setOf(TextStyle.Normal),
+                        setOf(),
                         "sashka have keked 3 times"
                     )
                 )
