@@ -62,7 +62,7 @@ fun ComponentUI(
                 fontSize = 16.sp,
                 lineHeight = 28.sp,
                 textAlign = TextAlign.Justify,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
             )
         }
 

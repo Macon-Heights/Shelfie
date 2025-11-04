@@ -40,6 +40,7 @@ fun MediaViewerContent(
         LazyColumn(
             userScrollEnabled = !serviceState.isPlaying,
             state = listState,
+            horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(24.dp),
             modifier = Modifier.fillMaxSize()
         ) {
@@ -61,27 +62,6 @@ fun MediaViewerContent(
         }
         Column {
             if (isMenu) {
-                /*
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .shadow(
-                            elevation = 6.dp,
-                            shape = SHAPE_L,
-                            clip = false
-                        )
-                        .clip(SHAPE_L)
-                        .background(getColors().surfaceVariant)
-                        .padding(12.dp)
-                ) {
-                    Text("Шрифт: 18")
-                    Text("Высота: 18")
-                    Text("Паддинг: 18")
-                    Text("Таймер: 18")
-                    Text("Скорость: 18")
-                }
-                */
                 MediaStateComponent(
                     state = serviceState,
                     index = listState.firstVisibleItemIndex,
