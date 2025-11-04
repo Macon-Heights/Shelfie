@@ -2,13 +2,9 @@ package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.base.ext.orEmpty
 import me.alexandervortex.shelfie.ui.model.ElementUI
-import me.alexandervortex.shelfie.ui.model.StyledText
 import me.alexandervortex.shelfie.ui.model.TextStyle
 import org.jsoup.nodes.Element
-import org.jsoup.nodes.TextNode
 import javax.inject.Inject
-
-// todo в самом конце склеить все EmptyLine которые идут подряд друг за другом
 
 class ElementMapper @Inject constructor() {
 
@@ -19,50 +15,40 @@ class ElementMapper @Inject constructor() {
     ): List<ElementUI> {
         if (element == null) return emptyList()
 
-        when (element.tagName()) {
-            "image" -> {
-                return image(element, binaries).orEmpty()
-            }
-
-            "empty-line" -> {
-                return listOf(ElementUI.EmptyLineUI)
-            }
-
-            else -> if (element.text().trim().isNotEmpty()) {
-                ElementUI.TextUI(
-                    listOf(StyledText(styles, element.text())),
-                )
-            }
+        return when (element.tagName()) {
+            "image" -> image(element, binaries).orEmpty()
+            "empty-line" -> listOf(ElementUI.EmptyLineUI)
+            else -> complexComponent(element, binaries, styles)
         }
+    }
 
-        /*
-        <p>
-            <strong>Infogrid Pacific</strong> - Element (TextNode) -> StyledText
-            Pte. Ltd.  - TextNode -> StyledText
-        </p>
-         */
-
+    private fun complexComponent(
+        element: Element,
+        binaries: Map<String, ByteArray>,
+        styles: Set<TextStyle>,
+    ): List<ElementUI> {
+        val result = mutableListOf<ElementUI>()
         val children = element.childNodes()
             .flatMap { node ->
-                when (node) {
-                    is Element -> map(node, binaries, styles) // прыгаем в рекурсию
-                    is TextNode -> node.text()
-                        .takeIf { it.trim().isNotEmpty() }
-                        ?.let {
-                            listOf(
-                                ElementUI.TextUI(parts = listOf(StyledText(styles, it)))
-                            )
-                        }
-                        ?: emptyList()
+                /*
+                todo:
+                тут я планирую прокидывать стили до самого дна
+                как-то мне нужно определять что текущая нода - полностью текстовая, которую нужно подать цельным блоком
+                и сделать ей отдельную ветку с TextUI(parts = разные стили текстов, склееные в будущем в один компонент)
+                в перспективе это должно сработать и с poem,
+                т.к. у меня на компоненте будет стили: Poem, Title, естесственно я сделаю Заголовок стиха,
+                а когда Poem, Line я сделаю строчку стиха
+                то же со всякими таблицами и тд, я могу на пост-продакшне склеивать все соседние Table. Xxx например теги в одну таблицу
+                мне кажется что это очень хороший будет подход,
 
-                    else -> emptyList()
-                }
+                не понимаю только пока что сделать в when чтобы достоверно распознать нижний текстовый уровень и применить ему стили,
+                будет ли он рекурсивничать? или лучше сделать ему отдельное ответвление?
+                 */
             }
 
         return children
     }
 
-    // its fine
     private fun image(
         element: Element,
         binaries: Map<String, ByteArray>,

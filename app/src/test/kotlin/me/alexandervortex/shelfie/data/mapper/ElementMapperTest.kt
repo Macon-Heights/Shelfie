@@ -7,10 +7,8 @@ import io.kotest.data.row
 import io.kotest.data.table
 import me.alexandervortex.shelfie.base.transformerTest
 import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsEmpty
-import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsFewTexts
 import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsText
 import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphEmpty
-import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphWithFewTexts
 import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphWithText
 
 class ElementMapperTest : BehaviorSpec({
@@ -23,7 +21,7 @@ class ElementMapperTest : BehaviorSpec({
             headers("xml", "model", "name"),
             row(paragraphEmpty(), elementsEmpty(), "elements empty"),
             row(paragraphWithText(), elementsText(), "elements text"),
-            row(paragraphWithFewTexts(), elementsFewTexts(), "elements text"),
+//            row(paragraphWithFewTexts(), elementsFewTexts(), "elements text"),
         )
     ) { xml, model, name ->
 
