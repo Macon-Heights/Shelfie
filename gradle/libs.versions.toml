@@ -26,6 +26,7 @@ storageVersion = "2.0.0"
 ### Tests
 kotestVersion = "5.9.1"
 junitVersion = "4.13.2"
+mockkVersion = "1.14.2"
 
 ### Settings
 datastoreVersion = "1.1.7"
@@ -81,6 +82,7 @@ storage = { group = "com.anggrayudi", name = "storage", version.ref = "storageVe
 
 ### Tests
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agpVersion" }
