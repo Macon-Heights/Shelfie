@@ -60,9 +60,9 @@ fun ComponentUI(
             Text(
                 text = styledText,
                 fontSize = 16.sp,
-                lineHeight = 28.sp,
+                lineHeight = 32.sp,
                 textAlign = TextAlign.Justify,
-                modifier = modifier
+                modifier = modifier.padding(bottom = 32.dp)
             )
         }
 
@@ -78,7 +78,7 @@ fun ComponentUI(
                     contentScale = ContentScale.FillWidth,
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp)
+                        .padding(bottom = 32.dp)
                 )
             }
         }
@@ -87,7 +87,7 @@ fun ComponentUI(
             Spacer(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp)
+                    .padding(bottom = 32.dp)
             )
         }
     }
