@@ -21,7 +21,6 @@ class ElementMapperTest : BehaviorSpec({
             headers("xml", "model", "name"),
             row(paragraphEmpty(), elementsEmpty(), "elements empty"),
             row(paragraphWithText(), elementsText(), "elements text"),
-//            row(paragraphWithFewTexts(), elementsFewTexts(), "elements text"),
         )
     ) { xml, model, name ->
 
