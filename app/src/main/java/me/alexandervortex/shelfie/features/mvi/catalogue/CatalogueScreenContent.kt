@@ -85,6 +85,7 @@ fun CatalogueScreenContent(
         }
 
         RoundButton(
+            isError = state.isRemoveMode,
             modifier = Modifier
                 .padding(32.dp)
                 .windowInsetsPadding(
