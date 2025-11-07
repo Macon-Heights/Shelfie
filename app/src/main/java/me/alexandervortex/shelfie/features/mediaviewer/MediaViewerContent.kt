@@ -1,8 +1,10 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -53,19 +55,22 @@ fun MediaViewerContent(
                 )
             }
         }
-        Column {
-            if (isMenu) {
-                MediaStateComponent(
-                    state = serviceState,
-                    index = listState.firstVisibleItemIndex,
-                    elements = book?.elements?.size ?: 0,
-                    playPauseAction = { playPauseAction.invoke() },
-                    timerAction = { timerAction.invoke() },
-                    speedAction = { speedAction.invoke() },
-                    prevAction = { prevAction.invoke() },
-                    nextAction = { nextAction.invoke() }
-                )
-            }
+
+        AnimatedVisibility(
+            visible = isMenu,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it })
+        ) {
+            MediaStateComponent(
+                state = serviceState,
+                index = listState.firstVisibleItemIndex,
+                elements = book?.elements?.size ?: 0,
+                playPauseAction = { playPauseAction.invoke() },
+                timerAction = { timerAction.invoke() },
+                speedAction = { speedAction.invoke() },
+                prevAction = { prevAction.invoke() },
+                nextAction = { nextAction.invoke() }
+            )
         }
     }
 }
