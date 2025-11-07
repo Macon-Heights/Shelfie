@@ -18,13 +18,13 @@ import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ProgressLine(scrollIndex: Int, elements: Int) {
-    if (scrollIndex > 0 && elements > 0 && scrollIndex <= elements) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(4.dp)
-                .clip(SHAPE_S)
-        ) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(4.dp)
+            .clip(SHAPE_S)
+    ) {
+        if (scrollIndex > 0 && elements > 0 && scrollIndex <= elements) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
