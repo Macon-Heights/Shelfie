@@ -43,7 +43,7 @@ fun BookComponent(
             Image(
                 modifier = Modifier.size(32.dp),
                 imageVector = if (model.isChecked) IC_CHECK else IC_UNCHECK,
-                contentDescription = "",
+                contentDescription = null,
                 colorFilter = ColorFilter.tint(getColors().primary)
             )
             Spacer(Modifier.size(16.dp))

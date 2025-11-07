@@ -22,7 +22,7 @@ fun ActionButtonComponentPreview() {
     CombinedPreviews {
         ActionButtonComponent(
             content = {
-                Icon(imageVector = IC_ADD, contentDescription = "")
+                Icon(imageVector = IC_ADD, contentDescription = null)
             },
             action = { }
         )
