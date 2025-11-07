@@ -41,7 +41,16 @@ fun BookComponent(
     ) {
         if (isRemoveMode) {
             Image(
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier
+                    .size(32.dp)
+                    .shadow(
+                        elevation = 6.dp,
+                        shape = SHAPE_M,
+                        clip = false
+                    )
+                    .clip(SHAPE_M)
+                    .then(modifier)
+                    .background(color),
                 imageVector = if (model.isChecked) IC_CHECK else IC_UNCHECK,
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(getColors().primary)
@@ -49,13 +58,14 @@ fun BookComponent(
             Spacer(Modifier.size(16.dp))
         }
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .shadow(
                     elevation = 6.dp,
                     shape = SHAPE_M,
                     clip = false
                 )
                 .clip(SHAPE_M)
+                .then(modifier)
                 .background(color)
                 .padding(16.dp)
         ) {
@@ -101,6 +111,6 @@ fun BookComponentPreview() {
         isChecked = false,
     )
     CombinedPreviews {
-        BookComponent(false, kek, Modifier)
+        BookComponent(true, kek, Modifier)
     }
 }
