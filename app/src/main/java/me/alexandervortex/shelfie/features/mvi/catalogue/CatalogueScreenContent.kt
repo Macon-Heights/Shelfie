@@ -36,8 +36,9 @@ import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 @Composable
 fun CatalogueScreenContent(
     state: CatalogueState,
-    onBookClick: (BookComponentModel) -> Unit,
-    onBookLongClick: (BookComponentModel) -> Unit,
+    onBookOpen: (BookComponentModel) -> Unit,
+    onToggleBookCheck: (BookComponentModel) -> Unit,
+    onToggleRemoveMode: (BookComponentModel) -> Unit,
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
@@ -62,9 +63,14 @@ fun CatalogueScreenContent(
                             isRemoveMode = state.isRemoveMode,
                             model = book,
                             modifier = Modifier.combinedClickable(
-                                onClick = { onBookClick(book) },
-                                onLongClick = { onBookLongClick(book) }
-                            )
+                                onClick = {
+                                    if (state.isRemoveMode) {
+                                        onToggleBookCheck(book)
+                                    } else {
+                                        onBookOpen(book)
+                                    }
+                                },
+                                onLongClick = { onToggleRemoveMode(book) })
                         )
                     }
                 }
