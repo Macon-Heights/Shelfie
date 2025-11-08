@@ -53,13 +53,9 @@ fun CatalogueScreen(
 
     CatalogueScreenContent(
         state = state,
-        onBookClick = { book ->
-            if (state.isRemoveMode)
-                viewModel.onIntent(CatalogueIntent.ToggleBookCheck(book.id))
-            else
-                navController.navigate(MediaViewerRoute(book.id).route)
-        },
-        onBookLongClick = { viewModel.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
+        onBookOpen = { navController.navigate(MediaViewerRoute(it.id).route) },
+        onToggleBookCheck = { viewModel.onIntent(CatalogueIntent.ToggleBookCheck(it.id)) },
+        onToggleRemoveMode = { viewModel.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
         onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
         onDeleteClick = { viewModel.onIntent(CatalogueIntent.RemoveChecked) }
     )
