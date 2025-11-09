@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.navigate.RouterScreen
 import me.alexandervortex.shelfie.features.settings.AppSettingsRepository
-import me.alexandervortex.shelfie.features.settings.ProvideAppSettings
+import me.alexandervortex.shelfie.features.settings.SettingsProvider
 import me.alexandervortex.shelfie.ui.theme.ShelfieTheme
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ProvideAppSettings(appSettingsRepository) {
+            SettingsProvider(appSettingsRepository) {
                 ShelfieTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
