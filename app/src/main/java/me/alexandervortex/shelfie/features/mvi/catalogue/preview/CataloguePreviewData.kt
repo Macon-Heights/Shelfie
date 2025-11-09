@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue.preview
 
-import me.alexandervortex.shelfie.ui.component.BookComponentModel
+import me.alexandervortex.shelfie.ui.model.BookComponentModel
 
 object CataloguePreviewData {
 

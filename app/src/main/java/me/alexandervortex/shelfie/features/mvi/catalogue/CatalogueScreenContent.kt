@@ -28,13 +28,13 @@ import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.component.BookComponent
-import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.component.EmptyList
 import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
 import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.component.refactored.ConfirmationComponent
 import me.alexandervortex.shelfie.ui.component.refactored.PopupBox
 import me.alexandervortex.shelfie.ui.component.refactored.TitleComponent
+import me.alexandervortex.shelfie.ui.model.BookComponentModel
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 
