@@ -27,6 +27,8 @@ class AppSettingsRepository
         .map { it[Keys.fontSize] ?: 16 }
 
     suspend fun setFontSize(size: Int) {
-        context.dataStore.edit { it[Keys.fontSize] = size }
+        if (size in 1..199) {
+            context.dataStore.edit { it[Keys.fontSize] = size }
+        }
     }
 }
