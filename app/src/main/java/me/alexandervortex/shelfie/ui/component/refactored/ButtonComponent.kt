@@ -32,17 +32,20 @@ fun ButtonComponent(
     modifierAfter: Modifier = Modifier,
     content: @Composable (Color) -> Unit,
     shape: Shape = SHAPE_L,
-    containerColor: Color = getColors().primary,
-    contentColor: Color = getColors().onPrimary,
+    containerColor: Color? = null,
+    contentColor: Color? = null,
 ) {
+    val DEFAULT_CONTAINER_COLOR = getColors().primary
+    val DEFAULT_CONTENT_COLOR = getColors().onPrimary
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .sizeIn(minHeight = MIN_HEIGHT.dp)
             .clipNShadow(shape)
             .then(modifierAfter)
-            .background(containerColor)
-    ) { content.invoke(contentColor) }
+            .background(containerColor ?: DEFAULT_CONTAINER_COLOR)
+    ) { content.invoke(contentColor ?: DEFAULT_CONTENT_COLOR) }
 }
 
 @Composable
