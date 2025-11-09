@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,8 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import me.alexandervortex.shelfie.features.settings.SettingsComponent
+import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.getBookUI
+import me.alexandervortex.shelfie.ui.component.refactored.PopupBox
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -33,46 +36,51 @@ fun MediaViewerContent(
     nextAction: () -> Unit,
     textAction: () -> Unit,
 ) {
-    Box(
+    PopupBox(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
-    ) {
-        LazyColumn(
-            userScrollEnabled = !serviceState.isPlaying,
-            state = listState,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(24.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val sections: List<ElementUI> = book?.elements.orEmpty()
-            itemsIndexed(sections) { index, section ->
-                ComponentUI(
-                    modifier = Modifier.clickable { textAction.invoke() },
-                    element = section,
-                    elementIndex = index,
-                    currentIndex = serviceState.index,
-                    partIndex = serviceState.part
+        contentAlignment = Alignment.BottomEnd,
+        content = {
+            LazyColumn(
+                userScrollEnabled = !serviceState.isPlaying,
+                state = listState,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(24.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                val sections: List<ElementUI> = book?.elements.orEmpty()
+                itemsIndexed(sections) { index, section ->
+                    ComponentUI(
+                        modifier = Modifier.clickable { textAction.invoke() },
+                        element = section,
+                        elementIndex = index,
+                        currentIndex = serviceState.index,
+                        partIndex = serviceState.part
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = isMenu,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                MediaStateComponent(
+                    state = serviceState,
+                    index = listState.firstVisibleItemIndex,
+                    elements = book?.elements?.size ?: 0,
+                    playPauseAction = { playPauseAction.invoke() },
+                    timerAction = { timerAction.invoke() },
+                    speedAction = { speedAction.invoke() },
+                    prevAction = { prevAction.invoke() },
+                    nextAction = { nextAction.invoke() }
                 )
             }
+        },
+        popup = {
+            val viewModel = hiltViewModel<SettingsViewModel>()
+            SettingsComponent(viewModel)
         }
-
-        AnimatedVisibility(
-            visible = isMenu,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it })
-        ) {
-            MediaStateComponent(
-                state = serviceState,
-                index = listState.firstVisibleItemIndex,
-                elements = book?.elements?.size ?: 0,
-                playPauseAction = { playPauseAction.invoke() },
-                timerAction = { timerAction.invoke() },
-                speedAction = { speedAction.invoke() },
-                prevAction = { prevAction.invoke() },
-                nextAction = { nextAction.invoke() }
-            )
-        }
-    }
+    )
 }
 
 @CombinedPreviews

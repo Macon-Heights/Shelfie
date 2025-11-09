@@ -52,6 +52,7 @@ fun CatalogueScreenContent(
     PopupBox(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
+        isPopup = state.isPopup,
         content = {
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -125,21 +126,19 @@ fun CatalogueScreenContent(
             )
         },
         popup = {
-            if (state.isPopup) {
-                ConfirmationComponent(
-                    title = stringResource(R.string.catalogue_remove_title),
-                    subtitle = stringResource(R.string.catalogue_remove_subtitle),
-                    approveText = stringResource(R.string.catalogue_remove_yes),
-                    declineText = stringResource(R.string.catalogue_remove_no),
-                    onApprove = {
-                        onDeleteClick.invoke()
-                        onTogglePopup(false)
-                    },
-                    onDecline = {
-                        onTogglePopup(false)
-                    }
-                )
-            }
+            ConfirmationComponent(
+                title = stringResource(R.string.catalogue_remove_title),
+                subtitle = stringResource(R.string.catalogue_remove_subtitle),
+                approveText = stringResource(R.string.catalogue_remove_yes),
+                declineText = stringResource(R.string.catalogue_remove_no),
+                onApprove = {
+                    onDeleteClick.invoke()
+                    onTogglePopup(false)
+                },
+                onDecline = {
+                    onTogglePopup(false)
+                }
+            )
         }
     )
 }
