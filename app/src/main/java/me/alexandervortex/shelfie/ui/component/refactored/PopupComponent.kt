@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ fun PopupComponent(
             .fillMaxSize()
             .background(overlayColor)
             .padding(24.dp)
+            .clickable { onDecline.invoke() }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
