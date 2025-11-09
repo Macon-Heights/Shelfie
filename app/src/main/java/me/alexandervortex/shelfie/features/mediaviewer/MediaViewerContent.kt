@@ -10,6 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,15 +34,17 @@ fun MediaViewerContent(
     serviceState: MediaServiceState,
     listState: LazyListState,
     playPauseAction: () -> Unit,
-    timerAction: () -> Unit,
+    timerAction: () -> Unit, // fixme
     speedAction: () -> Unit,
     prevAction: () -> Unit,
     nextAction: () -> Unit,
     textAction: () -> Unit,
 ) {
+    var isSettings by remember { mutableStateOf(false) }
     PopupBox(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
+        isPopup = isSettings,
         content = {
             LazyColumn(
                 userScrollEnabled = !serviceState.isPlaying,
@@ -69,7 +75,10 @@ fun MediaViewerContent(
                     index = listState.firstVisibleItemIndex,
                     elements = book?.elements?.size ?: 0,
                     playPauseAction = { playPauseAction.invoke() },
-                    timerAction = { timerAction.invoke() },
+                    timerAction = {
+                        isSettings = !isSettings
+//                        timerAction.invoke() fixme
+                    },
                     speedAction = { speedAction.invoke() },
                     prevAction = { prevAction.invoke() },
                     nextAction = { nextAction.invoke() }
@@ -78,7 +87,7 @@ fun MediaViewerContent(
         },
         popup = {
             val viewModel = hiltViewModel<SettingsViewModel>()
-            SettingsComponent(viewModel)
+            SettingsComponent(viewModel) { isSettings = false }
         }
     )
 }
