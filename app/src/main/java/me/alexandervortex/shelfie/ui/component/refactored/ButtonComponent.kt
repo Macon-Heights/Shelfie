@@ -28,11 +28,10 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_END_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_START_L
 
-private const val CONTENT_PADDING = 16
-private const val MIN_HEIGHT = 48
+private const val MIN_SIZE = 48
 
 const val BUTTON_BIG = 64
-const val BUTTON_SMALL = 48
+const val BUTTON_SMALL = MIN_SIZE
 
 @Composable
 fun ButtonComponent(
@@ -49,10 +48,13 @@ fun ButtonComponent(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .sizeIn(minHeight = MIN_HEIGHT.dp)
+            .sizeIn(
+                minHeight = MIN_SIZE.dp,
+                minWidth = MIN_SIZE.dp
+            )
             .clipNShadow(shape)
-            .then(modifierAfter)
             .background(containerColor ?: DEFAULT_CONTAINER_COLOR)
+            .then(modifierAfter)
     ) { content.invoke(contentColor ?: DEFAULT_CONTENT_COLOR) }
 }
 
@@ -87,14 +89,12 @@ private fun ButtonPreview() {
                 content = { Text(text = "button", color = it) }
             )
             ButtonComponent(
-                modifier = Modifier.weight(1f),
                 shape = SHAPE_START_L,
                 containerColor = getColors().error,
                 contentColor = getColors().onError,
                 content = { Text(text = "-", color = it) }
             )
             ButtonComponent(
-                modifier = Modifier.weight(2f),
                 shape = SHAPE_END_L,
                 content = { Text(text = "+", color = it) }
             )
