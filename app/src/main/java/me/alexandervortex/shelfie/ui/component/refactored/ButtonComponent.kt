@@ -26,7 +26,7 @@ private const val MIN_HEIGHT = 48
 
 @Composable
 fun ButtonComponent(
-    modifier: Modifier = Modifier,
+    modifierAfter: Modifier = Modifier,
     content: @Composable (Color) -> Unit,
     shape: Shape = SHAPE_L,
     containerColor: Color = getColors().primary,
@@ -37,7 +37,7 @@ fun ButtonComponent(
         modifier = Modifier
             .sizeIn(minHeight = MIN_HEIGHT.dp)
             .clipNShadow(shape)
-            .then(modifier)
+            .then(modifierAfter)
             .background(containerColor)
     ) { content.invoke(contentColor) }
 }
@@ -48,23 +48,23 @@ private fun ButtonPreview() {
     CombinedPreviews {
         Row {
             ButtonComponent(
-                modifier = Modifier.size(64.dp),
+                modifierAfter = Modifier.size(64.dp),
                 content = { Icon(IC_ADD, null, tint = it) }
             )
             ButtonComponent(
-                modifier = Modifier.weight(1f),
+                modifierAfter = Modifier.weight(1f),
                 content = { Text(text = "default button", color = it) }
             )
             ButtonComponent(
                 shape = SHAPE_START_L,
                 containerColor = getColors().error,
                 contentColor = getColors().onError,
-                modifier = Modifier,
+                modifierAfter = Modifier,
                 content = { Text(text = "-", color = it) }
             )
             ButtonComponent(
                 shape = SHAPE_END_L,
-                modifier = Modifier,
+                modifierAfter = Modifier,
                 content = { Text(text = "+", color = it) }
             )
         }

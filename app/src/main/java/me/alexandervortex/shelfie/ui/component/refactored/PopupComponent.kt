@@ -61,7 +61,7 @@ fun PopupComponent(
                 shape = SHAPE_S,
                 containerColor = getColors().error,
                 contentColor = getColors().onError,
-                modifier = Modifier
+                modifierAfter = Modifier
                     .fillMaxWidth()
                     .clickable { onApprove.invoke() },
                 content = { Text(text = approveText, color = it) }
@@ -69,7 +69,7 @@ fun PopupComponent(
             Spacer(Modifier.size(BUTTON_GAP.dp))
             ButtonComponent(
                 shape = SHAPE_S,
-                modifier = Modifier
+                modifierAfter = Modifier
                     .fillMaxWidth()
                     .clickable { onDecline.invoke() },
                 content = { Text(text = declineText, color = it) })

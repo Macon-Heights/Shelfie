@@ -70,7 +70,7 @@ fun MediaStateComponent(
             ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
             ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
             ButtonComponent(
-                modifier = Modifier
+                modifierAfter = Modifier
                     .size(BUTTON_BIG.dp)
                     .clickable { playPauseAction.invoke() },
                 content = {
@@ -101,7 +101,7 @@ private fun ButtonWithLabel(
         ButtonComponent(
             containerColor = getColors().secondary,
             contentColor = getColors().onSecondary,
-            modifier = Modifier
+            modifierAfter = Modifier
                 .size(BUTTON_SMALL.dp)
                 .clickable { playPauseAction.invoke() },
             content = {
