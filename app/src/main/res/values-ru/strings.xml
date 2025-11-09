@@ -3,4 +3,9 @@
     <string name="catalogue_title">Твои\nКниги</string>
     <string name="catalogue_empty">Здесь пока нет книг.\nДобавь свою первую книгу.</string>
     <string name="catalogue_section">Глава</string>
+
+    <string name="catalogue_remove_subtitle">Это действие необратимо.</string>
+    <string name="catalogue_remove_yes">Удалить</string>
+    <string name="catalogue_remove_no">Отмена</string>
+    <string name="catalogue_remove_title">Удалить?</string>
 </resources>
