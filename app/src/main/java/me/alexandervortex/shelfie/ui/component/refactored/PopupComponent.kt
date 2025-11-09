@@ -21,6 +21,7 @@ import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
+import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 
 @Composable
 fun PopupComponent(
@@ -51,13 +52,15 @@ fun PopupComponent(
             Text(subtitle)
             Spacer(Modifier.size(16.dp))
             Button(
+                shape = SHAPE_S,
                 onClick = onApprove,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(approveText)
             }
-            Spacer(Modifier.size(8.dp))
+            Spacer(Modifier.size(4.dp))
             Button(
+                shape = SHAPE_S,
                 onClick = onDecline,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -74,8 +77,8 @@ private fun PopupComponentPreview() {
         PopupComponent(
             "Удалить?",
             "Оно удалится безвозвратно",
-            "da",
-            "net", {}, {}
+            "Удалить",
+            "Отмена", {}, {}
         )
     }
 }

@@ -7,9 +7,8 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
@@ -47,12 +46,7 @@ fun ActionButtonComponent(
         ),
         modifier = modifier
             .size(64.dp)
-            .shadow(
-                elevation = 8.dp,
-                shape = SHAPE_L,
-                clip = false
-            )
-            .clip(SHAPE_L),
+            .clipNShadow(SHAPE_L),
         onClick = { action?.invoke() }
     ) { content.invoke() }
 }
