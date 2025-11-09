@@ -36,7 +36,6 @@ class CatalogueViewModel @Inject constructor(
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)
             is CatalogueIntent.RemoveChecked -> removeChecked()
             is CatalogueIntent.TogglePopup -> togglePopup(intent.isEnabled)
-            else -> { }
         }
     }
 
