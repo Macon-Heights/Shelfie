@@ -1,10 +1,17 @@
 package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +36,7 @@ const val BUTTON_SMALL = 48
 
 @Composable
 fun ButtonComponent(
+    modifier: Modifier = Modifier,
     modifierAfter: Modifier = Modifier,
     content: @Composable (Color) -> Unit,
     shape: Shape = SHAPE_L,
@@ -40,7 +48,7 @@ fun ButtonComponent(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .sizeIn(minHeight = MIN_HEIGHT.dp)
             .clipNShadow(shape)
             .then(modifierAfter)
@@ -52,6 +60,21 @@ fun ButtonComponent(
 @CombinedPreviews
 private fun ButtonPreview() {
     CombinedPreviews {
+        ButtonComponent(
+            modifier = Modifier
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+                .padding(32.dp),
+            modifierAfter = Modifier
+                .size(BUTTON_BIG.dp)
+                .clickable { },
+            content = {
+                Icon(
+                    imageVector = IC_ADD,
+                    contentDescription = null,
+                    tint = it
+                )
+            }
+        )
         Row {
             ButtonComponent(
                 modifierAfter = Modifier.size(64.dp),
