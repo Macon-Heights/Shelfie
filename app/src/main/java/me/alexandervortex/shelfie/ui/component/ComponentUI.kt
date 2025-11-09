@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.model.composeSpanStyle
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -56,10 +57,10 @@ fun ComponentUI(
                     withStyle(span) { append(word.text) }
                 }
             }
-
+            val fontSize = LocalAppSettings.fontSize.current.sp
             Text(
                 text = styledText,
-                fontSize = 16.sp,
+                fontSize = fontSize,
                 lineHeight = 32.sp,
                 textAlign = TextAlign.Justify,
                 modifier = modifier.padding(bottom = 32.dp)
