@@ -22,12 +22,12 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 
-private const val BUTTON_GAP = 8
-private const val TEXT_GAP = 16
-private const val TITLE_GAP = 8
-private const val TITLE_SIZE = 21
-private const val ROOT_PADDING = 32
-private const val BOX_PADDING = 16
+const val BUTTON_GAP = 8
+const val TEXT_GAP = 16
+const val TITLE_GAP = 8
+const val TITLE_SIZE = 21
+const val ROOT_PADDING = 32
+const val BOX_PADDING = 16
 
 @Composable
 fun ConfirmationComponent(
