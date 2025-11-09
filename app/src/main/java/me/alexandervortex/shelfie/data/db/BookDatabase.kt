@@ -8,7 +8,11 @@ import me.alexandervortex.shelfie.data.db.dao.BOOK_TABLE
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
 
-@Database(entities = [BookEntity::class], version = 3)
+@Database(
+    entities = [BookEntity::class],
+    version = 3,
+    exportSchema = false
+)
 abstract class BookDatabase : RoomDatabase() {
 
     abstract fun bookDao(): BookDao

@@ -5,14 +5,14 @@ lifecycleRuntimeKtxVersion = "2.9.2"
 activityComposeVersion = "1.10.1"
 
 ### Compose BOM
-composeBomVersion = "2024.09.00"
+composeBomVersion = "2024.10.00"
 
 ### Room
 mediaVersion = "1.7.0"
 roomRuntimeVersion = "2.8.0"
 
 ### Hilt
-hiltVersion = "2.49"
+hiltVersion = "2.52"
 hiltNavigationVersion = "1.2.0"
 
 ### Navigation

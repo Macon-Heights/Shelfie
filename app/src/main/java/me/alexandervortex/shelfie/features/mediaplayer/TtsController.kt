@@ -44,7 +44,10 @@ class TtsController(
             return
         }
 
-        val locale = bookModel?.titleInfo?.lang?.let(::Locale) ?: Locale.getDefault()
+        val locale = bookModel?.titleInfo?.lang?.let { lang ->
+            Locale.forLanguageTag(lang)
+        } ?: Locale.getDefault()
+
         val result = tts?.setLanguage(locale)
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             errorAction("Язык не поддерживается")
