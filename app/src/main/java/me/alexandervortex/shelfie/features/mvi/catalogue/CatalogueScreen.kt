@@ -40,14 +40,10 @@ fun CatalogueScreen(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         uri ?: return@rememberLauncherForActivityResult
+        val intent = Intent.FLAG_GRANT_READ_URI_PERMISSION
         try {
-            context.contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
-            )
-        } catch (_: SecurityException) {
-
-        }
+            context.contentResolver.takePersistableUriPermission(uri, intent)
+        } catch (_: SecurityException) { }
         viewModel.onIntent(CatalogueIntent.ImportBook(uri))
     }
 
@@ -58,6 +54,6 @@ fun CatalogueScreen(
         onToggleRemoveMode = { viewModel.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
         onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
         onDeleteClick = { viewModel.onIntent(CatalogueIntent.RemoveChecked) },
-        onTogglePopup = { viewModel.onIntent(CatalogueIntent.TogglePopup(it))}
+        onTogglePopup = { viewModel.onIntent(CatalogueIntent.TogglePopup(it)) }
     )
 }

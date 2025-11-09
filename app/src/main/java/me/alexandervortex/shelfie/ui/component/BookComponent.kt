@@ -12,13 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
 import me.alexandervortex.shelfie.features.mvi.catalogue.preview.CataloguePreviewData
@@ -43,12 +42,7 @@ fun BookComponent(
             Image(
                 modifier = Modifier
                     .size(32.dp)
-                    .shadow(
-                        elevation = 6.dp,
-                        shape = SHAPE_M,
-                        clip = false
-                    )
-                    .clip(SHAPE_M)
+                    .clipNShadow(SHAPE_M)
                     .then(modifier)
                     .background(color),
                 imageVector = if (model.isChecked) IC_CHECK else IC_UNCHECK,
@@ -59,12 +53,7 @@ fun BookComponent(
         }
         Column(
             modifier = Modifier
-                .shadow(
-                    elevation = 6.dp,
-                    shape = SHAPE_M,
-                    clip = false
-                )
-                .clip(SHAPE_M)
+                .clipNShadow(SHAPE_M)
                 .then(modifier)
                 .background(color)
                 .padding(16.dp)

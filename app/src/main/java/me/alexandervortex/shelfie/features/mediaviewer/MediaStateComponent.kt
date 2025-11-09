@@ -18,11 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.getBookUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -49,12 +48,7 @@ fun MediaStateComponent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(
-                elevation = 6.dp,
-                shape = SHAPE_TOP_L,
-                clip = false
-            )
-            .clip(SHAPE_TOP_L)
+            .clipNShadow(SHAPE_TOP_L)
             .background(getColors().surfaceVariant)
             .padding(top = 12.dp)
             .padding(horizontal = 12.dp)
