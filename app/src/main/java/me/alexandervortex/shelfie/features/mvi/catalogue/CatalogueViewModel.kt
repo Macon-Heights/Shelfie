@@ -35,7 +35,14 @@ class CatalogueViewModel @Inject constructor(
             is CatalogueIntent.ToggleRemoveMode -> toggleRemoveMode(intent.id)
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)
             is CatalogueIntent.RemoveChecked -> removeChecked()
+            is CatalogueIntent.TogglePopup -> togglePopup(intent.isEnabled)
             else -> { }
+        }
+    }
+
+    private fun togglePopup(enabled: Boolean) {
+        _state.update {
+            it.copy(isPopup = enabled)
         }
     }
 

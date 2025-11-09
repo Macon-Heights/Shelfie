@@ -57,6 +57,7 @@ fun CatalogueScreen(
         onToggleBookCheck = { viewModel.onIntent(CatalogueIntent.ToggleBookCheck(it.id)) },
         onToggleRemoveMode = { viewModel.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
         onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
-        onDeleteClick = { viewModel.onIntent(CatalogueIntent.RemoveChecked) }
+        onDeleteClick = { viewModel.onIntent(CatalogueIntent.RemoveChecked) },
+        onTogglePopup = { viewModel.onIntent(CatalogueIntent.TogglePopup(it))}
     )
 }
