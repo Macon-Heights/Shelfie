@@ -60,40 +60,42 @@ fun ButtonComponent(
 @CombinedPreviews
 private fun ButtonPreview() {
     CombinedPreviews {
-        ButtonComponent(
-            modifier = Modifier
-                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
-                .padding(32.dp),
-            modifierAfter = Modifier
-                .size(BUTTON_BIG.dp)
-                .clickable { },
-            content = {
-                Icon(
-                    imageVector = IC_ADD,
-                    contentDescription = null,
-                    tint = it
-                )
-            }
-        )
         Row {
+            ButtonComponent(
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+                    .padding(32.dp),
+                modifierAfter = Modifier
+                    .size(BUTTON_BIG.dp)
+                    .clickable { },
+                content = {
+                    Icon(
+                        imageVector = IC_ADD,
+                        contentDescription = null,
+                        tint = it
+                    )
+                }
+            )
             ButtonComponent(
                 modifierAfter = Modifier.size(64.dp),
                 content = { Icon(IC_ADD, null, tint = it) }
             )
+        }
+        Row {
             ButtonComponent(
                 modifierAfter = Modifier.weight(1f),
-                content = { Text(text = "default button", color = it) }
+                content = { Text(text = "button", color = it) }
             )
             ButtonComponent(
+                modifier = Modifier.weight(1f),
                 shape = SHAPE_START_L,
                 containerColor = getColors().error,
                 contentColor = getColors().onError,
-                modifierAfter = Modifier,
                 content = { Text(text = "-", color = it) }
             )
             ButtonComponent(
+                modifier = Modifier.weight(2f),
                 shape = SHAPE_END_L,
-                modifierAfter = Modifier,
                 content = { Text(text = "+", color = it) }
             )
         }
