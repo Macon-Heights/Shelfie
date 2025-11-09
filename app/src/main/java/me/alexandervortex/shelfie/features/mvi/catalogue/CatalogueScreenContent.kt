@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,21 +13,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.mediaviewer.RoundButton
+import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.BookComponentModel
 import me.alexandervortex.shelfie.ui.component.EmptyList
+import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
+import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.component.refactored.PopupBox
 import me.alexandervortex.shelfie.ui.component.refactored.PopupComponent
 import me.alexandervortex.shelfie.ui.component.refactored.TitleComponent
@@ -91,17 +96,32 @@ fun CatalogueScreenContent(
                     )
                 }
             }
+            val icon = if (state.isRemoveMode) IC_DELETE else IC_ADD
+            val containerColor = if (state.isRemoveMode) getColors().error else null
+            val contentColor = if (state.isRemoveMode) getColors().onError else null
 
-            RoundButton(
-                isError = state.isRemoveMode,
+            ButtonComponent(
                 modifier = Modifier
                     .padding(32.dp)
                     .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
-                icon = if (state.isRemoveMode) IC_DELETE else IC_ADD,
-                action = if (state.isRemoveMode) {
-                    { onTogglePopup.invoke(true) }
-                } else onAddClick,
-                isPrimary = true
+                contentColor = contentColor,
+                containerColor = containerColor,
+                modifierAfter = Modifier
+                    .size(BUTTON_BIG.dp)
+                    .clickable {
+                        if (state.isRemoveMode) {
+                            onTogglePopup.invoke(true)
+                        } else {
+                            onAddClick.invoke()
+                        }
+                    },
+                content = {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = it
+                    )
+                }
             )
         },
         popup = {
