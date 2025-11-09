@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.ui.component.refactored
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Icon
@@ -20,7 +19,6 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.SHAPE_END_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
-import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 import me.alexandervortex.shelfie.ui.theme.SHAPE_START_L
 
 private const val CONTENT_PADDING = 16
@@ -30,8 +28,8 @@ private const val MIN_HEIGHT = 48
 fun ButtonComponent(
     modifier: Modifier = Modifier,
     content: @Composable (Color) -> Unit,
-    shape: Shape = SHAPE_S,
-    backgroundColor: Color = getColors().primary,
+    shape: Shape = SHAPE_L,
+    containerColor: Color = getColors().primary,
     contentColor: Color = getColors().onPrimary,
 ) {
     Box(
@@ -40,8 +38,7 @@ fun ButtonComponent(
             .sizeIn(minHeight = MIN_HEIGHT.dp)
             .clipNShadow(shape)
             .then(modifier)
-            .background(backgroundColor)
-            .padding(horizontal = CONTENT_PADDING.dp)
+            .background(containerColor)
     ) { content.invoke(contentColor) }
 }
 
@@ -51,7 +48,6 @@ private fun ButtonPreview() {
     CombinedPreviews {
         Row {
             ButtonComponent(
-                shape = SHAPE_L,
                 modifier = Modifier.size(64.dp),
                 content = { Icon(IC_ADD, null, tint = it) }
             )
@@ -61,7 +57,7 @@ private fun ButtonPreview() {
             )
             ButtonComponent(
                 shape = SHAPE_START_L,
-                backgroundColor = getColors().error,
+                containerColor = getColors().error,
                 contentColor = getColors().onError,
                 modifier = Modifier,
                 content = { Text(text = "-", color = it) }

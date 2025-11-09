@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.getBookUI
+import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PAUSE
@@ -32,6 +35,9 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_SPEED
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_TIMER
 import me.alexandervortex.shelfie.ui.theme.SHAPE_TOP_L
+
+private const val BUTTON_BIG = 64
+private const val BUTTON_SMALL = 48
 
 @Composable
 fun MediaStateComponent(
@@ -63,7 +69,18 @@ fun MediaStateComponent(
 
             ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
             ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
-            RoundButton(icon = playPauseIcon, isPrimary = true) { playPauseAction.invoke() }
+            ButtonComponent(
+                modifier = Modifier
+                    .size(BUTTON_BIG.dp)
+                    .clickable { playPauseAction.invoke() },
+                content = {
+                    Icon(
+                        imageVector = playPauseIcon,
+                        contentDescription = null,
+                        tint = it
+                    )
+                }
+            )
             ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
             ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
         }
@@ -81,7 +98,20 @@ private fun ButtonWithLabel(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        RoundButton(icon = playPauseIcon) { playPauseAction.invoke() }
+        ButtonComponent(
+            containerColor = getColors().secondary,
+            contentColor = getColors().onSecondary,
+            modifier = Modifier
+                .size(BUTTON_SMALL.dp)
+                .clickable { playPauseAction.invoke() },
+            content = {
+                Icon(
+                    imageVector = playPauseIcon,
+                    contentDescription = null,
+                    tint = it
+                )
+            }
+        )
         if (text.isNullOrEmpty().not()) {
             Spacer(Modifier.size(8.dp))
             Text(
