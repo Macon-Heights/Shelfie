@@ -1,6 +1,8 @@
 package me.alexandervortex.shelfie.ui.preview
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,9 +22,11 @@ annotation class CombinedPreviews
 
 @Composable
 fun CombinedPreviews(
-    content: @Composable () -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     ShelfieTheme {
-        Surface(color = getColors().background) { content.invoke() }
+        Surface(color = getColors().background) {
+            Column { content.invoke(this) }
+        }
     }
 }

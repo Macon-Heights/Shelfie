@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,10 +19,12 @@ import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
+import me.alexandervortex.shelfie.ui.theme.SHAPE_END_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
+import me.alexandervortex.shelfie.ui.theme.SHAPE_START_L
 
-private const val CONTENT_PADDING = 4
+private const val CONTENT_PADDING = 16
 private const val MIN_HEIGHT = 48
 
 @Composable
@@ -39,7 +42,7 @@ fun ButtonComponent(
             .clipNShadow(shape)
             .then(modifier)
             .background(backgroundColor)
-            .padding(CONTENT_PADDING.dp)
+            .padding(horizontal = CONTENT_PADDING.dp)
     ) { content.invoke(contentColor) }
 }
 
@@ -51,11 +54,24 @@ private fun ButtonPreview() {
             modifier = Modifier.fillMaxWidth(),
             content = { Text(text = "default button", color = it) }
         )
-
-        ButtonComponent(
-            shape = SHAPE_L,
-            modifier = Modifier.size(64.dp),
-            content = { Icon(IC_ADD, null) }
-        )
+        Row {
+            ButtonComponent(
+                shape = SHAPE_L,
+                modifier = Modifier.size(64.dp),
+                content = { Icon(IC_ADD, null, tint = it) }
+            )
+            ButtonComponent(
+                shape = SHAPE_START_L,
+                backgroundColor = getColors().error,
+                contentColor = getColors().onError,
+                modifier = Modifier,
+                content = { Text(text = "-", color = it) }
+            )
+            ButtonComponent(
+                shape = SHAPE_END_L,
+                modifier = Modifier,
+                content = { Text(text = "+", color = it) }
+            )
+        }
     }
 }
