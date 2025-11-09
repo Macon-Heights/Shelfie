@@ -1,8 +1,5 @@
 package me.alexandervortex.shelfie.ui.theme
 
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF8F4C38)
@@ -220,8 +217,3 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF271D1B)
 val surfaceContainerDarkHighContrast = Color(0xFF392E2B)
 val surfaceContainerHighDarkHighContrast = Color(0xFF443936)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF504441)
-
-@Composable
-fun getColors(): ColorScheme {
-    return MaterialTheme.colorScheme
-}
