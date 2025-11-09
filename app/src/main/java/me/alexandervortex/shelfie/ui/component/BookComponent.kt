@@ -21,6 +21,7 @@ import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
 import me.alexandervortex.shelfie.features.mvi.catalogue.preview.CataloguePreviewData
+import me.alexandervortex.shelfie.ui.model.BookComponentModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
 import me.alexandervortex.shelfie.ui.theme.IC_UNCHECK

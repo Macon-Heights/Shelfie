@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.component
+package me.alexandervortex.shelfie.ui.model
 
 data class BookComponentModel(
     // UI

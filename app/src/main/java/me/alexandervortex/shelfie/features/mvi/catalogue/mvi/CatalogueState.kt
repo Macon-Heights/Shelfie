@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue.mvi
 
-import me.alexandervortex.shelfie.ui.component.BookComponentModel
+import me.alexandervortex.shelfie.ui.model.BookComponentModel
 
 data class CatalogueState(
     val isPopup: Boolean = false,
