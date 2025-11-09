@@ -30,7 +30,7 @@ private const val ROOT_PADDING = 32
 private const val BOX_PADDING = 16
 
 @Composable
-fun PopupComponent(
+fun ConfirmationComponent(
     title: String,
     subtitle: String,
     approveText: String,
@@ -81,7 +81,7 @@ fun PopupComponent(
 @Composable
 private fun PopupComponentPreview() {
     CombinedPreviews {
-        PopupComponent(
+        ConfirmationComponent(
             "Удалить?",
             "Оно удалится безвозвратно",
             "Удалить",
