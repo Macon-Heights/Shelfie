@@ -24,6 +24,9 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_START_L
 private const val CONTENT_PADDING = 16
 private const val MIN_HEIGHT = 48
 
+const val BUTTON_BIG = 64
+const val BUTTON_SMALL = 48
+
 @Composable
 fun ButtonComponent(
     modifierAfter: Modifier = Modifier,
