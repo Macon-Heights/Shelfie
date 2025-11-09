@@ -29,13 +29,14 @@ private const val STEP_SIZE = 2
 @Composable
 fun SettingsComponent(
     viewModel: SettingsViewModel?,
+    onDecline: () -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(getStaticSurfaceVariant().copy(alpha = 0.7f))
-            .clickable { /*onDecline.invoke()*/ }
+            .clickable { onDecline.invoke() }
             .padding(ROOT_PADDING.dp)
     ) {
         Column(
@@ -81,6 +82,6 @@ fun SettingsComponent(
 @Composable
 private fun SettingsPreview() {
     CombinedPreviews {
-        SettingsComponent(null)
+        SettingsComponent(null) {}
     }
 }
