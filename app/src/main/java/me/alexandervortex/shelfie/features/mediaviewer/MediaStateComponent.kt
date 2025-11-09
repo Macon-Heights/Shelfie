@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.getBookUI
+import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
+import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_SMALL
 import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
@@ -35,9 +37,6 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_SPEED
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_TIMER
 import me.alexandervortex.shelfie.ui.theme.SHAPE_TOP_L
-
-private const val BUTTON_BIG = 64
-private const val BUTTON_SMALL = 48
 
 @Composable
 fun MediaStateComponent(
