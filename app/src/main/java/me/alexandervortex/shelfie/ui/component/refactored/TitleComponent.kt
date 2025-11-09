@@ -23,16 +23,13 @@ private const val size = 64
 private const val spacing = 8
 
 @Composable
-fun TitleComponent(
-    text: String?,
-    modifier: Modifier = Modifier,
-) {
+fun TitleComponent(text: String?) {
     text?.let {
         Text(
             textAlign = TextAlign.End,
             color = getColors().onBackground,
             text = text,
-            modifier = modifier
+            modifier = Modifier
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
                 .padding(vertical = 64.dp)
                 .fillMaxWidth(),
