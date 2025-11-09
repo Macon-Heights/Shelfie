@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.ui.component.refactored
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
@@ -50,15 +49,15 @@ fun ButtonComponent(
 @CombinedPreviews
 private fun ButtonPreview() {
     CombinedPreviews {
-        ButtonComponent(
-            modifier = Modifier.fillMaxWidth(),
-            content = { Text(text = "default button", color = it) }
-        )
         Row {
             ButtonComponent(
                 shape = SHAPE_L,
                 modifier = Modifier.size(64.dp),
                 content = { Icon(IC_ADD, null, tint = it) }
+            )
+            ButtonComponent(
+                modifier = Modifier.weight(1f),
+                content = { Text(text = "default button", color = it) }
             )
             ButtonComponent(
                 shape = SHAPE_START_L,
