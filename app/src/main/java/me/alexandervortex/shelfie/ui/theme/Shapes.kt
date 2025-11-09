@@ -13,3 +13,6 @@ val SHAPE_XL = RoundedCornerShape(64.dp)
 val SHAPE_XXL = RoundedCornerShape(128.dp)
 
 val SHAPE_TOP_L = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
+val SHAPE_BOTTOM_L = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
+val SHAPE_START_L = RoundedCornerShape(topStart = 32.dp, bottomStart = 32.dp)
+val SHAPE_END_L = RoundedCornerShape(bottomEnd = 32.dp, topEnd = 32.dp)
