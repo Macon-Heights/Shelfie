@@ -14,20 +14,8 @@ import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.getBookUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
-import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 import me.alexandervortex.shelfie.ui.theme.SHAPE_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
-
-@CombinedPreviews
-@Composable
-private fun ButtonPreview() {
-    RoundButton(
-        Modifier,
-        IC_DELETE,
-        isError = true,
-        isPrimary = false, { }
-    )
-}
 
 @CombinedPreviews
 @Composable

@@ -59,7 +59,7 @@ fun PopupComponent(
             Spacer(Modifier.size(TEXT_GAP.dp))
             ButtonComponent(
                 shape = SHAPE_S,
-                backgroundColor = getColors().error,
+                containerColor = getColors().error,
                 contentColor = getColors().onError,
                 modifier = Modifier
                     .fillMaxWidth()
