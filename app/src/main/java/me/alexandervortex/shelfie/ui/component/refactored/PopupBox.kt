@@ -15,6 +15,7 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 fun PopupBox(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.BottomEnd,
+    isPopup: Boolean = false,
     content: @Composable BoxScope.() -> Unit,
     popup: @Composable BoxScope.() -> Unit,
 ) {
@@ -23,7 +24,7 @@ fun PopupBox(
         contentAlignment = contentAlignment,
         content = {
             content.invoke(this)
-            popup.invoke(this)
+            if (isPopup) popup.invoke(this)
         }
     )
 }
