@@ -16,8 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.R
+import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 private const val size = 64
 private const val spacing = 8

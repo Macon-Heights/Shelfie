@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mvi.catalogue.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun ProgressLine(scrollIndex: Int, elements: Int) {

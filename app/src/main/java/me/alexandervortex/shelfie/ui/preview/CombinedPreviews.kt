@@ -4,8 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.theme.ShelfieTheme
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Preview(
     name = "Light Mode",

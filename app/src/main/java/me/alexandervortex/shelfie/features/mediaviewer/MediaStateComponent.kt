@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.getBookUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
@@ -32,7 +33,6 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_SPEED
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_TIMER
 import me.alexandervortex.shelfie.ui.theme.SHAPE_TOP_L
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun MediaStateComponent(

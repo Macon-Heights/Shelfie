@@ -2,7 +2,6 @@ package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,9 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.base.ext.getColors
+import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
-import me.alexandervortex.shelfie.ui.theme.getColors
 
 @Composable
 fun PopupComponent(
@@ -31,16 +31,11 @@ fun PopupComponent(
     onApprove: () -> Unit,
     onDecline: () -> Unit,
 ) {
-    val overlayColor = if (isSystemInDarkTheme()) {
-        getColors().surfaceVariant.copy(alpha = 0.7f)
-    } else {
-        getColors().onSurfaceVariant.copy(alpha = 0.7f)
-    }
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(overlayColor)
+            .background(getStaticSurfaceVariant().copy(alpha = 0.7f))
             .padding(24.dp)
             .clickable { onDecline.invoke() }
     ) {
