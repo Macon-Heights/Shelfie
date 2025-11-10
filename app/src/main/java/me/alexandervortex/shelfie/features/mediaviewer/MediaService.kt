@@ -148,6 +148,7 @@ class MediaService : Service() {
         ttsController = TtsController(
             context = this,
             bookModel = bookUI,
+            scope = scope,
             errorAction = { msg -> _state.update { it.copy(error = msg) } },
             scrollToIndex = { idx, part ->
                 _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }
