@@ -5,7 +5,6 @@ import androidx.compose.runtime.compositionLocalOf
 object LocalAppSettings {
 
     val fontSize = compositionLocalOf { 16 }
-    // todo later
-    //    val ttsSpeed = compositionLocalOf { 1f }
-    //    val themeMode = compositionLocalOf { ThemeMode.System }
+    val stoppingTime = compositionLocalOf { 0L }
+    val ttsSpeed = compositionLocalOf { 1f }
 }
