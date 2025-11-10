@@ -24,6 +24,14 @@ class SettingsViewModel
             is SettingsIntent.ChangeFont -> viewModelScope.launch {
                 repo.setFontSize(intent.value)
             }
+
+            is SettingsIntent.ChangeTtsSpeed -> viewModelScope.launch {
+                repo.setTtsSpeed(intent.value)
+            }
+
+            is SettingsIntent.ChangeStoppingTime -> viewModelScope.launch {
+                repo.setStoppingTime(intent.value)
+            }
         }
     }
 }
