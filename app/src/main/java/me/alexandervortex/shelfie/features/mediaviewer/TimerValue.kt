@@ -11,9 +11,13 @@ enum class TimerValue(
     MIN_40(40, "40m"),
     HOUR(60, "1h");
 
+    override fun title() = text
 }
 
-interface Switchable<T : Enum<T>>
+interface Switchable<T : Enum<T>> {
+
+    fun title(): String
+}
 
 inline fun <reified T> T.next(): T where T : Enum<T>, T : Switchable<T> {
     val values = enumValues<T>()
