@@ -49,7 +49,8 @@ fun SettingsComponent(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = "app font size", fontSize = TITLE_SIZE.sp
+                    text = "App font size",
+                    fontSize = TITLE_SIZE.sp
                 )
                 val fontSize = LocalAppSettings.fontSize.current
                 ButtonComponent(
