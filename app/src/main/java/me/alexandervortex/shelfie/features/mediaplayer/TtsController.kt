@@ -3,8 +3,13 @@ package me.alexandervortex.shelfie.features.mediaplayer
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.features.mediaviewer.SpeechRate
 import me.alexandervortex.shelfie.features.mediaviewer.TimerValue
+import me.alexandervortex.shelfie.features.settings.AppSettingsRepository
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import java.util.Locale
@@ -13,6 +18,8 @@ import java.util.concurrent.TimeUnit
 class TtsController(
     context: Context,
     private val bookModel: BookUI?,
+    private val scope: CoroutineScope,
+    private val appSettings: AppSettingsRepository, // ✅ добавляем сюда
     private val errorAction: (String) -> Unit,
     private val scrollToIndex: (index: Int?, partIndex: Int?) -> Unit,
     private val onStateChanged: (Boolean) -> Unit = {},
@@ -85,12 +92,29 @@ class TtsController(
             return
         }
 
-        isSpeaking = true
-        onStateChanged(isSpeaking)
-        currentIndex = startIndex
-        currentPart = 0
-        tts?.stop()
-        speakNext()
+        scope.launch {
+            combine(
+                appSettings.ttsSpeedFlow,
+                appSettings.stoppingTimeFlow
+            ) { speed, stop ->
+                speed to stop
+            }
+                .first()
+                .let { (ttsSpeed, stopTime) ->
+                    // new SPEED
+                    tts?.setSpeechRate(ttsSpeed)
+                    // new Time
+                    // only more than current time
+                    stoppingTime = if (stopTime > System.currentTimeMillis()) stopTime else null
+                }
+
+            isSpeaking = true
+            onStateChanged(isSpeaking)
+            currentIndex = startIndex
+            currentPart = 0
+            tts?.stop()
+            speakNext()
+        }
     }
 
     fun changePlayPosition(step: Int) {
@@ -176,6 +200,6 @@ class TtsController(
         }
 
         val now = System.currentTimeMillis()
-        stoppingTime = now + TimeUnit.MINUTES.toMillis(timer.mins.toLong())
+        stoppingTime = now + TimeUnit.MINUTES.toMillis(timer.value.toLong())
     }
 }

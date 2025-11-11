@@ -13,13 +13,12 @@ import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.component.refactored.TITLE_SIZE
 
-private const val STEP_SIZE = 2
-
 @Composable
 fun SettingsItemComponent(
     title: String,
-    onIncrease: (Int) -> Unit,
-    onDecrease: (Int) -> Unit,
+    value: String,
+    onIncrease: () -> Unit,
+    onDecrease: () -> Unit,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
@@ -27,25 +26,25 @@ fun SettingsItemComponent(
             text = title,
             fontSize = TITLE_SIZE.sp
         )
-        val fontSize = LocalAppSettings.fontSize.current
+
         ButtonComponent(
             containerColor = getColors().tertiary,
             contentColor = getColors().onTertiary,
             modifier = Modifier.padding(horizontal = 8.dp),
             modifierAfter = Modifier.clickable {
-                onDecrease.invoke(fontSize - STEP_SIZE)
+                onDecrease.invoke()
             },
             content = { Text(text = "-", color = it) },
         )
 
         Text(
-            text = fontSize.toString(),
+            text = value,
             fontSize = TITLE_SIZE.sp
         )
         ButtonComponent(
             modifier = Modifier.padding(horizontal = 8.dp),
             modifierAfter = Modifier.clickable {
-                onIncrease.invoke(fontSize + STEP_SIZE)
+                onIncrease.invoke()
             },
             content = { Text(text = "+", color = it) }
         )
