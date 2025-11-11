@@ -2,13 +2,16 @@ package me.alexandervortex.shelfie.features.settings
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private val Context.dataStore by preferencesDataStore("app_settings")
 
 @Singleton
 class AppSettingsRepository
@@ -16,19 +19,36 @@ class AppSettingsRepository
     @ApplicationContext private val context: Context,
 ) {
 
-    private val Context.dataStore by preferencesDataStore(name = "app_settings")
+    companion object {
 
-    private object Keys {
-
-        val fontSize = intPreferencesKey("font_size")
+        private val FONT_SIZE = intPreferencesKey("font_size")
+        private val STOPPING_TIME = longPreferencesKey("stopping_time")
+        private val TTS_SPEED = floatPreferencesKey("tts_speed")
     }
 
-    val fontSizeFlow: Flow<Int> = context.dataStore.data
-        .map { it[Keys.fontSize] ?: 16 }
+    val fontSizeFlow = context.dataStore.data.map { prefs ->
+        prefs[FONT_SIZE] ?: 16
+    }
 
-    suspend fun setFontSize(size: Int) {
-        if (size in 1..199) {
-            context.dataStore.edit { it[Keys.fontSize] = size }
+    val stoppingTimeFlow = context.dataStore.data.map { prefs ->
+        prefs[STOPPING_TIME] ?: 0L
+    }
+
+    val ttsSpeedFlow = context.dataStore.data.map { prefs ->
+        prefs[TTS_SPEED] ?: 1f
+    }
+
+    suspend fun setFontSize(value: Int) {
+        if (value in 1..200) {
+            context.dataStore.edit { it[FONT_SIZE] = value }
         }
+    }
+
+    suspend fun setStoppingTime(value: Long) {
+        context.dataStore.edit { it[STOPPING_TIME] = value }
+    }
+
+    suspend fun setTtsSpeed(value: Float) {
+        context.dataStore.edit { it[TTS_SPEED] = value }
     }
 }
