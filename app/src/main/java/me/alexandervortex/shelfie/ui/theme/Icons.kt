@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timer
 
@@ -33,3 +34,4 @@ val IC_PLAYER_TIMER = icons.Timer
 
 // Settings
 val IC_SETTINGS = icons.Settings
+val IC_RESET = icons.SettingsBackupRestore

@@ -4,11 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +18,6 @@ import me.alexandervortex.shelfie.ui.component.refactored.BOX_PADDING
 import me.alexandervortex.shelfie.ui.component.refactored.ROOT_PADDING
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun SettingsComponent(
@@ -51,39 +48,11 @@ fun SettingsComponent(
                 },
                 onIncrease = {
                     viewModel?.onIntent(SettingsIntent.ChangeFont(fontSize + 2))
-                }
-            )
-            Spacer(Modifier.size(16.dp))
-
-            val stopTimeMillis = LocalAppSettings.stoppingTime.current
-            val now = System.currentTimeMillis()
-
-                // а что если ТТС скорость и таймер так и оставить в плеере (это же от плеера настройка)
-            // а вот шрифты уже в верхнюю шторку пихнуть например
-            // ПОСМОТРИ Я.КНИГИ
-            // ПОСМОТРИ ту читалку опенсорсную тоже! 
-            val diffMillis = (stopTimeMillis - now)
-            val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis)
-            val timerText = if (diffMinutes > 0) "$diffMinutes min" else "OFF"
-            SettingsItemComponent(
-                title = "Timer",
-                value = timerText,
-                onDecrease = {
-                    viewModel?.onIntent(
-                        SettingsIntent.ChangeStoppingTime(
-                            System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(2)
-                        )
-                    )
                 },
-                onIncrease = {
-                    viewModel?.onIntent(
-                        SettingsIntent.ChangeStoppingTime(
-                            System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2)
-                        )
-                    )
+                onReset = {
+                    viewModel?.onIntent(SettingsIntent.ChangeFont())
                 }
             )
-            Spacer(Modifier.size(16.dp))
         }
     }
 }
