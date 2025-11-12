@@ -5,7 +5,7 @@ enum class TimerValue(
     val text: String,
 ) : Switchable<TimerValue> {
 
-    OFF(0, "OFF"),
+    OFF(0, " "),
     TEST(1, "1m"),
     MIN_20(20, "20m"),
     MIN_40(40, "40m"),
