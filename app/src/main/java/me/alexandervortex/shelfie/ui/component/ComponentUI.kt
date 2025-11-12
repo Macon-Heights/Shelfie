@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.model.composeSpanStyle
@@ -35,7 +35,7 @@ fun ComponentUI(
     val lineHeight = LocalAppSettings.lineHeight.current
     when (element) {
         is ElementUI.TextUI -> {
-            val linkColor = MaterialTheme.colorScheme.primary
+            val linkColor = getColors().primary
 
             val styledText = buildAnnotatedString {
                 element.parts.forEachIndexed { wordIndex, word ->
@@ -44,12 +44,12 @@ fun ComponentUI(
                     val isHighlight = isCurrentElement && isCurrentWord
 
                     val baseTextColor = if (isHighlight)
-                        MaterialTheme.colorScheme.onPrimaryContainer
+                        getColors().onPrimaryContainer
                     else
-                        MaterialTheme.colorScheme.onBackground
+                        getColors().onBackground
 
                     val baseBgColor = if (isHighlight)
-                        MaterialTheme.colorScheme.primaryContainer
+                        getColors().primaryContainer
                     else
                         Color.Transparent
 

@@ -13,10 +13,12 @@ fun SettingsProvider(
     val fontSize by repository.fontSizeFlow.collectAsState(initial = 16)
     val padding by repository.paddingFlow.collectAsState(initial = 24)
     val lineHeight by repository.lineHeightFlow.collectAsState(initial = 1f)
+    val theme by repository.themeFlow.collectAsState(initial = 0)
 
     CompositionLocalProvider(
         LocalAppSettings.fontSize provides fontSize,
         LocalAppSettings.padding provides padding,
-        LocalAppSettings.lineHeight provides lineHeight
+        LocalAppSettings.lineHeight provides lineHeight,
+        LocalAppSettings.theme provides theme
     ) { content.invoke() }
 }
