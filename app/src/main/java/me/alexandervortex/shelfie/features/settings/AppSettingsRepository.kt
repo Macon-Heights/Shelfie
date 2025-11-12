@@ -23,10 +23,15 @@ class AppSettingsRepository
         private val FONT_SIZE = intPreferencesKey("font_size")
         private val PADDING = intPreferencesKey("padding")
         private val LINE_HEIGHT = floatPreferencesKey("line_height")
+        private val THEME = intPreferencesKey("theme")
     }
 
     val fontSizeFlow = context.dataStore.data.map { prefs ->
         prefs[FONT_SIZE] ?: 16
+    }
+
+    val themeFlow = context.dataStore.data.map { prefs ->
+        prefs[THEME] ?: 0
     }
 
     val paddingFlow = context.dataStore.data.map { prefs ->
@@ -41,6 +46,11 @@ class AppSettingsRepository
         if (value in 1..200) {
             context.dataStore.edit { it[FONT_SIZE] = value }
         }
+    }
+
+    suspend fun setTheme(value: Int) {
+        // fixme filter of height here
+        context.dataStore.edit { it[THEME] = value }
     }
 
     suspend fun setPadding(value: Int) {

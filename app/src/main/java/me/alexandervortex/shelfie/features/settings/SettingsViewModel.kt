@@ -32,6 +32,10 @@ class SettingsViewModel
             is SettingsIntent.ChangePadding -> viewModelScope.launch {
                 repo.setPadding(intent.value)
             }
+
+            is SettingsIntent.ChangeTheme -> viewModelScope.launch {
+                repo.setTheme(intent.value)
+            }
         }
     }
 }

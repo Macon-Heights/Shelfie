@@ -85,6 +85,21 @@ fun SettingsComponent(
                     viewModel?.onIntent(SettingsIntent.ChangePadding())
                 }
             )
+            Spacer(Modifier.size(16.dp))
+            val theme = LocalAppSettings.theme.current
+            SettingsItemComponent(
+                title = "Theme",
+                value = theme.toString(),
+                onDecrease = {
+                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme - 1))
+                },
+                onIncrease = {
+                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme + 1))
+                },
+                onReset = {
+                    viewModel?.onIntent(SettingsIntent.ChangeTheme())
+                }
+            )
         }
     }
 }

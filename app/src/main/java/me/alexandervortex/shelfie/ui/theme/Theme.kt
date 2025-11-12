@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 
 private val DarkColorScheme = darkColorScheme(
     primary = primaryDark,
@@ -255,10 +256,17 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun ShelfieTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    themeMode: Int = LocalAppSettings.theme.current,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    val darkTheme = when (themeMode) {
+        0 -> isSystemInDarkTheme()
+        1 -> true
+        2 -> false
+        else -> isSystemInDarkTheme()
+    }
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
