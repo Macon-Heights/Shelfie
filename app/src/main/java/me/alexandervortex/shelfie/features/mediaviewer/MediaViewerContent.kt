@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.features.settings.SettingsComponent
 import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
@@ -39,6 +40,7 @@ fun MediaViewerContent(
     textAction: () -> Unit,
 ) {
     var isSettings by remember { mutableStateOf(false) }
+    val padding = LocalAppSettings.padding.current
     PopupBox(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
@@ -48,7 +50,7 @@ fun MediaViewerContent(
                 userScrollEnabled = !serviceState.isPlaying,
                 state = listState,
                 horizontalAlignment = Alignment.Start,
-                contentPadding = PaddingValues(24.dp),
+                contentPadding = PaddingValues(padding.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
                 val sections: List<ElementUI> = book?.elements.orEmpty()

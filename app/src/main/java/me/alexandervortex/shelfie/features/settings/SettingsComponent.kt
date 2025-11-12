@@ -70,6 +70,21 @@ fun SettingsComponent(
                     viewModel?.onIntent(SettingsIntent.ChangeLineHeight())
                 }
             )
+            Spacer(Modifier.size(16.dp))
+            val padding = LocalAppSettings.padding.current
+            SettingsItemComponent(
+                title = "Padding",
+                value = padding.toString(),
+                onDecrease = {
+                    viewModel?.onIntent(SettingsIntent.ChangePadding(padding - 2))
+                },
+                onIncrease = {
+                    viewModel?.onIntent(SettingsIntent.ChangePadding(padding + 2))
+                },
+                onReset = {
+                    viewModel?.onIntent(SettingsIntent.ChangePadding())
+                }
+            )
         }
     }
 }
