@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
@@ -75,9 +76,19 @@ fun MediaStateComponent(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.Top,
+                    verticalAlignment = Alignment.Bottom,
                     horizontalArrangement = Arrangement.End
                 ) {
+                    state.title?.let {
+                        Text(
+                            textAlign = TextAlign.Center,
+                            text = state.title,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(end = 16.dp)
+                        )
+                    }
                     ButtonComponent(
                         modifier = Modifier.clickable { settingsAction.invoke() },
                         modifierAfter = Modifier,
@@ -184,7 +195,7 @@ fun MediaViewerPreview2() {
             book = bookUI,
             serviceState = MediaServiceState.playingState()
                 .copy(
-                    title = "Title",
+                    title = "Нити Смерти (Сборник)",
                     speed = SpeechRate.FAST,
                     timer = TimerValue.MIN_20,
                     index = 3,
