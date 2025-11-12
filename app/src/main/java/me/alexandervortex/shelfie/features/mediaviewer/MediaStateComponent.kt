@@ -1,5 +1,8 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -36,55 +40,103 @@ import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PLAY
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_SPEED
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_TIMER
+import me.alexandervortex.shelfie.ui.theme.IC_SETTINGS
+import me.alexandervortex.shelfie.ui.theme.SHAPE_BOTTOM_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_TOP_L
 
 @Composable
 fun MediaStateComponent(
+    visible: Boolean,
     state: MediaServiceState,
     index: Int,
     elements: Int,
     playPauseAction: () -> Unit,
+    settingsAction: () -> Unit,
     timerAction: () -> Unit,
     speedAction: () -> Unit,
     prevAction: () -> Unit,
     nextAction: () -> Unit,
 ) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clipNShadow(SHAPE_TOP_L)
-            .background(getColors().surfaceVariant)
-            .padding(top = 12.dp)
-            .padding(horizontal = 12.dp)
-            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.SpaceBetween
+    Column(Modifier.fillMaxSize()) {
+        AnimatedVisibility(
+            visible = visible,
+            enter = slideInVertically(initialOffsetY = { -it }),
+            exit = slideOutVertically(targetOffsetY = { -it })
         ) {
-            val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
-
-            ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
-            ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
-            ButtonComponent(
-                modifierAfter = Modifier
-                    .size(BUTTON_BIG.dp)
-                    .clickable { playPauseAction.invoke() },
-                content = {
-                    Icon(
-                        imageVector = playPauseIcon,
-                        contentDescription = null,
-                        tint = it
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clipNShadow(SHAPE_BOTTOM_L)
+                    .background(getColors().surfaceVariant)
+                    .padding(bottom = 12.dp)
+                    .padding(horizontal = 12.dp)
+                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    ButtonComponent(
+                        modifier = Modifier.clickable { settingsAction.invoke() },
+                        modifierAfter = Modifier,
+                        containerColor = getColors().surfaceVariant,
+                        contentColor = getColors().onSurfaceVariant,
+                        content = { color ->
+                            Icon(
+                                imageVector = IC_SETTINGS,
+                                contentDescription = null,
+                                tint = color
+                            )
+                        }
                     )
                 }
-            )
-            ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
-            ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
+            }
         }
-        ProgressLine(index, elements)
-        Spacer(Modifier.size(8.dp))
+        Spacer(Modifier.weight(1f))
+        AnimatedVisibility(
+            visible = visible,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it })
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clipNShadow(SHAPE_TOP_L)
+                    .background(getColors().surfaceVariant)
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 12.dp)
+                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
+
+                    ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
+                    ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
+                    ButtonComponent(
+                        modifierAfter = Modifier
+                            .size(BUTTON_BIG.dp)
+                            .clickable { playPauseAction.invoke() },
+                        content = {
+                            Icon(
+                                imageVector = playPauseIcon,
+                                contentDescription = null,
+                                tint = it
+                            )
+                        }
+                    )
+                    ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
+                    ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
+                }
+                ProgressLine(index, elements)
+                Spacer(Modifier.size(8.dp))
+            }
+        }
     }
 }
 

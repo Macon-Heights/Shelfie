@@ -22,9 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.mediaplayer.TtsController
-import me.alexandervortex.shelfie.features.settings.AppSettingsRepository
 import me.alexandervortex.shelfie.ui.model.BookUI
-import javax.inject.Inject
 
 private const val CHANNEL_ID = "mock_player"
 private const val ACTION_PLAY = "action_play"
@@ -53,9 +51,6 @@ class MediaService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
-
-    @Inject
-    lateinit var appSettingsRepository: AppSettingsRepository
 
     // infra
     private lateinit var mediaSession: MediaSessionCompat
@@ -153,8 +148,6 @@ class MediaService : Service() {
         ttsController = TtsController(
             context = this,
             bookModel = bookUI,
-            scope = scope,
-            appSettings = appSettingsRepository,
             errorAction = { msg -> _state.update { it.copy(error = msg) } },
             scrollToIndex = { idx, part ->
                 _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }
@@ -246,10 +239,10 @@ class MediaService : Service() {
     }
 
     fun clickTimer() {
-//        _state.update {
-////            it.copy(timer = it.timer.getNext())
-//        }
-//        ttsController?.updateTimer(state.value.timer)
+        _state.update {
+            it.copy(timer = it.timer.next())
+        }
+        ttsController?.updateTimer(state.value.timer)
     }
 
     fun clickSpeed() {
