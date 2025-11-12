@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.map
@@ -22,7 +21,7 @@ class AppSettingsRepository
     companion object {
 
         private val FONT_SIZE = intPreferencesKey("font_size")
-        private val STOPPING_TIME = longPreferencesKey("stopping_time")
+        private val PADDING = intPreferencesKey("padding")
         private val LINE_HEIGHT = floatPreferencesKey("line_height")
     }
 
@@ -30,8 +29,8 @@ class AppSettingsRepository
         prefs[FONT_SIZE] ?: 16
     }
 
-    val stoppingTimeFlow = context.dataStore.data.map { prefs ->
-        prefs[STOPPING_TIME] ?: 0L
+    val paddingFlow = context.dataStore.data.map { prefs ->
+        prefs[PADDING] ?: 24
     }
 
     val lineHeightFlow = context.dataStore.data.map { prefs ->
@@ -44,9 +43,9 @@ class AppSettingsRepository
         }
     }
 
-    suspend fun setStoppingTime(value: Long) {
+    suspend fun setPadding(value: Int) {
         // fixme filter of height here
-        context.dataStore.edit { it[STOPPING_TIME] = value }
+        context.dataStore.edit { it[PADDING] = value }
     }
 
     suspend fun setLineHeight(value: Float) {

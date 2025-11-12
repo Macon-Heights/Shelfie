@@ -11,12 +11,12 @@ fun SettingsProvider(
     content: @Composable () -> Unit,
 ) {
     val fontSize by repository.fontSizeFlow.collectAsState(initial = 16)
-    val stoppingTime by repository.stoppingTimeFlow.collectAsState(initial = 0L)
+    val padding by repository.paddingFlow.collectAsState(initial = 24)
     val lineHeight by repository.lineHeightFlow.collectAsState(initial = 1f)
 
     CompositionLocalProvider(
         LocalAppSettings.fontSize provides fontSize,
-        LocalAppSettings.stoppingTime provides stoppingTime,
+        LocalAppSettings.padding provides padding,
         LocalAppSettings.lineHeight provides lineHeight
     ) { content.invoke() }
 }

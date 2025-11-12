@@ -29,8 +29,8 @@ class SettingsViewModel
                 repo.setLineHeight(intent.value)
             }
 
-            is SettingsIntent.ChangeStoppingTime -> viewModelScope.launch {
-                repo.setStoppingTime(intent.value)
+            is SettingsIntent.ChangePadding -> viewModelScope.launch {
+                repo.setPadding(intent.value)
             }
         }
     }

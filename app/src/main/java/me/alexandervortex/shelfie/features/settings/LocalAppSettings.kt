@@ -5,6 +5,6 @@ import androidx.compose.runtime.compositionLocalOf
 object LocalAppSettings {
 
     val fontSize = compositionLocalOf { 16 }
-    val stoppingTime = compositionLocalOf { 0L }
+    val padding = compositionLocalOf { 24 }
     val lineHeight = compositionLocalOf { 1f }
 }
