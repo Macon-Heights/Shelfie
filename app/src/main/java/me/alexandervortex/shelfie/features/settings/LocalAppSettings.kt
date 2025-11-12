@@ -6,5 +6,5 @@ object LocalAppSettings {
 
     val fontSize = compositionLocalOf { 16 }
     val stoppingTime = compositionLocalOf { 0L }
-    val ttsSpeed = compositionLocalOf { 1f }
+    val lineHeight = compositionLocalOf { 1f }
 }
