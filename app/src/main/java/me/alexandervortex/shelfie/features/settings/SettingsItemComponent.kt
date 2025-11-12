@@ -26,7 +26,6 @@ fun SettingsItemComponent(
             modifier = Modifier.weight(1f),
             text = title,
         )
-
         ButtonComponent(
             containerColor = getColors().tertiary,
             contentColor = getColors().onTertiary,

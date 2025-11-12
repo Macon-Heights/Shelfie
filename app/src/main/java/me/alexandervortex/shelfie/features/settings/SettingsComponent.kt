@@ -4,9 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +53,21 @@ fun SettingsComponent(
                 },
                 onReset = {
                     viewModel?.onIntent(SettingsIntent.ChangeFont())
+                }
+            )
+            Spacer(Modifier.size(16.dp))
+            val lineHeight = LocalAppSettings.lineHeight.current
+            SettingsItemComponent(
+                title = "Line height",
+                value = lineHeight.toString(),
+                onDecrease = {
+                    viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight - 0.25f))
+                },
+                onIncrease = {
+                    viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight + 0.25f))
+                },
+                onReset = {
+                    viewModel?.onIntent(SettingsIntent.ChangeLineHeight())
                 }
             )
         }

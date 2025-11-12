@@ -23,7 +23,7 @@ class AppSettingsRepository
 
         private val FONT_SIZE = intPreferencesKey("font_size")
         private val STOPPING_TIME = longPreferencesKey("stopping_time")
-        private val TTS_SPEED = floatPreferencesKey("tts_speed")
+        private val LINE_HEIGHT = floatPreferencesKey("line_height")
     }
 
     val fontSizeFlow = context.dataStore.data.map { prefs ->
@@ -34,8 +34,8 @@ class AppSettingsRepository
         prefs[STOPPING_TIME] ?: 0L
     }
 
-    val ttsSpeedFlow = context.dataStore.data.map { prefs ->
-        prefs[TTS_SPEED] ?: 1f
+    val lineHeightFlow = context.dataStore.data.map { prefs ->
+        prefs[LINE_HEIGHT] ?: 1f
     }
 
     suspend fun setFontSize(value: Int) {
@@ -45,10 +45,11 @@ class AppSettingsRepository
     }
 
     suspend fun setStoppingTime(value: Long) {
+        // fixme filter of height here
         context.dataStore.edit { it[STOPPING_TIME] = value }
     }
 
-    suspend fun setTtsSpeed(value: Float) {
-        context.dataStore.edit { it[TTS_SPEED] = value }
+    suspend fun setLineHeight(value: Float) {
+        context.dataStore.edit { it[LINE_HEIGHT] = value }
     }
 }

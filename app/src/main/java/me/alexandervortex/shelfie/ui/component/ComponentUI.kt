@@ -32,6 +32,7 @@ fun ComponentUI(
     partIndex: Int,
 ) {
     val fontSize = LocalAppSettings.fontSize.current
+    val lineHeight = LocalAppSettings.lineHeight.current
     when (element) {
         is ElementUI.TextUI -> {
             val linkColor = MaterialTheme.colorScheme.primary
@@ -61,7 +62,7 @@ fun ComponentUI(
             Text(
                 text = styledText,
                 fontSize = fontSize.sp,
-                lineHeight = (fontSize * 2).sp,
+                lineHeight = (fontSize * (1 + lineHeight)).sp, // fixme better formula needed
                 textAlign = TextAlign.Justify,
                 modifier = modifier.padding(bottom = 32.dp)
             )

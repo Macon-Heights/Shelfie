@@ -12,11 +12,11 @@ fun SettingsProvider(
 ) {
     val fontSize by repository.fontSizeFlow.collectAsState(initial = 16)
     val stoppingTime by repository.stoppingTimeFlow.collectAsState(initial = 0L)
-    val ttsSpeed by repository.ttsSpeedFlow.collectAsState(initial = 1f)
+    val lineHeight by repository.lineHeightFlow.collectAsState(initial = 1f)
 
     CompositionLocalProvider(
         LocalAppSettings.fontSize provides fontSize,
         LocalAppSettings.stoppingTime provides stoppingTime,
-        LocalAppSettings.ttsSpeed provides ttsSpeed
+        LocalAppSettings.lineHeight provides lineHeight
     ) { content.invoke() }
 }
