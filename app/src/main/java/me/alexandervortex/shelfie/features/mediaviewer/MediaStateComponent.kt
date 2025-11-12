@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
+import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
+import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.ui.component.getBookUI
 import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
 import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_SMALL
@@ -196,7 +198,7 @@ fun MediaViewerPreview2() {
             serviceState = MediaServiceState.playingState()
                 .copy(
                     title = "Нити Смерти (Сборник)",
-                    speed = SpeechRate.FAST,
+                    speed = SpeechRateValue.FAST,
                     timer = TimerValue.MIN_20,
                     index = 3,
                 ),

@@ -3,8 +3,8 @@ package me.alexandervortex.shelfie.features.mediaplayer
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import me.alexandervortex.shelfie.features.mediaviewer.SpeechRate
-import me.alexandervortex.shelfie.features.mediaviewer.TimerValue
+import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
+import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import java.util.Locale
@@ -165,7 +165,7 @@ class TtsController(
         onStateChanged(isSpeaking)
     }
 
-    fun updateSpeechRate(speed: SpeechRate) {
+    fun updateSpeechRate(speed: SpeechRateValue) {
         tts?.setSpeechRate(speed.speed)
     }
 

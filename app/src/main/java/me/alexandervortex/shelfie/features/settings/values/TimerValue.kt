@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaviewer
+package me.alexandervortex.shelfie.features.settings.values
 
 enum class TimerValue(
     val value: Int,
@@ -10,14 +10,9 @@ enum class TimerValue(
     MIN_20(20, "20m"),
     MIN_40(40, "40m"),
     HOUR(60, "1h");
-
-    override fun title() = text
 }
 
-interface Switchable<T : Enum<T>> {
-
-    fun title(): String
-}
+interface Switchable<T : Enum<T>>
 
 inline fun <reified T> T.next(): T where T : Enum<T>, T : Switchable<T> {
     val values = enumValues<T>()
