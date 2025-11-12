@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +47,7 @@ fun MediaViewerContent(
             LazyColumn(
                 userScrollEnabled = !serviceState.isPlaying,
                 state = listState,
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.Start,
                 contentPadding = PaddingValues(24.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -65,10 +66,10 @@ fun MediaViewerContent(
             MediaStateComponent(
                 visible = isMenu,
                 state = serviceState,
-                index = listState.firstVisibleItemIndex,
+                index = remember { derivedStateOf { listState.firstVisibleItemIndex } }.value,
                 elements = book?.elements?.size ?: 0,
-                playPauseAction = { playPauseAction.invoke() },
                 settingsAction = { isSettings = !isSettings },
+                playPauseAction = { playPauseAction.invoke() },
                 timerAction = { timerAction.invoke() },
                 speedAction = { speedAction.invoke() },
                 prevAction = { prevAction.invoke() },

@@ -31,6 +31,7 @@ fun ComponentUI(
     elementIndex: Int,
     partIndex: Int,
 ) {
+    val fontSize = LocalAppSettings.fontSize.current
     when (element) {
         is ElementUI.TextUI -> {
             val linkColor = MaterialTheme.colorScheme.primary
@@ -57,11 +58,10 @@ fun ComponentUI(
                     withStyle(span) { append(word.text) }
                 }
             }
-            val fontSize = LocalAppSettings.fontSize.current.sp
             Text(
                 text = styledText,
-                fontSize = fontSize,
-                lineHeight = 32.sp,
+                fontSize = fontSize.sp,
+                lineHeight = (fontSize * 2).sp,
                 textAlign = TextAlign.Justify,
                 modifier = modifier.padding(bottom = 32.dp)
             )
@@ -88,7 +88,7 @@ fun ComponentUI(
             Spacer(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(bottom = 32.dp)
+                    .padding(bottom = (fontSize * 2).dp)
             )
         }
     }
