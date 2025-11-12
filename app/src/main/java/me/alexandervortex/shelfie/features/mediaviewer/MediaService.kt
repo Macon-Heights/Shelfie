@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.mediaplayer.TtsController
+import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
+import me.alexandervortex.shelfie.features.settings.values.TimerValue
+import me.alexandervortex.shelfie.features.settings.values.next
 import me.alexandervortex.shelfie.ui.model.BookUI
 
 private const val CHANNEL_ID = "mock_player"
@@ -139,7 +142,7 @@ class MediaService : Service() {
                 part = 0,
                 author = bookUI.titleInfo.author,
                 title = bookUI.titleInfo.title,
-                speed = SpeechRate.DEFAULT,
+                speed = SpeechRateValue.DEFAULT,
                 isPlaying = false,
                 timer = TimerValue.OFF
             )
