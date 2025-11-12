@@ -1,8 +1,5 @@
 package me.alexandervortex.shelfie.features.mediaviewer
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +31,7 @@ fun MediaViewerContent(
     serviceState: MediaServiceState,
     listState: LazyListState,
     playPauseAction: () -> Unit,
-    timerAction: () -> Unit, // fixme
+    timerAction: () -> Unit,
     speedAction: () -> Unit,
     prevAction: () -> Unit,
     nextAction: () -> Unit,
@@ -65,25 +62,18 @@ fun MediaViewerContent(
                 }
             }
 
-            AnimatedVisibility(
+            MediaStateComponent(
                 visible = isMenu,
-                enter = slideInVertically(initialOffsetY = { it }),
-                exit = slideOutVertically(targetOffsetY = { it })
-            ) {
-                MediaStateComponent(
-                    state = serviceState,
-                    index = listState.firstVisibleItemIndex,
-                    elements = book?.elements?.size ?: 0,
-                    playPauseAction = { playPauseAction.invoke() },
-                    timerAction = {
-                        isSettings = !isSettings
-//                        timerAction.invoke() fixme
-                    },
-                    speedAction = { speedAction.invoke() },
-                    prevAction = { prevAction.invoke() },
-                    nextAction = { nextAction.invoke() }
-                )
-            }
+                state = serviceState,
+                index = listState.firstVisibleItemIndex,
+                elements = book?.elements?.size ?: 0,
+                playPauseAction = { playPauseAction.invoke() },
+                settingsAction = { isSettings = !isSettings },
+                timerAction = { timerAction.invoke() },
+                speedAction = { speedAction.invoke() },
+                prevAction = { prevAction.invoke() },
+                nextAction = { nextAction.invoke() }
+            )
         },
         popup = {
             val viewModel = hiltViewModel<SettingsViewModel>()
