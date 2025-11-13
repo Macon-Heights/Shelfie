@@ -43,22 +43,26 @@ class AppSettingsRepository
     }
 
     suspend fun setFontSize(value: Int) {
-        if (value in 1..200) {
+        if (value in 1..240) {
             context.dataStore.edit { it[FONT_SIZE] = value }
         }
     }
 
     suspend fun setTheme(value: Int) {
-        // fixme filter of height here
-        context.dataStore.edit { it[THEME] = value }
+        if (value in 0..2) {
+            context.dataStore.edit { it[THEME] = value }
+        }
     }
 
     suspend fun setPadding(value: Int) {
-        // fixme filter of height here
-        context.dataStore.edit { it[PADDING] = value }
+        if (value in 0..128) {
+            context.dataStore.edit { it[PADDING] = value }
+        }
     }
 
     suspend fun setLineHeight(value: Float) {
-        context.dataStore.edit { it[LINE_HEIGHT] = value }
+        if (value in 0f..4f) {
+            context.dataStore.edit { it[LINE_HEIGHT] = value }
+        }
     }
 }
