@@ -1,10 +1,10 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue.preview
 
-import me.alexandervortex.shelfie.ui.model.BookComponentModel
+import me.alexandervortex.shelfie.ui.model.Bookable
 
 object CataloguePreviewData {
 
-    fun getBooks(): List<BookComponentModel> {
+    fun getBooks(): List<Bookable.BookComponentModel> {
         return listOf(
             listOf("1984", "George Orwell"),
             listOf("To Kill a Mockingbird", "Harper Lee"),
@@ -37,7 +37,7 @@ object CataloguePreviewData {
             listOf("Frankenstein", "Mary Shelley"),
             listOf("The Shining", "Stephen King")
         ).map {
-            BookComponentModel(
+            Bookable.BookComponentModel(
                 id = "id",
                 localPath = "path",
                 title = it.firstOrNull().orEmpty(),

@@ -20,8 +20,6 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
-import me.alexandervortex.shelfie.ui.model.BookComponentModel
-import me.alexandervortex.shelfie.ui.model.BookComponentSkeleton
 import me.alexandervortex.shelfie.ui.model.Bookable
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
@@ -40,7 +38,7 @@ fun BookComponent(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (isRemoveMode && model is BookComponentModel) {
+        if (isRemoveMode && model is Bookable.BookComponentModel) {
             Image(
                 modifier = Modifier
                     .size(32.dp)
@@ -53,7 +51,7 @@ fun BookComponent(
             )
             Spacer(Modifier.size(16.dp))
         }
-        val isBook = model is BookComponentModel
+        val isBook = model is Bookable.BookComponentModel
 
         Column(
             modifier = Modifier
@@ -63,7 +61,7 @@ fun BookComponent(
                 .padding(16.dp)
         ) {
             Text(
-                text = (model as? BookComponentModel)?.title.takeIf { isBook } ?: " ",
+                text = (model as? Bookable.BookComponentModel)?.title.takeIf { isBook } ?: " ",
                 color = onColorForTitle,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
@@ -71,14 +69,17 @@ fun BookComponent(
             )
             Spacer(Modifier.size(4.dp))
             Text(
-                text = (model as? BookComponentModel)?.author.takeIf { isBook } ?: " ",
+                text = (model as? Bookable.BookComponentModel)?.author.takeIf { isBook } ?: " ",
                 color = onColor,
                 fontWeight = FontWeight.Light,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End
             )
             Spacer(Modifier.size(8.dp))
-            ProgressLine((model as? BookComponentModel)?.scrollIndex, (model as? BookComponentModel)?.elements)
+            ProgressLine(
+                (model as? Bookable.BookComponentModel)?.scrollIndex,
+                (model as? Bookable.BookComponentModel)?.elements
+            )
         }
     }
 }
@@ -86,7 +87,7 @@ fun BookComponent(
 @Composable
 @CombinedPreviews
 fun BookComponentPreview() {
-    val model = BookComponentModel(
+    val model = Bookable.BookComponentModel(
         id = "thisisid",
         localPath = "",
         title = "Harry Potter and the Sorcerer's Stone",
@@ -96,7 +97,7 @@ fun BookComponentPreview() {
         elements = 100,
         isChecked = false,
     )
-    val skeleton = BookComponentSkeleton
+    val skeleton = Bookable.BookComponentSkeleton(0)
     CombinedPreviews {
         BookComponent(true, skeleton, Modifier)
     }

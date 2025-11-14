@@ -1,5 +1,10 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -33,7 +38,7 @@ import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.component.refactored.ConfirmationComponent
 import me.alexandervortex.shelfie.ui.component.refactored.PopupBox
 import me.alexandervortex.shelfie.ui.component.refactored.TitleComponent
-import me.alexandervortex.shelfie.ui.model.BookComponentModel
+import me.alexandervortex.shelfie.ui.model.Bookable
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 
@@ -41,10 +46,10 @@ import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 @Composable
 fun CatalogueScreenContent(
     state: CatalogueState,
-    onBookOpen: (BookComponentModel) -> Unit,
-    onToggleBookCheck: (BookComponentModel) -> Unit,
+    onBookOpen: (Bookable.BookComponentModel) -> Unit,
+    onToggleBookCheck: (Bookable.BookComponentModel) -> Unit,
     onTogglePopup: (Boolean) -> Unit,
-    onToggleRemoveMode: (BookComponentModel) -> Unit,
+    onToggleRemoveMode: (Bookable.BookComponentModel) -> Unit,
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
