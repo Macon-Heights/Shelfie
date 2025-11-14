@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -54,6 +53,7 @@ fun BookComponent(
             )
             Spacer(Modifier.size(16.dp))
         }
+        val isBook = model is BookComponentModel
 
         Column(
             modifier = Modifier
@@ -62,37 +62,23 @@ fun BookComponent(
                 .background(color)
                 .padding(16.dp)
         ) {
-            if (model is BookComponentModel) {
-                model.title?.let {
-                    Text(
-                        text = it,
-                        color = onColorForTitle,
-                        fontSize = 18.sp,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Left
-                    )
-                }
-                Spacer(Modifier.size(4.dp))
-                model.author?.let {
-                    Text(
-                        text = it,
-                        color = onColor,
-                        fontWeight = FontWeight.Light,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End
-                    )
-                }
-                if (model.scrollIndex > 0) {
-                    Spacer(Modifier.size(8.dp))
-                    ProgressLine(model.scrollIndex, model.elements)
-                }
-            } else {
-                Spacer(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                )
-            }
+            Text(
+                text = (model as? BookComponentModel)?.title.takeIf { isBook } ?: " ",
+                color = onColorForTitle,
+                fontSize = 18.sp,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Left
+            )
+            Spacer(Modifier.size(4.dp))
+            Text(
+                text = (model as? BookComponentModel)?.author.takeIf { isBook } ?: " ",
+                color = onColor,
+                fontWeight = FontWeight.Light,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.End
+            )
+            Spacer(Modifier.size(8.dp))
+            ProgressLine((model as? BookComponentModel)?.scrollIndex, (model as? BookComponentModel)?.elements)
         }
     }
 }
