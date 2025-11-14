@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -62,15 +61,11 @@ fun CatalogueScreenContent(
             ) {
                 item { TitleComponent(text = stringResource(R.string.catalogue_title)) }
                 when {
-                    state.isLoading -> item { CircularProgressIndicator() }
                     state.books.isEmpty() -> item { EmptyList(R.string.catalogue_empty) }
-
                     else -> {
                         items(state.books) { book ->
-                            BookComponent(
-                                isRemoveMode = state.isRemoveMode,
-                                model = book,
-                                modifier = Modifier.combinedClickable(
+                            val bookModifier = if (book is BookComponentModel) Modifier
+                                .combinedClickable(
                                     onClick = {
                                         if (state.isRemoveMode) {
                                             onToggleBookCheck(book)
@@ -78,7 +73,13 @@ fun CatalogueScreenContent(
                                             onBookOpen(book)
                                         }
                                     },
-                                    onLongClick = { onToggleRemoveMode(book) })
+                                    onLongClick = { onToggleRemoveMode(book) }
+                                ) else Modifier
+
+                            BookComponent(
+                                isRemoveMode = state.isRemoveMode,
+                                model = book,
+                                modifier = bookModifier
                             )
                         }
                     }
