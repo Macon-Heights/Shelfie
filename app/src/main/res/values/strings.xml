@@ -8,4 +8,13 @@
     <string name="catalogue_remove_subtitle">This action can’t be undone.</string>
     <string name="catalogue_remove_yes">Remove</string>
     <string name="catalogue_remove_no">Cancel</string>
+
+    <string name="settings_font_size">Font size</string>
+    <string name="settings_line_height">Line height</string>
+    <string name="settings_paddings">Paddings</string>
+    <string name="settings_theme">Theme</string>
+
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
 </resources>
