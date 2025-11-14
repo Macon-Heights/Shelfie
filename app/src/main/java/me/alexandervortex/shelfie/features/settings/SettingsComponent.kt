@@ -13,9 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
+import me.alexandervortex.shelfie.features.settings.values.ThemeValue
 import me.alexandervortex.shelfie.ui.component.refactored.BOX_PADDING
 import me.alexandervortex.shelfie.ui.component.refactored.ROOT_PADDING
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -43,7 +46,7 @@ fun SettingsComponent(
         ) {
             val fontSize = LocalAppSettings.fontSize.current
             SettingsItemComponent(
-                title = "App font size",
+                stringResource(R.string.settings_font_size),
                 value = fontSize.toString(),
                 onDecrease = {
                     viewModel?.onIntent(SettingsIntent.ChangeFont(fontSize - 2))
@@ -58,7 +61,7 @@ fun SettingsComponent(
             Spacer(Modifier.size(16.dp))
             val lineHeight = LocalAppSettings.lineHeight.current
             SettingsItemComponent(
-                title = "Line height",
+                stringResource(R.string.settings_line_height),
                 value = lineHeight.toString(),
                 onDecrease = {
                     viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight - 0.25f))
@@ -73,7 +76,7 @@ fun SettingsComponent(
             Spacer(Modifier.size(16.dp))
             val padding = LocalAppSettings.padding.current
             SettingsItemComponent(
-                title = "Padding",
+                title = stringResource(R.string.settings_paddings),
                 value = padding.toString(),
                 onDecrease = {
                     viewModel?.onIntent(SettingsIntent.ChangePadding(padding - 2))
@@ -88,8 +91,8 @@ fun SettingsComponent(
             Spacer(Modifier.size(16.dp))
             val theme = LocalAppSettings.theme.current
             SettingsItemComponent(
-                title = "Theme",
-                value = theme.toString(),
+                title = stringResource(R.string.settings_theme),
+                value = stringResource(ThemeValue.fromValue(theme).textResId),
                 onDecrease = {
                     viewModel?.onIntent(SettingsIntent.ChangeTheme(theme - 1))
                 },

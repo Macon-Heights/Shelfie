@@ -8,4 +8,13 @@
     <string name="catalogue_remove_yes">Удалить</string>
     <string name="catalogue_remove_no">Отмена</string>
     <string name="catalogue_remove_title">Удалить?</string>
+
+    <string name="settings_font_size">Размер шрифта</string>
+    <string name="settings_line_height">Высота строки</string>
+    <string name="settings_paddings">Отступы</string>
+    <string name="settings_theme">Тема</string>
+
+    <string name="settings_theme_system">Системная</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Темная</string>
 </resources>

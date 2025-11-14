@@ -1,12 +1,15 @@
 package me.alexandervortex.shelfie.features.settings.values
 
+import me.alexandervortex.shelfie.R
+
 enum class ThemeValue(
     val value: Int,
+    val textResId: Int,
 ) : Switchable<ThemeValue> {
 
-    SYSTEM(0),
-    LIGHT(1),
-    DARK(2);
+    SYSTEM(0, R.string.settings_theme_system),
+    DARK(1, R.string.settings_theme_dark),
+    LIGHT(2, R.string.settings_theme_light);
 
     companion object {
 
