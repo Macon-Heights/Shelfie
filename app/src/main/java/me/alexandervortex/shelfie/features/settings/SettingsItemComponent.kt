@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
+import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
+import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
 import me.alexandervortex.shelfie.ui.theme.IC_RESET
 
 @Composable
@@ -33,7 +35,13 @@ fun SettingsItemComponent(
             modifierAfter = Modifier.clickable {
                 onDecrease.invoke()
             },
-            content = { Text(text = "-", color = it) },
+            content = {
+                Icon(
+                    imageVector = IC_PLAYER_PREV,
+                    contentDescription = null,
+                    tint = it
+                )
+            },
         )
         Text(text = value)
         ButtonComponent(
@@ -41,7 +49,13 @@ fun SettingsItemComponent(
             modifierAfter = Modifier.clickable {
                 onIncrease.invoke()
             },
-            content = { Text(text = "+", color = it) }
+            content = {
+                Icon(
+                    imageVector = IC_PLAYER_NEXT,
+                    contentDescription = null,
+                    tint = it
+                )
+            }
         )
         ButtonComponent(
             modifier = Modifier.padding(start = 4.dp),
