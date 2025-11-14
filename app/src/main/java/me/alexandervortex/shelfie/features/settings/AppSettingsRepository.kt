@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.map
+import me.alexandervortex.shelfie.features.settings.values.ThemeValue
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,10 +49,8 @@ class AppSettingsRepository
         }
     }
 
-    suspend fun setTheme(value: Int) {
-        if (value in 0..2) {
-            context.dataStore.edit { it[THEME] = value }
-        }
+    suspend fun setTheme(value: ThemeValue) {
+        context.dataStore.edit { it[THEME] = value.value }
     }
 
     suspend fun setPadding(value: Int) {

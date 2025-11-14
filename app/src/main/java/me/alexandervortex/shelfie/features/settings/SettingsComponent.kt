@@ -19,6 +19,8 @@ import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
 import me.alexandervortex.shelfie.features.settings.values.ThemeValue
+import me.alexandervortex.shelfie.features.settings.values.next
+import me.alexandervortex.shelfie.features.settings.values.prev
 import me.alexandervortex.shelfie.ui.component.refactored.BOX_PADDING
 import me.alexandervortex.shelfie.ui.component.refactored.ROOT_PADDING
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -89,15 +91,16 @@ fun SettingsComponent(
                 }
             )
             Spacer(Modifier.size(16.dp))
-            val theme = LocalAppSettings.theme.current
+            val themeValue = LocalAppSettings.theme.current
+            val theme = ThemeValue.fromValue(themeValue)
             SettingsItemComponent(
                 title = stringResource(R.string.settings_theme),
-                value = stringResource(ThemeValue.fromValue(theme).textResId),
+                value = stringResource(ThemeValue.fromValue(themeValue).textResId),
                 onDecrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme - 1))
+                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme.prev()))
                 },
                 onIncrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme + 1))
+                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme.next()))
                 },
                 onReset = {
                     viewModel?.onIntent(SettingsIntent.ChangeTheme())
