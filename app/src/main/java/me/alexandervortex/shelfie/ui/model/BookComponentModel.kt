@@ -1,5 +1,7 @@
 package me.alexandervortex.shelfie.ui.model
 
+sealed interface Bookable
+
 data class BookComponentModel(
     // UI
     val isChecked: Boolean,
@@ -12,4 +14,6 @@ data class BookComponentModel(
     val scrollIndex: Int = 0,
     val scrollOffset: Int = 0,
     val elements: Int = 0,
-)
+) : Bookable
+
+data object BookComponentSkeleton : Bookable

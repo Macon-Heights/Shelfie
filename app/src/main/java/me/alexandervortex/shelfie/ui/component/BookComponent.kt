@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -20,8 +21,9 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
-import me.alexandervortex.shelfie.features.mvi.catalogue.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.model.BookComponentModel
+import me.alexandervortex.shelfie.ui.model.BookComponentSkeleton
+import me.alexandervortex.shelfie.ui.model.Bookable
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
 import me.alexandervortex.shelfie.ui.theme.IC_UNCHECK
@@ -30,7 +32,7 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 @Composable
 fun BookComponent(
     isRemoveMode: Boolean,
-    model: BookComponentModel,
+    model: Bookable,
     modifier: Modifier = Modifier,
 ) {
     val color = getColors().surfaceVariant
@@ -39,7 +41,7 @@ fun BookComponent(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (isRemoveMode) {
+        if (isRemoveMode && model is BookComponentModel) {
             Image(
                 modifier = Modifier
                     .size(32.dp)
@@ -52,6 +54,7 @@ fun BookComponent(
             )
             Spacer(Modifier.size(16.dp))
         }
+
         Column(
             modifier = Modifier
                 .clipNShadow(SHAPE_M)
@@ -59,28 +62,36 @@ fun BookComponent(
                 .background(color)
                 .padding(16.dp)
         ) {
-            model.title?.let {
-                Text(
-                    text = it,
-                    color = onColorForTitle,
-                    fontSize = 18.sp,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Left
+            if (model is BookComponentModel) {
+                model.title?.let {
+                    Text(
+                        text = it,
+                        color = onColorForTitle,
+                        fontSize = 18.sp,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Left
+                    )
+                }
+                Spacer(Modifier.size(4.dp))
+                model.author?.let {
+                    Text(
+                        text = it,
+                        color = onColor,
+                        fontWeight = FontWeight.Light,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End
+                    )
+                }
+                if (model.scrollIndex > 0) {
+                    Spacer(Modifier.size(8.dp))
+                    ProgressLine(model.scrollIndex, model.elements)
+                }
+            } else {
+                Spacer(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(64.dp)
                 )
-            }
-            Spacer(Modifier.size(4.dp))
-            model.author?.let {
-                Text(
-                    text = it,
-                    color = onColor,
-                    fontWeight = FontWeight.Light,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End
-                )
-            }
-            if (model.scrollIndex > 0) {
-                Spacer(Modifier.size(8.dp))
-                ProgressLine(model.scrollIndex, model.elements)
             }
         }
     }
@@ -89,8 +100,7 @@ fun BookComponent(
 @Composable
 @CombinedPreviews
 fun BookComponentPreview() {
-    val model = CataloguePreviewData.getBooks().random()
-    val kek = BookComponentModel(
+    val model = BookComponentModel(
         id = "thisisid",
         localPath = "",
         title = "Harry Potter and the Sorcerer's Stone",
@@ -100,7 +110,8 @@ fun BookComponentPreview() {
         elements = 100,
         isChecked = false,
     )
+    val skeleton = BookComponentSkeleton
     CombinedPreviews {
-        BookComponent(true, kek, Modifier)
+        BookComponent(true, skeleton, Modifier)
     }
 }
