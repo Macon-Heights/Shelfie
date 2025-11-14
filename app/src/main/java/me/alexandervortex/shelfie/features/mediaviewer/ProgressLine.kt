@@ -17,27 +17,29 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 
 @Composable
-fun ProgressLine(scrollIndex: Int, elements: Int) {
+fun ProgressLine(scrollIndex: Int?, elements: Int?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(4.dp)
             .clip(SHAPE_S)
     ) {
-        if (scrollIndex > 0 && elements > 0 && scrollIndex <= elements) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(scrollIndex.toFloat())
-                    .clip(SHAPE_S)
-                    .background(getColors().onSurfaceVariant)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight((elements - scrollIndex).toFloat())
-                    .background(getColors().onSurfaceVariant.copy(alpha = 0.3f))
-            )
+        if (scrollIndex != null && elements != null) {
+            if (scrollIndex > 0 && elements > 0 && scrollIndex <= elements) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(scrollIndex.toFloat())
+                        .clip(SHAPE_S)
+                        .background(getColors().onSurfaceVariant)
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight((elements - scrollIndex).toFloat())
+                        .background(getColors().onSurfaceVariant.copy(alpha = 0.3f))
+                )
+            }
         }
     }
 }
