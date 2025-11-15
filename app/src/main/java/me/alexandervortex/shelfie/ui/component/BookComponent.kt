@@ -45,9 +45,7 @@ fun BookComponent(
     val onColor = getColors().onSurfaceVariant
     val onColorForTitle = getColors().onSurface
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         if (isRemoveMode && model is Bookable.BookComponentModel) {
             Image(
                 modifier = Modifier
