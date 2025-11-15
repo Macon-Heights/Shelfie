@@ -24,7 +24,7 @@ fun MediaViewerScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val serviceState by ttsVm.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-    val book = ttsVm.bookUI.value
+    val book = ttsVm.bookUIModel.value
 
     var isMenu by remember { mutableStateOf(true) }
 

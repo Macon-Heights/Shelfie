@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
 /**
@@ -51,7 +51,7 @@ class MediaViewerViewModel
 
     private var service: MediaService? = null
     private var serviceJob: Job? = null
-    val bookUI: MutableState<BookUI?> = mutableStateOf(null)
+    val bookUIModel: MutableState<BookUIModel?> = mutableStateOf(null)
 
     private val _state = MutableStateFlow(MediaServiceState())
     val state: StateFlow<MediaServiceState> = _state.asStateFlow()
@@ -79,7 +79,7 @@ class MediaViewerViewModel
                         bookId,
                         index,
                         offset,
-                        bookUI.value?.elements?.size ?: 0
+                        bookUIModel.value?.elements?.size ?: 0
                     )
                 }
             }
@@ -117,8 +117,8 @@ class MediaViewerViewModel
     fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
-                bookUI.value = repo.getBookModelById(id)
-                service?.loadBook(bookUI.value)
+                bookUIModel.value = repo.getBookModelById(id)
+                service?.loadBook(bookUIModel.value)
 
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
@@ -136,7 +136,7 @@ class MediaViewerViewModel
                 id,
                 index,
                 offset,
-                bookUI.value?.elements?.size ?: 0
+                bookUIModel.value?.elements?.size ?: 0
             )
         }
     }

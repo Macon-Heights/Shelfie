@@ -1,11 +1,11 @@
 package me.alexandervortex.shelfie.ui.preview
 
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 
-fun getBookUI(): BookUI {
-    return BookUI(
+fun getBookUI(): BookUIModel {
+    return BookUIModel(
         titleInfo = getTitleInfo(),
         elements = getElements(),
         progressIndex = 0,

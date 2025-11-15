@@ -25,7 +25,7 @@ import me.alexandervortex.shelfie.features.mediaplayer.TtsController
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.features.settings.values.next
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 
 private const val CHANNEL_ID = "mock_player"
 private const val ACTION_PLAY = "action_play"
@@ -61,7 +61,7 @@ class MediaService : Service() {
 
     // TTS
     private var ttsController: TtsController? = null
-    private var playingBook: BookUI? = null
+    private var playingBook: BookUIModel? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -103,7 +103,7 @@ class MediaService : Service() {
         updatePlayback(!_state.value.isPlaying, indexToStart)//
     }
 
-    fun loadBook(book: BookUI?) {
+    fun loadBook(book: BookUIModel?) {
         if (book == null) {
             _state.update { it.copy(error = "Пустая книга") }
             return
@@ -132,16 +132,16 @@ class MediaService : Service() {
         }
     }
 
-    private fun initTtsController(bookUI: BookUI) {
-        playingBook = bookUI
+    private fun initTtsController(bookUIModel: BookUIModel) {
+        playingBook = bookUIModel
         ttsController?.release()
 
         _state.update {
             it.copy(
-                index = bookUI.progressIndex,
+                index = bookUIModel.progressIndex,
                 part = 0,
-                author = bookUI.titleInfo.author,
-                title = bookUI.titleInfo.title,
+                author = bookUIModel.titleInfo.author,
+                title = bookUIModel.titleInfo.title,
                 speed = SpeechRateValue.DEFAULT,
                 isPlaying = false,
                 timer = TimerValue.OFF
@@ -150,7 +150,7 @@ class MediaService : Service() {
 
         ttsController = TtsController(
             context = this,
-            bookModel = bookUI,
+            bookModel = bookUIModel,
             errorAction = { msg -> _state.update { it.copy(error = msg) } },
             scrollToIndex = { idx, part ->
                 _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }

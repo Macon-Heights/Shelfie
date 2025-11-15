@@ -6,7 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import java.io.File
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class UniversalFileParser
      * какой парсер должен парсить нашу книгу
      * должен ли файл быть обработан вообще (подходит ли он мне)
      */
-    suspend fun importFromUri(uri: Uri): BookUI? {
+    suspend fun importFromUri(uri: Uri): BookUIModel? {
         val result = withContext(Dispatchers.IO) {
             val extension = uri.safeGetFileExtension(context)
                 ?: return@withContext null
@@ -63,7 +63,7 @@ class UniversalFileParser
         localPath: String,
         scrollOffset: Int,
         scrollIndex: Int,
-    ): BookUI? {
+    ): BookUIModel? {
         val result = withContext(Dispatchers.IO) {
             val file = File(localPath)
             if (!file.exists()) {

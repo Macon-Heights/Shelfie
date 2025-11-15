@@ -5,14 +5,14 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class TtsController(
     context: Context,
-    private val bookModel: BookUI?,
+    private val bookModel: BookUIModel?,
     private val errorAction: (String) -> Unit,
     private val scrollToIndex: (index: Int?, partIndex: Int?) -> Unit,
     private val onStateChanged: (Boolean) -> Unit = {},

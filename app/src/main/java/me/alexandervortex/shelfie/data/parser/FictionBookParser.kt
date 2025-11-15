@@ -8,7 +8,7 @@ import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
 import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.parser.Parser
@@ -26,7 +26,7 @@ class FictionBookParser
         file: File,
         scrollOffset: Int,
         scrollIndex: Int,
-    ): BookUI {
+    ): BookUIModel {
         val doc: Document = Jsoup.parse(
             file,
             null,
@@ -38,7 +38,7 @@ class FictionBookParser
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
 
-        val result = BookUI(
+        val result = BookUIModel(
             titleInfo = titleInfoMapper.map(id, file.path, titleInfo),
             elements = elementMapper.map(body, binaries)
                 .splitPartsBySentences()
