@@ -44,7 +44,7 @@ import javax.inject.Inject
  * // а значит придется проверять книга на экране и книга в сервисе - это одна книга? (В сервисе)
  */
 @HiltViewModel
-class MediaViewerViewModel
+class ViewerViewModel
 @Inject constructor(
     private val repo: BookRepository,
 ) : ViewModel() {

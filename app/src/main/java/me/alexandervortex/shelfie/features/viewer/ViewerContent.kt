@@ -30,7 +30,7 @@ import me.alexandervortex.shelfie.ui.preview.getBookUI
 import me.alexandervortex.shelfie.ui.preview.pausedState
 
 @Composable
-fun MediaViewerContent(
+fun ViewerContent(
     isMenu: Boolean,
     book: BookUIModel?,
     serviceState: MediaServiceState,
@@ -93,7 +93,7 @@ fun MediaViewerContent(
 fun MediaViewerPreview() {
     CombinedPreviews {
         val bookUI = getBookUI()
-        MediaViewerContent(
+        ViewerContent(
             isMenu = true,
             book = bookUI,
             serviceState = pausedState(),

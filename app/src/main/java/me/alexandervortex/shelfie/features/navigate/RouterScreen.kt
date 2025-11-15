@@ -8,8 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import me.alexandervortex.shelfie.features.mvi.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.mvi.catalogue.CatalogueViewModel
-import me.alexandervortex.shelfie.features.viewer.MediaViewerScreen
-import me.alexandervortex.shelfie.features.viewer.MediaViewerViewModel
+import me.alexandervortex.shelfie.features.viewer.ViewerScreen
+import me.alexandervortex.shelfie.features.viewer.ViewerViewModel
 
 @Composable
 fun RouterScreen() {
@@ -37,9 +37,9 @@ fun RouterScreen() {
             }),
         ) {
 
-            val ttsVm = hiltViewModel<MediaViewerViewModel>()
+            val ttsVm = hiltViewModel<ViewerViewModel>()
 
-            MediaViewerScreen(
+            ViewerScreen(
                 id = it.getId(),
                 ttsVm = ttsVm
             )
