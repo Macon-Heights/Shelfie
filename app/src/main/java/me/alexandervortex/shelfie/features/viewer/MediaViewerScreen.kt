@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaviewer
+package me.alexandervortex.shelfie.features.viewer
 
 import android.widget.Toast
 import androidx.compose.foundation.lazy.rememberLazyListState

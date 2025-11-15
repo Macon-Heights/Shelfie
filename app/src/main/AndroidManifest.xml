@@ -27,7 +27,7 @@
         </activity>
 
         <service
-            android:name=".features.mediaviewer.MediaService"
+            android:name=".features.viewer.MediaService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
     </application>

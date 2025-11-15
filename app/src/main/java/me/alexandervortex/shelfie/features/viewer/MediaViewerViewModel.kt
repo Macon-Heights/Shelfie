@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaviewer
+package me.alexandervortex.shelfie.features.viewer
 
 import android.content.ComponentName
 import android.content.Context

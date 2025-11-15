@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaviewer
+package me.alexandervortex.shelfie.features.viewer
 
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
