@@ -6,9 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -27,7 +24,6 @@ fun ViewerScreen(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val serviceState by viewModel.state.collectAsStateWithLifecycle()
-    var isMenu by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         viewModel.loadCurrentBook(id)
@@ -83,7 +79,7 @@ fun ViewerScreen(
     }
 
     ViewerContent(
-        isMenu = isMenu,
+        isMenu = state.isMenuVisible,
         book = book,
         serviceState = state.serviceState,
         listState = listState,
@@ -98,7 +94,7 @@ fun ViewerScreen(
             viewModel.clickSpeed()
         },
         textAction = {
-            isMenu = !isMenu
+            viewModel.toggleMenu(isMenuVisible = !state.isMenuVisible)
         },
         nextAction = {
             viewModel.clickNext()

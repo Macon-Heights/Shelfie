@@ -138,4 +138,8 @@ class ViewerViewModel
     fun clickPrev() {
         service?.clickPrev()
     }
+
+    fun toggleMenu(isMenuVisible: Boolean) {
+        _state.update { it.copy(isMenuVisible = isMenuVisible) }
+    }
 }
