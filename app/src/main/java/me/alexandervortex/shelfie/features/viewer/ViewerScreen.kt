@@ -21,13 +21,12 @@ fun ViewerScreen(
     viewModel: ViewerViewModel,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val book = state.book
     val context = LocalContext.current
+    val listState = rememberLazyListState()
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val serviceState by viewModel.state.collectAsStateWithLifecycle()
-    val listState = rememberLazyListState()
-    val book = viewModel.bookUIModel.value
-
     var isMenu by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
