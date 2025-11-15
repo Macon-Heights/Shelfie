@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.ui.model
 
-data class BookUI(
+data class BookUIModel(
     val titleInfo: TitleInfoUIModel,
     val elements: List<ElementUIModel>,
     val progressIndex: Int = 0,

@@ -5,7 +5,7 @@ import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.Bookable
 import javax.inject.Inject
 
@@ -57,7 +57,7 @@ class BookRepository
      * получаем книгу по айди из бд + сам файл из папки
      * справедливо для любого типа книги
      */
-    suspend fun getBookModelById(id: String): BookUI? {
+    suspend fun getBookModelById(id: String): BookUIModel? {
 
         val entity = dao.getById(id)
         val result = entity?.let {

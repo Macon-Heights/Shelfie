@@ -21,7 +21,7 @@ import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
-import me.alexandervortex.shelfie.ui.model.BookUI
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
@@ -29,7 +29,7 @@ import me.alexandervortex.shelfie.ui.preview.getBookUI
 @Composable
 fun MediaViewerContent(
     isMenu: Boolean,
-    book: BookUI?,
+    book: BookUIModel?,
     serviceState: MediaServiceState,
     listState: LazyListState,
     playPauseAction: () -> Unit,
