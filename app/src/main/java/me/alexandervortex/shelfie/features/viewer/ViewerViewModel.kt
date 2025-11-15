@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +17,6 @@ import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.player.MediaService
 import me.alexandervortex.shelfie.features.viewer.mvi.ViewerState
-import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +29,6 @@ class ViewerViewModel
 
     private var service: MediaService? = null // todo leaked context
     private var serviceJob: Job? = null
-    val bookUIModel: MutableState<BookUIModel?> = mutableStateOf(null)
 
     private val _state = MutableStateFlow(ViewerState())
     val state = _state.asStateFlow()
@@ -97,9 +94,10 @@ class ViewerViewModel
     fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
-                bookUIModel.value = repo.getBookModelById(id)
-                service?.loadBook(bookUIModel.value)
-
+                _state.update {
+                    it.copy(book = repo.getBookModelById(id))
+                }
+                service?.loadBook(_state.value.book)
             } catch (e: Exception) {
                 errorState.value = e.localizedMessage ?: "unknown viewmodel error"
             }
@@ -116,7 +114,7 @@ class ViewerViewModel
                 id,
                 index,
                 offset,
-                bookUIModel.value?.elements?.size ?: 0
+                _state.value.book?.elements?.size ?: 0
             )
         }
     }
