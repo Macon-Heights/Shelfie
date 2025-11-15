@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaviewer
+package me.alexandervortex.shelfie.features.viewer
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
