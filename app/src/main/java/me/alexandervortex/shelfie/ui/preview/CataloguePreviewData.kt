@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.catalogue.preview
+package me.alexandervortex.shelfie.ui.preview
 
 import me.alexandervortex.shelfie.ui.model.Bookable
 
