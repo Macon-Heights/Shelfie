@@ -34,7 +34,7 @@ const val BUTTON_BIG = 64
 const val BUTTON_SMALL = MIN_SIZE
 
 @Composable
-fun ButtonComponent(
+fun ButtonUI(
     modifier: Modifier = Modifier,
     modifierAfter: Modifier = Modifier,
     content: @Composable (Color) -> Unit,
@@ -63,7 +63,7 @@ fun ButtonComponent(
 private fun ButtonPreview() {
     CombinedPreviews {
         Row {
-            ButtonComponent(
+            ButtonUI(
                 modifier = Modifier
                     .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
                     .padding(32.dp),
@@ -78,23 +78,23 @@ private fun ButtonPreview() {
                     )
                 }
             )
-            ButtonComponent(
+            ButtonUI(
                 modifierAfter = Modifier.size(64.dp),
                 content = { Icon(IC_ADD, null, tint = it) }
             )
         }
         Row {
-            ButtonComponent(
+            ButtonUI(
                 modifierAfter = Modifier.weight(1f),
                 content = { Text(text = "button", color = it) }
             )
-            ButtonComponent(
+            ButtonUI(
                 shape = SHAPE_START_L,
                 containerColor = getColors().error,
                 contentColor = getColors().onError,
                 content = { Text(text = "-", color = it) }
             )
-            ButtonComponent(
+            ButtonUI(
                 shape = SHAPE_END_L,
                 content = { Text(text = "+", color = it) }
             )

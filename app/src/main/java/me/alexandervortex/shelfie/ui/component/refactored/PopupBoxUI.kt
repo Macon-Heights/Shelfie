@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
-fun PopupBox(
+fun PopupBoxUI(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.BottomEnd,
     isPopup: Boolean = false,
@@ -33,7 +33,7 @@ fun PopupBox(
 @Composable
 private fun PopupBoxPreview() {
     CombinedPreviews {
-        PopupBox(
+        PopupBoxUI(
             modifier = Modifier.size(320.dp),
             contentAlignment = Alignment.Center,
             content = {
@@ -44,7 +44,7 @@ private fun PopupBoxPreview() {
                 )
             },
             popup = {
-                ConfirmationComponent(
+                ConfirmationUI(
                     "Kek", "Lol", "Nu da", "Nononono", {}
                 ) { }
             }

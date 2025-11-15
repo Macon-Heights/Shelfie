@@ -30,7 +30,7 @@ const val ROOT_PADDING = 32
 const val BOX_PADDING = 16
 
 @Composable
-fun ConfirmationComponent(
+fun ConfirmationUI(
     title: String,
     subtitle: String,
     approveText: String,
@@ -57,7 +57,7 @@ fun ConfirmationComponent(
             Spacer(Modifier.size(TITLE_GAP.dp))
             Text(subtitle)
             Spacer(Modifier.size(TEXT_GAP.dp))
-            ButtonComponent(
+            ButtonUI(
                 shape = SHAPE_S,
                 containerColor = getColors().error,
                 contentColor = getColors().onError,
@@ -67,7 +67,7 @@ fun ConfirmationComponent(
                 content = { Text(text = approveText, color = it) }
             )
             Spacer(Modifier.size(BUTTON_GAP.dp))
-            ButtonComponent(
+            ButtonUI(
                 shape = SHAPE_S,
                 modifierAfter = Modifier
                     .fillMaxWidth()
@@ -81,7 +81,7 @@ fun ConfirmationComponent(
 @Composable
 private fun PopupComponentPreview() {
     CombinedPreviews {
-        ConfirmationComponent(
+        ConfirmationUI(
             "Удалить?",
             "Оно удалится безвозвратно",
             "Удалить",

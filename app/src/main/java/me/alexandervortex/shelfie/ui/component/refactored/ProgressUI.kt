@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mediaviewer
+package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,12 +12,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mvi.catalogue.preview.CataloguePreviewData
-import me.alexandervortex.shelfie.ui.component.BookComponent
+import me.alexandervortex.shelfie.ui.component.BookUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 
 @Composable
-fun ProgressLine(scrollIndex: Int?, elements: Int?) {
+fun ProgressUI(scrollIndex: Int?, elements: Int?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,6 +53,6 @@ private fun BookComponentWithLine() {
         elements = 100
     )
     CombinedPreviews {
-        BookComponent(false, kek)
+        BookUI(false, kek)
     }
 }

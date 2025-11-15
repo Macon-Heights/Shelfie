@@ -17,11 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
-import me.alexandervortex.shelfie.features.settings.SettingsComponent
 import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.getBookUI
-import me.alexandervortex.shelfie.ui.component.refactored.PopupBox
+import me.alexandervortex.shelfie.ui.component.refactored.PopupBoxUI
+import me.alexandervortex.shelfie.ui.component.refactored.SettingsUI
 import me.alexandervortex.shelfie.ui.model.BookUI
 import me.alexandervortex.shelfie.ui.model.ElementUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -41,7 +41,7 @@ fun MediaViewerContent(
 ) {
     var isSettings by remember { mutableStateOf(false) }
     val padding = LocalAppSettings.padding.current
-    PopupBox(
+    PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
         isPopup = isSettings,
@@ -65,7 +65,7 @@ fun MediaViewerContent(
                 }
             }
 
-            MediaStateComponent(
+            MediaStateUI(
                 visible = isMenu,
                 state = serviceState,
                 index = remember { derivedStateOf { listState.firstVisibleItemIndex } }.value,
@@ -80,7 +80,7 @@ fun MediaViewerContent(
         },
         popup = {
             val viewModel = hiltViewModel<SettingsViewModel>()
-            SettingsComponent(viewModel) { isSettings = false }
+            SettingsUI(viewModel) { isSettings = false }
         }
     )
 }

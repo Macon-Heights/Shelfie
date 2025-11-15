@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.settings
+package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,16 +18,17 @@ import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
+import me.alexandervortex.shelfie.features.settings.LocalAppSettings
+import me.alexandervortex.shelfie.features.settings.SettingsIntent
+import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.features.settings.values.ThemeValue
 import me.alexandervortex.shelfie.features.settings.values.next
 import me.alexandervortex.shelfie.features.settings.values.prev
-import me.alexandervortex.shelfie.ui.component.refactored.BOX_PADDING
-import me.alexandervortex.shelfie.ui.component.refactored.ROOT_PADDING
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 
 @Composable
-fun SettingsComponent(
+fun SettingsUI(
     viewModel: SettingsViewModel?,
     onDecline: () -> Unit,
 ) {
@@ -47,7 +48,7 @@ fun SettingsComponent(
                 .padding(BOX_PADDING.dp)
         ) {
             val fontSize = LocalAppSettings.fontSize.current
-            SettingsItemComponent(
+            SettingsItemUI(
                 stringResource(R.string.settings_font_size),
                 value = fontSize.toString(),
                 onDecrease = {
@@ -62,7 +63,7 @@ fun SettingsComponent(
             )
             Spacer(Modifier.size(16.dp))
             val lineHeight = LocalAppSettings.lineHeight.current
-            SettingsItemComponent(
+            SettingsItemUI(
                 stringResource(R.string.settings_line_height),
                 value = lineHeight.toString(),
                 onDecrease = {
@@ -77,7 +78,7 @@ fun SettingsComponent(
             )
             Spacer(Modifier.size(16.dp))
             val padding = LocalAppSettings.padding.current
-            SettingsItemComponent(
+            SettingsItemUI(
                 title = stringResource(R.string.settings_paddings),
                 value = padding.toString(),
                 onDecrease = {
@@ -93,7 +94,7 @@ fun SettingsComponent(
             Spacer(Modifier.size(16.dp))
             val themeValue = LocalAppSettings.theme.current
             val theme = ThemeValue.fromValue(themeValue)
-            SettingsItemComponent(
+            SettingsItemUI(
                 title = stringResource(R.string.settings_theme),
                 value = stringResource(ThemeValue.fromValue(themeValue).textResId),
                 onDecrease = {
@@ -114,6 +115,6 @@ fun SettingsComponent(
 @Composable
 private fun SettingsPreview() {
     CombinedPreviews {
-        SettingsComponent(null) {}
+        SettingsUI(null) {}
     }
 }

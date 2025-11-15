@@ -23,7 +23,7 @@ private const val size = 64
 private const val spacing = 8
 
 @Composable
-fun TitleComponent(text: String?) {
+fun TitleUI(text: String?) {
     text?.let {
         Text(
             textAlign = TextAlign.End,
@@ -45,6 +45,6 @@ fun TitleComponent(text: String?) {
 @Composable
 private fun TitlePreview() {
     CombinedPreviews {
-        TitleComponent(stringResource(R.string.catalogue_title))
+        TitleUI(stringResource(R.string.catalogue_title))
     }
 }
