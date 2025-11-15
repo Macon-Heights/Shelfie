@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.features.mvi.catalogue.preview.CataloguePreviewData
+import me.alexandervortex.shelfie.ui.preview.CataloguePreviewData
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 
