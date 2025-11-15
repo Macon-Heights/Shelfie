@@ -1,7 +1,6 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,10 +35,10 @@ fun CatalogueScreen(
         }
     }
 
-    val picker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri: Uri? ->
+    val contract = ActivityResultContracts.OpenDocument()
+    val picker = rememberLauncherForActivityResult(contract) { uri ->
         uri ?: return@rememberLauncherForActivityResult
+
         val intent = Intent.FLAG_GRANT_READ_URI_PERMISSION
         try {
             context.contentResolver.takePersistableUriPermission(uri, intent)
@@ -47,7 +46,7 @@ fun CatalogueScreen(
         viewModel.onIntent(CatalogueIntent.ImportBook(uri))
     }
 
-    CatalogueScreenContent(
+    CatalogueContent(
         state = state,
         onBookOpen = { navController.navigate(MediaViewerRoute(it.id).route) },
         onToggleBookCheck = { viewModel.onIntent(CatalogueIntent.ToggleBookCheck(it.id)) },

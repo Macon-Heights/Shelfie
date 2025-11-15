@@ -45,7 +45,7 @@ import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CatalogueScreenContent(
+fun CatalogueContent(
     state: CatalogueState,
     onBookOpen: (Bookable.BookComponentModel) -> Unit,
     onToggleBookCheck: (Bookable.BookComponentModel) -> Unit,

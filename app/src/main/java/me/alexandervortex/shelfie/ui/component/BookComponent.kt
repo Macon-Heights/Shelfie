@@ -26,16 +26,24 @@ import me.alexandervortex.shelfie.ui.theme.IC_CHECK
 import me.alexandervortex.shelfie.ui.theme.IC_UNCHECK
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 
+private const val ROOT_PADDINGS = 16
+private const val SPACE_SYMBOL = " "
+
 @Composable
 fun BookComponent(
     isRemoveMode: Boolean,
     model: Bookable,
     modifier: Modifier = Modifier,
 ) {
-    val color = getColors().surfaceVariant
+    val isBook = model is Bookable.BookComponentModel
+
+    val color = if (isBook) {
+        getColors().surfaceVariant
+    } else {
+        getColors().surfaceContainer
+    }
     val onColor = getColors().onSurfaceVariant
     val onColorForTitle = getColors().onSurface
-    val colorAlt = getColors().surfaceContainer
 
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -53,17 +61,18 @@ fun BookComponent(
             )
             Spacer(Modifier.size(16.dp))
         }
-        val isBook = model is Bookable.BookComponentModel
 
         Column(
             modifier = Modifier
                 .clipNShadow(SHAPE_M)
                 .then(modifier)
-                .background(if (isBook) color else colorAlt)
-                .padding(16.dp)
+                .background(color)
+                .padding(ROOT_PADDINGS.dp)
         ) {
             Text(
-                text = (model as? Bookable.BookComponentModel)?.title.takeIf { isBook } ?: " ",
+                text = (model as? Bookable.BookComponentModel)
+                    ?.title.takeIf { isBook }
+                    ?: SPACE_SYMBOL,
                 color = onColorForTitle,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxWidth(),
@@ -71,7 +80,9 @@ fun BookComponent(
             )
             Spacer(Modifier.size(4.dp))
             Text(
-                text = (model as? Bookable.BookComponentModel)?.author.takeIf { isBook } ?: " ",
+                text = (model as? Bookable.BookComponentModel)
+                    ?.author.takeIf { isBook }
+                    ?: SPACE_SYMBOL,
                 color = onColor,
                 fontWeight = FontWeight.Light,
                 modifier = Modifier.fillMaxWidth(),
