@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.component
+package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.features.mediaviewer.ProgressLine
 import me.alexandervortex.shelfie.ui.model.Bookable
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
@@ -30,7 +29,7 @@ private const val ROOT_PADDINGS = 16
 private const val SPACE_SYMBOL = " "
 
 @Composable
-fun BookComponent(
+fun BookUI(
     isRemoveMode: Boolean,
     model: Bookable,
     modifier: Modifier = Modifier,
@@ -87,7 +86,7 @@ fun BookComponent(
                 textAlign = TextAlign.End
             )
             Spacer(Modifier.size(8.dp))
-            ProgressLine(
+            ProgressUI(
                 (model as? Bookable.BookComponentModel)?.scrollIndex,
                 (model as? Bookable.BookComponentModel)?.elements
             )
@@ -110,6 +109,6 @@ fun BookComponentPreview() {
     )
     val skeleton = Bookable.BookComponentSkeleton(0)
     CombinedPreviews {
-        BookComponent(true, skeleton, Modifier)
+        BookUI(true, skeleton, Modifier)
     }
 }

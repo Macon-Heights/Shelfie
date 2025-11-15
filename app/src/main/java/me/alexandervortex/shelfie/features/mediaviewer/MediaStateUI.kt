@@ -35,7 +35,8 @@ import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.ui.component.getBookUI
 import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
 import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_SMALL
-import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
+import me.alexandervortex.shelfie.ui.component.refactored.ButtonUI
+import me.alexandervortex.shelfie.ui.component.refactored.ProgressUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PAUSE
@@ -48,7 +49,7 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_BOTTOM_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_TOP_L
 
 @Composable
-fun MediaStateComponent(
+fun MediaStateUI(
     visible: Boolean,
     state: MediaServiceState,
     index: Int,
@@ -91,7 +92,7 @@ fun MediaStateComponent(
                                 .padding(end = 16.dp)
                         )
                     }
-                    ButtonComponent(
+                    ButtonUI(
                         modifier = Modifier.clickable { settingsAction.invoke() },
                         modifierAfter = Modifier,
                         containerColor = getColors().surfaceVariant,
@@ -131,7 +132,7 @@ fun MediaStateComponent(
 
                     ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
                     ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
-                    ButtonComponent(
+                    ButtonUI(
                         modifierAfter = Modifier
                             .size(BUTTON_BIG.dp)
                             .clickable { playPauseAction.invoke() },
@@ -146,7 +147,7 @@ fun MediaStateComponent(
                     ButtonWithLabel(IC_PLAYER_SPEED, state.speed.text) { speedAction.invoke() }
                     ButtonWithLabel(IC_PLAYER_NEXT) { nextAction.invoke() }
                 }
-                ProgressLine(index, elements)
+                ProgressUI(index, elements)
                 Spacer(Modifier.size(8.dp))
             }
         }
@@ -162,7 +163,7 @@ private fun ButtonWithLabel(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ButtonComponent(
+        ButtonUI(
             containerColor = getColors().secondary,
             contentColor = getColors().onSecondary,
             modifierAfter = Modifier

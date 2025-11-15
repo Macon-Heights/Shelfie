@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.settings
+package me.alexandervortex.shelfie.ui.component.refactored
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -10,13 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
 import me.alexandervortex.shelfie.ui.theme.IC_RESET
 
 @Composable
-fun SettingsItemComponent(
+fun SettingsItemUI(
     title: String,
     value: String,
     onIncrease: () -> Unit,
@@ -28,7 +27,7 @@ fun SettingsItemComponent(
             modifier = Modifier.weight(1f),
             text = title,
         )
-        ButtonComponent(
+        ButtonUI(
             containerColor = getColors().tertiary,
             contentColor = getColors().onTertiary,
             modifier = Modifier.padding(horizontal = 4.dp),
@@ -44,7 +43,7 @@ fun SettingsItemComponent(
             },
         )
         Text(text = value)
-        ButtonComponent(
+        ButtonUI(
             modifier = Modifier.padding(start = 4.dp),
             modifierAfter = Modifier.clickable {
                 onIncrease.invoke()
@@ -57,7 +56,7 @@ fun SettingsItemComponent(
                 )
             }
         )
-        ButtonComponent(
+        ButtonUI(
             modifier = Modifier.padding(start = 4.dp),
             modifierAfter = Modifier.clickable {
                 onReset.invoke()

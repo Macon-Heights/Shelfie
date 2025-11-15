@@ -32,13 +32,13 @@ import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
-import me.alexandervortex.shelfie.ui.component.BookComponent
 import me.alexandervortex.shelfie.ui.component.EmptyList
 import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
-import me.alexandervortex.shelfie.ui.component.refactored.ButtonComponent
-import me.alexandervortex.shelfie.ui.component.refactored.ConfirmationComponent
-import me.alexandervortex.shelfie.ui.component.refactored.PopupBox
-import me.alexandervortex.shelfie.ui.component.refactored.TitleComponent
+import me.alexandervortex.shelfie.ui.component.refactored.BookUI
+import me.alexandervortex.shelfie.ui.component.refactored.ButtonUI
+import me.alexandervortex.shelfie.ui.component.refactored.ConfirmationUI
+import me.alexandervortex.shelfie.ui.component.refactored.PopupBoxUI
+import me.alexandervortex.shelfie.ui.component.refactored.TitleUI
 import me.alexandervortex.shelfie.ui.model.Bookable
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
@@ -54,7 +54,7 @@ fun CatalogueContent(
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    PopupBox(
+    PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
         isPopup = state.isPopup,
@@ -67,7 +67,7 @@ fun CatalogueContent(
                     .fillMaxSize()
                     .animateContentSize(tween())
             ) {
-                item { TitleComponent(text = stringResource(R.string.catalogue_title)) }
+                item { TitleUI(text = stringResource(R.string.catalogue_title)) }
                 when {
                     state.books.isEmpty() -> item { EmptyList(R.string.catalogue_empty) }
                     else -> {
@@ -94,7 +94,7 @@ fun CatalogueContent(
                                 },
                                 label = "book_item_$index"
                             ) { animated ->
-                                BookComponent(
+                                BookUI(
                                     isRemoveMode = state.isRemoveMode,
                                     model = animated,
                                     modifier = bookModifier.animateItem(
@@ -125,7 +125,7 @@ fun CatalogueContent(
             val containerColor = if (state.isRemoveMode) getColors().error else null
             val contentColor = if (state.isRemoveMode) getColors().onError else null
 
-            ButtonComponent(
+            ButtonUI(
                 modifier = Modifier
                     .padding(32.dp)
                     .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
@@ -150,7 +150,7 @@ fun CatalogueContent(
             )
         },
         popup = {
-            ConfirmationComponent(
+            ConfirmationUI(
                 title = stringResource(R.string.catalogue_remove_title),
                 subtitle = stringResource(R.string.catalogue_remove_subtitle),
                 approveText = stringResource(R.string.catalogue_remove_yes),
