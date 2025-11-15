@@ -26,13 +26,13 @@ import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.features.settings.values.next
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 
+private const val CHANNEL_ID = "mock_player"
+private const val ACTION_PLAY = "action_play"
+private const val ACTION_PAUSE = "action_pause"
+private const val ACTION_SPEED = "action_speed"
+
 @AndroidEntryPoint
 class MediaService : Service() {
-
-    private val CHANNEL_ID = "mock_player"
-    private val ACTION_PLAY = "action_play"
-    private val ACTION_PAUSE = "action_pause"
-    private val ACTION_SPEED = "action_speed"
 
     // ---- публичный реактивный стейт
     private val _state = MutableStateFlow(MediaServiceState())
