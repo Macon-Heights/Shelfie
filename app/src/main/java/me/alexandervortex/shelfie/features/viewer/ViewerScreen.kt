@@ -20,7 +20,9 @@ fun ViewerScreen(
     id: String,
     viewModel: ViewerViewModel,
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+
     val lifecycleOwner = LocalLifecycleOwner.current
     val serviceState by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
@@ -36,7 +38,7 @@ fun ViewerScreen(
     LaunchedEffect(book) {
         book?.let {
             listState.scrollToItem(
-                index = viewModel.state.value.index,
+                index = state.serviceState.index,
                 scrollOffset = 0
             )
         }
@@ -71,10 +73,10 @@ fun ViewerScreen(
         }
     }
 
-    LaunchedEffect(serviceState.index, serviceState.part) {
-        if (serviceState.isPlaying) {
+    LaunchedEffect(state.serviceState.index, state.serviceState.part) {
+        if (state.serviceState.isPlaying) {
             try {
-                listState.animateScrollToItem(serviceState.index, scrollOffset = 0)
+                listState.animateScrollToItem(state.serviceState.index, scrollOffset = 0)
             } catch (e: Exception) {
 
             }
@@ -84,7 +86,7 @@ fun ViewerScreen(
     ViewerContent(
         isMenu = isMenu,
         book = book,
-        serviceState = serviceState,
+        serviceState = state.serviceState,
         listState = listState,
         playPauseAction = {
             val topIndex = listState.firstVisibleItemIndex
