@@ -35,6 +35,8 @@ fun BookComponent(
     val color = getColors().surfaceVariant
     val onColor = getColors().onSurfaceVariant
     val onColorForTitle = getColors().onSurface
+    val colorAlt = getColors().surfaceContainer
+
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -57,7 +59,7 @@ fun BookComponent(
             modifier = Modifier
                 .clipNShadow(SHAPE_M)
                 .then(modifier)
-                .background(color)
+                .background(if (isBook) color else colorAlt)
                 .padding(16.dp)
         ) {
             Text(

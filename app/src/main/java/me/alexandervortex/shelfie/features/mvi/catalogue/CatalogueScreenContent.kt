@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.features.mvi.catalogue
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -21,7 +22,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -62,14 +63,19 @@ fun CatalogueScreenContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .animateContentSize(tween())
             ) {
                 item { TitleComponent(text = stringResource(R.string.catalogue_title)) }
                 when {
                     state.books.isEmpty() -> item { EmptyList(R.string.catalogue_empty) }
                     else -> {
-                        items(state.books) { book ->
-                            val bookModifier = if (book is BookComponentModel) Modifier
+                        itemsIndexed(
+                            state.books,
+                            key = { index, _ -> index }
+                        ) { index, book ->
+                            val bookModifier = if (book is Bookable.BookComponentModel) Modifier
                                 .combinedClickable(
                                     onClick = {
                                         if (state.isRemoveMode) {
@@ -81,11 +87,23 @@ fun CatalogueScreenContent(
                                     onLongClick = { onToggleRemoveMode(book) }
                                 ) else Modifier
 
-                            BookComponent(
-                                isRemoveMode = state.isRemoveMode,
-                                model = book,
-                                modifier = bookModifier
-                            )
+                            AnimatedContent(
+                                targetState = book,
+                                transitionSpec = {
+                                    fadeIn(tween()) togetherWith fadeOut(tween())
+                                },
+                                label = "book_item_$index"
+                            ) { animated ->
+                                BookComponent(
+                                    isRemoveMode = state.isRemoveMode,
+                                    model = animated,
+                                    modifier = bookModifier.animateItem(
+                                        fadeInSpec = tween(),
+                                        fadeOutSpec = tween(),
+                                        placementSpec = tween()
+                                    )
+                                )
+                            }
                         }
                     }
                 }
