@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.viewer
+package me.alexandervortex.shelfie.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -33,10 +33,7 @@ import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
-import me.alexandervortex.shelfie.ui.component.BUTTON_BIG
-import me.alexandervortex.shelfie.ui.component.BUTTON_SMALL
-import me.alexandervortex.shelfie.ui.component.ButtonUI
-import me.alexandervortex.shelfie.ui.component.ProgressUI
+import me.alexandervortex.shelfie.features.viewer.MediaViewerContent
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
 import me.alexandervortex.shelfie.ui.preview.playingState
@@ -51,7 +48,7 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_BOTTOM_L
 import me.alexandervortex.shelfie.ui.theme.SHAPE_TOP_L
 
 @Composable
-fun MediaStateUI(
+fun PlayerUI(
     visible: Boolean,
     state: MediaServiceState,
     index: Int,

@@ -20,6 +20,7 @@ import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
+import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
 import me.alexandervortex.shelfie.ui.model.BookUIModel
@@ -67,7 +68,7 @@ fun MediaViewerContent(
                 }
             }
 
-            MediaStateUI(
+            PlayerUI(
                 visible = isMenu,
                 state = serviceState,
                 index = remember { derivedStateOf { listState.firstVisibleItemIndex } }.value,
