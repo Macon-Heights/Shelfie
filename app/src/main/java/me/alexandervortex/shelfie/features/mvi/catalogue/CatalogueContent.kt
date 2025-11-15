@@ -39,7 +39,7 @@ import me.alexandervortex.shelfie.ui.component.ConfirmationUI
 import me.alexandervortex.shelfie.ui.component.EmptyStateUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.TitleUI
-import me.alexandervortex.shelfie.ui.model.Bookable
+import me.alexandervortex.shelfie.ui.model.CatalogueItemUI
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 
@@ -47,10 +47,10 @@ import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 @Composable
 fun CatalogueContent(
     state: CatalogueState,
-    onBookOpen: (Bookable.BookComponentModel) -> Unit,
-    onToggleBookCheck: (Bookable.BookComponentModel) -> Unit,
+    onBookOpen: (CatalogueItemUI.Model) -> Unit,
+    onToggleBookCheck: (CatalogueItemUI.Model) -> Unit,
     onTogglePopup: (Boolean) -> Unit,
-    onToggleRemoveMode: (Bookable.BookComponentModel) -> Unit,
+    onToggleRemoveMode: (CatalogueItemUI.Model) -> Unit,
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
@@ -75,7 +75,7 @@ fun CatalogueContent(
                             state.books,
                             key = { index, _ -> index }
                         ) { index, book ->
-                            val bookModifier = if (book is Bookable.BookComponentModel) Modifier
+                            val bookModifier = if (book is CatalogueItemUI.Model) Modifier
                                 .combinedClickable(
                                     onClick = {
                                         if (state.isRemoveMode) {

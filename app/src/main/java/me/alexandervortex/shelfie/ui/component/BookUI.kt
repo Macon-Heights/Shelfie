@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.ui.model.Bookable
+import me.alexandervortex.shelfie.ui.model.CatalogueItemUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
 import me.alexandervortex.shelfie.ui.theme.IC_UNCHECK
@@ -31,10 +31,10 @@ private const val SPACE_SYMBOL = " "
 @Composable
 fun BookUI(
     isRemoveMode: Boolean,
-    model: Bookable,
+    model: CatalogueItemUI,
     modifier: Modifier = Modifier,
 ) {
-    val isBook = model is Bookable.BookComponentModel
+    val isBook = model is CatalogueItemUI.Model
 
     val color = if (isBook) {
         getColors().surfaceVariant
@@ -45,7 +45,7 @@ fun BookUI(
     val onColorForTitle = getColors().onSurface
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        if (isRemoveMode && model is Bookable.BookComponentModel) {
+        if (isRemoveMode && model is CatalogueItemUI.Model) {
             Image(
                 modifier = Modifier
                     .size(32.dp)
@@ -67,7 +67,7 @@ fun BookUI(
                 .padding(ROOT_PADDINGS.dp)
         ) {
             Text(
-                text = (model as? Bookable.BookComponentModel)
+                text = (model as? CatalogueItemUI.Model)
                     ?.title.takeIf { isBook }
                     ?: SPACE_SYMBOL,
                 color = onColorForTitle,
@@ -77,7 +77,7 @@ fun BookUI(
             )
             Spacer(Modifier.size(4.dp))
             Text(
-                text = (model as? Bookable.BookComponentModel)
+                text = (model as? CatalogueItemUI.Model)
                     ?.author.takeIf { isBook }
                     ?: SPACE_SYMBOL,
                 color = onColor,
@@ -87,8 +87,8 @@ fun BookUI(
             )
             Spacer(Modifier.size(8.dp))
             ProgressUI(
-                (model as? Bookable.BookComponentModel)?.scrollIndex,
-                (model as? Bookable.BookComponentModel)?.elements
+                (model as? CatalogueItemUI.Model)?.scrollIndex,
+                (model as? CatalogueItemUI.Model)?.elements
             )
         }
     }
@@ -97,7 +97,7 @@ fun BookUI(
 @Composable
 @CombinedPreviews
 fun BookComponentPreview() {
-    val model = Bookable.BookComponentModel(
+    val model = CatalogueItemUI.Model(
         id = "thisisid",
         localPath = "",
         title = "Harry Potter and the Sorcerer's Stone",
@@ -107,7 +107,7 @@ fun BookComponentPreview() {
         elements = 100,
         isChecked = false,
     )
-    val skeleton = Bookable.BookComponentSkeleton(0)
+    val skeleton = CatalogueItemUI.Skeleton(0)
     CombinedPreviews {
         BookUI(true, skeleton, Modifier)
     }
