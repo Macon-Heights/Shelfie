@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,8 +23,6 @@ class ViewerViewModel
 @Inject constructor(
     private val repo: BookRepository,
 ) : ViewModel() {
-
-    val errorState = mutableStateOf("")
 
     private var service: MediaService? = null // todo leaked context
     private var serviceJob: Job? = null
@@ -99,7 +96,9 @@ class ViewerViewModel
                 }
                 service?.loadBook(_state.value.book)
             } catch (e: Exception) {
-                errorState.value = e.localizedMessage ?: "unknown viewmodel error"
+                _state.update {
+                    it.copy(error = e.localizedMessage ?: "unknown viewmodel error")
+                }
             }
         }
     }
