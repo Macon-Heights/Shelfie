@@ -7,10 +7,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.alexandervortex.shelfie.features.viewer.mvi.ViewerIntent
 
 @Composable
 fun ViewerScreen(
@@ -18,17 +16,15 @@ fun ViewerScreen(
     viewModel: ViewerViewModel,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val serviceState = state.serviceState
-
-    val book = state.book
     val context = LocalContext.current
     val listState = rememberLazyListState()
 
-    val lifecycleOwner = LocalLifecycleOwner.current
+    val serviceState = state.serviceState
+    val book = state.book
 
-    LaunchedEffect(Unit) {
-        viewModel.loadCurrentBook(id)
-        viewModel.bindService(context)
+    LaunchedEffect(id) {
+        viewModel.onIntent(ViewerIntent.LoadBook(id))
+        viewModel.onIntent(ViewerIntent.BindService(context))
     }
 
     LaunchedEffect(book) {
@@ -52,20 +48,16 @@ fun ViewerScreen(
         }
     }
 
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP) {
-                viewModel.saveScrollStateOnDispose(
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.onIntent(
+                ViewerIntent.SaveScrollStateOnDispose(
                     id = id,
                     index = listState.firstVisibleItemIndex,
                     offset = listState.firstVisibleItemScrollOffset
                 )
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-            viewModel.unbindService(context)
+            )
+            viewModel.onIntent(ViewerIntent.UnbindService(context))
         }
     }
 
@@ -86,22 +78,22 @@ fun ViewerScreen(
         listState = listState,
         playPauseAction = {
             val topIndex = listState.firstVisibleItemIndex
-            viewModel.togglePlayPause(topIndex)
+            viewModel.onIntent(ViewerIntent.TogglePlayPause(topIndex))
         },
         timerAction = {
-            viewModel.clickTimer()
+            viewModel.onIntent(ViewerIntent.ToggleTimer)
         },
         speedAction = {
-            viewModel.clickSpeed()
+            viewModel.onIntent(ViewerIntent.ToggleSpeed)
         },
         textAction = {
-            viewModel.toggleMenu(isMenuVisible = !state.isMenuVisible)
+            viewModel.onIntent(ViewerIntent.ToggleMenu)
         },
         nextAction = {
-            viewModel.clickNext()
+            viewModel.onIntent(ViewerIntent.Next)
         },
         prevAction = {
-            viewModel.clickPrev()
+            viewModel.onIntent(ViewerIntent.Prev)
         }
     )
 }
