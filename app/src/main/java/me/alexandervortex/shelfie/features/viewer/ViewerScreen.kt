@@ -16,9 +16,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun MediaViewerScreen(
+fun ViewerScreen(
     id: String,
-    ttsVm: MediaViewerViewModel,
+    ttsVm: ViewerViewModel,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -81,7 +81,7 @@ fun MediaViewerScreen(
         }
     }
 
-    MediaViewerContent(
+    ViewerContent(
         isMenu = isMenu,
         book = book,
         serviceState = serviceState,
