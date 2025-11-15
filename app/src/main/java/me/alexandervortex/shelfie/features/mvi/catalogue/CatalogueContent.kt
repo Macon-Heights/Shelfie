@@ -33,13 +33,13 @@ import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.component.BUTTON_BIG
-import me.alexandervortex.shelfie.ui.component.BookUI
 import me.alexandervortex.shelfie.ui.component.ButtonUI
+import me.alexandervortex.shelfie.ui.component.CatalogueItemUI
 import me.alexandervortex.shelfie.ui.component.ConfirmationUI
 import me.alexandervortex.shelfie.ui.component.EmptyStateUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.TitleUI
-import me.alexandervortex.shelfie.ui.model.CatalogueItemUI
+import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 
@@ -47,10 +47,10 @@ import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 @Composable
 fun CatalogueContent(
     state: CatalogueState,
-    onBookOpen: (CatalogueItemUI.Model) -> Unit,
-    onToggleBookCheck: (CatalogueItemUI.Model) -> Unit,
+    onBookOpen: (CatalogueItemUIModel.Model) -> Unit,
+    onToggleBookCheck: (CatalogueItemUIModel.Model) -> Unit,
     onTogglePopup: (Boolean) -> Unit,
-    onToggleRemoveMode: (CatalogueItemUI.Model) -> Unit,
+    onToggleRemoveMode: (CatalogueItemUIModel.Model) -> Unit,
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
@@ -75,7 +75,7 @@ fun CatalogueContent(
                             state.books,
                             key = { index, _ -> index }
                         ) { index, book ->
-                            val bookModifier = if (book is CatalogueItemUI.Model) Modifier
+                            val bookModifier = if (book is CatalogueItemUIModel.Model) Modifier
                                 .combinedClickable(
                                     onClick = {
                                         if (state.isRemoveMode) {
@@ -94,7 +94,7 @@ fun CatalogueContent(
                                 },
                                 label = "book_item_$index"
                             ) { animated ->
-                                BookUI(
+                                CatalogueItemUI(
                                     isRemoveMode = state.isRemoveMode,
                                     model = animated,
                                     modifier = bookModifier.animateItem(
