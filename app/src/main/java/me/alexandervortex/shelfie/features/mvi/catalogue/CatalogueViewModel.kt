@@ -15,7 +15,7 @@ import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
-import me.alexandervortex.shelfie.ui.model.Bookable
+import me.alexandervortex.shelfie.ui.model.CatalogueItemUI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,16 +51,16 @@ class CatalogueViewModel @Inject constructor(
         _state.update { it.copy(books = books) }
     }
 
-    private fun getSkeletons(): List<Bookable> {
+    private fun getSkeletons(): List<CatalogueItemUI> {
         return (1..9).map { index ->
-            Bookable.BookComponentSkeleton(index)
+            CatalogueItemUI.Skeleton(index)
         }
     }
 
     private fun importBook(uri: Uri) = viewModelScope.launch {
         _state.update { state ->
             val oldBooks =
-                state.books.toMutableList().also { it.add(Bookable.BookComponentSkeleton(it.size)) }
+                state.books.toMutableList().also { it.add(CatalogueItemUI.Skeleton(it.size)) }
             state.copy(books = oldBooks)
         }
         try {
@@ -76,7 +76,7 @@ class CatalogueViewModel @Inject constructor(
         _state.update { current ->
             val newMode = !current.isRemoveMode
             val updatedBooks =
-                current.books.filterIsInstance<Bookable.BookComponentModel>().map { book ->
+                current.books.filterIsInstance<CatalogueItemUI.Model>().map { book ->
                     book.copy(isChecked = if (book.id == id) !book.isChecked else false)
                 }
             current.copy(isRemoveMode = newMode, books = updatedBooks)
@@ -86,7 +86,7 @@ class CatalogueViewModel @Inject constructor(
     private fun toggleBookCheck(id: String) {
         _state.update { current ->
             val updatedBooks =
-                current.books.filterIsInstance<Bookable.BookComponentModel>().map { book ->
+                current.books.filterIsInstance<CatalogueItemUI.Model>().map { book ->
                     if (book.id == id) book.copy(isChecked = !book.isChecked) else book
                 }
             current.copy(books = updatedBooks)
@@ -95,7 +95,7 @@ class CatalogueViewModel @Inject constructor(
 
     private fun removeChecked() = viewModelScope.launch {
         val checkedBooks =
-            _state.value.books.filterIsInstance<Bookable.BookComponentModel>()
+            _state.value.books.filterIsInstance<CatalogueItemUI.Model>()
                 .filter { it.isChecked }
         if (checkedBooks.isEmpty()) {
             _effect.emit(CatalogueEffect.ShowToast("Ничего не выбрано"))

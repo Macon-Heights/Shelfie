@@ -1,10 +1,10 @@
 package me.alexandervortex.shelfie.base.ext
 
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
-import me.alexandervortex.shelfie.ui.model.Bookable
+import me.alexandervortex.shelfie.ui.model.CatalogueItemUI
 
-fun BookEntity.toBookComponentModel(): Bookable.BookComponentModel {
-    return Bookable.BookComponentModel(
+fun BookEntity.toBookComponentModel(): CatalogueItemUI.Model {
+    return CatalogueItemUI.Model(
         isChecked = false,
         id = id,
         localPath = localPath,
