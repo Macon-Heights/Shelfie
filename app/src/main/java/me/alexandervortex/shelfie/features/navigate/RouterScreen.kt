@@ -37,11 +37,10 @@ fun RouterScreen() {
             }),
         ) {
 
-            val ttsVm = hiltViewModel<ViewerViewModel>()
-
+            val viewModel = hiltViewModel<ViewerViewModel>()
             ViewerScreen(
                 id = it.getId(),
-                ttsVm = ttsVm
+                viewModel = viewModel
             )
         }
     }
