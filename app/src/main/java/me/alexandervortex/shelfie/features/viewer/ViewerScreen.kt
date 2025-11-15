@@ -18,25 +18,25 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ViewerScreen(
     id: String,
-    ttsVm: ViewerViewModel,
+    viewModel: ViewerViewModel,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val serviceState by ttsVm.state.collectAsStateWithLifecycle()
+    val serviceState by viewModel.state.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-    val book = ttsVm.bookUIModel.value
+    val book = viewModel.bookUIModel.value
 
     var isMenu by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
-        ttsVm.loadCurrentBook(id)
-        ttsVm.bindService(context)
+        viewModel.loadCurrentBook(id)
+        viewModel.bindService(context)
     }
 
     LaunchedEffect(book) {
         book?.let {
             listState.scrollToItem(
-                index = ttsVm.state.value.index,
+                index = viewModel.state.value.index,
                 scrollOffset = 0
             )
         }
@@ -57,7 +57,7 @@ fun ViewerScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) {
-                ttsVm.saveScrollStateOnDispose(
+                viewModel.saveScrollStateOnDispose(
                     id = id,
                     index = listState.firstVisibleItemIndex,
                     offset = listState.firstVisibleItemScrollOffset
@@ -67,7 +67,7 @@ fun ViewerScreen(
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            ttsVm.unbindService(context)
+            viewModel.unbindService(context)
         }
     }
 
@@ -88,22 +88,22 @@ fun ViewerScreen(
         listState = listState,
         playPauseAction = {
             val topIndex = listState.firstVisibleItemIndex
-            ttsVm.togglePlayPause(topIndex)
+            viewModel.togglePlayPause(topIndex)
         },
         timerAction = {
-            ttsVm.clickTimer()
+            viewModel.clickTimer()
         },
         speedAction = {
-            ttsVm.clickSpeed()
+            viewModel.clickSpeed()
         },
         textAction = {
             isMenu = !isMenu
         },
         nextAction = {
-            ttsVm.clickNext()
+            viewModel.clickNext()
         },
         prevAction = {
-            ttsVm.clickPrev()
+            viewModel.clickPrev()
         }
     )
 }
