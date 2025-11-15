@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.data.mapper
 
-import me.alexandervortex.shelfie.ui.model.TitleInfoUI
+import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
@@ -11,8 +11,8 @@ class TitleInfoMapper
         id: String,
         localPath: String,
         titleInfo: Element?,
-    ): TitleInfoUI {
-        val result = TitleInfoUI(
+    ): TitleInfoUIModel {
+        val result = TitleInfoUIModel(
             id = id,
             localPath = localPath,
             title = titleInfo?.selectFirst("book-title")?.text()?.trim(),

@@ -32,12 +32,12 @@ import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
-import me.alexandervortex.shelfie.ui.component.getBookUI
-import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_BIG
-import me.alexandervortex.shelfie.ui.component.refactored.BUTTON_SMALL
-import me.alexandervortex.shelfie.ui.component.refactored.ButtonUI
-import me.alexandervortex.shelfie.ui.component.refactored.ProgressUI
+import me.alexandervortex.shelfie.ui.component.BUTTON_BIG
+import me.alexandervortex.shelfie.ui.component.BUTTON_SMALL
+import me.alexandervortex.shelfie.ui.component.ButtonUI
+import me.alexandervortex.shelfie.ui.component.ProgressUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.preview.getBookUI
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PLAY

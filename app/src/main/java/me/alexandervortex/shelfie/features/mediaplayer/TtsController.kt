@@ -6,7 +6,7 @@ import android.speech.tts.UtteranceProgressListener
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.ui.model.BookUI
-import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
@@ -136,7 +136,7 @@ class TtsController(
         val elements = bookModel?.elements ?: return stopSpeaking()
         if (currentIndex >= elements.size) return stopSpeaking()
 
-        val textUi = elements[currentIndex] as? ElementUI.TextUI ?: run {
+        val textUi = elements[currentIndex] as? ElementUIModel.TextUIModel ?: run {
             currentIndex++
             return speakNext()
         }

@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.component.refactored
+package me.alexandervortex.shelfie.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
