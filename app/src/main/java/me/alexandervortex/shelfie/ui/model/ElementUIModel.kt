@@ -6,55 +6,55 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 
-sealed interface ElementUI {
+sealed interface ElementUIModel {
 
-    data class TextUI(
+    data class TextUIModel(
         val parts: List<StyledText>,
-    ) : ElementUI
+    ) : ElementUIModel
 
-    data class ImageUI(
+    data class ImageUIModel(
         val image: ByteArray,
-    ) : ElementUI
+    ) : ElementUIModel
 
-    data object EmptyLineUI : ElementUI
+    data object EmptyLineUIModel : ElementUIModel
 
-    data class DebugUI(
+    data class DebugUIModel(
         val type: String, // type of tag
         val message: String, // error text
     )
 }
 
 data class StyledText(
-    val styles: Set<TextStyle>, // enum later
+    val styles: Set<TextStyleModel>, // enum later
     val text: String,
 )
 
 fun composeSpanStyle(
-    styles: Set<TextStyle>,
+    styles: Set<TextStyleModel>,
     linkColor: Color,
 ): SpanStyle {
     var span = SpanStyle()
 
     styles.forEach { style ->
         when (style) {
-            TextStyle.Bold -> span = span.merge(SpanStyle(fontWeight = FontWeight.Black))
-            TextStyle.Italic -> span = span.merge(SpanStyle(fontStyle = FontStyle.Italic))
-            TextStyle.Underline -> span =
+            TextStyleModel.Bold -> span = span.merge(SpanStyle(fontWeight = FontWeight.Black))
+            TextStyleModel.Italic -> span = span.merge(SpanStyle(fontStyle = FontStyle.Italic))
+            TextStyleModel.Underline -> span =
                 span.merge(SpanStyle(textDecoration = TextDecoration.Underline))
 
-            TextStyle.Sub -> span =
+            TextStyleModel.Sub -> span =
                 span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Subscript))
 
-            TextStyle.Sup -> span =
+            TextStyleModel.Sup -> span =
                 span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Superscript))
 
-            is TextStyle.Link -> span =
+            is TextStyleModel.Link -> span =
                 span.merge(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline))
 
-            TextStyle.Monospace -> span =
+            TextStyleModel.Monospace -> span =
                 span.merge(SpanStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace))
 
-            is TextStyle.Custom -> when (style.name) {
+            is TextStyleModel.Custom -> when (style.name) {
                 "strike" -> span =
                     span.merge(SpanStyle(textDecoration = TextDecoration.LineThrough))
 

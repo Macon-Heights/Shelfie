@@ -1,9 +1,9 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.base.ext.orEmpty
-import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
-import me.alexandervortex.shelfie.ui.model.TextStyle
+import me.alexandervortex.shelfie.ui.model.TextStyleModel
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import javax.inject.Inject
@@ -13,13 +13,13 @@ class ElementMapper @Inject constructor() {
     fun map(
         element: Element?,
         binaries: Map<String, ByteArray>,
-        styles: Set<TextStyle> = emptySet(),
-    ): List<ElementUI> {
+        styles: Set<TextStyleModel> = emptySet(),
+    ): List<ElementUIModel> {
         if (element == null) return emptyList()
 
         return when (element.tagName().lowercase()) {
             "image" -> image(element, binaries).orEmpty()
-            "empty-line" -> listOf(ElementUI.EmptyLineUI)
+            "empty-line" -> listOf(ElementUIModel.EmptyLineUIModel)
             else -> parseComplex(element, binaries, styles)
         }
     }
@@ -27,14 +27,14 @@ class ElementMapper @Inject constructor() {
     private fun parseComplex(
         element: Element,
         binaries: Map<String, ByteArray>,
-        styles: Set<TextStyle>,
-    ): List<ElementUI> {
-        val result = mutableListOf<ElementUI>()
+        styles: Set<TextStyleModel>,
+    ): List<ElementUIModel> {
+        val result = mutableListOf<ElementUIModel>()
         val textParts = mutableListOf<StyledText>()
 
         fun flushText() {
             if (textParts.isNotEmpty()) {
-                result += ElementUI.TextUI(parts = textParts.toList())
+                result += ElementUIModel.TextUIModel(parts = textParts.toList())
                 textParts.clear()
             }
         }
@@ -52,21 +52,21 @@ class ElementMapper @Inject constructor() {
                 }
 
                 is Element -> when (val tag = node.tagName().lowercase()) {
-                    "strong", "b" -> result += map(node, binaries, styles + TextStyle.Bold)
-                    "emphasis", "i" -> result += map(node, binaries, styles + TextStyle.Italic)
-                    "u" -> result += map(node, binaries, styles + TextStyle.Underline)
-                    "sub" -> result += map(node, binaries, styles + TextStyle.Sub)
-                    "sup" -> result += map(node, binaries, styles + TextStyle.Sup)
+                    "strong", "b" -> result += map(node, binaries, styles + TextStyleModel.Bold)
+                    "emphasis", "i" -> result += map(node, binaries, styles + TextStyleModel.Italic)
+                    "u" -> result += map(node, binaries, styles + TextStyleModel.Underline)
+                    "sub" -> result += map(node, binaries, styles + TextStyleModel.Sub)
+                    "sup" -> result += map(node, binaries, styles + TextStyleModel.Sup)
                     "strike", "s", "del" -> result += map(
                         node,
                         binaries,
-                        styles + TextStyle.Custom("strike")
+                        styles + TextStyleModel.Custom("strike")
                     )
 
-                    "code", "tt" -> result += map(node, binaries, styles + TextStyle.Monospace)
+                    "code", "tt" -> result += map(node, binaries, styles + TextStyleModel.Monospace)
                     "a" -> {
                         val href = node.attr("href").ifBlank { node.attr("xlink:href") }
-                        result += map(node, binaries, styles + TextStyle.Link(href))
+                        result += map(node, binaries, styles + TextStyleModel.Link(href))
                     }
 
                     "image" -> {
@@ -95,11 +95,11 @@ class ElementMapper @Inject constructor() {
     private fun image(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ElementUI? {
+    ): ElementUIModel? {
         val KEY = "xlink:href"
         val SHARP = "#"
         val ref = element.attr(KEY).removePrefix(SHARP)
         val image = binaries[ref]
-        return image?.let { ElementUI.ImageUI(it) }
+        return image?.let { ElementUIModel.ImageUIModel(it) }
     }
 }

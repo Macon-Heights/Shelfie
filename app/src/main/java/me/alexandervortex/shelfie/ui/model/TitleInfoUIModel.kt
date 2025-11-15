@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.ui.model
 
-data class TitleInfoUI(
+data class TitleInfoUIModel(
     val id: String,
     val localPath: String,
 

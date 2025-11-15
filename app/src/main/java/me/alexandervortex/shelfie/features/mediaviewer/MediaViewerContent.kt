@@ -19,12 +19,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
-import me.alexandervortex.shelfie.ui.component.getBookUI
-import me.alexandervortex.shelfie.ui.component.refactored.PopupBoxUI
-import me.alexandervortex.shelfie.ui.component.refactored.SettingsUI
+import me.alexandervortex.shelfie.ui.component.PopupBoxUI
+import me.alexandervortex.shelfie.ui.component.SettingsUI
 import me.alexandervortex.shelfie.ui.model.BookUI
-import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.preview.getBookUI
 
 @Composable
 fun MediaViewerContent(
@@ -53,7 +53,7 @@ fun MediaViewerContent(
                 contentPadding = PaddingValues(padding.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
-                val sections: List<ElementUI> = book?.elements.orEmpty()
+                val sections: List<ElementUIModel> = book?.elements.orEmpty()
                 itemsIndexed(sections) { index, section ->
                     ComponentUI(
                         modifier = Modifier.clickable { textAction.invoke() },

@@ -1,27 +1,27 @@
 package me.alexandervortex.shelfie.base.ext
 
-import me.alexandervortex.shelfie.ui.model.ElementUI
+import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
 
-fun ElementUI?.orEmpty(): List<ElementUI> {
+fun ElementUIModel?.orEmpty(): List<ElementUIModel> {
     return this?.let { listOf(it) } ?: emptyList()
 }
 
-fun List<ElementUI>.normalizeEmptyLines(): List<ElementUI> {
-    val result = mutableListOf<ElementUI>()
+fun List<ElementUIModel>.normalizeEmptyLines(): List<ElementUIModel> {
+    val result = mutableListOf<ElementUIModel>()
     forEachIndexed { _, element ->
-        if (element is ElementUI.EmptyLineUI) {
-            if (result.lastOrNull() is ElementUI.EmptyLineUI) return@forEachIndexed
+        if (element is ElementUIModel.EmptyLineUIModel) {
+            if (result.lastOrNull() is ElementUIModel.EmptyLineUIModel) return@forEachIndexed
         }
         result += element
     }
     return result
 }
 
-fun List<ElementUI>.normalizeEmptyTextUI(): List<ElementUI> {
-    val result = mutableListOf<ElementUI>()
+fun List<ElementUIModel>.normalizeEmptyTextUI(): List<ElementUIModel> {
+    val result = mutableListOf<ElementUIModel>()
     forEachIndexed { _, element ->
-        if (element is ElementUI.TextUI) {
+        if (element is ElementUIModel.TextUIModel) {
             if (element.parts.isEmpty() || element.parts.filter { it.text.isNotBlank() }
                     .isEmpty()) return@forEachIndexed
         }
@@ -30,11 +30,11 @@ fun List<ElementUI>.normalizeEmptyTextUI(): List<ElementUI> {
     return result
 }
 
-fun List<ElementUI>.splitPartsBySentences(): List<ElementUI> {
+fun List<ElementUIModel>.splitPartsBySentences(): List<ElementUIModel> {
     val sentenceRegex = Regex("(?<=[.!?])\\s+")
     return map { element ->
         when (element) {
-            is ElementUI.TextUI -> {
+            is ElementUIModel.TextUIModel -> {
                 val newParts = element.parts.flatMap { part ->
                     val sentences = part.text.split(sentenceRegex)
                         .map {

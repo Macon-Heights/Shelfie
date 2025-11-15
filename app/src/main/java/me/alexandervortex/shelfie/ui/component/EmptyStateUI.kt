@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.getColors
 
 @Composable
-fun EmptyList(@StringRes textRes: Int) {
+fun EmptyStateUI(@StringRes textRes: Int) {
     Text(
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Start,
