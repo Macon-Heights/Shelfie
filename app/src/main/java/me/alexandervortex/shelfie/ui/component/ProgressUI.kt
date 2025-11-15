@@ -52,6 +52,6 @@ private fun BookComponentWithLine() {
         elements = 100
     )
     CombinedPreviews {
-        BookUI(false, kek)
+        CatalogueItemUI(false, kek)
     }
 }

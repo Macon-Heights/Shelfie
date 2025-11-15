@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.ui.model
 
-sealed interface CatalogueItemUI {
+sealed interface CatalogueItemUIModel {
 
     data class Model(
         // UI
@@ -14,7 +14,7 @@ sealed interface CatalogueItemUI {
         val scrollIndex: Int = 0,
         val scrollOffset: Int = 0,
         val elements: Int = 0,
-    ) : CatalogueItemUI
+    ) : CatalogueItemUIModel
 
-    data class Skeleton(val index: Int) : CatalogueItemUI
+    data class Skeleton(val index: Int) : CatalogueItemUIModel
 }
