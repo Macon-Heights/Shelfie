@@ -51,7 +51,7 @@ class ViewerViewModel
 
     val errorState = mutableStateOf("")
 
-    private var service: MediaService? = null
+    private var service: MediaService? = null // todo leaked context
     private var serviceJob: Job? = null
     val bookUIModel: MutableState<BookUIModel?> = mutableStateOf(null)
 
