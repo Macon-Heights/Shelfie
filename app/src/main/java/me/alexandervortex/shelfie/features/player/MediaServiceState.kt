@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.viewer
+package me.alexandervortex.shelfie.features.player
 
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
@@ -15,20 +15,4 @@ data class MediaServiceState(
 
     val title: String? = null,
     val author: String? = null,
-) {
-
-    companion object {
-
-        fun playingState(): MediaServiceState {
-            return MediaServiceState(
-                isPlaying = true,
-            )
-        }
-
-        fun pausedState(): MediaServiceState {
-            return MediaServiceState(
-                isPlaying = false,
-            )
-        }
-    }
-}
+)

@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.features.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
@@ -25,6 +26,7 @@ import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
+import me.alexandervortex.shelfie.ui.preview.pausedState
 
 @Composable
 fun MediaViewerContent(
@@ -93,7 +95,7 @@ fun MediaViewerPreview() {
         MediaViewerContent(
             isMenu = true,
             book = bookUI,
-            serviceState = MediaServiceState.playingState(),
+            serviceState = pausedState(),
             listState = LazyListState(),
             nextAction = {},
             playPauseAction = {},

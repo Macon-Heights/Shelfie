@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.viewer
+package me.alexandervortex.shelfie.features.player
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.player.TtsController
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.features.settings.values.next
