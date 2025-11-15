@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.ui.preview
 
+import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
@@ -10,6 +11,18 @@ fun getBookUI(): BookUIModel {
         elements = getElements(),
         progressIndex = 0,
         progressOffset = 0
+    )
+}
+
+fun playingState(): MediaServiceState {
+    return MediaServiceState(
+        isPlaying = true,
+    )
+}
+
+fun pausedState(): MediaServiceState {
+    return MediaServiceState(
+        isPlaying = false,
     )
 }
 

@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.features.player.MediaService
+import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
