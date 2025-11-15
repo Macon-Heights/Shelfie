@@ -9,12 +9,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.player.MediaService
+import me.alexandervortex.shelfie.features.viewer.mvi.ViewerEffect
+import me.alexandervortex.shelfie.features.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.features.viewer.mvi.ViewerState
 import javax.inject.Inject
 
@@ -24,13 +28,39 @@ class ViewerViewModel
     private val repo: BookRepository,
 ) : ViewModel() {
 
-    private var service: MediaService? = null // todo leaked context
-    private var serviceJob: Job? = null
-
     private val _state = MutableStateFlow(ViewerState())
     val state = _state.asStateFlow()
 
+    private val _effect = MutableSharedFlow<ViewerEffect>()
+    val effect = _effect.asSharedFlow()
+
+    private var service: MediaService? = null // todo leaked context
+    private var serviceJob: Job? = null
     private var isBound = false
+
+    fun onIntent(intent: ViewerIntent) {
+        when (intent) {
+
+            is ViewerIntent.LoadBook -> loadCurrentBook(intent.id)
+            is ViewerIntent.BindService -> bindService(intent.context)
+            is ViewerIntent.UnbindService -> unbindService(intent.context)
+
+            is ViewerIntent.TogglePlayPause -> togglePlayPause(intent.index)
+            is ViewerIntent.SaveScrollStateOnDispose -> saveScrollStateOnDispose(
+                intent.id,
+                intent.index,
+                intent.offset
+            )
+
+            ViewerIntent.Next -> service?.clickNext()
+            ViewerIntent.Prev -> service?.clickPrev()
+            ViewerIntent.ToggleTimer -> service?.clickTimer()
+            ViewerIntent.ToggleSpeed -> service?.clickSpeed()
+
+            ViewerIntent.ToggleMenu -> _state.update { it.copy(isMenuVisible = !it.isMenuVisible) }
+            ViewerIntent.ToggleSettings -> _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
+        }
+    }
 
     private val conn = object : ServiceConnection {
 
@@ -67,7 +97,7 @@ class ViewerViewModel
         }
     }
 
-    fun bindService(context: Context) {
+    private fun bindService(context: Context) {
         if (isBound) return
         val intent = Intent(context, MediaService::class.java)
         // гарантируем живой сервис
@@ -77,7 +107,7 @@ class ViewerViewModel
     }
 
     /** вызывать при dispose или onStop */
-    fun unbindService(context: Context) {
+    private fun unbindService(context: Context) {
         if (!isBound) return
         runCatching {
             context.unbindService(conn)
@@ -88,7 +118,7 @@ class ViewerViewModel
         isBound = false
     }
 
-    fun loadCurrentBook(id: String) {
+    private fun loadCurrentBook(id: String) {
         viewModelScope.launch {
             try {
                 _state.update {
@@ -103,7 +133,7 @@ class ViewerViewModel
         }
     }
 
-    fun saveScrollStateOnDispose(
+    private fun saveScrollStateOnDispose(
         id: String,
         index: Int,
         offset: Int,
@@ -118,27 +148,27 @@ class ViewerViewModel
         }
     }
 
-    fun togglePlayPause(currentTopIndex: Int) {
+    private fun togglePlayPause(currentTopIndex: Int) {
         service?.togglePlayPause(currentTopIndex)
     }
 
-    fun clickTimer() {
+    private fun clickTimer() {
         service?.clickTimer()
     }
 
-    fun clickSpeed() {
+    private fun clickSpeed() {
         service?.clickSpeed()
     }
 
-    fun clickNext() {
+    private fun clickNext() {
         service?.clickNext()
     }
 
-    fun clickPrev() {
+    private fun clickPrev() {
         service?.clickPrev()
     }
 
-    fun toggleMenu(isMenuVisible: Boolean) {
+    private fun toggleMenu(isMenuVisible: Boolean) {
         _state.update { it.copy(isMenuVisible = isMenuVisible) }
     }
 }
