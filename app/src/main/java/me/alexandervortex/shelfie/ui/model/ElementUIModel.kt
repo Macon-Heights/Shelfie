@@ -8,6 +8,9 @@ import androidx.compose.ui.text.style.TextDecoration
 
 sealed interface ElementUIModel {
 
+
+    data object Skeleton : ElementUIModel
+
     data class TextUIModel(
         val parts: List<StyledText>,
     ) : ElementUIModel

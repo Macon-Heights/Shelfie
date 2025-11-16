@@ -20,6 +20,9 @@ import me.alexandervortex.shelfie.features.player.MediaService
 import me.alexandervortex.shelfie.features.viewer.mvi.ViewerEffect
 import me.alexandervortex.shelfie.features.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.features.viewer.mvi.ViewerState
+import me.alexandervortex.shelfie.ui.model.BookUIModel
+import me.alexandervortex.shelfie.ui.model.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,11 +43,9 @@ class ViewerViewModel
 
     fun onIntent(intent: ViewerIntent) {
         when (intent) {
-
             is ViewerIntent.LoadBook -> loadCurrentBook(intent.id)
             is ViewerIntent.BindService -> bindService(intent.context)
             is ViewerIntent.UnbindService -> unbindService(intent.context)
-
             is ViewerIntent.TogglePlayPause -> togglePlayPause(intent.index)
             is ViewerIntent.SaveScrollStateOnDispose -> saveScrollStateOnDispose(
                 intent.id,
@@ -56,7 +57,6 @@ class ViewerViewModel
             ViewerIntent.Prev -> service?.clickPrev()
             ViewerIntent.ToggleTimer -> service?.clickTimer()
             ViewerIntent.ToggleSpeed -> service?.clickSpeed()
-
             ViewerIntent.ToggleMenu -> _state.update { it.copy(isMenuVisible = !it.isMenuVisible) }
             ViewerIntent.ToggleSettings -> _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
         }
@@ -119,6 +119,14 @@ class ViewerViewModel
     }
 
     private fun loadCurrentBook(id: String) {
+        _state.update {
+            it.copy(
+                book = BookUIModel(
+                    titleInfo = getTitleInfo(),
+                    elements = getSkeletons()
+                )
+            )
+        }
         viewModelScope.launch {
             try {
                 _state.update {
@@ -130,6 +138,16 @@ class ViewerViewModel
                     it.copy(error = e.localizedMessage ?: "unknown viewmodel error")
                 }
             }
+        }
+    }
+
+    private fun getTitleInfo(): TitleInfoUIModel {
+        return TitleInfoUIModel("", "", "", "", "", "", "", "", null)
+    }
+
+    private fun getSkeletons(): List<ElementUIModel> {
+        return (1..9).map { index ->
+            ElementUIModel.Skeleton
         }
     }
 

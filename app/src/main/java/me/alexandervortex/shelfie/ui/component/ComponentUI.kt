@@ -2,12 +2,17 @@ package me.alexandervortex.shelfie.ui.component
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -23,6 +28,7 @@ import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.composeSpanStyle
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
+import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 
 @Composable
 fun ComponentUI(
@@ -92,6 +98,33 @@ fun ComponentUI(
                     .fillMaxWidth()
                     .padding(bottom = (fontSize * 2).dp)
             )
+        }
+
+        ElementUIModel.Skeleton -> {
+            Column {
+                repeat(9) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height((fontSize * (1 + lineHeight)).dp)
+                    ) {
+                        Text(
+                            text = " ",
+                            fontSize = fontSize.sp,
+                            textAlign = TextAlign.Justify,
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .clip(SHAPE_S)
+                                .background(getColors().onBackground)
+                        )
+                    }
+                }
+                Spacer(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = (fontSize * 2).dp)
+                )
+            }
         }
     }
 }
