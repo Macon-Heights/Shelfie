@@ -16,5 +16,5 @@ sealed interface CatalogueItemUIModel {
         val elements: Int = 0,
     ) : CatalogueItemUIModel
 
-    data class Skeleton(val index: Int) : CatalogueItemUIModel
+    data object Skeleton : CatalogueItemUIModel
 }

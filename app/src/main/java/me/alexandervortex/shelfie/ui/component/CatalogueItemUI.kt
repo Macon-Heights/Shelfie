@@ -107,7 +107,7 @@ fun BookComponentPreview() {
         elements = 100,
         isChecked = false,
     )
-    val skeleton = CatalogueItemUIModel.Skeleton(0)
+    val skeleton = CatalogueItemUIModel.Skeleton
     CombinedPreviews {
         CatalogueItemUI(true, skeleton, Modifier)
     }
