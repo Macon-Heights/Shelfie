@@ -1,5 +1,11 @@
 package me.alexandervortex.shelfie.features.viewer
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +38,7 @@ fun ViewerContent(
     onIntent: (ViewerIntent) -> Unit,
 ) {
     val book = state.book
-    var isSettings = state.isSettingsVisible
+    val isSettings = state.isSettingsVisible
     val padding = LocalAppSettings.padding.current
     PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
@@ -44,19 +50,37 @@ fun ViewerContent(
                 state = listState,
                 horizontalAlignment = Alignment.Start,
                 contentPadding = PaddingValues(padding.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .animateContentSize(tween())
             ) {
                 val sections: List<ElementUIModel> = book?.elements.orEmpty()
-                itemsIndexed(sections) { index, section ->
-                    ComponentUI(
-                        modifier = Modifier.clickable {
-                            onIntent(ViewerIntent.ToggleMenu)
+                itemsIndexed(
+                    sections,
+                    key = { index, item ->
+                        index
+                    }
+                ) { index, section ->
+
+                    AnimatedContent(
+                        targetState = section,  // важное изменение
+                        transitionSpec = {
+                            fadeIn(tween()) togetherWith fadeOut(tween())
                         },
-                        element = section,
-                        elementIndex = index,
-                        currentIndex = state.serviceState.index,
-                        partIndex = state.serviceState.part
-                    )
+                        label = "section_item_$index"
+                    ) { animated ->
+                        ComponentUI(
+                            modifier = Modifier
+                                .clickable {
+                                    onIntent(ViewerIntent.ToggleMenu)
+                                }
+                                .animateItem(placementSpec = tween()), // только item placement
+                            element = animated,
+                            elementIndex = index,
+                            currentIndex = state.serviceState.index,
+                            partIndex = state.serviceState.part
+                        )
+                    }
                 }
             }
 
