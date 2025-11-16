@@ -44,8 +44,6 @@ private fun getTitleInfo(): TitleInfoUIModel {
 private fun getElements(): List<ElementUIModel> {
     return listOf(
         ElementUIModel.Skeleton,
-        ElementUIModel.Skeleton,
-        ElementUIModel.Skeleton,
         ElementUIModel.TextUIModel(
             parts = listOf(
                 StyledText(
