@@ -53,14 +53,14 @@ class CatalogueViewModel @Inject constructor(
 
     private fun getSkeletons(): List<CatalogueItemUIModel> {
         return (1..9).map { index ->
-            CatalogueItemUIModel.Skeleton(index)
+            CatalogueItemUIModel.Skeleton
         }
     }
 
     private fun importBook(uri: Uri) = viewModelScope.launch {
         _state.update { state ->
             val oldBooks =
-                state.books.toMutableList().also { it.add(CatalogueItemUIModel.Skeleton(it.size)) }
+                state.books.toMutableList().also { it.add(CatalogueItemUIModel.Skeleton) }
             state.copy(books = oldBooks)
         }
         try {
