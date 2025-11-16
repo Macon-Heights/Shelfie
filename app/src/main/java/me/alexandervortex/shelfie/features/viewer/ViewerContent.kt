@@ -8,41 +8,31 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.features.settings.SettingsViewModel
+import me.alexandervortex.shelfie.features.viewer.mvi.ViewerIntent
+import me.alexandervortex.shelfie.features.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
-import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
-import me.alexandervortex.shelfie.ui.preview.pausedState
 
 @Composable
 fun ViewerContent(
-    isMenu: Boolean,
-    book: BookUIModel?,
-    serviceState: MediaServiceState,
+    state: ViewerState,
     listState: LazyListState,
-    playPauseAction: () -> Unit,
-    timerAction: () -> Unit,
-    speedAction: () -> Unit,
-    prevAction: () -> Unit,
-    nextAction: () -> Unit,
-    textAction: () -> Unit,
+    onIntent: (ViewerIntent) -> Unit,
 ) {
-    var isSettings by remember { mutableStateOf(false) }
+    val book = state.book
+    var isSettings = state.isSettingsVisible
     val padding = LocalAppSettings.padding.current
     PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
@@ -50,7 +40,7 @@ fun ViewerContent(
         isPopup = isSettings,
         content = {
             LazyColumn(
-                userScrollEnabled = !serviceState.isPlaying,
+                userScrollEnabled = !state.serviceState.isPlaying,
                 state = listState,
                 horizontalAlignment = Alignment.Start,
                 contentPadding = PaddingValues(padding.dp),
@@ -59,31 +49,33 @@ fun ViewerContent(
                 val sections: List<ElementUIModel> = book?.elements.orEmpty()
                 itemsIndexed(sections) { index, section ->
                     ComponentUI(
-                        modifier = Modifier.clickable { textAction.invoke() },
+                        modifier = Modifier.clickable {
+                            onIntent(ViewerIntent.ToggleMenu)
+                        },
                         element = section,
                         elementIndex = index,
-                        currentIndex = serviceState.index,
-                        partIndex = serviceState.part
+                        currentIndex = state.serviceState.index,
+                        partIndex = state.serviceState.part
                     )
                 }
             }
 
             PlayerUI(
-                visible = isMenu,
-                state = serviceState,
+                visible = state.isMenuVisible,
+                state = state.serviceState,
                 index = remember { derivedStateOf { listState.firstVisibleItemIndex } }.value,
                 elements = book?.elements?.size ?: 0,
-                settingsAction = { isSettings = !isSettings },
-                playPauseAction = { playPauseAction.invoke() },
-                timerAction = { timerAction.invoke() },
-                speedAction = { speedAction.invoke() },
-                prevAction = { prevAction.invoke() },
-                nextAction = { nextAction.invoke() }
+                settingsAction = { onIntent(ViewerIntent.ToggleSettings) },
+                playPauseAction = { onIntent(ViewerIntent.TogglePlayPause(listState.firstVisibleItemIndex)) },
+                timerAction = { onIntent(ViewerIntent.ToggleTimer) },
+                speedAction = { onIntent(ViewerIntent.ToggleSpeed) },
+                prevAction = { onIntent(ViewerIntent.Prev) },
+                nextAction = { onIntent(ViewerIntent.Next) }
             )
         },
         popup = {
             val viewModel = hiltViewModel<SettingsViewModel>()
-            SettingsUI(viewModel) { isSettings = false }
+            SettingsUI(viewModel) { onIntent(ViewerIntent.ToggleSettings) }
         }
     )
 }
@@ -94,16 +86,9 @@ fun MediaViewerPreview() {
     CombinedPreviews {
         val bookUI = getBookUI()
         ViewerContent(
-            isMenu = true,
-            book = bookUI,
-            serviceState = pausedState(),
+            state = ViewerState(book = bookUI),
             listState = LazyListState(),
-            nextAction = {},
-            playPauseAction = {},
-            prevAction = {},
-            textAction = {},
-            speedAction = {},
-            timerAction = {},
+            onIntent = {}
         )
     }
 }
