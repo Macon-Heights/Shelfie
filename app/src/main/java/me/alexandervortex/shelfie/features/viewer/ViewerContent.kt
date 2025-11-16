@@ -86,7 +86,10 @@ fun MediaViewerPreview() {
     CombinedPreviews {
         val bookUI = getBookUI()
         ViewerContent(
-            state = ViewerState(book = bookUI),
+            state = ViewerState(
+                isMenuVisible = false,
+                book = bookUI
+            ),
             listState = LazyListState(),
             onIntent = {}
         )
