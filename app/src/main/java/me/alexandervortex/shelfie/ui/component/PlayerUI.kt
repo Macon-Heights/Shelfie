@@ -34,6 +34,7 @@ import me.alexandervortex.shelfie.features.player.MediaServiceState
 import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.features.settings.values.TimerValue
 import me.alexandervortex.shelfie.features.viewer.ViewerContent
+import me.alexandervortex.shelfie.features.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
 import me.alexandervortex.shelfie.ui.preview.playingState
@@ -193,22 +194,18 @@ fun MediaViewerPreview2() {
     CombinedPreviews {
         val bookUI = getBookUI()
         ViewerContent(
-            isMenu = true,
-            book = bookUI,
-            serviceState = playingState()
-                .copy(
-                    title = "Нити Смерти (Сборник)",
-                    speed = SpeechRateValue.FAST,
-                    timer = TimerValue.MIN_20,
-                    index = 3,
-                ),
+            state = ViewerState(
+                book = bookUI,
+                serviceState = playingState()
+                    .copy(
+                        title = "Нити Смерти (Сборник)",
+                        speed = SpeechRateValue.FAST,
+                        timer = TimerValue.MIN_20,
+                        index = 3,
+                    ),
+            ),
             listState = LazyListState(),
-            nextAction = {},
-            prevAction = {},
-            textAction = {},
-            speedAction = {},
-            timerAction = {},
-            playPauseAction = {}
+            onIntent = {},
         )
     }
 }

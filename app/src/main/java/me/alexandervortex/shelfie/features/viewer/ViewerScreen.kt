@@ -72,28 +72,8 @@ fun ViewerScreen(
     }
 
     ViewerContent(
-        isMenu = state.isMenuVisible,
-        book = book,
-        serviceState = serviceState,
+        state = state,
         listState = listState,
-        playPauseAction = {
-            val topIndex = listState.firstVisibleItemIndex
-            viewModel.onIntent(ViewerIntent.TogglePlayPause(topIndex))
-        },
-        timerAction = {
-            viewModel.onIntent(ViewerIntent.ToggleTimer)
-        },
-        speedAction = {
-            viewModel.onIntent(ViewerIntent.ToggleSpeed)
-        },
-        textAction = {
-            viewModel.onIntent(ViewerIntent.ToggleMenu)
-        },
-        nextAction = {
-            viewModel.onIntent(ViewerIntent.Next)
-        },
-        prevAction = {
-            viewModel.onIntent(ViewerIntent.Prev)
-        }
+        onIntent = viewModel::onIntent
     )
 }
