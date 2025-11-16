@@ -115,7 +115,7 @@ fun ComponentUI(
                             modifier = modifier
                                 .fillMaxWidth()
                                 .clip(SHAPE_S)
-                                .background(getColors().onBackground)
+                                .background(getColors().surfaceContainerHighest)
                         )
                     }
                 }
@@ -135,6 +135,12 @@ fun TextUiPreview() {
     CombinedPreviews {
         ComponentUI(
             element = getBookUI().elements.first(),
+            elementIndex = 0,
+            currentIndex = 0,
+            partIndex = 2
+        )
+        ComponentUI(
+            element = getBookUI().elements.get(1),
             elementIndex = 0,
             currentIndex = 0,
             partIndex = 2
