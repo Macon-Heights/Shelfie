@@ -6,8 +6,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 
-sealed interface ElementUIModel {
+fun getKey(index: Int, firstIndex: Int?): Int {
+    return index - (firstIndex ?: 0)
+}
 
+sealed interface ElementUIModel {
 
     data object Skeleton : ElementUIModel
 
