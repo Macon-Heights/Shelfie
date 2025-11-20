@@ -2,7 +2,6 @@ package me.alexandervortex.shelfie.ui.component
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -102,7 +101,7 @@ fun ComponentUI(
 
         ElementUIModel.Skeleton -> {
             Column {
-                repeat(9) {
+                repeat(3) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -115,7 +114,6 @@ fun ComponentUI(
                             modifier = modifier
                                 .fillMaxWidth()
                                 .clip(SHAPE_S)
-                                .background(getColors().surfaceContainerHighest)
                         )
                     }
                 }
