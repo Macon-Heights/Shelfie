@@ -1,5 +1,12 @@
 package me.alexandervortex.shelfie.ui.component
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.AnimationConstants.DefaultDurationMillis
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -36,11 +44,21 @@ fun CatalogueItemUI(
 ) {
     val isBook = model is CatalogueItemUIModel.Model
 
+    val animatedColor by rememberInfiniteTransition().animateColor(
+        initialValue = getColors().surfaceVariant,
+        targetValue = getColors().surfaceContainer,
+        animationSpec = infiniteRepeatable(
+            animation = tween(DefaultDurationMillis * 3, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
     val color = if (isBook) {
         getColors().surfaceVariant
     } else {
-        getColors().surfaceContainer
+        animatedColor
     }
+
     val onColor = getColors().onSurfaceVariant
     val onColorForTitle = getColors().onSurface
 
@@ -60,7 +78,7 @@ fun CatalogueItemUI(
         }
 
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .clipNShadow(SHAPE_M)
                 .then(modifier)
                 .background(color)
