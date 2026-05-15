@@ -94,15 +94,31 @@ fun CatalogueItemUI(
                 textAlign = TextAlign.Left
             )
             Spacer(Modifier.size(4.dp))
-            Text(
-                text = (model as? CatalogueItemUIModel.Model)
-                    ?.author.takeIf { isBook }
-                    ?: SPACE_SYMBOL,
-                color = onColor,
-                fontWeight = FontWeight.Light,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val scrollIndex = (model as? CatalogueItemUIModel.Model)?.scrollIndex // 25
+                val elements = (model as? CatalogueItemUIModel.Model)?.elements // 50
+
+                if (scrollIndex != null && elements != null) {
+                    val textValue = 100 / (elements / scrollIndex)
+                    Text(
+                        text = "$textValue%",
+                        color = onColor,
+                        fontWeight = FontWeight.Light,
+                        textAlign = TextAlign.Start
+                    )
+                }
+                Text(
+                    text = (model as? CatalogueItemUIModel.Model)
+                        ?.author.takeIf { isBook }
+                        ?: SPACE_SYMBOL,
+                    color = onColor,
+                    fontWeight = FontWeight.Light,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.End
+                )
+            }
             Spacer(Modifier.size(8.dp))
             ProgressUI(
                 (model as? CatalogueItemUIModel.Model)?.scrollIndex,
@@ -121,12 +137,12 @@ fun BookComponentPreview() {
         title = "Harry Potter and the Sorcerer's Stone",
         author = "J.K. Rowling Rowling",
         year = "1001",
-        scrollIndex = 46,
-        elements = 100,
+        scrollIndex = 50,
+        elements = 365,
         isChecked = false,
     )
     val skeleton = CatalogueItemUIModel.Skeleton
     CombinedPreviews {
-        CatalogueItemUI(true, skeleton, Modifier)
+        CatalogueItemUI(true, model, Modifier)
     }
 }
