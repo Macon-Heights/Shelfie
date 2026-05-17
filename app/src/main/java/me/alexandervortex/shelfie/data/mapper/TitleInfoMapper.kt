@@ -8,13 +8,9 @@ class TitleInfoMapper
 @Inject constructor() {
 
     fun map(
-        id: String,
-        localPath: String,
         titleInfo: Element?,
     ): TitleInfoUIModel {
         val result = TitleInfoUIModel(
-            id = id,
-            localPath = localPath,
             title = titleInfo?.selectFirst("book-title")?.text()?.trim(),
             date = titleInfo?.selectFirst("date")?.text()?.trim(),
             author = titleInfo?.selectFirst("author")?.let {

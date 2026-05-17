@@ -9,8 +9,8 @@ class BookEntityMapper
 
     fun toEntity(model: BookUIModel): BookEntity {
         val entity = BookEntity(
-            id = model.titleInfo.id,
-            localPath = model.titleInfo.localPath,
+            id = model.id,
+            localPath = model.localPath,
             title = model.titleInfo.title,
             author = model.titleInfo.author,
             year = model.titleInfo.date,
