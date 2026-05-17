@@ -122,6 +122,8 @@ class ViewerViewModel
         _state.update {
             it.copy(
                 book = BookUIModel(
+                    id = "",
+                    localPath = "",
                     titleInfo = getTitleInfo(),
                     elements = getSkeletons()
                 )
@@ -142,7 +144,7 @@ class ViewerViewModel
     }
 
     private fun getTitleInfo(): TitleInfoUIModel {
-        return TitleInfoUIModel("", "", "", "", "", "", "", "", null)
+        return TitleInfoUIModel("", "", "", "", "", "", null)
     }
 
     private fun getSkeletons(): List<ElementUIModel> {

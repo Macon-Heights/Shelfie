@@ -106,7 +106,7 @@ class TtsController(
 
         // Сохраняем прогресс
         bookModel?.let {
-            saveScrollState.invoke(it.titleInfo.id, currentIndex, currentPart)
+            saveScrollState.invoke(it.id, currentIndex, currentPart)
         }
 
         // Если уже играем — продолжаем с нового места
@@ -123,7 +123,7 @@ class TtsController(
         if (stopAt != null && System.currentTimeMillis() >= stopAt) {
             bookModel?.let {
                 saveScrollState.invoke(
-                    it.titleInfo.id,
+                    it.id,
                     currentIndex,
                     currentPart
                 )

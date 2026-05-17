@@ -39,7 +39,9 @@ class FictionBookParser
         val binaries = doc.getBinaries()
 
         val result = BookUIModel(
-            titleInfo = titleInfoMapper.map(id, file.path, titleInfo),
+            id = id,
+            localPath = file.path,
+            titleInfo = titleInfoMapper.map(titleInfo),
             elements = elementMapper.map(body, binaries)
                 .splitPartsBySentences()
                 .normalizeEmptyTextUI()
