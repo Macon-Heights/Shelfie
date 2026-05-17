@@ -100,7 +100,7 @@ fun CatalogueItemUI(
                 val scrollIndex = (model as? CatalogueItemUIModel.Model)?.scrollIndex // 25
                 val elements = (model as? CatalogueItemUIModel.Model)?.elements // 50
 
-                if (scrollIndex != null && elements != null && elements > 0) {
+                if (scrollIndex != null && elements != null && elements > 0 && scrollIndex > 0) {
                     val textValue = (scrollIndex * 100) / elements
                     Text(
                         text = "$textValue%",
