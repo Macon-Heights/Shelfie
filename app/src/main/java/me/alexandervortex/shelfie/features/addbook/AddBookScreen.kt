@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.features.addbook
 
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,5 +35,8 @@ fun AddBookScreen(
         }
     }
 
-    TitleUI(state.name)
+    Column {
+        TitleUI(state.titleInfo?.title)
+        TitleUI(state.titleInfo?.author)
+    }
 }

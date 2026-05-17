@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.addbook.mvi.AddBookEffect
 import me.alexandervortex.shelfie.features.addbook.mvi.AddBookIntent
 import me.alexandervortex.shelfie.features.addbook.mvi.AddBookState
@@ -17,9 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddBookViewModel
-@Inject constructor() : ViewModel() {
+@Inject constructor(
+    private val bookRepository: BookRepository,
+) : ViewModel() {
 
-    private val _state = MutableStateFlow(AddBookState("loading info"))
+    private val _state = MutableStateFlow(AddBookState(null))
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<AddBookEffect>()
@@ -32,10 +35,11 @@ class AddBookViewModel
     }
 
     private fun loadPreview(uri: Uri?) {
-        viewModelScope.launch {
-            uri?.let {
+        uri?.let {
+            viewModelScope.launch {
+                val titleInfo = bookRepository.previewFromUri(uri)
                 _state.update { state ->
-                    state.copy(name = uri.toString())
+                    state.copy(titleInfo = titleInfo)
                 }
             }
         }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
 import me.alexandervortex.shelfie.ui.model.BookUIModel
+import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import java.io.File
 import javax.inject.Inject
 
@@ -18,6 +19,14 @@ class UniversalFileParser
 
     // пока только fb2
     private val supportedExtensions = setOf("fb2")
+
+    fun previewFromUri(uri: Uri): TitleInfoUIModel? {
+        return context.contentResolver.openInputStream(uri)?.use { stream ->
+            fictionBookParser.parseTitleInfo(
+                inputStream = stream,
+            )
+        }
+    }
 
     /**
      * тут мы должны решить
