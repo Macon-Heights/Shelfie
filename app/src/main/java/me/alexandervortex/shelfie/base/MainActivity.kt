@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = getColors().background
-                    ) { RouterScreen() }
+                    ) { RouterScreen(intent.data) }
                 }
             }
         }
