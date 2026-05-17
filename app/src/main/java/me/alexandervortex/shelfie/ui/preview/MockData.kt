@@ -8,6 +8,8 @@ import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 
 fun getBookUI(): BookUIModel {
     return BookUIModel(
+        id = "mock_book",
+        localPath = "fake_path",
         titleInfo = getTitleInfo(),
         elements = getElements(),
         progressIndex = 0,
@@ -29,8 +31,6 @@ fun pausedState(): MediaServiceState {
 
 private fun getTitleInfo(): TitleInfoUIModel {
     return TitleInfoUIModel(
-        id = "mock_book",
-        localPath = "fake_path",
         title = "Mock Book",
         date = "2025",
         author = "Sashke Vortex",
