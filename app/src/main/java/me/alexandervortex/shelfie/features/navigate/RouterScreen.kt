@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import me.alexandervortex.shelfie.features.addbook.AddBookScreen
+import me.alexandervortex.shelfie.features.addbook.AddBookViewModel
 import me.alexandervortex.shelfie.features.mvi.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.mvi.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.viewer.ViewerScreen
@@ -19,6 +21,15 @@ fun RouterScreen() {
         navController = navController,
         startDestination = CatalogueRoute.route
     ) {
+
+        composable(
+            route = AddBookRoute.route
+        ) {
+            AddBookScreen(
+                viewModel = hiltViewModel<AddBookViewModel>(),
+                navController = navController
+            )
+        }
 
         composable(
             route = CatalogueRoute.route
