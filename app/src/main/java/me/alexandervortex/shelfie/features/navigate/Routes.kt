@@ -1,5 +1,10 @@
 package me.alexandervortex.shelfie.features.navigate
 
+data object AddBookRoute {
+
+    val route = "addbook"
+}
+
 data object CatalogueRoute {
 
     val route = "catalogue"
