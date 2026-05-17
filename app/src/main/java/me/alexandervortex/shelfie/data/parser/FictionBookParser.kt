@@ -9,10 +9,12 @@ import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.ui.model.BookUIModel
+import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.parser.Parser
 import java.io.File
+import java.io.InputStream
 import javax.inject.Inject
 
 class FictionBookParser
@@ -20,6 +22,19 @@ class FictionBookParser
     private val titleInfoMapper: TitleInfoMapper,
     private val elementMapper: ElementMapper,
 ) {
+
+    fun parseTitleInfo(
+        inputStream: InputStream,
+    ): TitleInfoUIModel {
+        val doc: Document = Jsoup.parse(
+            inputStream,
+            null,
+            "",
+            Parser.xmlParser()
+        )
+        val titleInfo = doc.getTitleInfo()
+        return titleInfoMapper.map(titleInfo = titleInfo)
+    }
 
     fun parse(
         id: String,

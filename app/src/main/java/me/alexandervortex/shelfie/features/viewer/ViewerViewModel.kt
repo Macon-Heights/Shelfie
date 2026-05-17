@@ -171,26 +171,4 @@ class ViewerViewModel
     private fun togglePlayPause(currentTopIndex: Int) {
         service?.togglePlayPause(currentTopIndex)
     }
-
-    /** deprecated block (to remove)
-    private fun clickTimer() {
-        service?.clickTimer()
-    }
-
-    private fun clickSpeed() {
-        service?.clickSpeed()
-    }
-
-    private fun clickNext() {
-        service?.clickNext()
-    }
-
-    private fun clickPrev() {
-        service?.clickPrev()
-    }
-
-    private fun toggleMenu(isMenuVisible: Boolean) {
-        _state.update { it.copy(isMenuVisible = isMenuVisible) }
-    }
-    */
 }
