@@ -1,6 +1,8 @@
 package me.alexandervortex.shelfie.features.navigate
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,8 +16,16 @@ import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 import me.alexandervortex.shelfie.features.viewer.ViewerViewModel
 
 @Composable
-fun RouterScreen() {
+fun RouterScreen(
+    data: Uri? = null
+) {
     val navController = rememberNavController()
+
+    LaunchedEffect(data) {
+        if (data != null) {
+            navController.navigate(AddBookRoute.route)
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -26,6 +36,7 @@ fun RouterScreen() {
             route = AddBookRoute.route
         ) {
             AddBookScreen(
+                uri = data,
                 viewModel = hiltViewModel<AddBookViewModel>(),
                 navController = navController
             )
