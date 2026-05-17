@@ -12,6 +12,7 @@ import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
 import java.io.File
 import java.io.InputStream
@@ -33,7 +34,35 @@ class FictionBookParser
             Parser.xmlParser()
         )
         val titleInfo = doc.getTitleInfo()
-        return titleInfoMapper.map(titleInfo = titleInfo)
+        val binaries = doc.getBinaries()
+
+        val coverImage = getCoverImage(titleInfo, binaries)
+
+        return titleInfoMapper.map(
+            coverImage = coverImage,
+            titleInfo = titleInfo
+        )
+    }
+
+    private fun getCoverImage(
+        titleInfo: Element?,
+        binaries: Map<String, ByteArray>,
+    ): ByteArray? {
+        val coverImageElement = titleInfo
+            ?.selectFirst("coverpage > image")
+            ?: titleInfo?.selectFirst("coverpage image")
+
+        val ref = coverImageElement
+            ?.attr("xlink:href")
+            ?.ifBlank { coverImageElement.attr("l:href") }
+            ?.ifBlank { coverImageElement.attr("href") }
+            ?.removePrefix("#")
+            ?.trim()
+            .orEmpty()
+
+        if (ref.isBlank()) return null
+
+        return binaries[ref]
     }
 
     fun parse(
@@ -56,7 +85,7 @@ class FictionBookParser
         val result = BookUIModel(
             id = id,
             localPath = file.path,
-            titleInfo = titleInfoMapper.map(titleInfo),
+            titleInfo = titleInfoMapper.map(titleInfo, null),
             elements = elementMapper.map(body, binaries)
                 .splitPartsBySentences()
                 .normalizeEmptyTextUI()
