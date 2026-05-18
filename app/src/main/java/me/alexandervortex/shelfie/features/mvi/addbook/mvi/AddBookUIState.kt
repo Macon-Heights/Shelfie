@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.addbook.mvi
+package me.alexandervortex.shelfie.features.mvi.addbook.mvi
 
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 
