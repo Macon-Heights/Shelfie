@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.addbook.mvi.AddBookEffect
 import me.alexandervortex.shelfie.features.addbook.mvi.AddBookIntent
-import me.alexandervortex.shelfie.features.addbook.mvi.AddBookState
+import me.alexandervortex.shelfie.features.addbook.mvi.AddBookUIState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +22,7 @@ class AddBookViewModel
     private val bookRepository: BookRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AddBookState(null))
+    private val _state = MutableStateFlow(AddBookUIState(null))
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<AddBookEffect>()
@@ -31,6 +31,7 @@ class AddBookViewModel
     fun onIntent(intent: AddBookIntent) {
         when (intent) {
             is AddBookIntent.Add -> loadPreview(intent.uri)
+            is AddBookIntent.Import -> importBook(intent.uri)
         }
     }
 
@@ -40,6 +41,20 @@ class AddBookViewModel
                 val titleInfo = bookRepository.previewFromUri(uri)
                 _state.update { state ->
                     state.copy(titleInfo = titleInfo)
+                }
+            }
+        }
+    }
+
+    private fun importBook(uri: Uri?) {
+        uri?.let {
+            viewModelScope.launch {
+                try {
+                    bookRepository.importFromUri(uri)
+                    _effect.emit(AddBookEffect.ShowToast("Книга добавлена"))
+                    _effect.emit(AddBookEffect.Close)
+                } catch (e: Exception) {
+                    _effect.emit(AddBookEffect.ShowToast("Ошибка: ${e.localizedMessage}"))
                 }
             }
         }
