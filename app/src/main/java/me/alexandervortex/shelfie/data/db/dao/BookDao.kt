@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
 
+import kotlinx.coroutines.flow.Flow
+
 const val BOOK_TABLE = "book_table"
 
 @Dao
@@ -14,6 +16,10 @@ interface BookDao {
     @Query("SELECT * FROM $BOOK_TABLE WHERE id = :id LIMIT 1")
     suspend fun getById(id: String): BookEntity?
 
+    @Query("SELECT * FROM $BOOK_TABLE")
+    fun getBookEntitiesFlow(): Flow<List<BookEntity>>
+
+    @Deprecated("Flow now")
     @Query("SELECT * FROM $BOOK_TABLE")
     suspend fun getBookEntities(): List<BookEntity>
 

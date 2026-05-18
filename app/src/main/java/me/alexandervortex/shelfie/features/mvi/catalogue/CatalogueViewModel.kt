@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.base.ext.toBookComponentModel
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
@@ -29,9 +28,26 @@ class CatalogueViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<CatalogueEffect>()
     val effect = _effect.asSharedFlow()
 
+    init {
+        viewModelScope.launch {
+            bookRepository.booksFlow.collect { dbBooks ->
+                _state.update { current ->
+                    // Если книг нет, можем оставить скелетоны или пустой список. 
+                    // Но обычно Flow вернет пустой список если в БД пусто.
+                    val updatedBooks = dbBooks.map { dbBook ->
+                        val currentBook = current.books.filterIsInstance<CatalogueItemUIModel.Model>()
+                            .find { it.id == dbBook.id }
+                        dbBook.copy(isChecked = currentBook?.isChecked ?: false)
+                    }
+                    current.copy(books = updatedBooks)
+                }
+            }
+        }
+    }
+
     fun onIntent(intent: CatalogueIntent) {
         when (intent) {
-            is CatalogueIntent.LoadBooks -> loadBooks()
+            is CatalogueIntent.LoadBooks -> { /* flow starts in init */ }
             is CatalogueIntent.ImportBook -> importBook(intent.uri)
             is CatalogueIntent.ToggleRemoveMode -> toggleRemoveMode(intent.id)
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)
@@ -46,11 +62,6 @@ class CatalogueViewModel @Inject constructor(
         }
     }
 
-    private fun loadBooks() = viewModelScope.launch {
-        val books = bookRepository.getBookEntities().map { it.toBookComponentModel() }
-        _state.update { it.copy(books = books) }
-    }
-
     private fun getSkeletons(): List<CatalogueItemUIModel> {
         return (1..9).map { index ->
             CatalogueItemUIModel.Skeleton
@@ -58,18 +69,12 @@ class CatalogueViewModel @Inject constructor(
     }
 
     private fun importBook(uri: Uri) = viewModelScope.launch {
-        _state.update { state ->
-            val oldBooks =
-                state.books.toMutableList().also { it.add(CatalogueItemUIModel.Skeleton) }
-            state.copy(books = oldBooks)
-        }
         try {
             bookRepository.importFromUri(uri)
             _effect.emit(CatalogueEffect.ShowToast("Книга добавлена"))
         } catch (e: Exception) {
             _effect.emit(CatalogueEffect.ShowToast("Ошибка: ${e.localizedMessage}"))
         }
-        loadBooks()
     }
 
     private fun toggleRemoveMode(id: String) {
@@ -105,6 +110,5 @@ class CatalogueViewModel @Inject constructor(
         bookRepository.removeChecked(checkedBooks)
         _effect.emit(CatalogueEffect.ShowToast("Удалено ${checkedBooks.size} книг"))
         _state.update { it.copy(isRemoveMode = false) }
-        loadBooks()
     }
 }
