@@ -1,6 +1,9 @@
 package me.alexandervortex.shelfie.data.repository
 
 import android.net.Uri
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import me.alexandervortex.shelfie.base.ext.toBookComponentModel
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.db.entity.BookEntity
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
@@ -23,6 +26,9 @@ class BookRepository
     private val mapper: BookEntityMapper,
     private val parser: UniversalFileParser,
 ) {
+
+    val booksFlow: Flow<List<CatalogueItemUIModel.Model>> = dao.getBookEntitiesFlow()
+        .map { entities -> entities.map { it.toBookComponentModel() } }
 
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
         return parser.previewFromUri(uri)
