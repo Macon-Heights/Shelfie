@@ -79,7 +79,7 @@ class ViewerViewModel
             // 💾 Передаём callback для сохранения прогресса
             newService.setOnSaveProgressListener { bookId, index, offset ->
                 viewModelScope.launch {
-                    repo.saveCurrentBookProgress(
+                    repo.updateProgress(
                         bookId,
                         index,
                         offset,
@@ -159,7 +159,7 @@ class ViewerViewModel
         offset: Int,
     ) {
         viewModelScope.launch {
-            repo.saveCurrentBookProgress(
+            repo.updateProgress(
                 id,
                 index,
                 offset,

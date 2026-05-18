@@ -12,13 +12,6 @@ import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import javax.inject.Inject
 
-/**
- * Репозиторий книжек
- * добавляет книжку
- * получает список книжек
- * получает книгу по айди
- */
-
 class BookRepository
 @Inject constructor(
     private val dao: BookDao,
@@ -30,41 +23,29 @@ class BookRepository
         return parser.previewFromUri(uri)
     }
 
-    // just take book and place it to db, return NOTHING
     suspend fun importFromUri(uri: Uri) {
-        /**
-         * uri -> universal parser -> book model
-         * эта часть понятна и логична и пусть остается так
-         */
+
         val bookModel = parser.importFromUri(uri)
             ?: throw Exception("Книга не поддерживается.\nТолько FB2 формат.")
 
-        /**
-         * book model -> database
-         * это справедливо для любой книги в любом формате
-         */
+
         val entity = bookModel.let {
             mapper.toEntity(it)
         }
 
         entity.let {
-            dao.insert(it)
+            dao.addBook(it)
         }
     }
 
-    fun getBookEntities(): Flow<List<CatalogueItemUIModel.Model>> {
-        return dao.getBookEntities().map { entities ->
+    fun getPreviews(): Flow<List<CatalogueItemUIModel.Model>> {
+        return dao.getPreviews().map { entities ->
             entities.map { it.toBookComponentModel() }
         }
     }
 
-    /**
-     * получаем книгу по айди из бд + сам файл из папки
-     * справедливо для любого типа книги
-     */
     suspend fun getBookModelById(id: String): BookUIModel? {
-
-        val entity = dao.getById(id)
+        val entity = dao.getPreviewById(id)
         val result = entity?.let {
             parser.getBookModelById(
                 id = entity.id,
@@ -76,7 +57,7 @@ class BookRepository
         return result
     }
 
-    suspend fun saveCurrentBookProgress(
+    suspend fun updateProgress(
         id: String,
         index: Int,
         offset: Int,
@@ -85,8 +66,10 @@ class BookRepository
         dao.updateProgress(id, index, offset, elements)
     }
 
-    suspend fun removeChecked(books: List<CatalogueItemUIModel.Model>) {
+    suspend fun removeBooks(
+        books: List<CatalogueItemUIModel.Model>
+    ) {
         dao.removeBooks(books.map { it.id })
-        parser.removeBooksByPath(books.map { it.localPath })
+        parser.removeBooks(books.map { it.localPath })
     }
 }
