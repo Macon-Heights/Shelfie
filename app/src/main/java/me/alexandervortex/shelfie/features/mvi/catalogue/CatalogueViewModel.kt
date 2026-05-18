@@ -30,7 +30,7 @@ class CatalogueViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            bookRepository.getBookEntities().collect { dbBooks ->
+            bookRepository.getPreviews().collect { dbBooks ->
                 _state.update { current ->
                     // Если книг нет, можем оставить скелетоны или пустой список. 
                     // Но обычно Flow вернет пустой список если в БД пусто.
@@ -107,7 +107,7 @@ class CatalogueViewModel @Inject constructor(
             return@launch
         }
 
-        bookRepository.removeChecked(checkedBooks)
+        bookRepository.removeBooks(checkedBooks)
         _effect.emit(CatalogueEffect.ShowToast("Удалено ${checkedBooks.size} книг"))
         _state.update { it.copy(isRemoveMode = false) }
     }

@@ -17,7 +17,6 @@ class UniversalFileParser
     private val fictionBookParser: FictionBookParser,
 ) {
 
-    // пока только fb2
     private val supportedExtensions = setOf("fb2")
 
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
@@ -28,11 +27,6 @@ class UniversalFileParser
         }
     }
 
-    /**
-     * тут мы должны решить
-     * какой парсер должен парсить нашу книгу
-     * должен ли файл быть обработан вообще (подходит ли он мне)
-     */
     suspend fun importFromUri(uri: Uri): BookUIModel? {
         val result = withContext(Dispatchers.IO) {
             val extension = uri.safeGetFileExtension(context)
@@ -88,9 +82,13 @@ class UniversalFileParser
         return result
     }
 
-    suspend fun removeBooksByPath(paths: List<String>) = withContext(Dispatchers.IO) {
+    suspend fun removeBooks(paths: List<String>) = withContext(Dispatchers.IO) {
         paths.forEach {
-            runCatching { File(it).takeIf(File::exists)?.delete() }
+            runCatching {
+                File(it)
+                    .takeIf(File::exists)
+                    ?.delete()
+            }
         }
     }
 }
