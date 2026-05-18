@@ -4,9 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import me.alexandervortex.shelfie.data.db.entity.BookEntity
-
 import kotlinx.coroutines.flow.Flow
+import me.alexandervortex.shelfie.data.db.entity.BookEntity
 
 const val BOOK_TABLE = "book_table"
 
@@ -17,11 +16,7 @@ interface BookDao {
     suspend fun getById(id: String): BookEntity?
 
     @Query("SELECT * FROM $BOOK_TABLE")
-    fun getBookEntitiesFlow(): Flow<List<BookEntity>>
-
-    @Deprecated("Flow now")
-    @Query("SELECT * FROM $BOOK_TABLE")
-    suspend fun getBookEntities(): List<BookEntity>
+    fun getBookEntities(): Flow<List<BookEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(book: BookEntity)
