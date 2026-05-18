@@ -30,7 +30,7 @@ class CatalogueViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            bookRepository.booksFlow.collect { dbBooks ->
+            bookRepository.getBookEntities().collect { dbBooks ->
                 _state.update { current ->
                     // Если книг нет, можем оставить скелетоны или пустой список. 
                     // Но обычно Flow вернет пустой список если в БД пусто.

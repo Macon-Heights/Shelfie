@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.alexandervortex.shelfie.base.ext.toBookComponentModel
 import me.alexandervortex.shelfie.data.db.dao.BookDao
-import me.alexandervortex.shelfie.data.db.entity.BookEntity
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
@@ -26,9 +25,6 @@ class BookRepository
     private val mapper: BookEntityMapper,
     private val parser: UniversalFileParser,
 ) {
-
-    val booksFlow: Flow<List<CatalogueItemUIModel.Model>> = dao.getBookEntitiesFlow()
-        .map { entities -> entities.map { it.toBookComponentModel() } }
 
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
         return parser.previewFromUri(uri)
@@ -56,13 +52,10 @@ class BookRepository
         }
     }
 
-    /**
-     * получаем список всех наших книг ( в папке и в бд)
-     * справедливо для любого типа книги
-     */
-    suspend fun getBookEntities(): List<BookEntity> {
-        val entities = dao.getBookEntities().toMutableList()
-        return entities
+    fun getBookEntities(): Flow<List<CatalogueItemUIModel.Model>> {
+        return dao.getBookEntities().map { entities ->
+            entities.map { it.toBookComponentModel() }
+        }
     }
 
     /**
