@@ -16,9 +16,7 @@ import me.alexandervortex.shelfie.features.viewer.ViewerScreen
 import me.alexandervortex.shelfie.features.viewer.ViewerViewModel
 
 @Composable
-fun RouterScreen(
-    data: Uri? = null
-) {
+fun RouterScreen(data: Uri? = null) {
     val navController = rememberNavController()
 
     LaunchedEffect(data) {
