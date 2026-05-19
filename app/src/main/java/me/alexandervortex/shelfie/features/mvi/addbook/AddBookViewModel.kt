@@ -38,9 +38,13 @@ class AddBookViewModel
     private fun loadPreview(uri: Uri?) {
         uri?.let {
             viewModelScope.launch {
-                val titleInfo = bookRepository.previewFromUri(uri)
-                _state.update { state ->
-                    state.copy(titleInfo = titleInfo)
+                try {
+                    val titleInfo = bookRepository.previewFromUri(uri)
+                    _state.update { state ->
+                        state.copy(titleInfo = titleInfo)
+                    }
+                } catch (e: Exception) {
+                    _effect.emit(AddBookEffect.ShowToast("Ошибка: ${e.localizedMessage}"))
                 }
             }
         }
@@ -50,7 +54,7 @@ class AddBookViewModel
         uri?.let {
             viewModelScope.launch {
                 try {
-                    bookRepository.importFromUri(uri)
+                    bookRepository.addBookToDbAndDisk(uri)
                     _effect.emit(AddBookEffect.ShowToast("Книга добавлена"))
                     _effect.emit(AddBookEffect.Close)
                 } catch (e: Exception) {

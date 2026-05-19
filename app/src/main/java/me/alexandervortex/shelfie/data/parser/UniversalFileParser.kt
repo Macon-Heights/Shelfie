@@ -68,7 +68,7 @@ class UniversalFileParser
     // region xz
     private val supportedExtensions = setOf("fb2")
 
-    suspend fun importFromUri(uri: Uri): BookUIModel? {
+    suspend fun addBookToDbAndDisk(uri: Uri): BookUIModel? {
         val result = withContext(Dispatchers.IO) {
             val extension = uri.safeGetFileExtension(context)
                 ?: return@withContext null
