@@ -20,10 +20,24 @@ class UniversalFileParser
     @ApplicationContext private val context: Context,
     private val fictionBookParser: FictionBookParser,
 ) {
-
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
         return unzipOrNot(uri) { stream, extension ->
             previewParser(stream, extension)
+        }
+    }
+
+    fun parseAndCopy(uri: Uri): BookUIModel? {
+        return unzipOrNot(uri) { _, extension ->
+            val booksDir = File(context.filesDir, "books").apply { mkdirs() }
+            val id = System.currentTimeMillis().toString()
+            val outPutFile = File(booksDir, "$id.$extension")
+
+            openStream(uri) { input ->
+                outPutFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+            bookParser(id, outPutFile, extension)
         }
     }
 
@@ -32,15 +46,27 @@ class UniversalFileParser
         extension: String
     ): TitleInfoUIModel? {
         return when (extension) {
-            "fb2" -> fictionBookParser.getPreview(inputStream = stream)
+            "fb2" -> fictionBookParser.getPreview(stream)
             "epub" -> null
             else -> null
         }
     }
 
-    fun <T> unzipOrNot(
-        uri: Uri,
-        contentAction: (InputStream, String) -> T
+    private fun bookParser(
+        id: String,
+        outPutFile: File,
+        extension: String
+    ): BookUIModel? {
+        return when (extension) {
+            "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
+            "epub" -> null
+            else -> null
+        }
+    }
+
+    // region HELPERS
+    private fun <T> unzipOrNot(
+        uri: Uri, contentAction: (InputStream, String) -> T
     ): T? {
         val extension = uri.safeGetFileExtension(context) ?: return null
         return openStream(uri) { stream ->
@@ -49,7 +75,8 @@ class UniversalFileParser
                     var entry = zipStream.nextEntry
                     while (entry != null) {
                         if (!entry.isDirectory && isSupportedContent(entry.name)) {
-                            return@use contentAction.invoke(zipStream, "fb2") // only extension, not full entry name
+                            return@use contentAction.invoke(zipStream, "fb2")
+                            // only extension, not full entry name
                         }
                         entry = zipStream.nextEntry
                     }
@@ -62,38 +89,18 @@ class UniversalFileParser
     }
 
     private fun isSupportedContent(fileName: String): Boolean {
+        // fixme epub/fb2
         return fileName.endsWith(".fb2", ignoreCase = true)
     }
 
-    // region xz
-    private val supportedExtensions = setOf("fb2")
-
-    suspend fun addBookToDbAndDisk(uri: Uri): BookUIModel? {
-        val result = withContext(Dispatchers.IO) {
-            val extension = uri.safeGetFileExtension(context)
-                ?: return@withContext null
-            if (extension !in supportedExtensions) {
-                return@withContext null
-            }
-
-            val booksDir = File(context.filesDir, "books").apply { mkdirs() }
-            val id = System.currentTimeMillis().toString()
-
-            val outPutFile = File(booksDir, "$id.$extension")
-            context.contentResolver.openInputStream(uri)?.use { input ->
-                outPutFile.outputStream().use { output ->
-                    input.copyTo(output)
-                }
-            } ?: error("Не удалось открыть выбранный файл")
-
-            when (extension) {
-                "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
-                else -> null
-            }
-        }
-        return result
+    private fun <T> openStream(
+        uri: Uri, block: (InputStream) -> T
+    ): T? {
+        return context.contentResolver.openInputStream(uri)?.use(block)
     }
+    // endregion
 
+    // region NEEDS WORK
     suspend fun getBookModelById(
         id: String,
         localPath: String,
@@ -124,14 +131,5 @@ class UniversalFileParser
             }
         }
     }
-
-    //region hide
-    private fun <T> openStream(
-        uri: Uri,
-        block: (InputStream) -> T
-    ): T? {
-        return context.contentResolver.openInputStream(uri)?.use(block)
-    }
-    // endregion
     // endregion
 }
