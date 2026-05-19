@@ -9,6 +9,8 @@ import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import java.io.File
+import java.io.InputStream
+import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
 class UniversalFileParser
@@ -17,11 +19,43 @@ class UniversalFileParser
     private val fictionBookParser: FictionBookParser,
 ) {
 
+    fun previewFromUri(uri: Uri): TitleInfoUIModel? {
+        val extension = uri.safeGetFileExtension(context) ?: return null
+        return openStream(uri) { stream ->
+            if (extension == "zip") {
+                ZipInputStream(stream).use { zipStream ->
+                    var entry = zipStream.nextEntry
+                    while (entry != null) {
+                        if (!entry.isDirectory && entry.name.endsWith(".fb2", ignoreCase = true)) {
+                            return@use chooseParser(zipStream, "fb2")
+                        }
+                        entry = zipStream.nextEntry
+                    }
+                    null
+                }
+            } else {
+                chooseParser(stream, extension)
+            }
+        }
+    }
+
+    private fun chooseParser(
+        stream: InputStream,
+        extension: String
+    ): TitleInfoUIModel? {
+        return when (extension) {
+            "fb2" -> fictionBookParser.getPreview(inputStream = stream)
+            else -> null
+        }
+    }
+
+    // region xz
     private val supportedExtensions = setOf("fb2")
 
-    fun previewFromUri(uri: Uri): TitleInfoUIModel? {
+    @Deprecated("old one")
+    fun previewFromUriOld(uri: Uri): TitleInfoUIModel? {
         return context.contentResolver.openInputStream(uri)?.use { stream ->
-            fictionBookParser.parseTitleInfo(
+            fictionBookParser.getPreview(
                 inputStream = stream,
             )
         }
@@ -83,4 +117,14 @@ class UniversalFileParser
             }
         }
     }
+
+    //region hide
+    private fun <T> openStream(
+        uri: Uri,
+        block: (InputStream) -> T
+    ): T? {
+        return context.contentResolver.openInputStream(uri)?.use(block)
+    }
+    // endregion
+    // endregion
 }
