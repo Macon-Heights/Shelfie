@@ -20,26 +20,12 @@ class UniversalFileParser
 ) {
 
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
-        val extension = uri.safeGetFileExtension(context) ?: return null
-        return openStream(uri) { stream ->
-            if (extension == "zip") {
-                ZipInputStream(stream).use { zipStream ->
-                    var entry = zipStream.nextEntry
-                    while (entry != null) {
-                        if (!entry.isDirectory && entry.name.endsWith(".fb2", ignoreCase = true)) {
-                            return@use chooseParser(zipStream, "fb2")
-                        }
-                        entry = zipStream.nextEntry
-                    }
-                    null
-                }
-            } else {
-                chooseParser(stream, extension)
-            }
+        return unzipOrNot(uri) { stream, extension ->
+            previewParser(stream, extension)
         }
     }
 
-    private fun chooseParser(
+    private fun previewParser(
         stream: InputStream,
         extension: String
     ): TitleInfoUIModel? {
@@ -49,17 +35,34 @@ class UniversalFileParser
         }
     }
 
-    // region xz
-    private val supportedExtensions = setOf("fb2")
-
-    @Deprecated("old one")
-    fun previewFromUriOld(uri: Uri): TitleInfoUIModel? {
-        return context.contentResolver.openInputStream(uri)?.use { stream ->
-            fictionBookParser.getPreview(
-                inputStream = stream,
-            )
+    fun <T> unzipOrNot(
+        uri: Uri,
+        contentAction: (
+            InputStream,
+            String
+        ) -> T?
+    ): T? {
+        val extension = uri.safeGetFileExtension(context) ?: return null
+        return openStream(uri) { stream ->
+            if (extension == "zip") {
+                ZipInputStream(stream).use { zipStream ->
+                    var entry = zipStream.nextEntry
+                    while (entry != null) {
+                        if (!entry.isDirectory && entry.name.endsWith(".fb2", ignoreCase = true)) {
+                            return@use contentAction.invoke(zipStream, "fb2")
+                        }
+                        entry = zipStream.nextEntry
+                    }
+                    null
+                }
+            } else {
+                contentAction.invoke(stream, extension)
+            }
         }
     }
+
+    // region xz
+    private val supportedExtensions = setOf("fb2")
 
     suspend fun importFromUri(uri: Uri): BookUIModel? {
         val result = withContext(Dispatchers.IO) {
