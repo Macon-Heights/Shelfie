@@ -13,6 +13,8 @@ import java.io.InputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
+private const val ZIP_EXT = "zip"
+
 class UniversalFileParser
 @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -31,25 +33,23 @@ class UniversalFileParser
     ): TitleInfoUIModel? {
         return when (extension) {
             "fb2" -> fictionBookParser.getPreview(inputStream = stream)
+            "epub" -> null
             else -> null
         }
     }
 
     fun <T> unzipOrNot(
         uri: Uri,
-        contentAction: (
-            InputStream,
-            String
-        ) -> T?
+        contentAction: (InputStream, String) -> T
     ): T? {
         val extension = uri.safeGetFileExtension(context) ?: return null
         return openStream(uri) { stream ->
-            if (extension == "zip") {
+            if (extension == ZIP_EXT) {
                 ZipInputStream(stream).use { zipStream ->
                     var entry = zipStream.nextEntry
                     while (entry != null) {
-                        if (!entry.isDirectory && entry.name.endsWith(".fb2", ignoreCase = true)) {
-                            return@use contentAction.invoke(zipStream, "fb2")
+                        if (!entry.isDirectory && isSupportedContent(entry.name)) {
+                            return@use contentAction.invoke(zipStream, "fb2") // only extension, not full entry name
                         }
                         entry = zipStream.nextEntry
                     }
@@ -59,6 +59,10 @@ class UniversalFileParser
                 contentAction.invoke(stream, extension)
             }
         }
+    }
+
+    private fun isSupportedContent(fileName: String): Boolean {
+        return fileName.endsWith(".fb2", ignoreCase = true)
     }
 
     // region xz
