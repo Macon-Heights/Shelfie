@@ -47,7 +47,6 @@ class CatalogueViewModel @Inject constructor(
 
     fun onIntent(intent: CatalogueIntent) {
         when (intent) {
-            is CatalogueIntent.LoadBooks -> { /* flow starts in init */ }
             is CatalogueIntent.ImportBook -> importBook(intent.uri)
             is CatalogueIntent.ToggleRemoveMode -> toggleRemoveMode(intent.id)
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)

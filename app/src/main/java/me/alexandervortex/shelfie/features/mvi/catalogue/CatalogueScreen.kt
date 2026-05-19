@@ -16,21 +16,20 @@ import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
 
 @Composable
 fun CatalogueScreen(
-    viewModel: CatalogueViewModel,
-    navController: NavHostController,
+    vm: CatalogueViewModel,
+    nav: NavHostController,
 ) {
     val context = LocalContext.current
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by vm.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.onIntent(CatalogueIntent.LoadBooks)
-        viewModel.effect.collect { effect ->
+        vm.effect.collect { effect ->
             when (effect) {
                 is CatalogueEffect.ShowToast ->
                     Toast.makeText(context, effect.message, Toast.LENGTH_LONG).show()
 
                 is CatalogueEffect.NavigateTo ->
-                    navController.navigate(effect.route)
+                    nav.navigate(effect.route)
             }
         }
     }
@@ -43,16 +42,16 @@ fun CatalogueScreen(
         try {
             context.contentResolver.takePersistableUriPermission(uri, intent)
         } catch (_: SecurityException) { }
-        viewModel.onIntent(CatalogueIntent.ImportBook(uri))
+        vm.onIntent(CatalogueIntent.ImportBook(uri))
     }
 
     CatalogueContent(
         state = state,
-        onBookOpen = { navController.navigate(MediaViewerRoute(it.id).route) },
-        onToggleBookCheck = { viewModel.onIntent(CatalogueIntent.ToggleBookCheck(it.id)) },
-        onToggleRemoveMode = { viewModel.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
+        onBookOpen = { nav.navigate(MediaViewerRoute(it.id).route) },
+        onToggleBookCheck = { vm.onIntent(CatalogueIntent.ToggleBookCheck(it.id)) },
+        onToggleRemoveMode = { vm.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
         onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
-        onDeleteClick = { viewModel.onIntent(CatalogueIntent.RemoveChecked) },
-        onTogglePopup = { viewModel.onIntent(CatalogueIntent.TogglePopup(it)) }
+        onDeleteClick = { vm.onIntent(CatalogueIntent.RemoveChecked) },
+        onTogglePopup = { vm.onIntent(CatalogueIntent.TogglePopup(it)) }
     )
 }
