@@ -53,14 +53,6 @@ class UniversalFileParser
         return result
     }
 
-    /**
-     * тут мы берем файл по айди и пути
-     * делаем из него book model
-     * и возвращаем
-     *
-     * проверок не нужно
-     * сюда попали только валидные книги
-     */
     suspend fun getBookModelById(
         id: String,
         localPath: String,

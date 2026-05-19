@@ -44,8 +44,8 @@ fun RouterScreen(data: Uri? = null) {
             route = CatalogueRoute.route
         ) {
             CatalogueScreen(
-                viewModel = hiltViewModel<CatalogueViewModel>(),
-                navController = navController
+                vm = hiltViewModel<CatalogueViewModel>(),
+                nav = navController
             )
         }
 

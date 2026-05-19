@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Шелфи Ридер</string>
+
     <string name="catalogue_title">Твои\nКниги</string>
     <string name="catalogue_empty">Здесь пока нет книг.\nДобавь свою первую книгу.</string>
     <string name="catalogue_section">Глава</string>
@@ -13,8 +14,9 @@
     <string name="settings_line_height">Высота строки</string>
     <string name="settings_paddings">Отступы</string>
     <string name="settings_theme">Тема</string>
-
     <string name="settings_theme_system">Системная</string>
     <string name="settings_theme_light">Светлая</string>
     <string name="settings_theme_dark">Темная</string>
+
+    <string name="add_book_import_title">Добавить</string>
 </resources>
