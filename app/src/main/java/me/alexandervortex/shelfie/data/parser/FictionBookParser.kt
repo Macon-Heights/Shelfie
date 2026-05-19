@@ -24,7 +24,7 @@ class FictionBookParser
     private val elementMapper: ElementMapper,
 ) {
 
-    fun parseTitleInfo(
+    fun getPreview(
         inputStream: InputStream,
     ): TitleInfoUIModel {
         val doc: Document = Jsoup.parse(
@@ -44,26 +44,10 @@ class FictionBookParser
         )
     }
 
-    private fun getCoverImage(
-        titleInfo: Element?,
-        binaries: Map<String, ByteArray>,
-    ): ByteArray? {
-        val coverImageElement = titleInfo
-            ?.selectFirst("coverpage > image")
-            ?: titleInfo?.selectFirst("coverpage image")
+    // region xz
 
-        val ref = coverImageElement
-            ?.attr("xlink:href")
-            ?.ifBlank { coverImageElement.attr("l:href") }
-            ?.ifBlank { coverImageElement.attr("href") }
-            ?.removePrefix("#")
-            ?.trim()
-            .orEmpty()
 
-        if (ref.isBlank()) return null
 
-        return binaries[ref]
-    }
 
     fun parse(
         id: String,
@@ -95,4 +79,26 @@ class FictionBookParser
         )
         return result
     }
+
+    private fun getCoverImage(
+        titleInfo: Element?,
+        binaries: Map<String, ByteArray>,
+    ): ByteArray? {
+        val coverImageElement = titleInfo
+            ?.selectFirst("coverpage > image")
+            ?: titleInfo?.selectFirst("coverpage image")
+
+        val ref = coverImageElement
+            ?.attr("xlink:href")
+            ?.ifBlank { coverImageElement.attr("l:href") }
+            ?.ifBlank { coverImageElement.attr("href") }
+            ?.removePrefix("#")
+            ?.trim()
+            .orEmpty()
+
+        if (ref.isBlank()) return null
+
+        return binaries[ref]
+    }
+    // endregion
 }
