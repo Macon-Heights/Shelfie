@@ -69,7 +69,7 @@ class CatalogueViewModel @Inject constructor(
 
     private fun importBook(uri: Uri) = viewModelScope.launch {
         try {
-            bookRepository.importFromUri(uri)
+            bookRepository.addBookToDbAndDisk(uri)
             _effect.emit(CatalogueEffect.ShowToast("Книга добавлена"))
         } catch (e: Exception) {
             _effect.emit(CatalogueEffect.ShowToast("Ошибка: ${e.localizedMessage}"))

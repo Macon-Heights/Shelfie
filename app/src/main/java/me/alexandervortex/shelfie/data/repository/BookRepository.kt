@@ -23,19 +23,10 @@ class BookRepository
         return parser.previewFromUri(uri)
     }
 
-    suspend fun importFromUri(uri: Uri) {
-
-        val bookModel = parser.importFromUri(uri)
-            ?: throw Exception("Книга не поддерживается.\nТолько FB2 формат.")
-
-
-        val entity = bookModel.let {
-            mapper.toEntity(it)
-        }
-
-        entity.let {
-            dao.addBook(it)
-        }
+    suspend fun addBookToDbAndDisk(uri: Uri) {
+        val model = parser.addBookToDbAndDisk(uri) ?: throw Exception("Книга не поддерживается.")
+        val entity = mapper.toEntity(model)
+        dao.addBook(entity)
     }
 
     fun getPreviews(): Flow<List<CatalogueItemUIModel.Model>> {
