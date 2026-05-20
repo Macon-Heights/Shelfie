@@ -27,17 +27,15 @@ class UniversalFileParser
     }
 
     fun parseAndCopy(uri: Uri): BookUIModel? {
-        return unzipOrNot(uri) { _, extension ->
+        return unzipOrNot(uri) { stream, extension ->
             val booksDir = File(context.filesDir, "books").apply { mkdirs() }
             val id = System.currentTimeMillis().toString()
-            val outPutFile = File(booksDir, "$id.$extension")
+            val outputFile = File(booksDir, "$id.$extension")
 
-            openStream(uri) { input ->
-                outPutFile.outputStream().use { output ->
-                    input.copyTo(output)
-                }
+            outputFile.outputStream().use { output ->
+                stream.copyTo(output)
             }
-            bookParser(id, outPutFile, extension)
+            bookParser(id, outputFile, extension)
         }
     }
 
@@ -75,8 +73,8 @@ class UniversalFileParser
                     var entry = zipStream.nextEntry
                     while (entry != null) {
                         if (!entry.isDirectory && isSupportedContent(entry.name)) {
-                            return@use contentAction.invoke(zipStream, "fb2")
-                            // only extension, not full entry name
+                            val innerExt = entry.name.substringAfterLast('.', "")
+                            return@use contentAction.invoke(zipStream, innerExt)
                         }
                         entry = zipStream.nextEntry
                     }
@@ -89,8 +87,8 @@ class UniversalFileParser
     }
 
     private fun isSupportedContent(fileName: String): Boolean {
-        // fixme epub/fb2
-        return fileName.endsWith(".fb2", ignoreCase = true)
+        val supportedBooks = setOf("fb2", "epub")
+        return supportedBooks.any { fileName.endsWith(it) }
     }
 
     private fun <T> openStream(
