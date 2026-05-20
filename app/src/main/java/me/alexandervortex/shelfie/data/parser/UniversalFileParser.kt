@@ -43,7 +43,7 @@ class UniversalFileParser
         stream: InputStream,
         extension: String
     ): TitleInfoUIModel? {
-        return when (extension) {
+        return when (extension.lowercase()) {
             "fb2" -> fictionBookParser.getPreview(stream)
             "epub" -> null
             else -> null
@@ -55,7 +55,7 @@ class UniversalFileParser
         outPutFile: File,
         extension: String
     ): BookUIModel? {
-        return when (extension) {
+        return when (extension.lowercase()) {
             "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
             "epub" -> null
             else -> null
@@ -87,8 +87,8 @@ class UniversalFileParser
     }
 
     private fun isSupportedContent(fileName: String): Boolean {
-        val supportedBooks = setOf("fb2", "epub")
-        return supportedBooks.any { fileName.endsWith(it) }
+        val supportedBooks = setOf("fb2", "epub", "txt")
+        return supportedBooks.any { fileName.endsWith(it, ignoreCase = true) }
     }
 
     private fun <T> openStream(
