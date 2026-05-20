@@ -12,7 +12,7 @@ class TitleInfoMapper
         coverImage: ByteArray?,
     ): TitleInfoUIModel {
         val result = TitleInfoUIModel(
-            title = titleInfo?.selectFirst("book-title")?.text()?.trim(),
+            title = (titleInfo?.selectFirst("book-title") ?: titleInfo?.selectFirst("title"))?.text()?.trim(),
             date = titleInfo?.selectFirst("date")?.text()?.trim(),
             author = titleInfo?.selectFirst("author")?.let {
                 val first = it.selectFirst("first-name")?.text()?.trim()

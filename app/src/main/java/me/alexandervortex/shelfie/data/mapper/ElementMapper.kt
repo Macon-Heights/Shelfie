@@ -96,9 +96,11 @@ class ElementMapper @Inject constructor() {
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUIModel? {
-        val KEY = "xlink:href"
-        val SHARP = "#"
-        val ref = element.attr(KEY).removePrefix(SHARP)
+        val ref = element.attr("xlink:href")
+            .ifBlank { element.attr("l:href") }
+            .ifBlank { element.attr("href") }
+            .removePrefix("#")
+            .trim()
         val image = binaries[ref]
         return image?.let { ElementUIModel.ImageUIModel(it) }
     }
