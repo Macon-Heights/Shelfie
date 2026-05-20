@@ -45,10 +45,6 @@ class FictionBookParser
     }
 
     // region xz
-
-
-
-
     fun parse(
         id: String,
         file: File,
@@ -66,10 +62,12 @@ class FictionBookParser
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
 
+        val coverImage = getCoverImage(titleInfo, binaries)
+
         val result = BookUIModel(
             id = id,
             localPath = file.path,
-            titleInfo = titleInfoMapper.map(titleInfo, null),
+            titleInfo = titleInfoMapper.map(titleInfo, coverImage),
             elements = elementMapper.map(body, binaries)
                 .splitPartsBySentences()
                 .normalizeEmptyTextUI()

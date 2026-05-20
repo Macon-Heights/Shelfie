@@ -31,6 +31,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.getColors
+import me.alexandervortex.shelfie.base.ext.getStaticWhite
 import me.alexandervortex.shelfie.features.settings.LocalAppSettings
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.composeSpanStyle
@@ -103,6 +104,7 @@ fun ComponentUI(
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
                     modifier = modifier
+                        .background(getStaticWhite())
                         .fillMaxWidth()
                         .padding(bottom = 32.dp)
                 )

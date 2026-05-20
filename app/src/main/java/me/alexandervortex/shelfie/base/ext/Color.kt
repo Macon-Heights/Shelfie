@@ -16,3 +16,10 @@ fun getStaticSurfaceVariant() = if (isSystemInDarkTheme()) {
 } else {
     getColors().onSurfaceVariant
 }
+
+@Composable
+fun getStaticWhite() = if (isSystemInDarkTheme()) {
+    getColors().onBackground
+} else {
+    getColors().background
+}
