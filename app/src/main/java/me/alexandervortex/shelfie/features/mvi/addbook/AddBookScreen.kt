@@ -20,8 +20,11 @@ fun AddBookScreen(
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(uri) {
         viewModel.onIntent(AddBookIntent.Add(uri))
+    }
+
+    LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 is AddBookEffect.ShowToast ->
