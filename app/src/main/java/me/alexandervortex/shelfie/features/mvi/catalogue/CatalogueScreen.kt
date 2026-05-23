@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
+import me.alexandervortex.shelfie.features.navigate.AddBookRoute
 import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
 
 @Composable
@@ -42,7 +43,7 @@ fun CatalogueScreen(
         try {
             context.contentResolver.takePersistableUriPermission(uri, intent)
         } catch (_: SecurityException) { }
-        vm.onIntent(CatalogueIntent.ImportBook(uri))
+        nav.navigate(AddBookRoute(uri).route)
     }
 
     CatalogueContent(
