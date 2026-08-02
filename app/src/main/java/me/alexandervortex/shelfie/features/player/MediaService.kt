@@ -34,11 +34,9 @@ private const val ACTION_SPEED = "action_speed"
 @AndroidEntryPoint
 class MediaService : Service() {
 
-    // ---- публичный реактивный стейт
     private val _state = MutableStateFlow(MediaServiceState())
     val state = _state.asStateFlow()
 
-    // binder для связи с VM
     private val binder = LocalBinder()
 
     inner class LocalBinder : Binder() {
@@ -54,11 +52,9 @@ class MediaService : Service() {
 
     override fun onBind(intent: Intent?): IBinder = binder
 
-    // infra
     private lateinit var mediaSession: MediaSessionCompat
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    // TTS
     private var ttsController: TtsController? = null
     private var playingBook: BookUIModel? = null
 
@@ -168,7 +164,6 @@ class MediaService : Service() {
     }
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
-        // если контроллера нет, выходим (доп. защита)
         val ctrl = ttsController ?: run {
             _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
             return
@@ -228,7 +223,7 @@ class MediaService : Service() {
                 CHANNEL_ID,
                 "Shelfie Player",
                 NotificationManager.IMPORTANCE_LOW
-            ).apply { description = "Playback controls" } // вернул твою OLD строку
+            ).apply { description = "Playback controls" }
             nm.createNotificationChannel(ch)
         }
     }

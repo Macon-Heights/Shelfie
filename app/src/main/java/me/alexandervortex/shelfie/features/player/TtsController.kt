@@ -40,7 +40,7 @@ class TtsController(
 
     override fun onInit(status: Int) {
         if (status != TextToSpeech.SUCCESS) {
-            errorAction("Ошибка инициализации TTS")
+            errorAction("Error while initializing TTS")
             return
         }
 
@@ -50,7 +50,7 @@ class TtsController(
 
         val result = tts?.setLanguage(locale)
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            errorAction("Язык не поддерживается")
+            errorAction("Language not supported")
         }
         initListener()
     }
@@ -59,7 +59,7 @@ class TtsController(
         tts?.setOnUtteranceProgressListener(
             object : UtteranceProgressListener() {
                 override fun onStart(utteranceId: String?) {
-                    // формат: "el:part"
+                    // format: "el:part"
                     utteranceId?.split(':')?.let { parts ->
                         val el = parts.getOrNull(0)?.toIntOrNull()
                         val part = parts.getOrNull(1)?.toIntOrNull()
@@ -72,7 +72,7 @@ class TtsController(
                 }
 
                 override fun onError(utteranceId: String?) {
-                    errorAction("Ошибка TTS: $utteranceId")
+                    errorAction("TTS Error: $utteranceId")
                 }
             }
         )
@@ -81,7 +81,7 @@ class TtsController(
     private fun startSpeaking(startIndex: Int) {
         val elements = bookModel?.elements.orEmpty()
         if (elements.isEmpty()) {
-            errorAction("Пустая книга")
+            errorAction("Empty Book")
             return
         }
 
@@ -97,23 +97,18 @@ class TtsController(
         val elements = bookModel?.elements.orEmpty()
         if (elements.isEmpty()) return
 
-        // Останавливаем текущее чтение
         tts?.stop()
 
-        // Меняем текущий индекс
         currentIndex = (currentIndex + step).coerceIn(0, elements.lastIndex)
         currentPart = 0
 
-        // Сохраняем прогресс
         bookModel?.let {
             saveScrollState.invoke(it.id, currentIndex, currentPart)
         }
 
-        // Если уже играем — продолжаем с нового места
         if (isSpeaking) {
             speakNext()
         } else {
-            // Если пауза — просто обновляем позицию на экране
             scrollToIndex(currentIndex, currentPart)
         }
     }

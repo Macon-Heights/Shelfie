@@ -198,7 +198,7 @@ fun MediaViewerPreview2() {
                 book = bookUI,
                 serviceState = playingState()
                     .copy(
-                        title = "Нити Смерти (Сборник)",
+                        title = "Frankenstein",
                         speed = SpeechRateValue.FAST,
                         timer = TimerValue.MIN_20,
                         index = 3,
