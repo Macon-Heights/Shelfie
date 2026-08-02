@@ -79,7 +79,6 @@ class ElementMapper @Inject constructor() {
                     }
 
                     else -> {
-                        // прозрачный контейнер, рекурсивно идём вниз
                         result += map(node, binaries, styles)
                     }
                 }
