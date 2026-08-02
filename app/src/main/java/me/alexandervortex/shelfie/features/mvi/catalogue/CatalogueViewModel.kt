@@ -32,8 +32,6 @@ class CatalogueViewModel @Inject constructor(
         viewModelScope.launch {
             bookRepository.getPreviews().collect { dbBooks ->
                 _state.update { current ->
-                    // Если книг нет, можем оставить скелетоны или пустой список. 
-                    // Но обычно Flow вернет пустой список если в БД пусто.
                     val updatedBooks = dbBooks.map { dbBook ->
                         val currentBook = current.books.filterIsInstance<CatalogueItemUIModel.Model>()
                             .find { it.id == dbBook.id }
@@ -70,9 +68,9 @@ class CatalogueViewModel @Inject constructor(
     private fun importBook(uri: Uri) = viewModelScope.launch {
         try {
             bookRepository.addBookToDbAndDisk(uri)
-            _effect.emit(CatalogueEffect.ShowToast("Книга добавлена"))
+            _effect.emit(CatalogueEffect.ShowToast("Book Added"))
         } catch (e: Exception) {
-            _effect.emit(CatalogueEffect.ShowToast("Ошибка: ${e.localizedMessage}"))
+            _effect.emit(CatalogueEffect.ShowToast("Error: ${e.localizedMessage}"))
         }
     }
 
@@ -102,12 +100,12 @@ class CatalogueViewModel @Inject constructor(
             _state.value.books.filterIsInstance<CatalogueItemUIModel.Model>()
                 .filter { it.isChecked }
         if (checkedBooks.isEmpty()) {
-            _effect.emit(CatalogueEffect.ShowToast("Ничего не выбрано"))
+            _effect.emit(CatalogueEffect.ShowToast("Nothing selected"))
             return@launch
         }
 
         bookRepository.removeBooks(checkedBooks)
-        _effect.emit(CatalogueEffect.ShowToast("Удалено ${checkedBooks.size} книг"))
+        _effect.emit(CatalogueEffect.ShowToast("Removed ${checkedBooks.size} books"))
         _state.update { it.copy(isRemoveMode = false) }
     }
 }

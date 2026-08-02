@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -82,10 +84,10 @@ fun ConfirmationUI(
 private fun PopupComponentPreview() {
     CombinedPreviews {
         ConfirmationUI(
-            "Удалить?",
-            "Оно удалится безвозвратно",
-            "Удалить",
-            "Отмена", {}, {}
+            stringResource(R.string.catalogue_remove_title),
+            stringResource(R.string.catalogue_remove_subtitle),
+            stringResource(R.string.catalogue_remove_yes),
+            stringResource(R.string.catalogue_remove_no), {}, {}
         )
     }
 }

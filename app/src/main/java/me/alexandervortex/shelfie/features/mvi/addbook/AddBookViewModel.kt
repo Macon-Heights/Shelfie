@@ -44,7 +44,7 @@ class AddBookViewModel
                         state.copy(titleInfo = titleInfo)
                     }
                 } catch (e: Exception) {
-                    _effect.emit(AddBookEffect.ShowToast("Ошибка: ${e.localizedMessage}"))
+                    _effect.emit(AddBookEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }
             }
         }
@@ -55,10 +55,10 @@ class AddBookViewModel
             viewModelScope.launch {
                 try {
                     bookRepository.addBookToDbAndDisk(uri)
-                    _effect.emit(AddBookEffect.ShowToast("Книга добавлена"))
+                    _effect.emit(AddBookEffect.ShowToast("Book added"))
                     _effect.emit(AddBookEffect.Close)
                 } catch (e: Exception) {
-                    _effect.emit(AddBookEffect.ShowToast("Ошибка: ${e.localizedMessage}"))
+                    _effect.emit(AddBookEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }
             }
         }
