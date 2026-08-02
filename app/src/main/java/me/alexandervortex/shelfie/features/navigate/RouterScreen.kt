@@ -3,6 +3,7 @@ package me.alexandervortex.shelfie.features.navigate
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +22,10 @@ fun RouterScreen(data: Uri? = null) {
 
     LaunchedEffect(data) {
         if (data != null) {
-            navController.navigate(AddBookRoute.route)
+            navController.navigate(AddBookRoute(data).route) {
+                popUpTo(CatalogueRoute.route) { inclusive = false }
+                launchSingleTop = true
+            }
         }
     }
 
@@ -31,10 +35,13 @@ fun RouterScreen(data: Uri? = null) {
     ) {
 
         composable(
-            route = AddBookRoute.route
+            route = AddBookRoute.route,
+            arguments = listOf(getUri()),
         ) {
+            val uriString = it.getUri()
+            val uri = if (uriString.isNotEmpty()) uriString.toUri() else null
             AddBookScreen(
-                uri = data,
+                uri = uri,
                 viewModel = hiltViewModel<AddBookViewModel>(),
                 navController = navController
             )
