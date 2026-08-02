@@ -1,8 +1,15 @@
 package me.alexandervortex.shelfie.features.navigate
 
-data object AddBookRoute {
+import android.net.Uri
 
-    val route = "addbook"
+data class AddBookRoute(
+    val uri: Uri
+) {
+    val route = "addbook?uri=${Uri.encode(uri.toString())}"
+
+    companion object {
+         val route = "addbook?uri={uri}"
+    }
 }
 
 data object CatalogueRoute {
