@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookUIState
 import me.alexandervortex.shelfie.ui.component.ButtonUI
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 
 @Composable
 fun AddBookUI(
@@ -85,15 +85,7 @@ private fun AddScreenPreview() {
         }
 
         val state = AddBookUIState(
-            TitleInfoUIModel(
-                title = "Причуды природы",
-                date = "1981",
-                author = "Игорь Акимушкин",
-                annotation = "Книга известного популяризатора науки учёного и писателя Игоря Акимушкина посвящена необычным, а порой и парадоксальным явлениям в образе жизни и повадках животного царства природы. Особое внимание уделено редким и исчезающим животным, подлежащим охране. Отдельная глава рассказывает об удивительных феноменах растительного мира Земли. Рассчитана книга на массового читателя.",
-                genre = "Природа",
-                lang = "ру",
-                coverImage = coverBytes,
-            )
+            getTitleInfo(coverBytes)
         )
         AddBookUI(state) {}
     }

@@ -29,15 +29,15 @@ fun pausedState(): MediaServiceState {
     )
 }
 
-private fun getTitleInfo(): TitleInfoUIModel {
+fun getTitleInfo(coverBytes: ByteArray? = null): TitleInfoUIModel {
     return TitleInfoUIModel(
-        title = "Mock Book",
-        date = "2025",
-        author = "Sashke Vortex",
-        annotation = "Mock Book\nThis is just description for a book. This is just description for a book.\n\nby Sashke Vortex",
-        genre = "Horror",
+        title = "Frankenstein",
+        date = "1818",
+        author = "Mary Shelley",
+        annotation = "Victor Frankenstein, a young scientist driven by ambition, discovers a way to create life. However, he is horrified by the creature he brings into the world and abandons it. Rejected by society and desperate for companionship, the creature turns against its creator. The novel explores responsibility, loneliness, prejudice, and the consequences of uncontrolled ambition.",
+        genre = "Gothic Fiction",
         lang = "en",
-        coverImage = null
+        coverImage = coverBytes,
     )
 }
 
