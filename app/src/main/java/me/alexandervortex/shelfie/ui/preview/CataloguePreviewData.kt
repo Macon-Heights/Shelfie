@@ -42,7 +42,7 @@ object CataloguePreviewData {
                 localPath = "path",
                 title = it.firstOrNull().orEmpty(),
                 author = it.lastOrNull(),
-                year = "1001",
+                year = (1800..2010).random().toString(),
                 isChecked = listOf(true, false).random(),
                 scrollIndex = 9,
                 elements = 20
