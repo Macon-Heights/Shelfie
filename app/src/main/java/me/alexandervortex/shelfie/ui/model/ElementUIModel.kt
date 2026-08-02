@@ -20,7 +20,22 @@ sealed interface ElementUIModel {
 
     data class ImageUIModel(
         val image: ByteArray,
-    ) : ElementUIModel
+    ) : ElementUIModel {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as ImageUIModel
+
+            if (!image.contentEquals(other.image)) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return image.contentHashCode()
+        }
+    }
 
     data object EmptyLineUIModel : ElementUIModel
 
