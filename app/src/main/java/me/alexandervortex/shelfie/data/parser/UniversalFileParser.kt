@@ -62,7 +62,6 @@ class UniversalFileParser
         }
     }
 
-    // region HELPERS
     private fun <T> unzipOrNot(
         uri: Uri, contentAction: (InputStream, String) -> T
     ): T? {
@@ -96,9 +95,7 @@ class UniversalFileParser
     ): T? {
         return context.contentResolver.openInputStream(uri)?.use(block)
     }
-    // endregion
 
-    // region NEEDS WORK
     suspend fun getBookModelById(
         id: String,
         localPath: String,
@@ -129,5 +126,4 @@ class UniversalFileParser
             }
         }
     }
-    // endregion
 }

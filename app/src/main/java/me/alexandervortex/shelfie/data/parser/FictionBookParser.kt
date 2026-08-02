@@ -44,7 +44,6 @@ class FictionBookParser
         )
     }
 
-    // region xz
     fun parse(
         id: String,
         file: File,
@@ -98,5 +97,4 @@ class FictionBookParser
 
         return binaries[ref]
     }
-    // endregion
 }

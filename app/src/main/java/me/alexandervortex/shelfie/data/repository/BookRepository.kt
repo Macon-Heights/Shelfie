@@ -24,7 +24,7 @@ class BookRepository
     }
 
     suspend fun addBookToDbAndDisk(uri: Uri) {
-        val model = parser.parseAndCopy(uri) ?: throw Exception("Книга не поддерживается.")
+        val model = parser.parseAndCopy(uri) ?: throw Exception("Book not supported")
         val entity = mapper.toEntity(model)
         dao.addBook(entity)
     }

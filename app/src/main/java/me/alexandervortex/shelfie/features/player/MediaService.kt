@@ -92,7 +92,7 @@ class MediaService : Service() {
             playingBook?.let {
                 initTtsController(it)
             }
-            _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
+            _state.update { it.copy(error = "Nothing to play") }
             return
         }
         updatePlayback(!_state.value.isPlaying, indexToStart)//
@@ -100,7 +100,7 @@ class MediaService : Service() {
 
     fun loadBook(book: BookUIModel?) {
         if (book == null) {
-            _state.update { it.copy(error = "Пустая книга") }
+            _state.update { it.copy(error = "Empty Book") }
             return
         }
 
@@ -154,7 +154,6 @@ class MediaService : Service() {
                 _state.update {
                     it.copy(isPlaying = isPlaying)
                 }
-                // синхронизируем плитку в шторке
                 startForeground(1, buildNotification(_state.value.isPlaying))
             },
             saveScrollState = { id, index, offset ->
@@ -165,7 +164,7 @@ class MediaService : Service() {
 
     private fun updatePlayback(isPlaying: Boolean, indexToStartPlaying: Int) {
         val ctrl = ttsController ?: run {
-            _state.update { it.copy(error = "Книга не загружена — нечего воспроизводить") }
+            _state.update { it.copy(error = "Nothing to play") }
             return
         }
 
@@ -178,7 +177,7 @@ class MediaService : Service() {
 
     private fun buildNotification(isPlaying: Boolean): Notification {
         val action = if (isPlaying) ACTION_PAUSE else ACTION_PLAY
-        val label = if (isPlaying) "паусе" else "плау"
+        val label = if (isPlaying) "pause" else "play"
         val icon = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
 
         val intent = PendingIntent.getService(

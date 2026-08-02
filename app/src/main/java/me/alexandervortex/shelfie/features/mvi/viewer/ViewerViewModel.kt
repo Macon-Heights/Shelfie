@@ -76,7 +76,6 @@ class ViewerViewModel
                 }
             }
 
-            // 💾 Передаём callback для сохранения прогресса
             newService.setOnSaveProgressListener { bookId, index, offset ->
                 viewModelScope.launch {
                     repo.updateProgress(
@@ -100,13 +99,11 @@ class ViewerViewModel
     private fun bindService(context: Context) {
         if (isBound) return
         val intent = Intent(context, MediaService::class.java)
-        // гарантируем живой сервис
         context.startForegroundService(intent)
         context.bindService(intent, conn, Context.BIND_AUTO_CREATE)
         isBound = true
     }
 
-    /** вызывать при dispose или onStop */
     private fun unbindService(context: Context) {
         if (!isBound) return
         runCatching {
