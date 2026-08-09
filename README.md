@@ -7,17 +7,12 @@ between reading and listening while keeping a single shared reading progress.
 
 Built with Kotlin and Jetpack Compose as an actively developed personal product.
 
-<!--
-HERO SCREENSHOT:
-Reader with TTS currently playing.
-Show highlighted sentence + player controls.
-
-Save as:
-docs/screenshots/reader-tts.png
--->
-
 <p align="center">
-  <img src="docs/screenshots/reader-tts.png" width="300" alt="Shelfie reader with TTS playback"/>
+  <img
+    src="docs/screenshots/reader-tts.png"
+    width="360"
+    alt="Shelfie reader with synchronized TTS playback"
+  />
 </p>
 
 ## ✨ What is Shelfie?
@@ -56,31 +51,25 @@ Currently, **FB2 is the first supported book format**.
 
 ## 📱 User experience
 
-<!--
-SCREENSHOTS:
-1. Catalogue with several books and different reading progress
-2. Import preview with cover + title + author + description
-3. Reader settings displayed over the book
-
-Save as:
-docs/screenshots/catalogue.png
-docs/screenshots/import-preview.png
-docs/screenshots/reader-settings.png
--->
-
-<p align="center">
-  <img src="docs/screenshots/catalogue.png" width="30%" alt="Shelfie catalogue"/>
-  &nbsp;
-  <img src="docs/screenshots/import-preview.png" width="30%" alt="Shelfie book import preview"/>
-  &nbsp;
-  <img src="docs/screenshots/reader-settings.png" width="30%" alt="Shelfie reader settings"/>
-</p>
-
 The UI is built around keeping the reading experience uninterrupted.
 
 Reader settings are applied immediately while the book remains visible,
 loading states use skeleton animations, and importing a book includes a
 preview step before it becomes part of the library.
+
+<p align="center">
+  <img
+    src="docs/screenshots/catalogue.png"
+    width="45%"
+    alt="Shelfie book catalogue"
+  />
+  &nbsp;&nbsp;
+  <img
+    src="docs/screenshots/reader-settings.png"
+    width="45%"
+    alt="Shelfie reader settings"
+  />
+</p>
 
 ## 🎧 Reading and listening are one experience
 
@@ -92,21 +81,16 @@ automatically follows the narration.
 
 Stop listening and continue reading from the same progress.
 
-<!--
-SCREENSHOT:
-Android notification shade while Shelfie is playing in background.
-IMPORTANT: remove personal notifications first.
-
-Save as:
-docs/screenshots/background-playback.png
--->
-
-<p align="center">
-  <img src="docs/screenshots/background-playback.png" width="300" alt="Shelfie background playback notification"/>
-</p>
-
 Playback continues outside the reader through an Android foreground media
 service, allowing the book to keep playing while Shelfie is in the background.
+
+<p align="center">
+  <img
+    src="docs/screenshots/background-playback.png"
+    width="360"
+    alt="Shelfie background playback in Android media controls"
+  />
+</p>
 
 ## 🛠 Tech stack
 
