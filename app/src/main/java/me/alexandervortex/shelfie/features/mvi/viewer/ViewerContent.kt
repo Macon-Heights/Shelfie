@@ -78,7 +78,7 @@ fun ViewerContent(
                             element = animated,
                             elementIndex = index,
                             currentIndex = state.serviceState.index,
-                            partIndex = state.serviceState.part
+                            partIndex = state.serviceState.offset
                         )
                     }
                 }

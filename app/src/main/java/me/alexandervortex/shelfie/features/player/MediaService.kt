@@ -116,7 +116,7 @@ class MediaService : Service() {
                 it.copy(
                     isPlaying = false,
                     index = book.progressIndex,
-                    part = 0,
+                    offset = book.progressOffset,
                     title = book.titleInfo.title,
                     author = book.titleInfo.author,
                     error = ""
@@ -134,7 +134,7 @@ class MediaService : Service() {
         _state.update {
             it.copy(
                 index = bookUIModel.progressIndex,
-                part = 0,
+                offset = bookUIModel.progressOffset,
                 author = bookUIModel.titleInfo.author,
                 title = bookUIModel.titleInfo.title,
                 speed = SpeechRateValue.DEFAULT,
@@ -148,7 +148,7 @@ class MediaService : Service() {
             bookModel = bookUIModel,
             errorAction = { msg -> _state.update { it.copy(error = msg) } },
             scrollToIndex = { idx, part ->
-                _state.update { it.copy(index = idx ?: 0, part = part ?: 0) }
+                _state.update { it.copy(index = idx ?: 0, offset = part ?: 0) }
             },
             onStateChanged = { isPlaying ->
                 _state.update {
