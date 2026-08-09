@@ -31,7 +31,7 @@ fun ViewerScreen(
         book?.let {
             listState.scrollToItem(
                 index = serviceState.index,
-                scrollOffset = 0
+                scrollOffset = serviceState.offset
             )
         }
     }
@@ -61,10 +61,10 @@ fun ViewerScreen(
         }
     }
 
-    LaunchedEffect(serviceState.index, serviceState.part) {
+    LaunchedEffect(serviceState.index, serviceState.offset) {
         if (serviceState.isPlaying) {
             try {
-                listState.animateScrollToItem(serviceState.index, scrollOffset = 0)
+                listState.animateScrollToItem(serviceState.index, scrollOffset = serviceState.offset)
             } catch (e: Exception) {
 
             }

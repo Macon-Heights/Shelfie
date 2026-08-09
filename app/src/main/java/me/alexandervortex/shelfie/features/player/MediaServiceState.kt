@@ -11,7 +11,7 @@ data class MediaServiceState(
     val timer: TimerValue = TimerValue.OFF,
 
     val index: Int = 0,
-    val part: Int = 0,
+    val offset: Int = 0,
 
     val title: String? = null,
     val author: String? = null,
