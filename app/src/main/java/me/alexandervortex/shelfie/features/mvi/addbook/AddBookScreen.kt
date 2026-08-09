@@ -39,7 +39,7 @@ fun AddBookScreen(
         }
     }
 
-    AddBookUI(state) {
+    AddBookContent(state) {
         viewModel.onIntent(AddBookIntent.Import(uri))
     }
 }

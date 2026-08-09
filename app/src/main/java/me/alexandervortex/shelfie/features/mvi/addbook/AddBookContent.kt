@@ -31,7 +31,7 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 
 @Composable
-fun AddBookUI(
+fun AddBookContent(
     state: AddBookUIState,
     onImport: () -> Unit
 ) {
@@ -87,6 +87,6 @@ private fun AddScreenPreview() {
         val state = AddBookUIState(
             getTitleInfo(coverBytes)
         )
-        AddBookUI(state) {}
+        AddBookContent(state) {}
     }
 }
