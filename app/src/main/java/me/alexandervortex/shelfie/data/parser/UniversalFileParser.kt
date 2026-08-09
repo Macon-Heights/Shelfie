@@ -8,6 +8,7 @@ import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.FictionBookParser
+import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import java.io.File
@@ -21,7 +22,8 @@ class UniversalFileParser
 @Inject constructor(
     @ApplicationContext private val context: Context,
     private val fictionBookParser: FictionBookParser,
-    private val epub: EpubParser
+    private val epub: EpubParser,
+    private val pdf: PdfParser,
 ) {
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
         return unzipOrNot(uri) { stream, extension ->
@@ -49,6 +51,7 @@ class UniversalFileParser
         return when (extension.lowercase()) {
             "fb2" -> fictionBookParser.getPreview(stream)
             "epub" -> epub.getPreview(stream)
+            "pdf" -> pdf.getPreview(stream)
             else -> null
         }
     }
@@ -61,6 +64,7 @@ class UniversalFileParser
         return when (extension.lowercase()) {
             "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
             "epub" -> epub.parse(id, outPutFile, 0, 0)
+            "pdf" -> pdf.parse(id, outPutFile, 0, 0)
             else -> null
         }
     }
@@ -89,7 +93,7 @@ class UniversalFileParser
     }
 
     private fun isSupportedContent(fileName: String): Boolean {
-        val supportedBooks = setOf("fb2", "epub", "txt")
+        val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
         return supportedBooks.any { fileName.endsWith(it, ignoreCase = true) }
     }
 
