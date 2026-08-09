@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.parser
+package me.alexandervortex.shelfie.data.parser.fb2
 
 import me.alexandervortex.shelfie.base.ext.getBinaries
 import me.alexandervortex.shelfie.base.ext.getBody
