@@ -10,8 +10,9 @@ import dagger.hilt.components.SingletonComponent
 import me.alexandervortex.shelfie.data.db.BookDatabase
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.parser.FictionBookParser
+import me.alexandervortex.shelfie.data.parser.fb2.FictionBookParser
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Singleton
 
@@ -25,8 +26,9 @@ object MainModule {
     fun provideFictionBookParser(
         @ApplicationContext context: Context,
         mapper: FictionBookParser,
+        epub: EpubParser
     ): UniversalFileParser {
-        return UniversalFileParser(context, mapper)
+        return UniversalFileParser(context, mapper, epub)
     }
 
     @Provides

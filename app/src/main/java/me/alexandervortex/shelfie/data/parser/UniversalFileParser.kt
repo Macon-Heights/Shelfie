@@ -6,6 +6,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
+import me.alexandervortex.shelfie.data.parser.epub.EpubParser
+import me.alexandervortex.shelfie.data.parser.fb2.FictionBookParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import java.io.File
@@ -19,6 +21,7 @@ class UniversalFileParser
 @Inject constructor(
     @ApplicationContext private val context: Context,
     private val fictionBookParser: FictionBookParser,
+    private val epub: EpubParser
 ) {
     fun previewFromUri(uri: Uri): TitleInfoUIModel? {
         return unzipOrNot(uri) { stream, extension ->
@@ -45,7 +48,7 @@ class UniversalFileParser
     ): TitleInfoUIModel? {
         return when (extension.lowercase()) {
             "fb2" -> fictionBookParser.getPreview(stream)
-            "epub" -> null
+            "epub" -> epub.getPreview(stream)
             else -> null
         }
     }
@@ -57,7 +60,7 @@ class UniversalFileParser
     ): BookUIModel? {
         return when (extension.lowercase()) {
             "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
-            "epub" -> null
+            "epub" -> epub.parse(id, outPutFile, 0, 0)
             else -> null
         }
     }
@@ -107,11 +110,10 @@ class UniversalFileParser
             if (!file.exists()) {
                 return@withContext null
             }
-            fictionBookParser.parse(
-                id,
-                file,
-                scrollOffset,
-                scrollIndex
+            val extension = file.extension
+            bookParser(id, file, extension)?.copy(
+                progressIndex = scrollIndex,
+                progressOffset = scrollOffset
             )
         }
         return result

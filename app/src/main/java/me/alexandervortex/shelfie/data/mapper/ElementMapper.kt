@@ -18,7 +18,7 @@ class ElementMapper @Inject constructor() {
         if (element == null) return emptyList()
 
         return when (element.tagName().lowercase()) {
-            "image" -> image(element, binaries).orEmpty()
+            "image", "img" -> image(element, binaries).orEmpty()
             "empty-line" -> listOf(ElementUIModel.EmptyLineUIModel)
             else -> parseComplex(element, binaries, styles)
         }
@@ -69,7 +69,7 @@ class ElementMapper @Inject constructor() {
                         result += map(node, binaries, styles + TextStyleModel.Link(href))
                     }
 
-                    "image" -> {
+                    "image", "img" -> {
                         flushText()
                         image(node, binaries)?.let { result += it }
                     }
@@ -95,12 +95,13 @@ class ElementMapper @Inject constructor() {
         element: Element,
         binaries: Map<String, ByteArray>,
     ): ElementUIModel? {
-        val ref = element.attr("xlink:href")
+        val ref = element.attr("src")
+            .ifBlank { element.attr("xlink:href") }
             .ifBlank { element.attr("l:href") }
             .ifBlank { element.attr("href") }
             .removePrefix("#")
             .trim()
-        val image = binaries[ref]
+        val image = binaries[ref] ?: binaries[ref.substringAfterLast("/")]
         return image?.let { ElementUIModel.ImageUIModel(it) }
     }
 }
