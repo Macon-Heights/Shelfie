@@ -38,7 +38,7 @@ import me.alexandervortex.shelfie.ui.component.CatalogueItemUI
 import me.alexandervortex.shelfie.ui.component.ConfirmationUI
 import me.alexandervortex.shelfie.ui.component.EmptyStateUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
-import me.alexandervortex.shelfie.ui.component.TitleUI
+import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
@@ -67,7 +67,12 @@ fun CatalogueContent(
                     .fillMaxSize()
                     .animateContentSize(tween())
             ) {
-                item { TitleUI(text = stringResource(R.string.catalogue_title)) }
+                item {
+                    TitleUI(
+                        modifier = Modifier.padding(vertical = 64.dp),
+                        text = stringResource(R.string.catalogue_title)
+                    )
+                }
                 when {
                     state.books.isEmpty() -> item { EmptyStateUI(R.string.catalogue_empty) }
                     else -> {
