@@ -9,10 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
-import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 
 @Composable
 fun ImageUI(
@@ -29,7 +27,7 @@ fun ImageUI(
 
     bitmap?.let {
         Image(
-            modifier = modifier.clipNShadow(SHAPE_M),
+            modifier = modifier,
             bitmap = bitmap,
             contentScale = ContentScale.Fit,
             contentDescription = null,
