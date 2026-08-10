@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.catalogue
+package me.alexandervortex.shelfie.features.screens.catalogue
 
 import android.content.Intent
 import android.widget.Toast
@@ -10,8 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
-import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
+import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueEffect
+import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.features.navigate.AddBookRoute
 import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
 

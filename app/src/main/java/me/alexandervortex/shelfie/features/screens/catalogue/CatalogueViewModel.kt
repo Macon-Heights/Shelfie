@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.catalogue
+package me.alexandervortex.shelfie.features.screens.catalogue
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueEffect
-import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueIntent
-import me.alexandervortex.shelfie.features.mvi.catalogue.mvi.CatalogueState
+import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueEffect
+import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueIntent
+import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import javax.inject.Inject
 

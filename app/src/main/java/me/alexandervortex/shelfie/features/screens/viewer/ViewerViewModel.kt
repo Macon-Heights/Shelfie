@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.viewer
+package me.alexandervortex.shelfie.features.screens.viewer
 
 import android.content.ComponentName
 import android.content.Context
@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.player.MediaService
-import me.alexandervortex.shelfie.features.mvi.viewer.mvi.ViewerEffect
-import me.alexandervortex.shelfie.features.mvi.viewer.mvi.ViewerIntent
-import me.alexandervortex.shelfie.features.mvi.viewer.mvi.ViewerState
+import me.alexandervortex.shelfie.features.screens.viewer.mvi.ViewerEffect
+import me.alexandervortex.shelfie.features.screens.viewer.mvi.ViewerIntent
+import me.alexandervortex.shelfie.features.screens.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel

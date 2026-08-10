@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.catalogue.mvi
+package me.alexandervortex.shelfie.features.screens.catalogue.mvi
 
 sealed interface CatalogueEffect {
     data class ShowToast(val message: String) : CatalogueEffect

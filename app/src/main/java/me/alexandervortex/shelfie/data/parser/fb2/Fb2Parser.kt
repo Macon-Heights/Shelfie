@@ -18,7 +18,7 @@ import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
 
-class FictionBookParser
+class Fb2Parser
 @Inject constructor(
     private val titleInfoMapper: TitleInfoMapper,
     private val elementMapper: ElementMapper,

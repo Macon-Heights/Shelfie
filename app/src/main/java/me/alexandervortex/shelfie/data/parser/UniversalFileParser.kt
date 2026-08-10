@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
-import me.alexandervortex.shelfie.data.parser.fb2.FictionBookParser
+import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
@@ -21,7 +21,7 @@ private const val ZIP_EXT = "zip"
 class UniversalFileParser
 @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val fictionBookParser: FictionBookParser,
+    private val fb2: Fb2Parser,
     private val epub: EpubParser,
     private val pdf: PdfParser,
 ) {
@@ -49,7 +49,7 @@ class UniversalFileParser
         extension: String
     ): TitleInfoUIModel? {
         return when (extension.lowercase()) {
-            "fb2" -> fictionBookParser.getPreview(stream)
+            "fb2" -> fb2.getPreview(stream)
             "epub" -> epub.getPreview(stream)
             "pdf" -> pdf.getPreview(stream)
             else -> null
@@ -62,7 +62,7 @@ class UniversalFileParser
         extension: String
     ): BookUIModel? {
         return when (extension.lowercase()) {
-            "fb2" -> fictionBookParser.parse(id, outPutFile, 0, 0)
+            "fb2" -> fb2.parse(id, outPutFile, 0, 0)
             "epub" -> epub.parse(id, outPutFile, 0, 0)
             "pdf" -> pdf.parse(id, outPutFile, 0, 0)
             else -> null

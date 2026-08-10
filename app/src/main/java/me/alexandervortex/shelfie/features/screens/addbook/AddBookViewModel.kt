@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.addbook
+package me.alexandervortex.shelfie.features.screens.addbook
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookEffect
-import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookIntent
-import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookUIState
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookEffect
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookIntent
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
 import javax.inject.Inject
 
 @HiltViewModel

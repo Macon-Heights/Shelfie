@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.catalogue.mvi
+package me.alexandervortex.shelfie.features.screens.catalogue.mvi
 
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 

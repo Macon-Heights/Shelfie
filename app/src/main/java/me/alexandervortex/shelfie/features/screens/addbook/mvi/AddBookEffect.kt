@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.addbook.mvi
+package me.alexandervortex.shelfie.features.screens.addbook.mvi
 
 sealed interface AddBookEffect {
     data class ShowToast(val message: String) : AddBookEffect

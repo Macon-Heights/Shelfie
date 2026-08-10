@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.addbook
+package me.alexandervortex.shelfie.features.screens.addbook
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookUIState
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getTitleInfo

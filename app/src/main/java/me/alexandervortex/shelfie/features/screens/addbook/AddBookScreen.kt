@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.mvi.addbook
+package me.alexandervortex.shelfie.features.screens.addbook
 
 import android.net.Uri
 import android.widget.Toast
@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookEffect
-import me.alexandervortex.shelfie.features.mvi.addbook.mvi.AddBookIntent
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookEffect
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookIntent
 
 @Composable
 fun AddBookScreen(
