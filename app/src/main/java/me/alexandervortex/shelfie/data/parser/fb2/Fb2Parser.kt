@@ -37,10 +37,14 @@ class Fb2Parser
         val binaries = doc.getBinaries()
 
         val coverImage = getCoverImage(titleInfo, binaries)
+        val manyImages = binaries.map {
+            it.value
+        }
 
         return titleInfoMapper.map(
             coverImage = coverImage,
-            titleInfo = titleInfo
+            titleInfo = titleInfo,
+            manyImages = manyImages
         )
     }
 
@@ -66,7 +70,7 @@ class Fb2Parser
         val result = BookUIModel(
             id = id,
             localPath = file.path,
-            titleInfo = titleInfoMapper.map(titleInfo, coverImage),
+            titleInfo = titleInfoMapper.map(titleInfo, coverImage, emptyList()),
             elements = elementMapper.map(body, binaries)
                 .splitPartsBySentences()
                 .normalizeEmptyTextUI()

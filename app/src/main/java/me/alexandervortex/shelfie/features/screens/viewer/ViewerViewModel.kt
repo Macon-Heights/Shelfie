@@ -141,7 +141,7 @@ class ViewerViewModel
     }
 
     private fun getTitleInfo(): TitleInfoUIModel {
-        return TitleInfoUIModel("", "", "", "", "", "", null)
+        return TitleInfoUIModel("", "", "", "", "", "", null, emptyList())
     }
 
     private fun getSkeletons(): List<ElementUIModel> {

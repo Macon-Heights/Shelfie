@@ -8,6 +8,7 @@ data class TitleInfoUIModel(
     val genre: String?,
     val lang: String?,
     val coverImage: ByteArray?,
+    val manyImages: List<ByteArray?>
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

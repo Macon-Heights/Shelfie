@@ -29,7 +29,7 @@ class EpubParser
             }
             parse(id = "preview", file = tempFile, scrollOffset = 0, scrollIndex = 0).titleInfo
         } catch (_: Exception) {
-            TitleInfoUIModel(null, null, null, null, null, null, null)
+            TitleInfoUIModel(null, null, null, null, null, null, null, emptyList())
         } finally {
             if (tempFile.exists()) tempFile.delete()
         }
@@ -102,7 +102,8 @@ class EpubParser
                     date = metadata?.selectFirst("dc|date")?.text(),
                     annotation = metadata?.selectFirst("dc|description")?.text(),
                     genre = metadata?.selectFirst("dc|subject")?.text(),
-                    lang = metadata?.selectFirst("dc|language")?.text()
+                    lang = metadata?.selectFirst("dc|language")?.text(),
+                    manyImages = emptyList()
                 ),
                 elements = elements
                     .splitPartsBySentences()

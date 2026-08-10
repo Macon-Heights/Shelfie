@@ -3,6 +3,7 @@ package me.alexandervortex.shelfie.features.screens.addbook
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastFilterNotNull
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
 import me.alexandervortex.shelfie.ui.component.ButtonUI
@@ -52,24 +54,41 @@ fun AddBookContent(
                 )
             }
 
+            if (info.manyImages.fastFilterNotNull().isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(rememberScrollState())
+                ) {
+                    info.manyImages.fastFilterNotNull().forEach {
+                        val bitmap = remember(it) {
+                            BitmapFactory.decodeByteArray(it, 0, it.size)
+                        }
+                        if (bitmap != null) {
+                            Image(
+                                bitmap = bitmap.asImageBitmap(),
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                }
+            }
+
             Text("${info.title}\n${info.author}")
             Spacer(Modifier.size(16.dp))
             Text("${info.annotation}")
             Spacer(Modifier.size(32.dp))
-            Row {
-                ButtonUI(
-                    modifier = Modifier.fillMaxWidth(),
-                    modifierAfter = Modifier.clickable {
-                        onImport.invoke()
-                    },
-                    content = {
-                        Text(
-                            text = stringResource(R.string.add_book_import_title),
-                            color = it
-                        )
-                    }
-                )
-            }
+            ButtonUI(
+                modifier = Modifier.fillMaxWidth(),
+                modifierAfter = Modifier.clickable {
+                    onImport.invoke()
+                },
+                content = {
+                    Text(
+                        text = stringResource(R.string.add_book_import_title),
+                        color = it
+                    )
+                }
+            )
         }
     }
 }
@@ -81,6 +100,7 @@ private fun AddScreenPreview() {
         val context = LocalContext.current
 
         val coverBytes = remember {
+            @Suppress("ResourceType")
             context.resources.openRawResource(R.drawable.img).readBytes()
         }
 

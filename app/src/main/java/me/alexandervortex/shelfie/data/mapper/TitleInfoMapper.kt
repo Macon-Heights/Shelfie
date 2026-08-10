@@ -10,6 +10,7 @@ class TitleInfoMapper
     fun map(
         titleInfo: Element?,
         coverImage: ByteArray?,
+        manyImages: List<ByteArray?>
     ): TitleInfoUIModel {
         val result = TitleInfoUIModel(
             title = (titleInfo?.selectFirst("book-title") ?: titleInfo?.selectFirst("title"))?.text()?.trim(),
@@ -22,7 +23,8 @@ class TitleInfoMapper
             annotation = titleInfo?.selectFirst("annotation")?.text()?.trim(),
             genre = titleInfo?.selectFirst("genre")?.text()?.trim(),
             lang = titleInfo?.selectFirst("lang")?.text()?.trim(),
-            coverImage = coverImage
+            coverImage = coverImage,
+            manyImages = manyImages
         )
         return result
     }

@@ -38,6 +38,7 @@ fun getTitleInfo(coverBytes: ByteArray? = null): TitleInfoUIModel {
         genre = "Gothic Fiction",
         lang = "en",
         coverImage = coverBytes,
+        manyImages = listOf(coverBytes, coverBytes, coverBytes, coverBytes)
     )
 }
 

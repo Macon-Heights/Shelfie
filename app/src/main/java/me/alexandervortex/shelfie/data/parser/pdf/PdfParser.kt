@@ -48,10 +48,11 @@ class PdfParser
                 date = null,
                 annotation = "PDF Document ($pageCount pages)",
                 genre = "PDF",
-                lang = null
+                lang = null,
+                manyImages = emptyList()
             )
         } catch (_: Exception) {
-            TitleInfoUIModel(null, null, null, null, null, null, null)
+            TitleInfoUIModel(null, null, null, null, null, null, null, manyImages = emptyList())
         } finally {
             if (tempFile.exists()) tempFile.delete()
         }
@@ -96,7 +97,8 @@ class PdfParser
                 date = null,
                 annotation = "PDF Document (${pdfRenderer.pageCount} pages)",
                 genre = "PDF",
-                lang = null
+                lang = null,
+                manyImages = emptyList()
             ),
             elements = elements,
             progressIndex = scrollIndex,
