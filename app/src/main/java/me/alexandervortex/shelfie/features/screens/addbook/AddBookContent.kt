@@ -4,11 +4,14 @@ import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -18,6 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -40,7 +44,6 @@ fun AddBookContent(
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 32.dp)
             .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
         state.titleInfo?.let { info ->
@@ -49,8 +52,11 @@ fun AddBookContent(
                 Image(
                     bitmap = bitmap.asImageBitmap(),
                     contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.padding(32.dp)
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 128.dp)
+                        .padding(vertical = 64.dp)
                 )
             }
 
@@ -58,6 +64,10 @@ fun AddBookContent(
                 Row(
                     modifier = Modifier
                         .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 32.dp)
+                        .height(128.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     info.manyImages.fastFilterNotNull().forEach {
                         val bitmap = remember(it) {
@@ -65,8 +75,10 @@ fun AddBookContent(
                         }
                         if (bitmap != null) {
                             Image(
+                                modifier = Modifier.fillMaxHeight(),
                                 bitmap = bitmap.asImageBitmap(),
                                 contentDescription = null,
+                                contentScale = ContentScale.Fit,
                             )
                         }
                     }
