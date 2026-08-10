@@ -29,7 +29,10 @@ fun pausedState(): MediaServiceState {
     )
 }
 
-fun getTitleInfo(coverBytes: ByteArray? = null): TitleInfoUIModel {
+fun getTitleInfo(
+    coverBytes: ByteArray? = null,
+    manyImages: List<ByteArray> = emptyList()
+): TitleInfoUIModel {
     return TitleInfoUIModel(
         title = "Frankenstein",
         date = "1818",
@@ -38,11 +41,7 @@ fun getTitleInfo(coverBytes: ByteArray? = null): TitleInfoUIModel {
         genre = "Gothic Fiction",
         lang = "en",
         coverImage = coverBytes,
-        manyImages = listOf(
-            coverBytes, coverBytes, coverBytes, coverBytes,
-            coverBytes, coverBytes, coverBytes, coverBytes,
-            coverBytes, coverBytes, coverBytes, coverBytes,
-        )
+        manyImages = manyImages
     )
 }
 

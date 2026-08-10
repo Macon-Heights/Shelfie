@@ -111,13 +111,24 @@ private fun AddScreenPreview() {
     CombinedPreviews {
         val context = LocalContext.current
 
-        val coverBytes = remember {
-            @Suppress("ResourceType")
-            context.resources.openRawResource(R.drawable.img).readBytes()
+        val images = listOf(
+            R.drawable.img_4,
+            R.drawable.img_1,
+            R.drawable.img_2,
+            R.drawable.img_3,
+            R.drawable.img
+        )
+
+        val cover = remember {
+            context.resources.openRawResource(images.first()).readBytes()
+        }
+
+        val screens = remember {
+            images.map { context.resources.openRawResource(it).readBytes() }
         }
 
         val state = AddBookUIState(
-            getTitleInfo(coverBytes)
+            getTitleInfo(cover, screens)
         )
         AddBookContent(state) {}
     }
