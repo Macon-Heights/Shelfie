@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.settings
+package me.alexandervortex.shelfie.data.repository
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

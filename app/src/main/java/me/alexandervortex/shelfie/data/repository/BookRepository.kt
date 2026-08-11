@@ -4,12 +4,12 @@ import android.net.Uri
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.alexandervortex.shelfie.base.ext.toBookComponentModel
-import me.alexandervortex.shelfie.data.db.dao.BookDao
+import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
-import me.alexandervortex.shelfie.feature.screens.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
 import javax.inject.Inject
 
 class BookRepository
