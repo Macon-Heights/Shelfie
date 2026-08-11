@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
-import me.alexandervortex.shelfie.features.screens.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.feature.screens.preview.PreviewScreenUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import java.io.File
 import java.io.InputStream

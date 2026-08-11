@@ -18,12 +18,12 @@ import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
-import me.alexandervortex.shelfie.features.settings.LocalAppSettings
-import me.alexandervortex.shelfie.features.settings.SettingsIntent
-import me.alexandervortex.shelfie.features.settings.SettingsViewModel
-import me.alexandervortex.shelfie.features.settings.values.ThemeValue
-import me.alexandervortex.shelfie.features.settings.values.next
-import me.alexandervortex.shelfie.features.settings.values.prev
+import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
+import me.alexandervortex.shelfie.feature.settings.SettingsIntent
+import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
+import me.alexandervortex.shelfie.feature.settings.values.ThemeValue
+import me.alexandervortex.shelfie.feature.settings.values.next
+import me.alexandervortex.shelfie.feature.settings.values.prev
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 

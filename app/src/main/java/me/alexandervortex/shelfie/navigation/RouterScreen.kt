@@ -9,12 +9,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import me.alexandervortex.shelfie.features.screens.preview.PreviewScreen
-import me.alexandervortex.shelfie.features.screens.preview.PreviewScreenViewModel
-import me.alexandervortex.shelfie.features.screens.catalogue.CatalogueScreen
-import me.alexandervortex.shelfie.features.screens.catalogue.CatalogueViewModel
-import me.alexandervortex.shelfie.features.screens.viewer.ViewerScreen
-import me.alexandervortex.shelfie.features.screens.viewer.ViewerViewModel
+import me.alexandervortex.shelfie.feature.screens.preview.PreviewScreen
+import me.alexandervortex.shelfie.feature.screens.preview.PreviewScreenViewModel
+import me.alexandervortex.shelfie.feature.screens.catalogue.CatalogueScreen
+import me.alexandervortex.shelfie.feature.screens.catalogue.CatalogueViewModel
+import me.alexandervortex.shelfie.feature.screens.viewer.ViewerScreen
+import me.alexandervortex.shelfie.feature.screens.viewer.ViewerViewModel
 
 @Composable
 fun RouterScreen(data: Uri? = null) {

@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.features.player.MediaServiceState
-import me.alexandervortex.shelfie.features.settings.values.SpeechRateValue
-import me.alexandervortex.shelfie.features.settings.values.TimerValue
-import me.alexandervortex.shelfie.features.screens.viewer.ViewerContent
-import me.alexandervortex.shelfie.features.screens.viewer.mvi.ViewerState
+import me.alexandervortex.shelfie.feature.player.MediaServiceState
+import me.alexandervortex.shelfie.feature.settings.values.SpeechRateValue
+import me.alexandervortex.shelfie.feature.settings.values.TimerValue
+import me.alexandervortex.shelfie.feature.screens.viewer.ViewerContent
+import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
 import me.alexandervortex.shelfie.ui.preview.playingState

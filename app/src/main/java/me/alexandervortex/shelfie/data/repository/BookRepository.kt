@@ -9,7 +9,7 @@ import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
-import me.alexandervortex.shelfie.features.screens.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.feature.screens.preview.PreviewScreenUIModel
 import javax.inject.Inject
 
 class BookRepository
