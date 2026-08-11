@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookEffect
 import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookIntent
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +22,7 @@ class AddBookViewModel
     private val bookRepository: BookRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AddBookUIState(null))
+    private val _state = MutableStateFlow(PreviewScreenUIModel())
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<AddBookEffect>()
@@ -40,9 +40,7 @@ class AddBookViewModel
             viewModelScope.launch {
                 try {
                     val titleInfo = bookRepository.previewFromUri(uri)
-                    _state.update { state ->
-                        state.copy(titleInfo = titleInfo)
-                    }
+                    _state.update { titleInfo ?: it }
                 } catch (e: Exception) {
                     _effect.emit(AddBookEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }

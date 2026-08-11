@@ -21,12 +21,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
-import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
+import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
 import me.alexandervortex.shelfie.ui.preview.getTitleInfo
@@ -40,7 +40,7 @@ const val SUBTITLE_SIZE = 21
 
 @Composable
 fun AddBookContent(
-    state: AddBookUIState,
+    state: PreviewScreenUIModel,
     onImport: () -> Unit
 ) {
     Column(
@@ -48,7 +48,7 @@ fun AddBookContent(
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .verticalScroll(rememberScrollState())
     ) {
-        state.titleInfo?.let { info ->
+        state.let { info ->
             ImageUI(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -89,18 +89,13 @@ fun AddBookContent(
 private fun AddScreenPreview() {
     CombinedPreviews {
         val context = LocalContext.current
-
         val cover = remember {
             ImageUIModel(context.resources.openRawResource(getImages().random()).readBytes())
         }
-
         val screens = remember {
             getImages().map { ImageUIModel(context.resources.openRawResource(it).readBytes()) }
         }
-
-        val state = AddBookUIState(
-            getTitleInfo(cover, screens)
-        )
+        val state = getTitleInfo(cover, screens)
         AddBookContent(state) {}
     }
 }
