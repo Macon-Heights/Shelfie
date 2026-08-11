@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.viewer.mvi
+package me.alexandervortex.shelfie.feature.viewer.mvi
 
 sealed interface ViewerEffect {
     data class ShowToast(val message: String) : ViewerEffect

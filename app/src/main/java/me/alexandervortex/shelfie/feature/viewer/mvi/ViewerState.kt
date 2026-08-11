@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.viewer.mvi
+package me.alexandervortex.shelfie.feature.viewer.mvi
 
 import me.alexandervortex.shelfie.feature.player.MediaServiceState
 import me.alexandervortex.shelfie.ui.model.BookUIModel

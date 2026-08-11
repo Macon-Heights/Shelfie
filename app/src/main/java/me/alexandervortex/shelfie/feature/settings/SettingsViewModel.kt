@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.alexandervortex.shelfie.data.repository.AppSettingsRepository
 import javax.inject.Inject
 
 @HiltViewModel

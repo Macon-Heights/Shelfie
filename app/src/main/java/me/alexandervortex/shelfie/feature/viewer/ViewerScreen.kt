@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.viewer
+package me.alexandervortex.shelfie.feature.viewer
 
 import android.widget.Toast
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -8,7 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerIntent
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 
 @Composable
 fun ViewerScreen(

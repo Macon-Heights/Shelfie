@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.viewer
+package me.alexandervortex.shelfie.feature.viewer
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
@@ -19,8 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerIntent
-import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerState
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
 import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI

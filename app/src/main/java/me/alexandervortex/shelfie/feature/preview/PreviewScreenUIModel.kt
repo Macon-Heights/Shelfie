@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.preview
+package me.alexandervortex.shelfie.feature.preview
 
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 

@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.preview
+package me.alexandervortex.shelfie.feature.preview
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import me.alexandervortex.shelfie.data.repository.AppSettingsRepository
 
 @Composable
 fun SettingsProvider(

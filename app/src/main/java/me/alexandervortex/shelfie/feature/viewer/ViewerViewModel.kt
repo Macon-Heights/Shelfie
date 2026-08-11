@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.viewer
+package me.alexandervortex.shelfie.feature.viewer
 
 import android.content.ComponentName
 import android.content.Context
@@ -17,12 +17,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.feature.player.MediaService
-import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerEffect
-import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerIntent
-import me.alexandervortex.shelfie.feature.screens.viewer.mvi.ViewerState
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerEffect
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.feature.screens.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
 import javax.inject.Inject
 
 @HiltViewModel

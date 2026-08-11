@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.catalogue
+package me.alexandervortex.shelfie.feature.catalogue
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
@@ -31,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.feature.screens.catalogue.mvi.CatalogueState
+import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.ui.component.BUTTON_BIG
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.CatalogueItemUI

@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.viewer.mvi
+package me.alexandervortex.shelfie.feature.viewer.mvi
 
 import android.content.Context
 

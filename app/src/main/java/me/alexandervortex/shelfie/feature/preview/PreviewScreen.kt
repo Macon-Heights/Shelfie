@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.screens.preview
+package me.alexandervortex.shelfie.feature.preview
 
 import android.net.Uri
 import android.widget.Toast
