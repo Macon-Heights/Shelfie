@@ -7,7 +7,7 @@ import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
+import me.alexandervortex.shelfie.features.screens.addbook.PreviewScreenUIModel
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.io.File

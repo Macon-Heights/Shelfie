@@ -11,9 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookEffect
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookIntent
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,13 +22,13 @@ class AddBookViewModel
     private val _state = MutableStateFlow(PreviewScreenUIModel())
     val state = _state.asStateFlow()
 
-    private val _effect = MutableSharedFlow<AddBookEffect>()
+    private val _effect = MutableSharedFlow<PreviewScreenEffect>()
     val effect = _effect.asSharedFlow()
 
-    fun onIntent(intent: AddBookIntent) {
+    fun onIntent(intent: PreviewScreenIntent) {
         when (intent) {
-            is AddBookIntent.Add -> loadPreview(intent.uri)
-            is AddBookIntent.Import -> importBook(intent.uri)
+            is PreviewScreenIntent.Add -> loadPreview(intent.uri)
+            is PreviewScreenIntent.Import -> importBook(intent.uri)
         }
     }
 
@@ -42,7 +39,7 @@ class AddBookViewModel
                     val titleInfo = bookRepository.previewFromUri(uri)
                     _state.update { titleInfo ?: it }
                 } catch (e: Exception) {
-                    _effect.emit(AddBookEffect.ShowToast("Error: ${e.localizedMessage}"))
+                    _effect.emit(PreviewScreenEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }
             }
         }
@@ -53,10 +50,10 @@ class AddBookViewModel
             viewModelScope.launch {
                 try {
                     bookRepository.addBookToDbAndDisk(uri)
-                    _effect.emit(AddBookEffect.ShowToast("Book added"))
-                    _effect.emit(AddBookEffect.Close)
+                    _effect.emit(PreviewScreenEffect.ShowToast("Book added"))
+                    _effect.emit(PreviewScreenEffect.Close)
                 } catch (e: Exception) {
-                    _effect.emit(AddBookEffect.ShowToast("Error: ${e.localizedMessage}"))
+                    _effect.emit(PreviewScreenEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }
             }
         }

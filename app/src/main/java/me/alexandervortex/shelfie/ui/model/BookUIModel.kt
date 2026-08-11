@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.ui.model
 
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
+import me.alexandervortex.shelfie.features.screens.addbook.PreviewScreenUIModel
 
 data class BookUIModel(
     val id: String,

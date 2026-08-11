@@ -8,8 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookEffect
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookIntent
 
 @Composable
 fun AddBookScreen(
@@ -21,25 +19,25 @@ fun AddBookScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(uri) {
-        viewModel.onIntent(AddBookIntent.Add(uri))
+        viewModel.onIntent(PreviewScreenIntent.Add(uri))
     }
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is AddBookEffect.ShowToast ->
+                is PreviewScreenEffect.ShowToast ->
                     Toast.makeText(context, effect.message, Toast.LENGTH_LONG).show()
 
-                is AddBookEffect.NavigateTo ->
+                is PreviewScreenEffect.NavigateTo ->
                     navController.navigate(effect.route)
 
-                is AddBookEffect.Close ->
+                is PreviewScreenEffect.Close ->
                     navController.navigateUp()
             }
         }
     }
 
     AddBookContent(state) {
-        viewModel.onIntent(AddBookIntent.Import(uri))
+        viewModel.onIntent(PreviewScreenIntent.Import(uri))
     }
 }

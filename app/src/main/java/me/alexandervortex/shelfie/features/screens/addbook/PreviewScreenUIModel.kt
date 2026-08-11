@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook.mvi
+package me.alexandervortex.shelfie.features.screens.addbook
 
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 

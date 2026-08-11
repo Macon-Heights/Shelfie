@@ -6,7 +6,7 @@ import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
+import me.alexandervortex.shelfie.features.screens.addbook.PreviewScreenUIModel
 
 fun getImages(): List<Int> {
     val images = listOf(

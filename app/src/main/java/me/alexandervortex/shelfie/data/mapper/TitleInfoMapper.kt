@@ -1,7 +1,7 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
-import me.alexandervortex.shelfie.features.screens.addbook.mvi.PreviewScreenUIModel
+import me.alexandervortex.shelfie.features.screens.addbook.PreviewScreenUIModel
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
