@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.navigate
+package me.alexandervortex.shelfie.navigation
 
 import android.net.Uri
 

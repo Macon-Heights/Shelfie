@@ -12,7 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.features.navigate.RouterScreen
+import me.alexandervortex.shelfie.navigation.RouterScreen
 import me.alexandervortex.shelfie.features.settings.AppSettingsRepository
 import me.alexandervortex.shelfie.features.settings.SettingsProvider
 import me.alexandervortex.shelfie.ui.theme.ShelfieTheme

@@ -12,8 +12,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.features.screens.catalogue.mvi.CatalogueIntent
-import me.alexandervortex.shelfie.features.navigate.AddBookRoute
-import me.alexandervortex.shelfie.features.navigate.MediaViewerRoute
+import me.alexandervortex.shelfie.navigation.AddBookRoute
+import me.alexandervortex.shelfie.navigation.MediaViewerRoute
 
 @Composable
 fun CatalogueScreen(
