@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.navigation
+package me.alexandervortex.shelfie.feature.navigation
 
 import android.net.Uri
 import androidx.compose.runtime.Composable
