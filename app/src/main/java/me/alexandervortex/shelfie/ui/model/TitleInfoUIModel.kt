@@ -1,5 +1,7 @@
 package me.alexandervortex.shelfie.ui.model
 
+import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
+
 data class TitleInfoUIModel(
     val title: String?,
     val date: String?,
@@ -7,6 +9,6 @@ data class TitleInfoUIModel(
     val annotation: String?,
     val genre: String?,
     val lang: String?,
-    val coverImage: BasicImage?,
-    val manyImages: List<BasicImage?>
+    val coverImage: ImageUIModel?,
+    val manyImages: List<ImageUIModel?>
 )

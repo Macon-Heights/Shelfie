@@ -26,7 +26,7 @@ import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
-import me.alexandervortex.shelfie.ui.model.BasicImage
+import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
 import me.alexandervortex.shelfie.ui.preview.getTitleInfo
@@ -54,7 +54,7 @@ fun AddBookContent(
                     .fillMaxWidth()
                     .padding(top = VERTICAL_GAP.dp)
                     .padding(horizontal = HORIZONTAL_PADDING.dp)
-                    .height(COVER_HEIGHT.dp), basicImage = info.coverImage
+                    .height(COVER_HEIGHT.dp), imageUIModel = info.coverImage
             )
             CarouselImageUI(
                 modifier = Modifier
@@ -91,11 +91,11 @@ private fun AddScreenPreview() {
         val context = LocalContext.current
 
         val cover = remember {
-            BasicImage(context.resources.openRawResource(getImages().random()).readBytes())
+            ImageUIModel(context.resources.openRawResource(getImages().random()).readBytes())
         }
 
         val screens = remember {
-            getImages().map { BasicImage(context.resources.openRawResource(it).readBytes()) }
+            getImages().map { ImageUIModel(context.resources.openRawResource(it).readBytes()) }
         }
 
         val state = AddBookUIState(

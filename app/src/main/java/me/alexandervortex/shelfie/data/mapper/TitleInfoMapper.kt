@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.data.mapper
 
-import me.alexandervortex.shelfie.ui.model.BasicImage
+import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import org.jsoup.nodes.Element
 import javax.inject.Inject
@@ -10,8 +10,8 @@ class TitleInfoMapper
 
     fun map(
         titleInfo: Element?,
-        coverImage: BasicImage?,
-        manyImages: List<BasicImage?>
+        coverImage: ImageUIModel?,
+        manyImages: List<ImageUIModel?>
     ): TitleInfoUIModel {
         val result = TitleInfoUIModel(
             title = (titleInfo?.selectFirst("book-title") ?: titleInfo?.selectFirst("title"))?.text()?.trim(),

@@ -8,7 +8,7 @@ import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
 import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
-import me.alexandervortex.shelfie.ui.model.BasicImage
+import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
 import org.jsoup.Jsoup
@@ -37,9 +37,9 @@ class Fb2Parser
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
 
-        val coverImage = BasicImage(getCoverImage(titleInfo, binaries))
+        val coverImage = ImageUIModel(getCoverImage(titleInfo, binaries))
         val manyImages = binaries.map {
-            BasicImage(it.value)
+            ImageUIModel(it.value)
         }
 
         return titleInfoMapper.map(
@@ -66,7 +66,7 @@ class Fb2Parser
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
 
-        val coverImage = BasicImage(getCoverImage(titleInfo, binaries))
+        val coverImage = ImageUIModel(getCoverImage(titleInfo, binaries))
 
         val result = BookUIModel(
             id = id,

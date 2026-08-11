@@ -2,7 +2,7 @@ package me.alexandervortex.shelfie.ui.preview
 
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.player.MediaServiceState
-import me.alexandervortex.shelfie.ui.model.BasicImage
+import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
@@ -44,8 +44,8 @@ fun pausedState(): MediaServiceState {
 }
 
 fun getTitleInfo(
-    coverBytes: BasicImage? = null,
-    manyImages: List<BasicImage> = emptyList()
+    coverBytes: ImageUIModel? = null,
+    manyImages: List<ImageUIModel> = emptyList()
 ): TitleInfoUIModel {
     return TitleInfoUIModel(
         title = "Frankenstein",
