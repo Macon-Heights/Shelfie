@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastFilterNotNull
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
 
@@ -23,18 +24,20 @@ fun CarouselImageUI(
     images: List<ByteArray?>? = null
 ) {
     images?.let {
-        Row(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .then(modifier),
-            horizontalArrangement = Arrangement.spacedBy(GAP.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            images.forEach {
-                ImageUI(
-                    modifier = Modifier.fillMaxHeight(),
-                    image = it
-                )
+        if (images.fastFilterNotNull().isNotEmpty()) {
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(rememberScrollState())
+                    .then(modifier),
+                horizontalArrangement = Arrangement.spacedBy(GAP.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                images.forEach {
+                    ImageUI(
+                        modifier = Modifier.fillMaxHeight(),
+                        image = it
+                    )
+                }
             }
         }
     }

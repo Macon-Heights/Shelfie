@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
 import me.alexandervortex.shelfie.ui.component.ButtonUI
-import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
+import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
 import me.alexandervortex.shelfie.ui.preview.getTitleInfo
@@ -39,7 +39,8 @@ const val SUBTITLE_SIZE = 21
 
 @Composable
 fun AddBookContent(
-    state: AddBookUIState, onImport: () -> Unit
+    state: AddBookUIState,
+    onImport: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -50,22 +51,26 @@ fun AddBookContent(
             ImageUI(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = VERTICAL_GAP.dp)
                     .padding(horizontal = HORIZONTAL_PADDING.dp)
                     .height(COVER_HEIGHT.dp), image = info.coverImage
             )
-            Spacer(Modifier.size(VERTICAL_GAP.dp))
             CarouselImageUI(
                 modifier = Modifier
+                    .padding(top = VERTICAL_GAP.dp)
                     .padding(horizontal = HORIZONTAL_PADDING.dp)
                     .height(CAROUSEL_HEIGHT.dp), images = info.manyImages
             )
-            Spacer(Modifier.size(VERTICAL_GAP.dp))
-            Column(modifier = Modifier.padding(horizontal = 32.dp)) {
+            Column(
+                modifier = Modifier.padding(horizontal = 32.dp, vertical = VERTICAL_GAP.dp)
+            ) {
                 TitleUI(text = info.title, size = TITLE_SIZE,)
                 TitleUI(text = info.author, size = SUBTITLE_SIZE,)
                 Spacer(Modifier.size(VERTICAL_GAP.dp))
-                info.annotation?.let { Text(it) }
-                Spacer(Modifier.size(VERTICAL_GAP.dp))
+                info.annotation?.let {
+                    Text(it)
+                    Spacer(Modifier.size(VERTICAL_GAP.dp))
+                }
                 ButtonUI(modifier = Modifier.fillMaxWidth(), modifierAfter = Modifier.clickable {
                     onImport.invoke()
                 }, content = {
@@ -73,7 +78,6 @@ fun AddBookContent(
                         text = stringResource(R.string.add_book_import_title), color = it
                     )
                 })
-                Spacer(Modifier.size(HORIZONTAL_PADDING.dp))
             }
         }
     }
