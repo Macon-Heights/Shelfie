@@ -9,7 +9,7 @@ import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class UniversalFileParser
 ) {
     private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
 
-    fun previewFromUri(uri: Uri): TitleInfoUIModel? {
+    fun previewFromUri(uri: Uri): PreviewScreenUIModel? {
         return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
             previewParser(stream, extension)
         }
@@ -46,7 +46,7 @@ class UniversalFileParser
     private fun previewParser(
         stream: InputStream,
         extension: String
-    ): TitleInfoUIModel? {
+    ): PreviewScreenUIModel? {
         return when (extension.lowercase()) {
             "fb2" -> fb2.getPreview(stream)
             "epub" -> epub.getPreview(stream)

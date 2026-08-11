@@ -7,7 +7,7 @@ import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.io.File
@@ -20,7 +20,7 @@ class EpubParser
     private val elementMapper: ElementMapper,
 ) {
 
-    fun getPreview(inputStream: InputStream): TitleInfoUIModel {
+    fun getPreview(inputStream: InputStream): PreviewScreenUIModel {
         val tempFile = File.createTempFile("epub_preview", ".epub")
         return try {
             inputStream.use { input ->
@@ -30,7 +30,7 @@ class EpubParser
             }
             parse(id = "preview", file = tempFile, scrollOffset = 0, scrollIndex = 0).titleInfo
         } catch (_: Exception) {
-            TitleInfoUIModel(null, null, null, null, null, null, null, emptyList())
+            PreviewScreenUIModel(null, null, null, null, null, null, null, emptyList())
         } finally {
             if (tempFile.exists()) tempFile.delete()
         }
@@ -96,7 +96,7 @@ class EpubParser
             return BookUIModel(
                 id = id,
                 localPath = file.path,
-                titleInfo = TitleInfoUIModel(
+                titleInfo = PreviewScreenUIModel(
                     title = title,
                     author = author,
                     coverImage = coverImage,

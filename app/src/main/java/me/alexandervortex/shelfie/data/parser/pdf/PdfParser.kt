@@ -6,7 +6,7 @@ import android.os.ParcelFileDescriptor
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PdfParser
 @Inject constructor() {
 
-    fun getPreview(inputStream: InputStream): TitleInfoUIModel {
+    fun getPreview(inputStream: InputStream): PreviewScreenUIModel {
         val tempFile = File.createTempFile("pdf_preview", ".pdf")
         return try {
             inputStream.use { input ->
@@ -42,7 +42,7 @@ class PdfParser
             pdfRenderer.close()
             parcelFileDescriptor.close()
 
-            TitleInfoUIModel(
+            PreviewScreenUIModel(
                 title = tempFile.nameWithoutExtension,
                 author = "PDF Document",
                 coverImage = ImageUIModel(coverImage),
@@ -53,7 +53,7 @@ class PdfParser
                 manyImages = emptyList()
             )
         } catch (_: Exception) {
-            TitleInfoUIModel(null, null, null, null, null, null, null, manyImages = emptyList())
+            PreviewScreenUIModel(null, null, null, null, null, null, null, manyImages = emptyList())
         } finally {
             if (tempFile.exists()) tempFile.delete()
         }
@@ -91,7 +91,7 @@ class PdfParser
         val model = BookUIModel(
             id = id,
             localPath = file.path,
-            titleInfo = TitleInfoUIModel(
+            titleInfo = PreviewScreenUIModel(
                 title = file.nameWithoutExtension,
                 author = "PDF Document",
                 coverImage = ImageUIModel(coverImage),

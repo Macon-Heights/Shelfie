@@ -22,7 +22,7 @@ import me.alexandervortex.shelfie.features.screens.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.features.screens.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -140,8 +140,8 @@ class ViewerViewModel
         }
     }
 
-    private fun getTitleInfo(): TitleInfoUIModel {
-        return TitleInfoUIModel("", "", "", "", "", "", null, emptyList())
+    private fun getTitleInfo(): PreviewScreenUIModel {
+        return PreviewScreenUIModel("", "", "", "", "", "", null, emptyList())
     }
 
     private fun getSkeletons(): List<ElementUIModel> {

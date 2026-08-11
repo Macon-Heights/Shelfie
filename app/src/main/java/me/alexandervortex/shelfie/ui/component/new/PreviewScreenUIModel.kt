@@ -1,8 +1,6 @@
-package me.alexandervortex.shelfie.ui.model
+package me.alexandervortex.shelfie.ui.component.new
 
-import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
-
-data class TitleInfoUIModel(
+data class PreviewScreenUIModel(
     val title: String?,
     val date: String?,
     val author: String?,

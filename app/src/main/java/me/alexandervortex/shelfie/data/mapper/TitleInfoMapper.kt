@@ -1,7 +1,7 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
@@ -12,8 +12,8 @@ class TitleInfoMapper
         titleInfo: Element?,
         coverImage: ImageUIModel?,
         manyImages: List<ImageUIModel?>
-    ): TitleInfoUIModel {
-        val result = TitleInfoUIModel(
+    ): PreviewScreenUIModel {
+        val result = PreviewScreenUIModel(
             title = (titleInfo?.selectFirst("book-title") ?: titleInfo?.selectFirst("title"))?.text()?.trim(),
             date = titleInfo?.selectFirst("date")?.text()?.trim(),
             author = titleInfo?.selectFirst("author")?.let {

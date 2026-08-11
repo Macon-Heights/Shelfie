@@ -6,7 +6,7 @@ import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 
 fun getImages(): List<Int> {
     val images = listOf(
@@ -46,8 +46,8 @@ fun pausedState(): MediaServiceState {
 fun getTitleInfo(
     coverBytes: ImageUIModel? = null,
     manyImages: List<ImageUIModel> = emptyList()
-): TitleInfoUIModel {
-    return TitleInfoUIModel(
+): PreviewScreenUIModel {
+    return PreviewScreenUIModel(
         title = "Frankenstein",
         date = "1818",
         author = "Mary Shelley",

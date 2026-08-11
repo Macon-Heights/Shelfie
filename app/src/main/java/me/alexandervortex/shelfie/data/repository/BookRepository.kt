@@ -9,7 +9,7 @@ import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
-import me.alexandervortex.shelfie.ui.model.TitleInfoUIModel
+import me.alexandervortex.shelfie.ui.component.new.PreviewScreenUIModel
 import javax.inject.Inject
 
 class BookRepository
@@ -19,7 +19,7 @@ class BookRepository
     private val parser: UniversalFileParser,
 ) {
 
-    fun previewFromUri(uri: Uri): TitleInfoUIModel? {
+    fun previewFromUri(uri: Uri): PreviewScreenUIModel? {
         return parser.previewFromUri(uri)
     }
 
