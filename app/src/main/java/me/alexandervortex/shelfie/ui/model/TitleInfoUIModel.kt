@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.ui.model
 
+@Deprecated("need to build many different models as AddBookUIState")
 data class TitleInfoUIModel(
     val title: String?,
     val date: String?,
