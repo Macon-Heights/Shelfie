@@ -11,6 +11,7 @@ import me.alexandervortex.shelfie.data.db.BookDatabase
 import me.alexandervortex.shelfie.data.db.dao.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.data.parser.ZipHelper
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
@@ -28,9 +29,10 @@ object MainModule {
         @ApplicationContext context: Context,
         mapper: Fb2Parser,
         epub: EpubParser,
-        pdfParser: PdfParser
+        pdfParser: PdfParser,
+        zipHelper: ZipHelper
     ): UniversalFileParser {
-        return UniversalFileParser(context, mapper, epub, pdfParser)
+        return UniversalFileParser(context, mapper, epub, pdfParser, zipHelper)
     }
 
     @Provides
