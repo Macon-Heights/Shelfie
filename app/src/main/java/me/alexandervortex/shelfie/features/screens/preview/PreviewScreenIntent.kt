@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook
+package me.alexandervortex.shelfie.features.screens.preview
 
 import android.net.Uri
 

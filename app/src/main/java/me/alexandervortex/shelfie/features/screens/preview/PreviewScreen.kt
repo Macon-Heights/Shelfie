@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook
+package me.alexandervortex.shelfie.features.screens.preview
 
 import android.net.Uri
 import android.widget.Toast
@@ -10,9 +10,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 
 @Composable
-fun AddBookScreen(
+fun PreviewScreen(
     uri: Uri?,
-    viewModel: AddBookViewModel,
+    viewModel: PreviewScreenViewModel,
     navController: NavHostController,
 ) {
     val context = LocalContext.current
@@ -37,7 +37,7 @@ fun AddBookScreen(
         }
     }
 
-    AddBookContent(state) {
+    PreviewScreenContent(state) {
         viewModel.onIntent(PreviewScreenIntent.Import(uri))
     }
 }

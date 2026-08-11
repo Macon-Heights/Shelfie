@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import me.alexandervortex.shelfie.features.screens.addbook.AddBookScreen
-import me.alexandervortex.shelfie.features.screens.addbook.AddBookViewModel
+import me.alexandervortex.shelfie.features.screens.preview.PreviewScreen
+import me.alexandervortex.shelfie.features.screens.preview.PreviewScreenViewModel
 import me.alexandervortex.shelfie.features.screens.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.features.screens.catalogue.CatalogueViewModel
 import me.alexandervortex.shelfie.features.screens.viewer.ViewerScreen
@@ -40,9 +40,9 @@ fun RouterScreen(data: Uri? = null) {
         ) {
             val uriString = it.getUri()
             val uri = if (uriString.isNotEmpty()) uriString.toUri() else null
-            AddBookScreen(
+            PreviewScreen(
                 uri = uri,
-                viewModel = hiltViewModel<AddBookViewModel>(),
+                viewModel = hiltViewModel<PreviewScreenViewModel>(),
                 navController = navController
             )
         }

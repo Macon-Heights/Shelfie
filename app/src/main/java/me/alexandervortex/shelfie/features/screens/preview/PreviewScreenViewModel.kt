@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook
+package me.alexandervortex.shelfie.features.screens.preview
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,7 @@ import me.alexandervortex.shelfie.data.repository.BookRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class AddBookViewModel
+class PreviewScreenViewModel
 @Inject constructor(
     private val bookRepository: BookRepository,
 ) : ViewModel() {

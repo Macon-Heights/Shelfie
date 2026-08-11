@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook
+package me.alexandervortex.shelfie.features.screens.preview
 
 sealed interface PreviewScreenEffect {
     data class ShowToast(val message: String) : PreviewScreenEffect

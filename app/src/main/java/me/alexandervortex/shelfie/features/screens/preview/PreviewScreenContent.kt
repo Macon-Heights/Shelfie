@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook
+package me.alexandervortex.shelfie.features.screens.preview
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -38,7 +38,7 @@ const val TITLE_SIZE = 32
 const val SUBTITLE_SIZE = 21
 
 @Composable
-fun AddBookContent(
+fun PreviewScreenContent(
     state: PreviewScreenUIModel,
     onImport: () -> Unit
 ) {
@@ -95,6 +95,6 @@ private fun AddScreenPreview() {
             getImages().map { ImageUIModel(context.resources.openRawResource(it).readBytes()) }
         }
         val state = getTitleInfo(cover, screens)
-        AddBookContent(state) {}
+        PreviewScreenContent(state) {}
     }
 }
