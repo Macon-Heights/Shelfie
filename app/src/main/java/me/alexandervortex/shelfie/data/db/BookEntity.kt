@@ -1,9 +1,8 @@
-package me.alexandervortex.shelfie.data.db.entity
+package me.alexandervortex.shelfie.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import me.alexandervortex.shelfie.data.db.dao.BOOK_TABLE
 
 @Entity(tableName = BOOK_TABLE)
 data class BookEntity(

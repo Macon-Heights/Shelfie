@@ -1,11 +1,10 @@
-package me.alexandervortex.shelfie.data.db.dao
+package me.alexandervortex.shelfie.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import me.alexandervortex.shelfie.data.db.entity.BookEntity
 
 const val BOOK_TABLE = "book_table"
 
