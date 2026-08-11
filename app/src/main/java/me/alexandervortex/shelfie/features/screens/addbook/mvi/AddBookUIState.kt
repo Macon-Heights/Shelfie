@@ -1,5 +1,7 @@
 package me.alexandervortex.shelfie.features.screens.addbook.mvi
 
+import me.alexandervortex.shelfie.ui.model.BasicImage
+
 data class AddBookUIState(
     val title: String?,
     val author: String?,

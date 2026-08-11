@@ -9,15 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import me.alexandervortex.shelfie.ui.model.BasicImage
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
 
 @Composable
 fun ImageUI(
     modifier: Modifier = Modifier,
-    image: ByteArray? = null,
+    basicImage: BasicImage? = null,
 ) {
-    val bitmap = image?.let {
+    val bitmap = basicImage?.image?.let { image ->
         remember(image) {
             BitmapFactory.decodeByteArray(
                 image, 0, image.size
@@ -45,7 +46,8 @@ fun ImageUIPreview() {
             val bytes = remember(img) {
                 context.resources.openRawResource(img).readBytes()
             }
-            ImageUI(image = bytes)
+            val imageModel = BasicImage(bytes)
+            ImageUI(basicImage = imageModel)
         }
     }
 }

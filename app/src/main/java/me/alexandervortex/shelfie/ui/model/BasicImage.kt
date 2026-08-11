@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.features.screens.addbook.mvi
+package me.alexandervortex.shelfie.ui.model
 
 data class BasicImage(val image: ByteArray? = null) {
 

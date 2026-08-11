@@ -22,13 +22,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.features.screens.addbook.mvi.AddBookUIState
+import me.alexandervortex.shelfie.ui.model.BasicImage
+import me.alexandervortex.shelfie.features.screens.addbook.mvi.getBookUIState
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
-import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 
 const val COVER_HEIGHT = 256
 const val CAROUSEL_HEIGHT = 128
@@ -47,38 +48,39 @@ fun AddBookContent(
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .verticalScroll(rememberScrollState())
     ) {
-        state.titleInfo?.let { info ->
-            ImageUI(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = VERTICAL_GAP.dp)
-                    .padding(horizontal = HORIZONTAL_PADDING.dp)
-                    .height(COVER_HEIGHT.dp), image = info.coverImage
-            )
-            CarouselImageUI(
-                modifier = Modifier
-                    .padding(top = VERTICAL_GAP.dp)
-                    .padding(horizontal = HORIZONTAL_PADDING.dp)
-                    .height(CAROUSEL_HEIGHT.dp), images = info.manyImages
-            )
-            Column(
-                modifier = Modifier.padding(horizontal = 32.dp, vertical = VERTICAL_GAP.dp)
-            ) {
-                TitleUI(text = info.title, size = TITLE_SIZE,)
-                TitleUI(text = info.author, size = SUBTITLE_SIZE,)
+
+        ImageUI(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = VERTICAL_GAP.dp)
+                .padding(horizontal = HORIZONTAL_PADDING.dp)
+                .height(COVER_HEIGHT.dp),
+            basicImage = state.coverImage
+        )
+        CarouselImageUI(
+            modifier = Modifier
+                .padding(top = VERTICAL_GAP.dp)
+                .padding(horizontal = HORIZONTAL_PADDING.dp)
+                .height(CAROUSEL_HEIGHT.dp),
+            images = state.gallery
+        )
+        Column(
+            modifier = Modifier.padding(horizontal = 32.dp, vertical = VERTICAL_GAP.dp)
+        ) {
+            TitleUI(text = state.title, size = TITLE_SIZE)
+            TitleUI(text = state.author, size = SUBTITLE_SIZE)
+            Spacer(Modifier.size(VERTICAL_GAP.dp))
+            state.annotation?.let {
+                Text(it)
                 Spacer(Modifier.size(VERTICAL_GAP.dp))
-                info.annotation?.let {
-                    Text(it)
-                    Spacer(Modifier.size(VERTICAL_GAP.dp))
-                }
-                ButtonUI(modifier = Modifier.fillMaxWidth(), modifierAfter = Modifier.clickable {
-                    onImport.invoke()
-                }, content = {
-                    Text(
-                        text = stringResource(R.string.add_book_import_title), color = it
-                    )
-                })
             }
+            ButtonUI(modifier = Modifier.fillMaxWidth(), modifierAfter = Modifier.clickable {
+                onImport.invoke()
+            }, content = {
+                Text(
+                    text = stringResource(R.string.add_book_import_title), color = it
+                )
+            })
         }
     }
 }
@@ -90,16 +92,14 @@ private fun AddScreenPreview() {
         val context = LocalContext.current
 
         val cover = remember {
-            context.resources.openRawResource(getImages().random()).readBytes()
+            BasicImage(context.resources.openRawResource(getImages().random()).readBytes())
         }
 
         val screens = remember {
-            getImages().map { context.resources.openRawResource(it).readBytes() }
+            getImages().map { BasicImage(context.resources.openRawResource(it).readBytes()) }
         }
 
-        val state = AddBookUIState(
-            getTitleInfo(cover, screens)
-        )
+        val state = getBookUIState(cover, screens)
         AddBookContent(state) {}
     }
 }
