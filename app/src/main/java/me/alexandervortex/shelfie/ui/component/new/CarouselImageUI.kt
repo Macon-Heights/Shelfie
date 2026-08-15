@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastFilterNotNull
+import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getImages
 
@@ -21,7 +22,7 @@ private const val GAP = 16
 @Composable
 fun CarouselImageUI(
     modifier: Modifier = Modifier,
-    images: List<ImageUIModel?>? = null
+    images: List<ImageModel?>? = null
 ) {
     images?.let {
         if (images.fastFilterNotNull().isNotEmpty()) {
@@ -35,7 +36,7 @@ fun CarouselImageUI(
                 images.forEach {
                     ImageUI(
                         modifier = Modifier.fillMaxHeight(),
-                        imageUIModel = it
+                        imageModel = it
                     )
                 }
             }
@@ -50,7 +51,7 @@ private fun Preview() {
         val context = LocalContext.current
         val images = remember {
             getImages().map {
-                ImageUIModel(context.resources.openRawResource(it).readBytes())
+                ImageModel(context.resources.openRawResource(it).readBytes())
             }
         }.shuffled()
         CarouselImageUI(

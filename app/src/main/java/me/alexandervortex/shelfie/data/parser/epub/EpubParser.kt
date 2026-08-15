@@ -4,7 +4,7 @@ import me.alexandervortex.shelfie.base.ext.normalizeEmptyLines
 import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
 import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
-import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
+import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
@@ -79,7 +79,7 @@ class EpubParser
             val coverPath = coverId?.let { manifest[it] } 
                 ?: manifest.values.find { it.contains("cover", true) && (it.endsWith(".jpg", true) || it.endsWith(".png", true)) }
             
-            val coverImage = ImageUIModel(coverPath?.let { binaries[it] ?: binaries[it.substringAfterLast("/")] })
+            val coverImage = ImageModel(coverPath?.let { binaries[it] ?: binaries[it.substringAfterLast("/")] })
 
             val elements = mutableListOf<ElementUIModel>()
             spine.forEach { path ->

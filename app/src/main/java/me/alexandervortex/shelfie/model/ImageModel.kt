@@ -1,6 +1,6 @@
-package me.alexandervortex.shelfie.ui.component.new
+package me.alexandervortex.shelfie.model
 
-data class ImageUIModel(
+data class ImageModel(
     val image: ByteArray? = null
 ) {
 
@@ -8,7 +8,7 @@ data class ImageUIModel(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ImageUIModel
+        other as ImageModel
 
         if (!image.contentEquals(other.image)) return false
 

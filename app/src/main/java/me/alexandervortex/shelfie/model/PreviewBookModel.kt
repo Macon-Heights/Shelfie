@@ -1,7 +1,5 @@
 package me.alexandervortex.shelfie.model
 
-import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
-
 data class PreviewBookModel(
     val title: String? = null,
     val date: String? = null,
@@ -9,6 +7,6 @@ data class PreviewBookModel(
     val annotation: String? = null,
     val genre: String? = null,
     val lang: String? = null,
-    val coverImage: ImageUIModel? = null,
-    val gallery: List<ImageUIModel?>? = null
+    val coverImage: ImageModel? = null,
+    val gallery: List<ImageModel?>? = null
 )

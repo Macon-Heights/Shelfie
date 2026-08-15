@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.data.parser.pdf
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
 import android.os.ParcelFileDescriptor
-import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
+import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
@@ -45,7 +45,7 @@ class PdfParser
             PreviewBookModel(
                 title = tempFile.nameWithoutExtension,
                 author = "PDF Document",
-                coverImage = ImageUIModel(coverImage),
+                coverImage = ImageModel(coverImage),
                 date = null,
                 annotation = "PDF Document ($pageCount pages)",
                 genre = "PDF",
@@ -94,7 +94,7 @@ class PdfParser
             titleInfo = PreviewBookModel(
                 title = file.nameWithoutExtension,
                 author = "PDF Document",
-                coverImage = ImageUIModel(coverImage),
+                coverImage = ImageModel(coverImage),
                 date = null,
                 annotation = "PDF Document (${pdfRenderer.pageCount} pages)",
                 genre = "PDF",
