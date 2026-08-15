@@ -7,7 +7,7 @@ import me.alexandervortex.shelfie.base.ext.toModel
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
@@ -20,7 +20,7 @@ class BookRepository
     private val parser: UniversalFileParser,
 ) {
 
-    fun previewFromUri(uri: Uri): PreviewScreenUIModel? {
+    fun previewFromUri(uri: Uri): PreviewBookModel? {
         return parser.previewFromUri(uri)
     }
 

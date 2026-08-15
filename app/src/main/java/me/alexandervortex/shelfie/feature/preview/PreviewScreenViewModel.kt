@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +20,7 @@ class PreviewScreenViewModel
     private val bookRepository: BookRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(PreviewScreenUIModel())
+    private val _state = MutableStateFlow(PreviewBookModel())
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<PreviewScreenEffect>()

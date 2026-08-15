@@ -10,7 +10,7 @@ import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -27,7 +27,7 @@ class Fb2Parser
 
     fun getPreview(
         inputStream: InputStream,
-    ): PreviewScreenUIModel {
+    ): PreviewBookModel {
         val doc: Document = Jsoup.parse(
             inputStream,
             null,

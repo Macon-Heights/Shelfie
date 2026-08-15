@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
@@ -39,7 +40,7 @@ const val SUBTITLE_SIZE = 21
 
 @Composable
 fun PreviewScreenContent(
-    state: PreviewScreenUIModel,
+    state: PreviewBookModel,
     onImport: () -> Unit
 ) {
     Column(
@@ -59,7 +60,7 @@ fun PreviewScreenContent(
                 modifier = Modifier
                     .padding(top = VERTICAL_GAP.dp)
                     .padding(horizontal = HORIZONTAL_PADDING.dp)
-                    .height(CAROUSEL_HEIGHT.dp), images = info.manyImages
+                    .height(CAROUSEL_HEIGHT.dp), images = info.gallery
             )
             Column(
                 modifier = Modifier.padding(horizontal = 32.dp, vertical = VERTICAL_GAP.dp)

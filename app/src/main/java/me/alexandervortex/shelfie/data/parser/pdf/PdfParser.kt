@@ -6,7 +6,7 @@ import android.os.ParcelFileDescriptor
 import me.alexandervortex.shelfie.ui.component.new.ImageUIModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PdfParser
 @Inject constructor() {
 
-    fun getPreview(inputStream: InputStream): PreviewScreenUIModel {
+    fun getPreview(inputStream: InputStream): PreviewBookModel {
         val tempFile = File.createTempFile("pdf_preview", ".pdf")
         return try {
             inputStream.use { input ->
@@ -42,7 +42,7 @@ class PdfParser
             pdfRenderer.close()
             parcelFileDescriptor.close()
 
-            PreviewScreenUIModel(
+            PreviewBookModel(
                 title = tempFile.nameWithoutExtension,
                 author = "PDF Document",
                 coverImage = ImageUIModel(coverImage),
@@ -50,10 +50,10 @@ class PdfParser
                 annotation = "PDF Document ($pageCount pages)",
                 genre = "PDF",
                 lang = null,
-                manyImages = emptyList()
+                gallery = emptyList()
             )
         } catch (_: Exception) {
-            PreviewScreenUIModel(null, null, null, null, null, null, null, manyImages = emptyList())
+            PreviewBookModel(null, null, null, null, null, null, null, gallery = emptyList())
         } finally {
             if (tempFile.exists()) tempFile.delete()
         }
@@ -91,7 +91,7 @@ class PdfParser
         val model = BookUIModel(
             id = id,
             localPath = file.path,
-            titleInfo = PreviewScreenUIModel(
+            titleInfo = PreviewBookModel(
                 title = file.nameWithoutExtension,
                 author = "PDF Document",
                 coverImage = ImageUIModel(coverImage),
@@ -99,7 +99,7 @@ class PdfParser
                 annotation = "PDF Document (${pdfRenderer.pageCount} pages)",
                 genre = "PDF",
                 lang = null,
-                manyImages = emptyList()
+                gallery = emptyList()
             ),
             elements = elements,
             progressIndex = scrollIndex,

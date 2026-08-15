@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
-import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import java.io.File
 import java.io.InputStream
@@ -24,7 +24,7 @@ class UniversalFileParser
 ) {
     private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
 
-    fun previewFromUri(uri: Uri): PreviewScreenUIModel? {
+    fun previewFromUri(uri: Uri): PreviewBookModel? {
         return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
             previewParser(stream, extension)
         }
@@ -46,7 +46,7 @@ class UniversalFileParser
     private fun previewParser(
         stream: InputStream,
         extension: String
-    ): PreviewScreenUIModel? {
+    ): PreviewBookModel? {
         return when (extension.lowercase()) {
             "fb2" -> fb2.getPreview(stream)
             "epub" -> epub.getPreview(stream)
