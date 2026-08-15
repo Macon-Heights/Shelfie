@@ -48,9 +48,9 @@ fun CatalogueScreen(
 
     CatalogueContent(
         state = state,
-        onBookOpen = { nav.navigate(MediaViewerRoute(it.id).route) },
-        onToggleBookCheck = { vm.onIntent(CatalogueIntent.ToggleBookCheck(it.id)) },
-        onToggleRemoveMode = { vm.onIntent(CatalogueIntent.ToggleRemoveMode(it.id)) },
+        onBookOpen = { nav.navigate(MediaViewerRoute(it.data.id).route) },
+        onToggleBookCheck = { vm.onIntent(CatalogueIntent.ToggleBookCheck(it.data.id)) },
+        onToggleRemoveMode = { vm.onIntent(CatalogueIntent.ToggleRemoveMode(it.data.id)) },
         onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
         onDeleteClick = { vm.onIntent(CatalogueIntent.RemoveChecked) },
         onTogglePopup = { vm.onIntent(CatalogueIntent.TogglePopup(it)) }

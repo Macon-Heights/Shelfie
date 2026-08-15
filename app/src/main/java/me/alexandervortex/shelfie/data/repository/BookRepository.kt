@@ -3,13 +3,14 @@ package me.alexandervortex.shelfie.data.repository
 import android.net.Uri
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.alexandervortex.shelfie.base.ext.toBookComponentModel
+import me.alexandervortex.shelfie.base.ext.toModel
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
+import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
-import me.alexandervortex.shelfie.feature.preview.PreviewScreenUIModel
 import javax.inject.Inject
 
 class BookRepository
@@ -29,9 +30,9 @@ class BookRepository
         dao.addBook(entity)
     }
 
-    fun getPreviews(): Flow<List<CatalogueItemUIModel.Model>> {
+    fun getPreviews(): Flow<List<CatalogueItemModel>> {
         return dao.getPreviews().map { entities ->
-            entities.map { it.toBookComponentModel() }
+            entities.map { it.toModel() }
         }
     }
 
@@ -60,7 +61,7 @@ class BookRepository
     suspend fun removeBooks(
         books: List<CatalogueItemUIModel.Model>
     ) {
-        dao.removeBooks(books.map { it.id })
-        parser.removeBooks(books.map { it.localPath })
+        dao.removeBooks(books.map { it.data.id })
+        parser.removeBooks(books.map { it.data.localPath })
     }
 }

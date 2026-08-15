@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.clipNShadow
 import me.alexandervortex.shelfie.base.ext.getColors
+import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_CHECK
@@ -86,7 +87,7 @@ fun CatalogueItemUI(
         ) {
             Text(
                 text = (model as? CatalogueItemUIModel.Model)
-                    ?.title.takeIf { isBook }
+                    ?.data?.title.takeIf { isBook }
                     ?: SPACE_SYMBOL,
                 color = onColorForTitle,
                 fontSize = 18.sp,
@@ -97,8 +98,8 @@ fun CatalogueItemUI(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val scrollIndex = (model as? CatalogueItemUIModel.Model)?.scrollIndex // 25
-                val elements = (model as? CatalogueItemUIModel.Model)?.elements // 50
+                val scrollIndex = (model as? CatalogueItemUIModel.Model)?.data?.scrollIndex // 25
+                val elements = (model as? CatalogueItemUIModel.Model)?.data?.elements // 50
 
                 if (scrollIndex != null && elements != null && elements > 0 && scrollIndex > 0) {
                     val textValue = (scrollIndex * 100) / elements
@@ -111,7 +112,7 @@ fun CatalogueItemUI(
                 }
                 Text(
                     text = (model as? CatalogueItemUIModel.Model)
-                        ?.author.takeIf { isBook }
+                        ?.data?.author.takeIf { isBook }
                         ?: SPACE_SYMBOL,
                     color = onColor,
                     fontWeight = FontWeight.Light,
@@ -121,8 +122,8 @@ fun CatalogueItemUI(
             }
             Spacer(Modifier.size(8.dp))
             ProgressUI(
-                (model as? CatalogueItemUIModel.Model)?.scrollIndex,
-                (model as? CatalogueItemUIModel.Model)?.elements
+                (model as? CatalogueItemUIModel.Model)?.data?.scrollIndex,
+                (model as? CatalogueItemUIModel.Model)?.data?.elements
             )
         }
     }
@@ -132,14 +133,16 @@ fun CatalogueItemUI(
 @CombinedPreviews
 fun BookComponentPreview() {
     val model = CatalogueItemUIModel.Model(
-        id = "thisisid",
-        localPath = "",
-        title = "Harry Potter and the Sorcerer's Stone",
-        author = "J.K. Rowling Rowling",
-        year = "1001",
-        scrollIndex = 50,
-        elements = 365,
         isChecked = false,
+        data = CatalogueItemModel(
+            id = "thisisid",
+            localPath = "",
+            title = "Harry Potter and the Sorcerer's Stone",
+            author = "J.K. Rowling Rowling",
+            year = "1001",
+            scrollIndex = 50,
+            elements = 365,
+        )
     )
     val skeleton = CatalogueItemUIModel.Skeleton
     CombinedPreviews {

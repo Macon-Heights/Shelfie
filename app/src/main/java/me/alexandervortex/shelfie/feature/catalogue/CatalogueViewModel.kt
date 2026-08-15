@@ -20,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CatalogueViewModel @Inject constructor(
     private val bookRepository: BookRepository,
+    private val catalogueUIFactory: CatalogueUIFactory
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CatalogueState(books = getSkeletons()))
@@ -33,9 +34,10 @@ class CatalogueViewModel @Inject constructor(
             bookRepository.getPreviews().collect { dbBooks ->
                 _state.update { current ->
                     val updatedBooks = dbBooks.map { dbBook ->
+                        val uiBook = catalogueUIFactory.getCatalogueItemUIModel(dbBook)
                         val currentBook = current.books.filterIsInstance<CatalogueItemUIModel.Model>()
-                            .find { it.id == dbBook.id }
-                        dbBook.copy(isChecked = currentBook?.isChecked ?: false)
+                            .find { it.data.id == uiBook.data.id }
+                        uiBook.copy(isChecked = currentBook?.isChecked ?: false)
                     }
                     current.copy(books = updatedBooks)
                 }
@@ -79,7 +81,7 @@ class CatalogueViewModel @Inject constructor(
             val newMode = !current.isRemoveMode
             val updatedBooks =
                 current.books.filterIsInstance<CatalogueItemUIModel.Model>().map { book ->
-                    book.copy(isChecked = if (book.id == id) !book.isChecked else false)
+                    book.copy(isChecked = if (book.data.id == id) !book.isChecked else false)
                 }
             current.copy(isRemoveMode = newMode, books = updatedBooks)
         }
@@ -89,7 +91,7 @@ class CatalogueViewModel @Inject constructor(
         _state.update { current ->
             val updatedBooks =
                 current.books.filterIsInstance<CatalogueItemUIModel.Model>().map { book ->
-                    if (book.id == id) book.copy(isChecked = !book.isChecked) else book
+                    if (book.data.id == id) book.copy(isChecked = !book.isChecked) else book
                 }
             current.copy(books = updatedBooks)
         }

@@ -48,8 +48,10 @@ fun ProgressUI(scrollIndex: Int?, elements: Int?) {
 private fun BookComponentWithLine() {
     val model = CataloguePreviewData.getBooks().random()
     val kek = model.copy(
-        scrollIndex = 20,
-        elements = 100
+        data = model.data.copy(
+            scrollIndex = 20,
+            elements = 100
+        )
     )
     CombinedPreviews {
         CatalogueItemUI(false, kek)
