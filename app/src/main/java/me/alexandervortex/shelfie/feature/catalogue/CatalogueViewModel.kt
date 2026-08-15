@@ -18,9 +18,10 @@ import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CatalogueViewModel @Inject constructor(
-    private val bookRepository: BookRepository,
-    private val catalogueUIFactory: CatalogueUIFactory
+class CatalogueViewModel
+@Inject constructor(
+    private val repository: BookRepository,
+    private val factory: CatalogueUIFactory
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CatalogueState(books = getSkeletons()))
@@ -31,10 +32,10 @@ class CatalogueViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            bookRepository.getPreviews().collect { dbBooks ->
+            repository.getPreviews().collect { dbBooks ->
                 _state.update { current ->
                     val updatedBooks = dbBooks.map { dbBook ->
-                        val uiBook = catalogueUIFactory.getCatalogueItemUIModel(dbBook)
+                        val uiBook = factory.getCatalogueItemUIModel(dbBook)
                         val currentBook = current.books.filterIsInstance<CatalogueItemUIModel.Model>()
                             .find { it.data.id == uiBook.data.id }
                         uiBook.copy(isChecked = currentBook?.isChecked ?: false)
@@ -69,31 +70,32 @@ class CatalogueViewModel @Inject constructor(
 
     private fun importBook(uri: Uri) = viewModelScope.launch {
         try {
-            bookRepository.addBookToDbAndDisk(uri)
+            repository.addBookToDbAndDisk(uri)
             _effect.emit(CatalogueEffect.ShowToast("Book Added"))
         } catch (e: Exception) {
             _effect.emit(CatalogueEffect.ShowToast("Error: ${e.localizedMessage}"))
         }
     }
 
-    private fun toggleRemoveMode(id: String) {
+    private fun toggleRemoveMode(id: String? = null) {
         _state.update { current ->
-            val newMode = !current.isRemoveMode
-            val updatedBooks =
+            val newIsRemoveMode = !current.isRemoveMode
+            val updatedBooks = if (newIsRemoveMode && id != null) {
                 current.books.filterIsInstance<CatalogueItemUIModel.Model>().map { book ->
-                    book.copy(isChecked = if (book.data.id == id) !book.isChecked else false)
+                    book.copy(isChecked = book.data.id == id)
                 }
-            current.copy(isRemoveMode = newMode, books = updatedBooks)
+            } else { current.books }
+            current.copy(isRemoveMode = newIsRemoveMode, books = updatedBooks)
         }
     }
 
     private fun toggleBookCheck(id: String) {
-        _state.update { current ->
-            val updatedBooks =
-                current.books.filterIsInstance<CatalogueItemUIModel.Model>().map { book ->
-                    if (book.data.id == id) book.copy(isChecked = !book.isChecked) else book
-                }
-            current.copy(books = updatedBooks)
+            _state.update { current ->
+                val updatedBooks =
+                    current.books.filterIsInstance<CatalogueItemUIModel.Model>().map { book ->
+                        if (book.data.id == id) book.copy(isChecked = !book.isChecked) else book
+                    }
+                current.copy(books = updatedBooks)
         }
     }
 
@@ -106,7 +108,7 @@ class CatalogueViewModel @Inject constructor(
             return@launch
         }
 
-        bookRepository.removeBooks(checkedBooks)
+        repository.removeBooks(checkedBooks)
         _effect.emit(CatalogueEffect.ShowToast("Removed ${checkedBooks.size} books"))
         _state.update { it.copy(isRemoveMode = false) }
     }

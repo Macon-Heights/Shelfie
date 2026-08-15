@@ -2,6 +2,7 @@ package me.alexandervortex.shelfie.feature.catalogue
 
 import android.content.Intent
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -22,6 +23,10 @@ fun CatalogueScreen(
 ) {
     val context = LocalContext.current
     val state by vm.state.collectAsStateWithLifecycle()
+
+    BackHandler(enabled = state.isRemoveMode) {
+        vm.onIntent(CatalogueIntent.ToggleRemoveMode())
+    }
 
     LaunchedEffect(Unit) {
         vm.effect.collect { effect ->
