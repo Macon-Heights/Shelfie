@@ -3,7 +3,6 @@ package me.alexandervortex.shelfie.feature.catalogue
 import android.net.Uri
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.alexandervortex.shelfie.base.ext.toModel
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
@@ -17,9 +16,9 @@ class CatalogueRepository
     private val parser: UniversalFileParser,
 ) {
 
-    fun getPreviews(): Flow<List<CatalogueItemModel>> {
-        return dao.getPreviews().map { entities ->
-            entities.map { it.toModel() }
+    fun getCatalogueItems(): Flow<List<CatalogueItemModel>> {
+        return dao.getCatalogueItems().map { entities ->
+            entities.map { mapper.toModel(it) }
         }
     }
 

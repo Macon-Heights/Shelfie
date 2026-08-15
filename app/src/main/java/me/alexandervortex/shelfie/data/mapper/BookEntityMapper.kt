@@ -1,6 +1,7 @@
 package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.data.db.BookEntity
+import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
@@ -19,5 +20,20 @@ class BookEntityMapper
             elements = model.elements.size
         )
         return entity
+    }
+
+    fun toModel(entity: BookEntity): CatalogueItemModel {
+        return with(entity) {
+            CatalogueItemModel(
+                id = id,
+                localPath = localPath,
+                title = title,
+                author = author,
+                year = year,
+                scrollIndex = scrollIndex,
+                scrollOffset = scrollOffset,
+                elements = elements
+            )
+        }
     }
 }

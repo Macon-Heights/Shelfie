@@ -30,7 +30,7 @@ class CatalogueViewModel
 
     init {
         viewModelScope.launch {
-            repository.getPreviews().collect { dbBooks ->
+            repository.getCatalogueItems().collect { dbBooks ->
                 _state.update { current ->
                     val updatedBooks = dbBooks.map { dbBook ->
                         val uiBook = factory.getCatalogueItemUIModel(dbBook)

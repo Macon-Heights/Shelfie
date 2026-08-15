@@ -12,7 +12,7 @@ const val BOOK_TABLE = "book_table"
 interface BookDao {
 
     @Query("SELECT * FROM $BOOK_TABLE")
-    fun getPreviews(): Flow<List<BookEntity>>
+    fun getCatalogueItems(): Flow<List<BookEntity>>
 
     @Query("SELECT * FROM $BOOK_TABLE WHERE id = :id LIMIT 1")
     suspend fun getPreviewById(id: String): BookEntity?
