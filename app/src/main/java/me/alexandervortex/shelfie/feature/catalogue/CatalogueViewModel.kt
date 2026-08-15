@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
@@ -20,13 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class CatalogueViewModel
 @Inject constructor(
-    private val repository: BookRepository,
+    private val repository: CatalogueRepository,
     private val factory: CatalogueUIFactory
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CatalogueState(books = getSkeletons()))
     val state = _state.asStateFlow()
-
     private val _effect = MutableSharedFlow<CatalogueEffect>()
     val effect = _effect.asSharedFlow()
 
