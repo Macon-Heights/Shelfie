@@ -7,10 +7,9 @@ import me.alexandervortex.shelfie.base.ext.toModel
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.model.CatalogueItemModel
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import javax.inject.Inject
 
 class BookRepository
@@ -59,9 +58,9 @@ class BookRepository
     }
 
     suspend fun removeBooks(
-        books: List<CatalogueItemUIModel.Model>
+        books: List<CatalogueItemModel>
     ) {
-        dao.removeBooks(books.map { it.data.id })
-        parser.removeBooks(books.map { it.data.localPath })
+        dao.removeBooks(books.map { it.id })
+        parser.removeBooks(books.map { it.localPath })
     }
 }

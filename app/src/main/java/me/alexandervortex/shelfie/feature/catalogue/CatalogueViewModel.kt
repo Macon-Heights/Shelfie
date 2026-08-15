@@ -100,9 +100,10 @@ class CatalogueViewModel
     }
 
     private fun removeChecked() = viewModelScope.launch {
-        val checkedBooks =
-            _state.value.books.filterIsInstance<CatalogueItemUIModel.Model>()
+        val checkedBooks = _state.value.books
+                .filterIsInstance<CatalogueItemUIModel.Model>()
                 .filter { it.isChecked }
+                .map { it.data }
         if (checkedBooks.isEmpty()) {
             _effect.emit(CatalogueEffect.ShowToast("Nothing selected"))
             return@launch
