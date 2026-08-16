@@ -33,20 +33,6 @@ class UniversalFileParser
         }
     }
 
-    @Deprecated("old one")
-    private fun bookParser(
-        id: String,
-        outPutFile: File,
-        extension: String
-    ): BookUIModel? {
-        return when (extension.lowercase()) {
-            "fb2" -> fb2.parse(id, outPutFile, 0, 0)
-            "epub" -> epub.parse(id, outPutFile, 0, 0)
-            "pdf" -> pdf.parse(id, outPutFile, 0, 0)
-            else -> null
-        }
-    }
-
     fun bookParser(
         stream: InputStream,
         extension: String
