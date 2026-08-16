@@ -9,6 +9,7 @@ import me.alexandervortex.shelfie.data.parser.FileHelper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.parser.ZipHelper
 import me.alexandervortex.shelfie.model.CatalogueItemModel
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import javax.inject.Inject
 
 private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
@@ -21,6 +22,10 @@ class CatalogueRepository
     private val fileHelper: FileHelper,
     private val zipHelper: ZipHelper
 ) {
+
+    fun previewFromUri(uri: Uri): PreviewBookModel? {
+        return parser.previewFromUri(uri)
+    }
 
     fun getCatalogueItems(): Flow<List<CatalogueItemModel>> {
         return dao.getCatalogueItems().map { entities ->

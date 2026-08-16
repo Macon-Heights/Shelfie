@@ -1,9 +1,7 @@
 package me.alexandervortex.shelfie.data.repository
 
-import android.net.Uri
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
@@ -13,10 +11,6 @@ class BookRepository
     private val dao: BookDao,
     private val parser: UniversalFileParser,
 ) {
-
-    fun previewFromUri(uri: Uri): PreviewBookModel? {
-        return parser.previewFromUri(uri)
-    }
 
     suspend fun getBookModelById(id: String): BookUIModel? {
         val entity = dao.getPreviewById(id)
