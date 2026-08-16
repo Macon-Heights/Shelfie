@@ -21,17 +21,6 @@ class UniversalFileParser
     private val zipHelper: ZipHelper,
     private val fileHelper: FileHelper,
 ) {
-    fun previewParser(
-        stream: InputStream,
-        extension: String
-    ): PreviewBookModel? {
-        return when (extension.lowercase()) {
-            "fb2" -> fb2.getPreview(stream)
-            "epub" -> epub.getPreview(stream)
-            "pdf" -> pdf.getPreview(stream)
-            else -> null
-        }
-    }
 
     fun bookParser(
         stream: InputStream,
@@ -39,8 +28,8 @@ class UniversalFileParser
     ): ParsedBookModel? {
         return when (extension.lowercase()) {
             "fb2" -> fb2.parse(stream)
-//          fixme  "epub" -> epub.parse(outPutFile)
-//      fixme      "pdf" -> pdf.parse(outPutFile)
+            "epub" -> zipHelper.useZipFile(stream) { epub.parse(it) }
+            // fixme "pdf" -> pdf.parse(stream)
             else -> null
         }
     }

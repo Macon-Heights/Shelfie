@@ -37,7 +37,7 @@ class PreviewScreenViewModel
         uri?.let {
             viewModelScope.launch {
                 try {
-                    val titleInfo = catalogueRepository.previewFromUri(uri)
+                    val titleInfo = catalogueRepository.previewBook(uri)
                     _state.update { titleInfo ?: it }
                 } catch (e: Exception) {
                     _effect.emit(PreviewScreenEffect.ShowToast("Error: ${e.localizedMessage}"))
