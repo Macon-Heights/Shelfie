@@ -5,13 +5,13 @@ import me.alexandervortex.shelfie.model.PreviewBookModel
 import org.jsoup.nodes.Element
 import javax.inject.Inject
 
-class TitleInfoMapper
+class PreviewBookMapper
 @Inject constructor() {
 
     fun map(
         titleInfo: Element?,
         coverImage: ImageModel?,
-        manyImages: List<ImageModel?>
+        gallery: List<ImageModel?>
     ): PreviewBookModel {
         val result = PreviewBookModel(
             title = (titleInfo?.selectFirst("book-title") ?: titleInfo?.selectFirst("title"))?.text()?.trim(),
@@ -25,7 +25,7 @@ class TitleInfoMapper
             genre = titleInfo?.selectFirst("genre")?.text()?.trim(),
             lang = titleInfo?.selectFirst("lang")?.text()?.trim(),
             coverImage = coverImage,
-            gallery = manyImages
+            gallery = gallery
         )
         return result
     }
