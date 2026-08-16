@@ -17,6 +17,7 @@ class FileHelper
     private val booksDir: File
         get() = File(context.filesDir, "books").apply { if (!exists()) mkdirs() }
 
+    @Deprecated("old one")
     fun saveBook(stream: InputStream, extension: String): Pair<String, File> {
         val id = System.currentTimeMillis().toString()
         val outputFile = File(booksDir, "$id.$extension")
@@ -29,6 +30,18 @@ class FileHelper
     fun getFile(path: String): File? {
         val file = File(path)
         return if (file.exists()) file else null
+    }
+
+    fun saveBookFile(
+        id: String,
+        extension: String,
+        stream: InputStream,
+    ): String {
+        val outputFile = File(booksDir, "$id.$extension")
+        outputFile.outputStream().use { output ->
+            stream.copyTo(output)
+        }
+        return outputFile.path
     }
 
     suspend fun deleteFiles(paths: List<String>) = withContext(Dispatchers.IO) {
