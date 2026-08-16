@@ -7,7 +7,7 @@ import me.alexandervortex.shelfie.base.ext.normalizeEmptyLines
 import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
 import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
-import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
+import me.alexandervortex.shelfie.data.mapper.PreviewBookMapper
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class Fb2Parser
 @Inject constructor(
-    private val titleInfoMapper: TitleInfoMapper,
+    private val previewBookMapper: PreviewBookMapper,
     private val elementMapper: ElementMapper,
 ) {
 
@@ -35,16 +35,16 @@ class Fb2Parser
         )
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
+        val coverImage = getCoverImage(titleInfo, binaries)
 
-        val coverImage = ImageModel(getCoverImage(titleInfo, binaries))
-        val manyImages = binaries.map {
+        val gallery = binaries.map {
             ImageModel(it.value)
         }
 
-        return titleInfoMapper.map(
+        return previewBookMapper.map(
             coverImage = coverImage,
             titleInfo = titleInfo,
-            manyImages = manyImages
+            gallery = gallery
         )
     }
 
@@ -62,12 +62,12 @@ class Fb2Parser
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
 
-        val coverImage = ImageModel(getCoverImage(titleInfo, binaries))
+        val coverImage = getCoverImage(titleInfo, binaries)
         // fixme manyImages
         val manyImags = emptyList<ImageModel>()
         val result = ParsedBookModel(
 
-            titleInfo = titleInfoMapper.map(titleInfo, coverImage, manyImags),
+            titleInfo = previewBookMapper.map(titleInfo, coverImage, manyImags),
             elements = elementMapper.map(body, binaries)
                 .splitPartsBySentences()
                 .normalizeEmptyTextUI()
@@ -79,7 +79,7 @@ class Fb2Parser
     private fun getCoverImage(
         titleInfo: Element?,
         binaries: Map<String, ByteArray>,
-    ): ByteArray? {
+    ): ImageModel? {
         val coverImageElement = titleInfo
             ?.selectFirst("coverpage > image")
             ?: titleInfo?.selectFirst("coverpage image")
@@ -94,6 +94,6 @@ class Fb2Parser
 
         if (ref.isBlank()) return null
 
-        return binaries[ref]
+        return ImageModel(binaries[ref])
     }
 }
