@@ -11,12 +11,10 @@ import me.alexandervortex.shelfie.data.mapper.TitleInfoMapper
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
-import me.alexandervortex.shelfie.ui.model.BookUIModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
-import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -48,40 +46,6 @@ class Fb2Parser
             titleInfo = titleInfo,
             manyImages = manyImages
         )
-    }
-
-    @Deprecated("old one")
-    fun parse(
-        id: String,
-        file: File,
-        scrollOffset: Int,
-        scrollIndex: Int,
-    ): BookUIModel {
-        val doc: Document = Jsoup.parse(
-            file,
-            null,
-            "",
-            Parser.xmlParser()
-        )
-
-        val body = doc.getBody()
-        val titleInfo = doc.getTitleInfo()
-        val binaries = doc.getBinaries()
-
-        val coverImage = ImageModel(getCoverImage(titleInfo, binaries))
-
-        val result = BookUIModel(
-            id = id,
-            localPath = file.path,
-            titleInfo = titleInfoMapper.map(titleInfo, coverImage, emptyList()),
-            elements = elementMapper.map(body, binaries)
-                .splitPartsBySentences()
-                .normalizeEmptyTextUI()
-                .normalizeEmptyLines(),
-            progressIndex = scrollIndex,
-            progressOffset = scrollOffset
-        )
-        return result
     }
 
     fun parse(
