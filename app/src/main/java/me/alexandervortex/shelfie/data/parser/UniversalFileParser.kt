@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
+import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import java.io.File
@@ -28,6 +29,13 @@ class UniversalFileParser
         }
     }
 
+    fun parse(uri: Uri): ParsedBookModel? {
+        return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
+            bookParser(stream, extension)
+        }
+    }
+
+    @Deprecated("split parse and copy to different methods")
     fun parseAndCopy(uri: Uri): BookUIModel? {
         return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
             val (id, file) = fileHelper.saveBook(stream, extension)
@@ -47,6 +55,7 @@ class UniversalFileParser
         }
     }
 
+    @Deprecated("old one")
     private fun bookParser(
         id: String,
         outPutFile: File,
@@ -56,6 +65,18 @@ class UniversalFileParser
             "fb2" -> fb2.parse(id, outPutFile, 0, 0)
             "epub" -> epub.parse(id, outPutFile, 0, 0)
             "pdf" -> pdf.parse(id, outPutFile, 0, 0)
+            else -> null
+        }
+    }
+
+    private fun bookParser(
+        stream: InputStream,
+        extension: String
+    ): ParsedBookModel? {
+        return when (extension.lowercase()) {
+            "fb2" -> fb2.parse(stream)
+//          fixme  "epub" -> epub.parse(outPutFile)
+//      fixme      "pdf" -> pdf.parse(outPutFile)
             else -> null
         }
     }
