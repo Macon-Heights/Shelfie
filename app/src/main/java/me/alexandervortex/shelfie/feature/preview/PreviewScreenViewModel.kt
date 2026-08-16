@@ -52,7 +52,7 @@ class PreviewScreenViewModel
         uri?.let {
             viewModelScope.launch {
                 try {
-                    catalogueRepository.addBookToDbAndDisk(uri)
+                    catalogueRepository.addBookToDbAndDiskNew(uri)
                     _effect.emit(PreviewScreenEffect.ShowToast("Book added"))
                     _effect.emit(PreviewScreenEffect.Close)
                 } catch (e: Exception) {

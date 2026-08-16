@@ -31,11 +31,13 @@ fun CatalogueScreen(
     LaunchedEffect(Unit) {
         vm.effect.collect { effect ->
             when (effect) {
-                is CatalogueEffect.ShowToast ->
-                    Toast.makeText(context, effect.message, Toast.LENGTH_LONG).show()
+                is CatalogueEffect.ShowToast -> Toast.makeText(
+                    context,
+                    effect.message,
+                    Toast.LENGTH_LONG
+                ).show()
 
-                is CatalogueEffect.NavigateTo ->
-                    nav.navigate(effect.route)
+                is CatalogueEffect.NavigateTo -> nav.navigate(effect.route)
             }
         }
     }

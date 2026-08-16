@@ -46,7 +46,6 @@ class CatalogueViewModel
 
     fun onIntent(intent: CatalogueIntent) {
         when (intent) {
-            is CatalogueIntent.ImportBook -> importBook(intent.uri)
             is CatalogueIntent.ToggleRemoveMode -> toggleRemoveMode(intent.id)
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)
             is CatalogueIntent.RemoveChecked -> removeChecked()
@@ -63,15 +62,6 @@ class CatalogueViewModel
     private fun getSkeletons(): List<CatalogueItemUIModel> {
         return (1..9).map { index ->
             CatalogueItemUIModel.Skeleton
-        }
-    }
-
-    private fun importBook(uri: Uri) = viewModelScope.launch {
-        try {
-            repository.addBookToDbAndDisk(uri)
-            _effect.emit(CatalogueEffect.ShowToast("Book Added"))
-        } catch (e: Exception) {
-            _effect.emit(CatalogueEffect.ShowToast("Error: ${e.localizedMessage}"))
         }
     }
 
