@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
+import me.alexandervortex.shelfie.data.parser.FileHelper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import javax.inject.Inject
@@ -14,6 +15,7 @@ class CatalogueRepository
     private val dao: BookDao,
     private val mapper: BookEntityMapper,
     private val parser: UniversalFileParser,
+    private val fileHelper: FileHelper,
 ) {
 
     fun getCatalogueItems(): Flow<List<CatalogueItemModel>> {
@@ -26,7 +28,7 @@ class CatalogueRepository
         books: List<CatalogueItemModel>
     ) {
         dao.removeCatalogueItems(books.map { it.id })
-        parser.removeCatalogueItems(books.map { it.localPath })
+        fileHelper.deleteFiles(books.map { it.localPath })
     }
 
     suspend fun addBookToDbAndDisk(uri: Uri) {

@@ -1,8 +1,6 @@
 package me.alexandervortex.shelfie.data.parser
 
-import android.content.Context
 import android.net.Uri
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
@@ -16,11 +14,11 @@ import javax.inject.Inject
 
 class UniversalFileParser
 @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val fb2: Fb2Parser,
     private val epub: EpubParser,
     private val pdf: PdfParser,
     private val zipHelper: ZipHelper,
+    private val fileHelper: FileHelper,
 ) {
     private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
 
@@ -32,14 +30,8 @@ class UniversalFileParser
 
     fun parseAndCopy(uri: Uri): BookUIModel? {
         return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
-            val booksDir = File(context.filesDir, "books").apply { mkdirs() }
-            val id = System.currentTimeMillis().toString()
-            val outputFile = File(booksDir, "$id.$extension")
-
-            outputFile.outputStream().use { output ->
-                stream.copyTo(output)
-            }
-            bookParser(id, outputFile, extension)
+            val (id, file) = fileHelper.saveBook(stream, extension)
+            bookParser(id, file, extension)
         }
     }
 
@@ -74,27 +66,13 @@ class UniversalFileParser
         scrollOffset: Int,
         scrollIndex: Int,
     ): BookUIModel? {
-        val result = withContext(Dispatchers.IO) {
-            val file = File(localPath)
-            if (!file.exists()) {
-                return@withContext null
-            }
+        return withContext(Dispatchers.IO) {
+            val file = fileHelper.getFile(localPath) ?: return@withContext null
             val extension = file.extension
             bookParser(id, file, extension)?.copy(
                 progressIndex = scrollIndex,
                 progressOffset = scrollOffset
             )
-        }
-        return result
-    }
-
-    suspend fun removeCatalogueItems(paths: List<String>) = withContext(Dispatchers.IO) {
-        paths.forEach {
-            runCatching {
-                File(it)
-                    .takeIf(File::exists)
-                    ?.delete()
-            }
         }
     }
 }
