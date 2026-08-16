@@ -24,7 +24,9 @@ class CatalogueRepository
 ) {
 
     fun previewFromUri(uri: Uri): PreviewBookModel? {
-        return parser.previewFromUri(uri)
+        return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
+            parser.previewParser(stream, extension)
+        }
     }
 
     fun getCatalogueItems(): Flow<List<CatalogueItemModel>> {
