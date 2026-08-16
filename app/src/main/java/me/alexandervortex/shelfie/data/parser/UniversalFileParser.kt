@@ -21,23 +21,7 @@ class UniversalFileParser
     private val zipHelper: ZipHelper,
     private val fileHelper: FileHelper,
 ) {
-    private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
-
-    fun previewFromUri(uri: Uri): PreviewBookModel? {
-        return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
-            previewParser(stream, extension)
-        }
-    }
-
-    @Deprecated("split parse and copy to different methods")
-    fun parseAndCopy(uri: Uri): BookUIModel? {
-        return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
-            val (id, file) = fileHelper.saveBook(stream, extension)
-            bookParser(id, file, extension)
-        }
-    }
-
-    private fun previewParser(
+    fun previewParser(
         stream: InputStream,
         extension: String
     ): PreviewBookModel? {
