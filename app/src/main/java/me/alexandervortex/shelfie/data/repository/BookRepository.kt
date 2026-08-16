@@ -18,7 +18,6 @@ class BookRepository
         return parser.previewFromUri(uri)
     }
 
-
     suspend fun getBookModelById(id: String): BookUIModel? {
         val entity = dao.getPreviewById(id)
         val result = entity?.let {

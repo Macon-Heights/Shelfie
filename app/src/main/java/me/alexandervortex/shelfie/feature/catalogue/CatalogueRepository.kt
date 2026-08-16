@@ -22,16 +22,16 @@ class CatalogueRepository
         }
     }
 
+    suspend fun removeCatalogueItems(
+        books: List<CatalogueItemModel>
+    ) {
+        dao.removeCatalogueItems(books.map { it.id })
+        parser.removeCatalogueItems(books.map { it.localPath })
+    }
+
     suspend fun addBookToDbAndDisk(uri: Uri) {
         val model = parser.parseAndCopy(uri) ?: throw Exception("Book not supported")
         val entity = mapper.toEntity(model)
         dao.addBook(entity)
-    }
-
-    suspend fun removeBooks(
-        books: List<CatalogueItemModel>
-    ) {
-        dao.removeBooks(books.map { it.id })
-        parser.removeBooks(books.map { it.localPath })
     }
 }

@@ -88,7 +88,7 @@ class UniversalFileParser
         return result
     }
 
-    suspend fun removeBooks(paths: List<String>) = withContext(Dispatchers.IO) {
+    suspend fun removeCatalogueItems(paths: List<String>) = withContext(Dispatchers.IO) {
         paths.forEach {
             runCatching {
                 File(it)

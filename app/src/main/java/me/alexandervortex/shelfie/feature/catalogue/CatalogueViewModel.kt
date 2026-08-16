@@ -107,7 +107,7 @@ class CatalogueViewModel
             return@launch
         }
 
-        repository.removeBooks(checkedBooks)
+        repository.removeCatalogueItems(checkedBooks)
         _effect.emit(CatalogueEffect.ShowToast("Removed ${checkedBooks.size} books"))
         _state.update { it.copy(isRemoveMode = false) }
     }

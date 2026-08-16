@@ -14,6 +14,9 @@ interface BookDao {
     @Query("SELECT * FROM $BOOK_TABLE")
     fun getCatalogueItems(): Flow<List<BookEntity>>
 
+    @Query("DELETE FROM $BOOK_TABLE WHERE id IN (:ids)")
+    suspend fun removeCatalogueItems(ids: List<String>)
+
     @Query("SELECT * FROM $BOOK_TABLE WHERE id = :id LIMIT 1")
     suspend fun getPreviewById(id: String): BookEntity?
 
@@ -27,7 +30,4 @@ interface BookDao {
         offset: Int,
         elements: Int
     )
-
-    @Query("DELETE FROM $BOOK_TABLE WHERE id IN (:ids)")
-    suspend fun removeBooks(ids: List<String>)
 }
