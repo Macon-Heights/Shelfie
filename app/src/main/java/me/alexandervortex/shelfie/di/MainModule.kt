@@ -7,15 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.alexandervortex.shelfie.data.db.BookDatabase
 import me.alexandervortex.shelfie.data.db.BookDao
-import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.data.parser.ZipHelper
-import me.alexandervortex.shelfie.data.parser.epub.EpubParser
-import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
-import me.alexandervortex.shelfie.data.parser.pdf.PdfParser
-import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.data.db.BookDatabase
 import javax.inject.Singleton
 
 const val BOOK_DB = "book_db"
@@ -23,27 +16,6 @@ const val BOOK_DB = "book_db"
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
-
-    @Provides
-    fun provideFictionBookParser(
-        @ApplicationContext context: Context,
-        mapper: Fb2Parser,
-        epub: EpubParser,
-        pdfParser: PdfParser,
-        zipHelper: ZipHelper
-    ): UniversalFileParser {
-        return UniversalFileParser(context, mapper, epub, pdfParser, zipHelper)
-    }
-
-    @Provides
-    @Singleton
-    fun provideBookRepository(
-        dao: BookDao,
-        mapper: BookEntityMapper,
-        parser: UniversalFileParser,
-    ): BookRepository {
-        return BookRepository(dao, mapper, parser)
-    }
 
     @Provides
     @Singleton

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.feature.catalogue.CatalogueRepository
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import javax.inject.Inject
 
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class PreviewScreenViewModel
 @Inject constructor(
     private val bookRepository: BookRepository,
+    private val catalogueRepository: CatalogueRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PreviewBookModel())
@@ -50,7 +52,7 @@ class PreviewScreenViewModel
         uri?.let {
             viewModelScope.launch {
                 try {
-                    bookRepository.addBookToDbAndDisk(uri)
+                    catalogueRepository.addBookToDbAndDisk(uri)
                     _effect.emit(PreviewScreenEffect.ShowToast("Book added"))
                     _effect.emit(PreviewScreenEffect.Close)
                 } catch (e: Exception) {
