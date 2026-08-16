@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
+import java.io.File
 import java.io.InputStream
+import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
@@ -35,6 +37,20 @@ class ZipHelper @Inject constructor(
             } else {
                 contentAction.invoke(stream, extension)
             }
+        }
+    }
+
+    fun <T> useZipFile(inputStream: InputStream, block: (ZipFile) -> T): T {
+        val tempFile = File.createTempFile("temp_book", ".zip", context.cacheDir)
+        return try {
+            tempFile.outputStream().use { output ->
+                inputStream.copyTo(output)
+            }
+            ZipFile(tempFile).use { zipFile ->
+                block(zipFile)
+            }
+        } finally {
+            tempFile.delete()
         }
     }
 
