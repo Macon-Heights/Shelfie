@@ -2,12 +2,32 @@ package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.data.db.BookEntity
 import me.alexandervortex.shelfie.model.CatalogueItemModel
+import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
 class BookEntityMapper
 @Inject constructor() {
 
+    fun initFirstEntity(
+        id: String,
+        localPath: String,
+        model: ParsedBookModel,
+    ): BookEntity {
+        val entity = BookEntity(
+            id = id,
+            localPath = localPath,
+            title = model.titleInfo.title,
+            author = model.titleInfo.author,
+            year = model.titleInfo.date,
+            scrollIndex = 0,
+            scrollOffset = 0,
+            elements = model.elements.size
+        )
+        return entity
+    }
+
+    @Deprecated("old one")
     fun toEntity(model: BookUIModel): BookEntity {
         val entity = BookEntity(
             id = model.id,
