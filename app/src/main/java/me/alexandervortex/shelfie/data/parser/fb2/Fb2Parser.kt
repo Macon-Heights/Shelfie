@@ -10,7 +10,6 @@ import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.PreviewBookMapper
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
-import me.alexandervortex.shelfie.model.PreviewBookModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -23,30 +22,6 @@ class Fb2Parser
     private val previewBookMapper: PreviewBookMapper,
     private val elementMapper: ElementMapper,
 ) {
-
-    fun getPreview(
-        inputStream: InputStream,
-    ): PreviewBookModel {
-        val doc: Document = Jsoup.parse(
-            inputStream,
-            null,
-            "",
-            Parser.xmlParser()
-        )
-        val titleInfo = doc.getTitleInfo()
-        val binaries = doc.getBinaries()
-        val coverImage = getCoverImage(titleInfo, binaries)
-
-        val gallery = binaries.map {
-            ImageModel(it.value)
-        }
-
-        return previewBookMapper.map(
-            coverImage = coverImage,
-            titleInfo = titleInfo,
-            gallery = gallery
-        )
-    }
 
     fun parse(
         inputStream: InputStream
