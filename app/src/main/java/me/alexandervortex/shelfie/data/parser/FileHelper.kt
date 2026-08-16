@@ -36,12 +36,12 @@ class FileHelper
         id: String,
         extension: String,
         stream: InputStream,
-    ): String {
+    ): File {
         val outputFile = File(booksDir, "$id.$extension")
         outputFile.outputStream().use { output ->
             stream.copyTo(output)
         }
-        return outputFile.path
+        return outputFile
     }
 
     suspend fun deleteFiles(paths: List<String>) = withContext(Dispatchers.IO) {

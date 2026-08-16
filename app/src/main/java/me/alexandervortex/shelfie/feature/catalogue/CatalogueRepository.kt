@@ -7,8 +7,11 @@ import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
 import me.alexandervortex.shelfie.data.parser.FileHelper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
+import me.alexandervortex.shelfie.data.parser.ZipHelper
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import javax.inject.Inject
+
+private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
 
 class CatalogueRepository
 @Inject constructor(
@@ -16,6 +19,7 @@ class CatalogueRepository
     private val mapper: BookEntityMapper,
     private val parser: UniversalFileParser,
     private val fileHelper: FileHelper,
+    private val zipHelper: ZipHelper
 ) {
 
     fun getCatalogueItems(): Flow<List<CatalogueItemModel>> {
@@ -31,9 +35,33 @@ class CatalogueRepository
         fileHelper.deleteFiles(books.map { it.localPath })
     }
 
+    @Deprecated("old one")
     suspend fun addBookToDbAndDisk(uri: Uri) {
         val model = parser.parseAndCopy(uri) ?: throw Exception("Book not supported")
         val entity = mapper.toEntity(model)
         dao.addBook(entity)
+    }
+
+    suspend fun addBookToDbAndDiskNew(uri: Uri) {
+        zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
+            val id = System.currentTimeMillis().toString()
+            val file = fileHelper.saveBookFile(
+                id = id,
+                extension = extension,
+                stream = stream,
+            )
+
+            val model = file.inputStream().use { savedStream ->
+                parser.bookParser(savedStream, extension)
+            } ?: throw Exception("Book not supported")
+
+            mapper.initFirstEntity(
+                id = id,
+                localPath = file.path,
+                model = model,
+            )
+        }?.let { entity ->
+            dao.addBook(entity)
+        }
     }
 }

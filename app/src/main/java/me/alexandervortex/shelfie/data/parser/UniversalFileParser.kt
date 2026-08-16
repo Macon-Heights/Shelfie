@@ -29,12 +29,6 @@ class UniversalFileParser
         }
     }
 
-    fun parse(uri: Uri): ParsedBookModel? {
-        return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
-            bookParser(stream, extension)
-        }
-    }
-
     @Deprecated("split parse and copy to different methods")
     fun parseAndCopy(uri: Uri): BookUIModel? {
         return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
@@ -69,7 +63,7 @@ class UniversalFileParser
         }
     }
 
-    private fun bookParser(
+    fun bookParser(
         stream: InputStream,
         extension: String
     ): ParsedBookModel? {
