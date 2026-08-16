@@ -35,14 +35,7 @@ class CatalogueRepository
         fileHelper.deleteFiles(books.map { it.localPath })
     }
 
-    @Deprecated("old one")
-    suspend fun addBookToDbAndDisk(uri: Uri) {
-        val model = parser.parseAndCopy(uri) ?: throw Exception("Book not supported")
-        val entity = mapper.toEntity(model)
-        dao.addBook(entity)
-    }
-
-    suspend fun addBookToDbAndDiskNew(uri: Uri) {
+    suspend fun addBook(uri: Uri) {
         zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
             val id = System.currentTimeMillis().toString()
             val file = fileHelper.saveBookFile(
