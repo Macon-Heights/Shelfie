@@ -15,20 +15,20 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.data.repository.CatalogueRepository
 import me.alexandervortex.shelfie.feature.player.MediaService
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerEffect
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
+import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.model.PreviewBookModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewerViewModel
 @Inject constructor(
-    private val repo: BookRepository,
+    private val repo: CatalogueRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewerState())
