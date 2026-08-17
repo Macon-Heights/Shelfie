@@ -1,21 +1,25 @@
 package me.alexandervortex.shelfie.data.parser
 
-import me.alexandervortex.shelfie.base.ext.normalizeEmptyLines
-import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
-import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
-import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
+import me.alexandervortex.shelfie.base.ext.toSpineSection
+import me.alexandervortex.shelfie.data.mapper.ElementMapper
+import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
-import me.alexandervortex.shelfie.ui.model.ElementUIModel
+import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.util.zip.ZipFile
 import javax.inject.Inject
 
+private data class SpineItem(
+    val id: String,
+    val path: String,
+)
+
 class EpubParser
 @Inject constructor(
-    private val elementUIMapper: ElementUIMapper,
+    private val elementMapper: ElementMapper,
 ) {
 
     fun parse(
@@ -32,13 +36,15 @@ class EpubParser
         val author = metadata?.selectFirst("dc|creator")?.text()
             ?: metadata?.selectFirst("creator")?.text()
 
-        val manifest = opfDoc.select("manifest > item").associate {
-            it.attr("id") to it.attr("href")
-        }
+        val manifest = opfDoc.select("manifest > item")
+            .associate { it.attr("id") to it.attr("href") }
 
-        val spine = opfDoc.select("spine > itemref").mapNotNull {
-            manifest[it.attr("idref")]
-        }
+        val spine = opfDoc.select("spine > itemref")
+            .mapNotNull { item ->
+                val id = item.attr("idref")
+                val path = manifest[id] ?: return@mapNotNull null
+                SpineItem(id = id, path = path)
+            }
 
         val binaries = mutableMapOf<String, ByteArray>()
         manifest.values.forEach { path ->
@@ -69,16 +75,29 @@ class EpubParser
         val coverImage =
             ImageModel(coverPath?.let { binaries[it] ?: binaries[it.substringAfterLast("/")] })
 
-        val elements = mutableListOf<ElementUIModel>()
-        spine.forEach { path ->
-            val fullPath = resolvePath(opfPath, path)
-            zip.getEntry(fullPath)?.let { entry ->
-                val doc = zip.getInputStream(entry).use {
-                    Jsoup.parse(it, "UTF-8", "", Parser.xmlParser())
-                }
-                val body = doc.selectFirst("body") ?: doc
-                elements.addAll(elementUIMapper.map(body, binaries))
+        val chapters = spine.mapNotNull { item ->
+            val fullPath = resolvePath(base = opfPath, relative = item.path)
+            val entry = zip.getEntry(fullPath) ?: return@mapNotNull null
+            val doc = zip.getInputStream(entry).use {
+                Jsoup.parse(
+                    it,
+                    "UTF-8",
+                    "",
+                    Parser.xmlParser()
+                )
             }
+
+            val body = doc.selectFirst("body")
+                ?: return@mapNotNull null
+
+            val document = elementMapper.map(
+                root = body,
+                binaries = binaries,
+            )
+
+            document.toSpineSection(
+                id = item.id
+            )
         }
 
         return ParsedBookModel(
@@ -90,12 +109,11 @@ class EpubParser
                 annotation = metadata?.selectFirst("dc|description")?.text(),
                 genre = metadata?.selectFirst("dc|subject")?.text(),
                 lang = metadata?.selectFirst("dc|language")?.text(),
-                gallery = emptyList()
+                gallery = emptyList(),
             ),
-            elements = elements
-                .splitPartsBySentences()
-                .normalizeEmptyTextUI()
-                .normalizeEmptyLines()
+            document = BookDocument(
+                children = chapters
+            ),
         )
     }
 

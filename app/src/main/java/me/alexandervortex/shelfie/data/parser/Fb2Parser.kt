@@ -3,10 +3,7 @@ package me.alexandervortex.shelfie.data.parser
 import me.alexandervortex.shelfie.base.ext.getBinaries
 import me.alexandervortex.shelfie.base.ext.getBody
 import me.alexandervortex.shelfie.base.ext.getTitleInfo
-import me.alexandervortex.shelfie.base.ext.normalizeEmptyLines
-import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
-import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
-import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
+import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.PreviewBookMapper
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
@@ -20,7 +17,7 @@ import javax.inject.Inject
 class Fb2Parser
 @Inject constructor(
     private val previewBookMapper: PreviewBookMapper,
-    private val elementUIMapper: ElementUIMapper,
+    private val elementMapper: ElementMapper,
 ) {
 
     fun parse(
@@ -38,15 +35,16 @@ class Fb2Parser
         val binaries = doc.getBinaries()
 
         val coverImage = getCoverImage(titleInfo, binaries)
-        // fixme manyImages
-        val manyImags = emptyList<ImageModel>()
         val result = ParsedBookModel(
-
-            titleInfo = previewBookMapper.map(titleInfo, coverImage, manyImags),
-            elements = elementUIMapper.map(body, binaries)
-                .splitPartsBySentences()
-                .normalizeEmptyTextUI()
-                .normalizeEmptyLines(),
+            titleInfo = previewBookMapper.map(
+                titleInfo = titleInfo,
+                coverImage = coverImage,
+                gallery = emptyList(),
+            ),
+            document = elementMapper.map(
+                root = body,
+                binaries = binaries,
+            ),
         )
         return result
     }
