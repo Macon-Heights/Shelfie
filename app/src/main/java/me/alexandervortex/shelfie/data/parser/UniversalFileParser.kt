@@ -2,8 +2,8 @@ package me.alexandervortex.shelfie.data.parser
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.alexandervortex.shelfie.data.parser.epub.EpubParser
-import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
+import me.alexandervortex.shelfie.data.helper.FileHelper
+import me.alexandervortex.shelfie.data.helper.ZipHelper
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.ProgressModel

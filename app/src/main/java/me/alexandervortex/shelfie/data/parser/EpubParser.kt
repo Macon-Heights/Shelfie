@@ -1,9 +1,9 @@
-package me.alexandervortex.shelfie.data.parser.epub
+package me.alexandervortex.shelfie.data.parser
 
 import me.alexandervortex.shelfie.base.ext.normalizeEmptyLines
 import me.alexandervortex.shelfie.base.ext.normalizeEmptyTextUI
 import me.alexandervortex.shelfie.base.ext.splitPartsBySentences
-import me.alexandervortex.shelfie.data.mapper.ElementMapper
+import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class EpubParser
 @Inject constructor(
-    private val elementMapper: ElementMapper,
+    private val elementUIMapper: ElementUIMapper,
 ) {
 
     fun parse(
@@ -77,7 +77,7 @@ class EpubParser
                     Jsoup.parse(it, "UTF-8", "", Parser.xmlParser())
                 }
                 val body = doc.selectFirst("body") ?: doc
-                elements.addAll(elementMapper.map(body, binaries))
+                elements.addAll(elementUIMapper.map(body, binaries))
             }
         }
 
