@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.feature.catalogue.CatalogueRepository
+import me.alexandervortex.shelfie.data.repository.CatalogueRepository
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import javax.inject.Inject
 

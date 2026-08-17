@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.catalogue
+package me.alexandervortex.shelfie.data.repository
 
 import android.net.Uri
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +10,7 @@ import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.parser.ZipHelper
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
+import me.alexandervortex.shelfie.ui.model.BookUIModel
 import javax.inject.Inject
 
 private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
@@ -63,5 +64,27 @@ class CatalogueRepository
         }?.let { entity ->
             dao.addBook(entity)
         }
+    }
+
+    suspend fun updateProgress(
+        id: String,
+        index: Int,
+        offset: Int,
+        elements: Int,
+    ) {
+        dao.updateProgress(id, index, offset, elements)
+    }
+
+    suspend fun getBookModelById(id: String): BookUIModel? {
+        val entity = dao.getPreviewById(id)
+        val result = entity?.let {
+            parser.getBookModelById(
+                id = entity.id,
+                localPath = entity.localPath,
+                scrollOffset = entity.scrollOffset,
+                scrollIndex = entity.scrollIndex
+            )
+        }
+        return result
     }
 }
