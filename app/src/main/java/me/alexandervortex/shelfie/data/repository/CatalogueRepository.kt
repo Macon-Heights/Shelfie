@@ -10,7 +10,8 @@ import me.alexandervortex.shelfie.data.parser.UniversalFileParser
 import me.alexandervortex.shelfie.data.parser.ZipHelper
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
-import me.alexandervortex.shelfie.ui.model.BookUIModel
+import me.alexandervortex.shelfie.model.ProgressBookModel
+import me.alexandervortex.shelfie.model.ProgressModel
 import javax.inject.Inject
 
 private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
@@ -75,16 +76,22 @@ class CatalogueRepository
         dao.updateProgress(id, index, offset, elements)
     }
 
-    suspend fun getBookModelById(id: String): BookUIModel? {
+    suspend fun getBookModelById(id: String): ProgressBookModel? {
         val entity = dao.getPreviewById(id)
-        val result = entity?.let {
+
+        val progressBookModel = entity?.let {
+            val progress = ProgressModel(
+                progressIndex = entity.scrollIndex,
+                progressOffset = entity.scrollOffset,
+                elements = entity.elements
+            )
+
             parser.getBookModelById(
                 id = entity.id,
                 localPath = entity.localPath,
-                scrollOffset = entity.scrollOffset,
-                scrollIndex = entity.scrollIndex
+                progress = progress
             )
         }
-        return result
+        return progressBookModel
     }
 }

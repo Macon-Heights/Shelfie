@@ -5,7 +5,8 @@ import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.data.parser.epub.EpubParser
 import me.alexandervortex.shelfie.data.parser.fb2.Fb2Parser
 import me.alexandervortex.shelfie.model.ParsedBookModel
-import me.alexandervortex.shelfie.ui.model.BookUIModel
+import me.alexandervortex.shelfie.model.ProgressBookModel
+import me.alexandervortex.shelfie.model.ProgressModel
 import java.io.InputStream
 import java.util.zip.ZipFile
 import javax.inject.Inject
@@ -32,9 +33,8 @@ class UniversalFileParser
     suspend fun getBookModelById(
         id: String,
         localPath: String,
-        scrollOffset: Int,
-        scrollIndex: Int,
-    ): BookUIModel? {
+        progress: ProgressModel
+    ): ProgressBookModel? {
         return withContext(Dispatchers.IO) {
             val file = fileHelper.getFile(localPath) ?: return@withContext null
             val extension = file.extension
@@ -44,13 +44,11 @@ class UniversalFileParser
                 else -> null
             } ?: return@withContext null
 
-            BookUIModel(
+            ProgressBookModel(
                 id = id,
                 localPath = localPath,
-                titleInfo = parsed.titleInfo,
-                elements = parsed.elements,
-                progressIndex = scrollIndex,
-                progressOffset = scrollOffset
+                progress = progress,
+                book = parsed
             )
         }
     }

@@ -29,6 +29,7 @@ import javax.inject.Inject
 class ViewerViewModel
 @Inject constructor(
     private val repo: CatalogueRepository,
+    private val factory: ViewerUIFactory
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewerState())
@@ -129,7 +130,8 @@ class ViewerViewModel
         viewModelScope.launch {
             try {
                 _state.update {
-                    it.copy(book = repo.getBookModelById(id))
+                    val model = repo.getBookModelById(id)
+                    it.copy(book = factory.getBookUIModel(model))
                 }
                 service?.loadBook(_state.value.book)
             } catch (e: Exception) {
