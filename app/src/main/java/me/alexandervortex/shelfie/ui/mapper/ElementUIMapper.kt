@@ -1,16 +1,16 @@
 package me.alexandervortex.shelfie.ui.mapper
 
 import me.alexandervortex.shelfie.base.ext.orEmpty
+import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
 import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import javax.inject.Inject
-import kotlin.collections.plus
-import kotlin.collections.plusAssign
 
-class ElementUIMapper @Inject constructor() {
+class ElementUIMapper
+@Inject constructor() {
 
     fun map(
         element: Element?,
@@ -104,6 +104,6 @@ class ElementUIMapper @Inject constructor() {
             .removePrefix("#")
             .trim()
         val image = binaries[ref] ?: binaries[ref.substringAfterLast("/")]
-        return image?.let { ElementUIModel.ImageUIModel(it) }
+        return image?.let { ElementUIModel.ImageUIModel(ImageModel(it)) }
     }
 }

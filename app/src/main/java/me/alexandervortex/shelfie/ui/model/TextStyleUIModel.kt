@@ -6,6 +6,7 @@ sealed interface TextStyleUIModel {
     data object Underline : TextStyleUIModel
     data object Sub : TextStyleUIModel
     data object Sup : TextStyleUIModel
+    data object Strikethrough : TextStyleUIModel
     data class Link(val href: String) : TextStyleUIModel
     data object Monospace : TextStyleUIModel
     data class Custom(val name: String) : TextStyleUIModel

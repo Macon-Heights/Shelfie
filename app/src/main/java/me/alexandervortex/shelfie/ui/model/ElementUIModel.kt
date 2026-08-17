@@ -5,6 +5,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import me.alexandervortex.shelfie.model.ImageModel
 
 fun getKey(index: Int, firstIndex: Int?): Int {
     return index - (firstIndex ?: 0)
@@ -45,6 +46,9 @@ fun composeSpanStyle(
         when (style) {
             TextStyleUIModel.Bold -> span = span.merge(SpanStyle(fontWeight = FontWeight.Black))
             TextStyleUIModel.Italic -> span = span.merge(SpanStyle(fontStyle = FontStyle.Italic))
+            is TextStyleUIModel.Strikethrough -> span =
+                span.merge(SpanStyle(textDecoration = TextDecoration.LineThrough))
+
             TextStyleUIModel.Underline -> span =
                 span.merge(SpanStyle(textDecoration = TextDecoration.Underline))
 
@@ -63,7 +67,6 @@ fun composeSpanStyle(
             is TextStyleUIModel.Custom -> when (style.name) {
                 "strike" -> span =
                     span.merge(SpanStyle(textDecoration = TextDecoration.LineThrough))
-
                 else -> {}
             }
         }

@@ -6,7 +6,7 @@ import me.alexandervortex.shelfie.model.GroupKind
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.RichText
-import me.alexandervortex.shelfie.model.TextMark
+import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
 import org.jsoup.nodes.TextNode
@@ -263,7 +263,6 @@ class ElementMapper
         element: Element,
         binaries: Map<String, ByteArray>,
     ): RichText {
-
         return RichText(
             parts = compactInline(
                 mapInlineNodes(
@@ -312,7 +311,7 @@ class ElementMapper
     private fun mapInlineNodes(
         nodes: List<Node>,
         binaries: Map<String, ByteArray>,
-        marks: Set<TextMark>,
+        marks: Set<TextStyleUIModel>,
         link: String?,
     ): List<InlineNode> {
 
@@ -346,7 +345,7 @@ class ElementMapper
     private fun mapInlineElement(
         element: Element,
         binaries: Map<String, ByteArray>,
-        marks: Set<TextMark>,
+        marks: Set<TextStyleUIModel>,
         link: String?,
     ): List<InlineNode> {
 
@@ -358,7 +357,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Bold,
+                    marks + TextStyleUIModel.Bold,
                     link,
                 )
 
@@ -366,7 +365,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Italic,
+                    marks + TextStyleUIModel.Italic,
                     link,
                 )
 
@@ -374,7 +373,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Underline,
+                    marks + TextStyleUIModel.Underline,
                     link,
                 )
 
@@ -382,7 +381,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Subscript,
+                    marks + TextStyleUIModel.Sub,
                     link,
                 )
 
@@ -390,7 +389,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Superscript,
+                    marks + TextStyleUIModel.Sup,
                     link,
                 )
 
@@ -398,7 +397,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Strikethrough,
+                    marks + TextStyleUIModel.Strikethrough,
                     link,
                 )
 
@@ -406,7 +405,7 @@ class ElementMapper
                 mapInlineNodes(
                     element.childNodes(),
                     binaries,
-                    marks + TextMark.Monospace,
+                    marks + TextStyleUIModel.Monospace,
                     link,
                 )
 
@@ -446,7 +445,7 @@ class ElementMapper
 
     private fun mapTextNode(
         node: TextNode,
-        marks: Set<TextMark>,
+        marks: Set<TextStyleUIModel>,
         link: String?,
     ): InlineNode.Text {
 

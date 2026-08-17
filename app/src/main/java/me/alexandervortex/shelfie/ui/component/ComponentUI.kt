@@ -95,7 +95,9 @@ fun ComponentUI(
 
         is ElementUIModel.ImageUIModel -> {
             val bitmap = BitmapFactory.decodeByteArray(
-                element.image, 0, element.image.size
+                element.image.image,
+                0,
+                element.image.image?.size ?: 0
             )
 
             bitmap?.let {

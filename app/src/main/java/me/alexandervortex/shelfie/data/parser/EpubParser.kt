@@ -6,7 +6,6 @@ import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
-import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.util.zip.ZipFile
