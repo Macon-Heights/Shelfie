@@ -46,36 +46,36 @@ sealed interface ElementUIModel {
 }
 
 data class StyledText(
-    val styles: Set<TextStyleModel>, // enum later
+    val styles: Set<TextStyleUIModel>, // enum later
     val text: String,
 )
 
 fun composeSpanStyle(
-    styles: Set<TextStyleModel>,
+    styles: Set<TextStyleUIModel>,
     linkColor: Color,
 ): SpanStyle {
     var span = SpanStyle()
 
     styles.forEach { style ->
         when (style) {
-            TextStyleModel.Bold -> span = span.merge(SpanStyle(fontWeight = FontWeight.Black))
-            TextStyleModel.Italic -> span = span.merge(SpanStyle(fontStyle = FontStyle.Italic))
-            TextStyleModel.Underline -> span =
+            TextStyleUIModel.Bold -> span = span.merge(SpanStyle(fontWeight = FontWeight.Black))
+            TextStyleUIModel.Italic -> span = span.merge(SpanStyle(fontStyle = FontStyle.Italic))
+            TextStyleUIModel.Underline -> span =
                 span.merge(SpanStyle(textDecoration = TextDecoration.Underline))
 
-            TextStyleModel.Sub -> span =
+            TextStyleUIModel.Sub -> span =
                 span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Subscript))
 
-            TextStyleModel.Sup -> span =
+            TextStyleUIModel.Sup -> span =
                 span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Superscript))
 
-            is TextStyleModel.Link -> span =
+            is TextStyleUIModel.Link -> span =
                 span.merge(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline))
 
-            TextStyleModel.Monospace -> span =
+            TextStyleUIModel.Monospace -> span =
                 span.merge(SpanStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace))
 
-            is TextStyleModel.Custom -> when (style.name) {
+            is TextStyleUIModel.Custom -> when (style.name) {
                 "strike" -> span =
                     span.merge(SpanStyle(textDecoration = TextDecoration.LineThrough))
 

@@ -8,6 +8,7 @@ import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
 import me.alexandervortex.shelfie.model.PreviewBookModel
 
+@Deprecated("move to feature package")
 fun getImages(): List<Int> {
     val images = listOf(
         R.drawable.img_4,
@@ -20,6 +21,7 @@ fun getImages(): List<Int> {
     return images
 }
 
+@Deprecated("move to feature package")
 fun getBookUI(): BookUIModel {
     return BookUIModel(
         id = "mock_book",
@@ -31,18 +33,21 @@ fun getBookUI(): BookUIModel {
     )
 }
 
+@Deprecated("move to feature package")
 fun playingState(): MediaServiceState {
     return MediaServiceState(
         isPlaying = true,
     )
 }
 
+@Deprecated("move to feature package")
 fun pausedState(): MediaServiceState {
     return MediaServiceState(
         isPlaying = false,
     )
 }
 
+@Deprecated("move to feature package")
 fun getTitleInfo(
     coverBytes: ImageModel? = null,
     manyImages: List<ImageModel> = emptyList()
@@ -59,6 +64,7 @@ fun getTitleInfo(
     )
 }
 
+@Deprecated("move to feature package")
 private fun getElements(): List<ElementUIModel> {
     return listOf(
         ElementUIModel.Skeleton,
