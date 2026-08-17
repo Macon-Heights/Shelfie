@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.data.parser
+package me.alexandervortex.shelfie.data.helper
 
 import android.content.Context
 import android.net.Uri
