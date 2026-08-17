@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.repository.CatalogueRepository
+import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.feature.player.MediaService
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerEffect
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewerViewModel
 @Inject constructor(
-    private val repo: CatalogueRepository,
+    private val repo: BookRepository,
     private val factory: ViewerUIFactory
 ) : ViewModel() {
 

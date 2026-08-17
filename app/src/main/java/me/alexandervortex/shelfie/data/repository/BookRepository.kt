@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.alexandervortex.shelfie.data.db.BookDao
 import me.alexandervortex.shelfie.data.mapper.BookEntityMapper
-import me.alexandervortex.shelfie.data.parser.FileHelper
+import me.alexandervortex.shelfie.data.helper.FileHelper
 import me.alexandervortex.shelfie.data.parser.UniversalFileParser
-import me.alexandervortex.shelfie.data.parser.ZipHelper
+import me.alexandervortex.shelfie.data.helper.ZipHelper
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.model.ProgressBookModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 private val supportedBooks = setOf("fb2", "epub", "txt", "pdf")
 
-class CatalogueRepository
+class BookRepository
 @Inject constructor(
     private val dao: BookDao,
     private val mapper: BookEntityMapper,

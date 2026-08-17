@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.alexandervortex.shelfie.data.repository.CatalogueRepository
+import me.alexandervortex.shelfie.data.repository.BookRepository
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PreviewScreenViewModel
 @Inject constructor(
-    private val catalogueRepository: CatalogueRepository
+    private val bookRepository: BookRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PreviewBookModel())
@@ -37,7 +37,7 @@ class PreviewScreenViewModel
         uri?.let {
             viewModelScope.launch {
                 try {
-                    val titleInfo = catalogueRepository.previewBook(uri)
+                    val titleInfo = bookRepository.previewBook(uri)
                     _state.update { titleInfo ?: it }
                 } catch (e: Exception) {
                     _effect.emit(PreviewScreenEffect.ShowToast("Error: ${e.localizedMessage}"))
@@ -50,7 +50,7 @@ class PreviewScreenViewModel
         uri?.let {
             viewModelScope.launch {
                 try {
-                    catalogueRepository.addBook(uri)
+                    bookRepository.addBook(uri)
                     _effect.emit(PreviewScreenEffect.ShowToast("Book added"))
                     _effect.emit(PreviewScreenEffect.Close)
                 } catch (e: Exception) {
