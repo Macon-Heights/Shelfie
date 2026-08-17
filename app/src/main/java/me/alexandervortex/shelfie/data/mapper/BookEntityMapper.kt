@@ -22,7 +22,7 @@ class BookEntityMapper
             year = model.titleInfo.date,
             scrollIndex = 0,
             scrollOffset = 0,
-            elements = model.elements.size
+            elements = 0 // fixme BROKEN PROGRESS HERE (or not o_O ?)
         )
         return entity
     }
