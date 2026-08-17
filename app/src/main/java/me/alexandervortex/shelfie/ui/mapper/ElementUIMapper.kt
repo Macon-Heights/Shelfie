@@ -1,19 +1,21 @@
-package me.alexandervortex.shelfie.data.mapper
+package me.alexandervortex.shelfie.ui.mapper
 
 import me.alexandervortex.shelfie.base.ext.orEmpty
 import me.alexandervortex.shelfie.ui.model.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
-import me.alexandervortex.shelfie.ui.model.TextStyleModel
+import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 import javax.inject.Inject
+import kotlin.collections.plus
+import kotlin.collections.plusAssign
 
-class ElementMapper @Inject constructor() {
+class ElementUIMapper @Inject constructor() {
 
     fun map(
         element: Element?,
         binaries: Map<String, ByteArray>,
-        styles: Set<TextStyleModel> = emptySet(),
+        styles: Set<TextStyleUIModel> = emptySet(),
     ): List<ElementUIModel> {
         if (element == null) return emptyList()
 
@@ -27,7 +29,7 @@ class ElementMapper @Inject constructor() {
     private fun parseComplex(
         element: Element,
         binaries: Map<String, ByteArray>,
-        styles: Set<TextStyleModel>,
+        styles: Set<TextStyleUIModel>,
     ): List<ElementUIModel> {
         val result = mutableListOf<ElementUIModel>()
         val textParts = mutableListOf<StyledText>()
@@ -52,21 +54,21 @@ class ElementMapper @Inject constructor() {
                 }
 
                 is Element -> when (val tag = node.tagName().lowercase()) {
-                    "strong", "b" -> result += map(node, binaries, styles + TextStyleModel.Bold)
-                    "emphasis", "i" -> result += map(node, binaries, styles + TextStyleModel.Italic)
-                    "u" -> result += map(node, binaries, styles + TextStyleModel.Underline)
-                    "sub" -> result += map(node, binaries, styles + TextStyleModel.Sub)
-                    "sup" -> result += map(node, binaries, styles + TextStyleModel.Sup)
+                    "strong", "b" -> result += map(node, binaries, styles + TextStyleUIModel.Bold)
+                    "emphasis", "i" -> result += map(node, binaries, styles + TextStyleUIModel.Italic)
+                    "u" -> result += map(node, binaries, styles + TextStyleUIModel.Underline)
+                    "sub" -> result += map(node, binaries, styles + TextStyleUIModel.Sub)
+                    "sup" -> result += map(node, binaries, styles + TextStyleUIModel.Sup)
                     "strike", "s", "del" -> result += map(
                         node,
                         binaries,
-                        styles + TextStyleModel.Custom("strike")
+                        styles + TextStyleUIModel.Custom("strike")
                     )
 
-                    "code", "tt" -> result += map(node, binaries, styles + TextStyleModel.Monospace)
+                    "code", "tt" -> result += map(node, binaries, styles + TextStyleUIModel.Monospace)
                     "a" -> {
                         val href = node.attr("href").ifBlank { node.attr("xlink:href") }
-                        result += map(node, binaries, styles + TextStyleModel.Link(href))
+                        result += map(node, binaries, styles + TextStyleUIModel.Link(href))
                     }
 
                     "image", "img" -> {

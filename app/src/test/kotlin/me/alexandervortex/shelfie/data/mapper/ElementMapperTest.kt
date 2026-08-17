@@ -10,10 +10,11 @@ import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsEmpty
 import me.alexandervortex.shelfie.data.mapper.TestDataModels.elementsText
 import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphEmpty
 import me.alexandervortex.shelfie.data.mapper.TestDataXml.paragraphWithText
+import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
 
 class ElementMapperTest : BehaviorSpec({
 
-    val mapper = ElementMapper()
+    val mapper = ElementUIMapper()
     val binaries = TestDataXml.binaries()
 
     forAll(
