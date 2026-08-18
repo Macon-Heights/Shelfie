@@ -8,15 +8,14 @@ import io.kotest.data.table
 import me.alexandervortex.shelfie.base.transformerTest
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmpty
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmptyModel
-import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphListOfText
-import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphListOfTextModel
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphWithText
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphWithTextModel
-import me.alexandervortex.shelfie.ui.mapper.ElementUIMapper
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.problemPart
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.problemPartModel
 
 class ElementMapperTest : BehaviorSpec({
 
-    val mapper = ElementUIMapper()
+    val mapper = ElementMapper()
     val binaries = TestDataXml.binaries()
 
     forAll(
@@ -24,6 +23,7 @@ class ElementMapperTest : BehaviorSpec({
             headers("xml", "model", "name"),
             row(paragraphEmpty(), paragraphEmptyModel(), "paragraph empty"),
             row(paragraphWithText(), paragraphWithTextModel(), "paragraph with text"),
+            row(problemPart(), problemPartModel(), "paragraph with text"),
 //            row(paragraphListOfText(), paragraphListOfTextModel(), "paragraph with text"),
         )
     ) { xml, model, name ->
