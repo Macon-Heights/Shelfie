@@ -503,11 +503,11 @@ class ElementMapper
     private fun isBlockElement(
         element: Element,
     ): Boolean {
-
         val tag = element.tagName().lowercase()
-
-        return tag in BLOCK_TAGS ||
-                tag.matches(Regex("h[1-6]"))
+        if (tag in BLOCK_TAGS || tag.matches(Regex("h[1-6]"))) {
+            return true
+        }
+        return element.children().any { isBlockElement(it) }
     }
 
     private fun compactInline(
@@ -517,6 +517,7 @@ class ElementMapper
         val result = mutableListOf<InlineNode>()
 
         source.forEach { node ->
+            if (node is InlineNode.Text && node.text.isEmpty()) return@forEach
 
             val previous = result.lastOrNull()
 
@@ -524,8 +525,7 @@ class ElementMapper
                 previous is InlineNode.Text &&
                 node is InlineNode.Text &&
                 previous.marks == node.marks &&
-                previous.link == node.link &&
-                previous.text == node.text
+                previous.link == node.link
             ) {
                 result[result.lastIndex] = previous.copy(
                     text = previous.text + node.text
