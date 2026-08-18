@@ -23,13 +23,14 @@ class ElementMapper
             return BookDocument(emptyList())
         }
 
-        return BookDocument(
+        val result = BookDocument(
             children = mapNodes(
                 nodes = root.childNodes(),
                 binaries = binaries,
                 parentPath = "root",
             )
         )
+        return result
     }
 
     private fun mapNodes(
@@ -523,7 +524,8 @@ class ElementMapper
                 previous is InlineNode.Text &&
                 node is InlineNode.Text &&
                 previous.marks == node.marks &&
-                previous.link == node.link
+                previous.link == node.link &&
+                previous.text == node.text
             ) {
                 result[result.lastIndex] = previous.copy(
                     text = previous.text + node.text

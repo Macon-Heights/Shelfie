@@ -131,7 +131,8 @@ class ViewerViewModel
             try {
                 _state.update {
                     val model = repo.getBookModelById(id)
-                    it.copy(book = factory.getBookUIModel(model))
+                    val uiModel = factory.getBookUIModel(model)
+                    it.copy(book = uiModel)
                 }
                 service?.loadBook(_state.value.book)
             } catch (e: Exception) {

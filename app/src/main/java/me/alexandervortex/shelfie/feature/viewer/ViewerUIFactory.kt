@@ -15,7 +15,7 @@ class ViewerUIFactory
     fun getBookUIModel(
         model: ProgressBookModel?
     ): BookUIModel? {
-        return model?.let {
+        val result = model?.let {
             BookUIModel(
                 id = model.id,
                 localPath = model.localPath,
@@ -25,6 +25,7 @@ class ViewerUIFactory
                 progressOffset = model.progress.progressOffset
             )
         }
+        return result
     }
 
     private fun mapBookNode(node: BookNode): List<ElementUIModel?> {
