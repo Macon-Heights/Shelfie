@@ -45,9 +45,8 @@ class ElementMapper
         fun flushInline() {
             if (pendingInline.isEmpty()) return
 
-            val content = RichText(
-                parts = compactInline(pendingInline)
-            )
+            val parts = compactInline(pendingInline)
+            val content = RichText(parts = parts)
 
             if (content.plainText.isNotBlank()) {
                 result += BookNode.Paragraph(

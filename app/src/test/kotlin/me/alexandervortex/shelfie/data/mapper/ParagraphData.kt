@@ -248,7 +248,21 @@ object ParagraphData {
         </body>
     """.toElement()
 
-    fun paragraphEmptyModel() = BookDocument(emptyList())
+    fun paragraphEmptyModel() = BookDocument(
+        children = listOf(
+            BookNode.Paragraph(
+                id = "node:root/0/1/1", content = RichText(
+                    parts = listOf(
+                        InlineNode.Text(
+                            text = " ",
+                            marks = emptySet(),
+                            link = null
+                        )
+                    )
+                )
+            )
+        )
+    )
 
     fun paragraphWithText() = """
         <body>

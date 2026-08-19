@@ -8,6 +8,8 @@ import io.kotest.data.table
 import me.alexandervortex.shelfie.base.transformerTest
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplex
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplexModel
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmpty
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmptyModel
 
 class ElementMapperTest : BehaviorSpec({
 
@@ -18,7 +20,7 @@ class ElementMapperTest : BehaviorSpec({
         table(
             headers("xml", "model", "name"),
             // todo: extra empty blocks here, but fine with paragraphs
-//            row(paragraphEmpty(), paragraphEmptyModel(), "paragraph empty"),
+            row(paragraphEmpty(), paragraphEmptyModel(), "paragraph empty"),
 //            row(paragraphWithText(), paragraphWithTextModel(), "paragraph with text"),
             row(paragraphComplex(), paragraphComplexModel(), "paragraph complex"),
         )
