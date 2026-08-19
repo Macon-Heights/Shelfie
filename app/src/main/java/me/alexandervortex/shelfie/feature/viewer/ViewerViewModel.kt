@@ -129,9 +129,9 @@ class ViewerViewModel
         }
         viewModelScope.launch {
             try {
+                val model = repo.getBookModelById(id)
+                val uiModel = factory.getBookUIModel(model)
                 _state.update {
-                    val model = repo.getBookModelById(id)
-                    val uiModel = factory.getBookUIModel(model)
                     it.copy(book = uiModel)
                 }
                 service?.loadBook(_state.value.book)
