@@ -6,8 +6,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.BitmapFactory
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
@@ -75,7 +77,7 @@ class MediaService : Service() {
             isActive = true
         }
 
-        startForeground(1, buildNotification(isPlaying = false))
+        updateForeground(false)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -83,6 +85,7 @@ class MediaService : Service() {
             ACTION_PLAY -> updatePlayback(true, _state.value.index)
             ACTION_PAUSE -> updatePlayback(false, _state.value.index)
             ACTION_SPEED -> clickSpeed()
+            else -> updateForeground()
         }
         return START_STICKY
     }
@@ -154,7 +157,7 @@ class MediaService : Service() {
                 _state.update {
                     it.copy(isPlaying = isPlaying)
                 }
-                startForeground(1, buildNotification(_state.value.isPlaying))
+                updateForeground()
             },
             saveScrollState = { id, index, offset ->
                 onSaveProgress?.invoke(id, index, offset)
@@ -171,8 +174,17 @@ class MediaService : Service() {
         _state.update {
             it.copy(isPlaying = isPlaying)
         }
-        startForeground(1, buildNotification(isPlaying))
+        updateForeground()
         ctrl.togglePlayPause(indexToStartPlaying)
+    }
+
+    private fun updateForeground(isPlaying: Boolean = _state.value.isPlaying) {
+        val notification = buildNotification(isPlaying)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(1, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+        } else {
+            startForeground(1, notification)
+        }
     }
 
     private fun buildNotification(isPlaying: Boolean): Notification {
