@@ -10,6 +10,8 @@ import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplex
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplexModel
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmpty
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmptyModel
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphWithText
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphWithTextModel
 
 class ElementMapperTest : BehaviorSpec({
 
@@ -19,9 +21,8 @@ class ElementMapperTest : BehaviorSpec({
     forAll(
         table(
             headers("xml", "model", "name"),
-            // todo: extra empty blocks here, but fine with paragraphs
             row(paragraphEmpty(), paragraphEmptyModel(), "paragraph empty"),
-//            row(paragraphWithText(), paragraphWithTextModel(), "paragraph with text"),
+            row(paragraphWithText(), paragraphWithTextModel(), "paragraph with text"),
             row(paragraphComplex(), paragraphComplexModel(), "paragraph complex"),
         )
     ) { xml, model, name ->

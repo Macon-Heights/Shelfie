@@ -118,34 +118,42 @@ class ElementMapper
             }
 
             tag == "p" -> {
-                BookNode.Paragraph(
-                    id = id,
-                    content = mapRichText(element, binaries),
-                )
+                mapRichText(element, binaries)?.let {
+                    BookNode.Paragraph(
+                        id = id,
+                        content = it
+                    )
+                }
             }
 
             tag == "title" -> {
-                BookNode.Heading(
-                    id = id,
-                    level = 1,
-                    content = mapTitle(element, binaries),
-                )
+                mapTitle(element, binaries)?.let {
+                    BookNode.Heading(
+                        id = id,
+                        level = 1,
+                        content = it,
+                    )
+                }
             }
 
             tag == "subtitle" -> {
-                BookNode.Heading(
-                    id = id,
-                    level = 2,
-                    content = mapRichText(element, binaries),
-                )
+                mapRichText(element, binaries)?.let {
+                    BookNode.Heading(
+                        id = id,
+                        level = 2,
+                        content = it,
+                    )
+                }
             }
 
             tag.matches(Regex("h[1-6]")) -> {
-                BookNode.Heading(
-                    id = id,
-                    level = tag.substring(1).toInt(),
-                    content = mapRichText(element, binaries),
-                )
+                mapRichText(element, binaries)?.let {
+                    BookNode.Heading(
+                        id = id,
+                        level = tag.substring(1).toInt(),
+                        content = it,
+                    )
+                }
             }
 
             tag == "image" || tag == "img" -> {
@@ -246,16 +254,15 @@ class ElementMapper
         binaries: Map<String, ByteArray>,
         path: String,
         kind: GroupKind,
-    ): BookNode {
-
+    ): BookNode? {
         val children = mapNodes(
             nodes = element.childNodes(),
             binaries = binaries,
             parentPath = path,
         )
 
-        return if (kind is GroupKind.Other && children.size == 1) {
-            children.first()
+        return if (kind is GroupKind.Other && children.size < 2) {
+            children.firstOrNull()
         } else {
             BookNode.Group(
                 id = elementId(element, path),
@@ -268,23 +275,26 @@ class ElementMapper
     private fun mapRichText(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): RichText {
-        return RichText(
-            parts = compactInline(
-                mapInlineNodes(
-                    nodes = element.childNodes(),
-                    binaries = binaries,
-                    marks = emptySet(),
-                    link = null,
-                )
+    ): RichText? {
+        val parts = compactInline(
+            mapInlineNodes(
+                nodes = element.childNodes(),
+                binaries = binaries,
+                marks = emptySet(),
+                link = null,
             )
         )
+        return if (parts.isNotEmpty()) {
+            RichText(
+                parts = parts
+            )
+        } else null
     }
 
     private fun mapTitle(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): RichText {
+    ): RichText? {
 
         val paragraphs = element.children()
             .filter { it.tagName().equals("p", ignoreCase = true) }
@@ -327,7 +337,7 @@ class ElementMapper
             when (node) {
 
                 is TextNode -> {
-                    result += mapTextNode(
+                    if (node.text().trim().isNotEmpty()) result += mapTextNode(
                         node = node,
                         marks = marks,
                         link = link,
