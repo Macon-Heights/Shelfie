@@ -19,10 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
-import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
 import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
+import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
@@ -69,6 +69,7 @@ fun ViewerContent(
                         },
                         label = "section_item_$index"
                     ) { animated ->
+                        val isCurrentElement = state.serviceState.index == index
                         ComponentUI(
                             modifier = Modifier
                                 .clickable {
@@ -76,8 +77,7 @@ fun ViewerContent(
                                 }
                                 .animateItem(placementSpec = tween()),
                             element = animated,
-                            elementIndex = index,
-                            currentIndex = state.serviceState.index,
+                            isCurrentElement = isCurrentElement,
                             partIndex = state.serviceState.offset
                         )
                     }

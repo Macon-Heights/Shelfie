@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -43,17 +44,17 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 fun ComponentUI(
     modifier: Modifier = Modifier,
     element: ElementUIModel,
-    currentIndex: Int,
-    elementIndex: Int,
+    isCurrentElement: Boolean,
     partIndex: Int,
 ) {
-    val animatedColor by rememberInfiniteTransition().animateColor(
+    val animatedColor by rememberInfiniteTransition(label = "skeleton").animateColor(
         initialValue = getColors().surfaceVariant,
         targetValue = getColors().surfaceContainer,
         animationSpec = infiniteRepeatable(
             animation = tween(DefaultDurationMillis * 3, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
-        )
+        ),
+        label = "skeleton_color"
     )
 
     val fontSize = LocalAppSettings.fontSize.current
@@ -61,48 +62,51 @@ fun ComponentUI(
     when (element) {
         is ElementUIModel.TextUIModel -> {
             val linkColor = getColors().primary
+            val onBackground = getColors().onBackground
+            val onPrimaryContainer = getColors().onPrimaryContainer
+            val primaryContainer = getColors().primaryContainer
 
-            val styledText = buildAnnotatedString {
-                element.parts.forEachIndexed { wordIndex, word ->
-                    val isCurrentElement = elementIndex == currentIndex
-                    val isCurrentWord = wordIndex == partIndex
-                    val isHighlight = isCurrentElement && isCurrentWord
+            val styledText = remember(element, isCurrentElement, partIndex, linkColor, onBackground, onPrimaryContainer, primaryContainer) {
+                buildAnnotatedString {
+                    element.parts.forEachIndexed { wordIndex, word ->
+                        val isHighlight = isCurrentElement && wordIndex == partIndex
 
-                    val baseTextColor = if (isHighlight)
-                        getColors().onPrimaryContainer
-                    else
-                        getColors().onBackground
+                        val baseTextColor = if (isHighlight)
+                            onPrimaryContainer
+                        else
+                            onBackground
 
-                    val baseBgColor = if (isHighlight)
-                        getColors().primaryContainer
-                    else
-                        Color.Transparent
+                        val baseBgColor = if (isHighlight)
+                            primaryContainer
+                        else
+                            Color.Transparent
 
-                    val span = composeSpanStyle(word.styles, linkColor)
-                        .merge(SpanStyle(color = baseTextColor, background = baseBgColor))
+                        val span = composeSpanStyle(word.styles, linkColor)
+                            .merge(SpanStyle(color = baseTextColor, background = baseBgColor))
 
-                    withStyle(span) { append(word.text) }
+                        withStyle(span) { append(word.text) }
+                    }
                 }
             }
             Text(
                 text = styledText,
                 fontSize = fontSize.sp,
-                lineHeight = (fontSize * (1 + lineHeight)).sp, // fixme better formula needed
+                lineHeight = (fontSize * (1 + lineHeight)).sp,
                 textAlign = TextAlign.Justify,
                 modifier = modifier.padding(bottom = 32.dp)
             )
         }
 
         is ElementUIModel.ImageUIModel -> {
-            val bitmap = BitmapFactory.decodeByteArray(
-                element.image.image,
-                0,
-                element.image.image?.size ?: 0
-            )
+            val bitmap = remember(element) {
+                element.image.image?.let {
+                    BitmapFactory.decodeByteArray(it, 0, it.size)
+                }
+            }
 
             bitmap?.let {
                 Image(
-                    bitmap = bitmap.asImageBitmap(),
+                    bitmap = it.asImageBitmap(),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
                     modifier = modifier
@@ -156,14 +160,12 @@ fun TextUiPreview() {
     CombinedPreviews {
         ComponentUI(
             element = getBookUI().elements.first(),
-            elementIndex = 0,
-            currentIndex = 0,
+            isCurrentElement = true,
             partIndex = 2
         )
         ComponentUI(
             element = getBookUI().elements.get(1),
-            elementIndex = 0,
-            currentIndex = 0,
+            isCurrentElement = false,
             partIndex = 2
         )
     }
