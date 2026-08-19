@@ -247,17 +247,23 @@ class ElementMapper
         binaries: Map<String, ByteArray>,
         path: String,
         kind: GroupKind,
-    ): BookNode.Group {
+    ): BookNode {
 
-        return BookNode.Group(
-            id = elementId(element, path),
-            kind = kind,
-            children = mapNodes(
-                nodes = element.childNodes(),
-                binaries = binaries,
-                parentPath = path,
-            ),
+        val children = mapNodes(
+            nodes = element.childNodes(),
+            binaries = binaries,
+            parentPath = path,
         )
+
+        return if (kind is GroupKind.Other && children.size == 1) {
+            children.first()
+        } else {
+            BookNode.Group(
+                id = elementId(element, path),
+                kind = kind,
+                children = children,
+            )
+        }
     }
 
     private fun mapRichText(
