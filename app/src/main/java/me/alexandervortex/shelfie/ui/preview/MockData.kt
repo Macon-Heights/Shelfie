@@ -5,7 +5,6 @@ import me.alexandervortex.shelfie.feature.player.MediaServiceState
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.new.StyledText
 import me.alexandervortex.shelfie.ui.model.new.UI
 
@@ -66,7 +65,7 @@ fun getTitleInfo(
 }
 
 @Deprecated("move to feature package")
-private fun getElements(): List<ElementUIModel> {
+private fun getElements(): List<UI> {
     return listOf(
         UI.Skeleton,
         UI.ComplexText(

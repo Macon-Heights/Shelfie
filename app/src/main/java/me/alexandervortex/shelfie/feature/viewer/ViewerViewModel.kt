@@ -22,7 +22,6 @@ import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.new.UI
 import javax.inject.Inject
 
@@ -148,7 +147,7 @@ class ViewerViewModel
         return PreviewBookModel("", "", "", "", "", "", null, emptyList())
     }
 
-    private fun getSkeletons(): List<ElementUIModel> {
+    private fun getSkeletons(): List<UI> {
         return (1..9).map { index ->
             UI.Skeleton
         }

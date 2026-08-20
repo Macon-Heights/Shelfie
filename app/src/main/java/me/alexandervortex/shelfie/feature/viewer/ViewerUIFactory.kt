@@ -5,7 +5,6 @@ import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.new.StyledText
 import me.alexandervortex.shelfie.ui.model.new.UI
 import javax.inject.Inject
@@ -29,7 +28,7 @@ class ViewerUIFactory
         return result
     }
 
-    private fun mapBookNode(node: BookNode): List<ElementUIModel?> {
+    private fun mapBookNode(node: BookNode): List<UI?> {
         return when (node) {
             is BookNode.Section -> mapSection(node)
             is BookNode.Paragraph -> mapRichText(node.content)
@@ -40,11 +39,11 @@ class ViewerUIFactory
         }
     }
 
-    private fun mapSection(node: BookNode.Section): List<ElementUIModel?> {
+    private fun mapSection(node: BookNode.Section): List<UI?> {
         return mapRichText(node.title) + node.children.flatMap { mapBookNode(it) }
     }
 
-    private fun mapRichText(rich: RichText?): List<ElementUIModel> {
+    private fun mapRichText(rich: RichText?): List<UI> {
         if (rich == null) return emptyList()
         val elements = rich.parts.map { part ->
             mapInlineNode(part)
@@ -52,7 +51,7 @@ class ViewerUIFactory
         return elements
     }
 
-    private fun mapInlineNode(node: InlineNode): ElementUIModel {
+    private fun mapInlineNode(node: InlineNode): UI {
         return when (node) {
             is InlineNode.Image -> UI.Image(node.image)
             is InlineNode.LineBreak -> UI.EmptyLine

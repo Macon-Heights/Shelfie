@@ -27,7 +27,7 @@ import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
-import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.new.UI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
 
@@ -54,7 +54,7 @@ fun ViewerContent(
                     .fillMaxSize()
                     .animateContentSize(tween())
             ) {
-                val sections: List<ElementUIModel> = book?.elements.orEmpty()
+                val sections: List<UI> = book?.elements.orEmpty()
                 itemsIndexed(
                     sections,
                     key = { index, item ->
