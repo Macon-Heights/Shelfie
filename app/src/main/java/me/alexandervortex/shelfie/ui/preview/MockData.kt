@@ -7,6 +7,7 @@ import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.new.StyledText
+import me.alexandervortex.shelfie.ui.model.new.UI
 
 @Deprecated("move to feature package")
 fun getImages(): List<Int> {
@@ -67,7 +68,7 @@ fun getTitleInfo(
 @Deprecated("move to feature package")
 private fun getElements(): List<ElementUIModel> {
     return listOf(
-        ElementUIModel.Skeleton,
+        UI.Skeleton,
         ElementUIModel.TextUIModel(
             parts = listOf(
                 StyledText(
@@ -84,7 +85,7 @@ private fun getElements(): List<ElementUIModel> {
                 )
             )
         ),
-        ElementUIModel.EmptyLineUIModel,
+        UI.EmptyLine,
         ElementUIModel.TextUIModel(
             parts = listOf(
                 StyledText(

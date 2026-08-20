@@ -13,7 +13,7 @@ import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 sealed interface UI {
 
     // basic
-    data object EmptyLine : UI
+    data object EmptyLine : UI, ElementUIModel
 
     data class Image(
         val image: ImageModel,
@@ -25,7 +25,7 @@ sealed interface UI {
 
     //
 
-    data object Skeleton : UI
+    data object Skeleton : UI, ElementUIModel
 
     data class Heading(
         val level: Int,

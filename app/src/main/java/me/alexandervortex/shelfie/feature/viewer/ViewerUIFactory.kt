@@ -36,7 +36,7 @@ class ViewerUIFactory
             is BookNode.Heading -> mapRichText(node.content)
             is BookNode.Image -> listOf(UI.Image(node.image))
             is BookNode.Group -> node.children.flatMap { mapBookNode(it) }
-            is BookNode.EmptyLine -> listOf(ElementUIModel.EmptyLineUIModel)
+            is BookNode.EmptyLine -> listOf(UI.EmptyLine)
         }
     }
 
@@ -55,7 +55,7 @@ class ViewerUIFactory
     private fun mapInlineNode(node: InlineNode): ElementUIModel {
         return when (node) {
             is InlineNode.Image -> UI.Image(node.image)
-            is InlineNode.LineBreak -> ElementUIModel.EmptyLineUIModel
+            is InlineNode.LineBreak -> UI.EmptyLine
             is InlineNode.Text -> ElementUIModel.TextUIModel(
                 listOf(
                     StyledText(

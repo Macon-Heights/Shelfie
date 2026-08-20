@@ -23,6 +23,7 @@ import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.new.UI
 import javax.inject.Inject
 
 @HiltViewModel
@@ -149,7 +150,7 @@ class ViewerViewModel
 
     private fun getSkeletons(): List<ElementUIModel> {
         return (1..9).map { index ->
-            ElementUIModel.Skeleton
+            UI.Skeleton
         }
     }
 

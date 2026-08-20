@@ -118,7 +118,7 @@ fun ComponentUI(
             }
         }
 
-        is ElementUIModel.EmptyLineUIModel -> {
+        is UI.EmptyLine -> {
             Spacer(
                 modifier = modifier
                     .fillMaxWidth()
@@ -126,7 +126,7 @@ fun ComponentUI(
             )
         }
 
-        ElementUIModel.Skeleton -> {
+        UI.Skeleton -> {
             Column {
                 repeat(3) {
                     Box(
