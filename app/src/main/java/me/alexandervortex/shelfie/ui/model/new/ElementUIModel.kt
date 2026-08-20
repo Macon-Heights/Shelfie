@@ -1,16 +1,20 @@
-package me.alexandervortex.shelfie.ui.model
+package me.alexandervortex.shelfie.ui.model.new
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 
 fun getKey(index: Int, firstIndex: Int?): Int {
     return index - (firstIndex ?: 0)
 }
 
+@Deprecated("remove asap")
 sealed interface ElementUIModel {
 
     data object Skeleton : ElementUIModel
@@ -29,14 +33,14 @@ sealed interface ElementUIModel {
         val type: String, // type of tag
         val message: String, // error text
     )
+
+    data class StyledText(
+        val styles: Set<TextStyleUIModel>, // enum later
+        val text: String,
+    )
 }
 
-data class StyledText(
-    val styles: Set<TextStyleUIModel>, // enum later
-    val text: String,
-)
-
-fun composeSpanStyle(
+private fun composeSpanStyle(
     styles: Set<TextStyleUIModel>,
     linkColor: Color,
 ): SpanStyle {
@@ -53,16 +57,16 @@ fun composeSpanStyle(
                 span.merge(SpanStyle(textDecoration = TextDecoration.Underline))
 
             TextStyleUIModel.Sub -> span =
-                span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Subscript))
+                span.merge(SpanStyle(baselineShift = BaselineShift.Subscript))
 
             TextStyleUIModel.Sup -> span =
-                span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Superscript))
+                span.merge(SpanStyle(baselineShift = BaselineShift.Superscript))
 
             is TextStyleUIModel.Link -> span =
                 span.merge(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline))
 
             TextStyleUIModel.Monospace -> span =
-                span.merge(SpanStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace))
+                span.merge(SpanStyle(fontFamily = FontFamily.Monospace))
 
             is TextStyleUIModel.Custom -> when (style.name) {
                 "strike" -> span =
