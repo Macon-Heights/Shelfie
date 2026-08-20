@@ -5,8 +5,9 @@ import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.ui.model.StyledText
+import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.new.StyledText
+import me.alexandervortex.shelfie.ui.model.new.UI
 import javax.inject.Inject
 
 class ViewerUIFactory
@@ -33,7 +34,7 @@ class ViewerUIFactory
             is BookNode.Section -> mapSection(node)
             is BookNode.Paragraph -> mapRichText(node.content)
             is BookNode.Heading -> mapRichText(node.content)
-            is BookNode.Image -> listOf(ElementUIModel.ImageUIModel(node.image))
+            is BookNode.Image -> listOf(UI.Image(node.image))
             is BookNode.Group -> node.children.flatMap { mapBookNode(it) }
             is BookNode.EmptyLine -> listOf(ElementUIModel.EmptyLineUIModel)
         }
@@ -53,7 +54,7 @@ class ViewerUIFactory
 
     private fun mapInlineNode(node: InlineNode): ElementUIModel {
         return when (node) {
-            is InlineNode.Image -> ElementUIModel.ImageUIModel(node.image)
+            is InlineNode.Image -> UI.Image(node.image)
             is InlineNode.LineBreak -> ElementUIModel.EmptyLineUIModel
             is InlineNode.Text -> ElementUIModel.TextUIModel(
                 listOf(

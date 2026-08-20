@@ -2,8 +2,10 @@ package me.alexandervortex.shelfie.ui.model.new
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
@@ -15,7 +17,7 @@ sealed interface UI {
 
     data class Image(
         val image: ImageModel,
-    ) : UI
+    ) : UI, ElementUIModel
 
     data class RichText(
         val parts: List<StyledText>,
@@ -33,8 +35,6 @@ sealed interface UI {
     data class Paragraph(
         val content: RichText,
     ) : UI
-
-
 }
 
 data class StyledText(
@@ -59,16 +59,16 @@ fun composeSpanStyle(
                 span.merge(SpanStyle(textDecoration = TextDecoration.Underline))
 
             TextStyleUIModel.Sub -> span =
-                span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Subscript))
+                span.merge(SpanStyle(baselineShift = BaselineShift.Subscript))
 
             TextStyleUIModel.Sup -> span =
-                span.merge(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Superscript))
+                span.merge(SpanStyle(baselineShift = BaselineShift.Superscript))
 
             is TextStyleUIModel.Link -> span =
                 span.merge(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline))
 
             TextStyleUIModel.Monospace -> span =
-                span.merge(SpanStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace))
+                span.merge(SpanStyle(fontFamily = FontFamily.Monospace))
 
             is TextStyleUIModel.Custom -> when (style.name) {
                 "strike" -> span =

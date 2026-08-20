@@ -34,8 +34,9 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticWhite
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
-import me.alexandervortex.shelfie.ui.model.ElementUIModel
-import me.alexandervortex.shelfie.ui.model.composeSpanStyle
+import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.new.UI
+import me.alexandervortex.shelfie.ui.model.new.composeSpanStyle
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
 import me.alexandervortex.shelfie.ui.theme.SHAPE_S
@@ -97,7 +98,7 @@ fun ComponentUI(
             )
         }
 
-        is ElementUIModel.ImageUIModel -> {
+        is UI.Image -> {
             val bitmap = remember(element) {
                 element.image.image?.let {
                     BitmapFactory.decodeByteArray(it, 0, it.size)

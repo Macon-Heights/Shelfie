@@ -6,7 +6,7 @@ import android.speech.tts.UtteranceProgressListener
 import me.alexandervortex.shelfie.feature.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.feature.settings.values.TimerValue
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 

@@ -27,7 +27,7 @@ import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
-import me.alexandervortex.shelfie.ui.model.ElementUIModel
+import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.preview.getBookUI
 
