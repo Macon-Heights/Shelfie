@@ -7,7 +7,4 @@ fun getKey(index: Int, firstIndex: Int?): Int {
 @Deprecated("remove asap")
 sealed interface ElementUIModel {
 
-    data class TextUIModel(
-        val parts: List<StyledText>,
-    ) : ElementUIModel
 }

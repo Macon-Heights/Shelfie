@@ -69,7 +69,7 @@ fun getTitleInfo(
 private fun getElements(): List<ElementUIModel> {
     return listOf(
         UI.Skeleton,
-        ElementUIModel.TextUIModel(
+        UI.ComplexText(
             parts = listOf(
                 StyledText(
                     styles = emptySet(),
@@ -86,7 +86,7 @@ private fun getElements(): List<ElementUIModel> {
             )
         ),
         UI.EmptyLine,
-        ElementUIModel.TextUIModel(
+        UI.ComplexText(
             parts = listOf(
                 StyledText(
                     styles = emptySet(),

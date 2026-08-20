@@ -56,7 +56,7 @@ class ViewerUIFactory
         return when (node) {
             is InlineNode.Image -> UI.Image(node.image)
             is InlineNode.LineBreak -> UI.EmptyLine
-            is InlineNode.Text -> ElementUIModel.TextUIModel(
+            is InlineNode.Text ->  UI.ComplexText(
                 listOf(
                     StyledText(
                         node.marks,

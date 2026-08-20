@@ -61,7 +61,7 @@ fun ComponentUI(
     val fontSize = LocalAppSettings.fontSize.current
     val lineHeight = LocalAppSettings.lineHeight.current
     when (element) {
-        is ElementUIModel.TextUIModel -> {
+        is  UI.ComplexText -> {
             val linkColor = getColors().primary
             val onBackground = getColors().onBackground
             val onPrimaryContainer = getColors().onPrimaryContainer
