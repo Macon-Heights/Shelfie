@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.ui.component
 
-import android.graphics.BitmapFactory
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.AnimationConstants.DefaultDurationMillis
 import androidx.compose.animation.core.LinearEasing
@@ -8,7 +7,6 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,8 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -33,9 +29,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.base.ext.getStaticWhite
+import me.alexandervortex.shelfie.feature.preview.COVER_HEIGHT
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
 import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookUI
+import me.alexandervortex.shelfie.ui.component.new.ImageUI
+import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.UI
 import me.alexandervortex.shelfie.ui.model.composeSpanStyle
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -63,14 +61,11 @@ fun ComponentUI(
     when (element) {
         is UI.Heading -> {
             val level = (1f / element.level) + 1
-            Text(
-                text = getStyledText(element.content, isCurrentElement, partIndex),
-                fontSize = (fontSize * level).sp,
-                lineHeight = (fontSize * (1 + lineHeight)).sp,
-                textAlign = TextAlign.End,
+            TitleUI(
+                size = (fontSize * level).toInt(),
                 modifier = modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 32.dp)
+                    .fillMaxWidth(),
+                text = getStyledText(element.content, isCurrentElement, partIndex)
             )
         }
 
@@ -79,29 +74,17 @@ fun ComponentUI(
                 text = getStyledText(element, isCurrentElement, partIndex),
                 fontSize = fontSize.sp,
                 lineHeight = (fontSize * (1 + lineHeight)).sp,
-                textAlign = TextAlign.Justify,
                 modifier = modifier.padding(bottom = 32.dp)
             )
         }
 
         is UI.Image -> {
-            val bitmap = remember(element) {
-                element.image.image?.let {
-                    BitmapFactory.decodeByteArray(it, 0, it.size)
-                }
-            }
-
-            bitmap?.let {
-                Image(
-                    bitmap = it.asImageBitmap(),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    modifier = modifier
-                        .background(getStaticWhite())
-                        .fillMaxWidth()
-                        .padding(bottom = 32.dp)
-                )
-            }
+            ImageUI(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(COVER_HEIGHT.dp),
+                model = element.image
+            )
         }
 
         is UI.EmptyLine -> {

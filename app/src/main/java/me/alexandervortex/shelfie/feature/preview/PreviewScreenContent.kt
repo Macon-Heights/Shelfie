@@ -18,16 +18,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getImages
 import me.alexandervortex.shelfie.feature.viewer.getTitleInfo
+import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
-import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
@@ -54,7 +54,7 @@ fun PreviewScreenContent(
                     .fillMaxWidth()
                     .padding(top = VERTICAL_GAP.dp)
                     .padding(horizontal = HORIZONTAL_PADDING.dp)
-                    .height(COVER_HEIGHT.dp), imageModel = info.coverImage
+                    .height(COVER_HEIGHT.dp), model = info.coverImage
             )
             CarouselImageUI(
                 modifier = Modifier
@@ -65,8 +65,8 @@ fun PreviewScreenContent(
             Column(
                 modifier = Modifier.padding(horizontal = 32.dp, vertical = VERTICAL_GAP.dp)
             ) {
-                TitleUI(text = info.title, size = TITLE_SIZE)
-                TitleUI(text = info.author, size = SUBTITLE_SIZE)
+                info.title?.let { TitleUI(text = AnnotatedString(it), size = TITLE_SIZE) }
+                info.author?.let { TitleUI(text = AnnotatedString(it), size = SUBTITLE_SIZE) }
                 Spacer(Modifier.size(VERTICAL_GAP.dp))
                 info.annotation?.let {
                     Text(it)
@@ -84,16 +84,16 @@ fun PreviewScreenContent(
     }
 }
 
-@Preview
+@CombinedPreviews
 @Composable
 private fun AddScreenPreview() {
     CombinedPreviews {
         val context = LocalContext.current
         val cover = remember {
-            ImageModel(context.resources.openRawResource(getImages().random()).readBytes())
+            ByteImageModel(context.resources.openRawResource(getImages().random()).readBytes())
         }
         val screens = remember {
-            getImages().map { ImageModel(context.resources.openRawResource(it).readBytes()) }
+            getImages().map { ByteImageModel(context.resources.openRawResource(it).readBytes()) }
         }
         val state = getTitleInfo(cover, screens)
         PreviewScreenContent(state) {}
