@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
@@ -70,7 +71,7 @@ fun CatalogueContent(
                 item {
                     TitleUI(
                         modifier = Modifier.padding(vertical = 64.dp),
-                        text = stringResource(R.string.catalogue_title)
+                        text = AnnotatedString(stringResource(R.string.catalogue_title))
                     )
                 }
                 when {
