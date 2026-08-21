@@ -34,10 +34,10 @@ import me.alexandervortex.shelfie.feature.player.MediaServiceState
 import me.alexandervortex.shelfie.feature.settings.values.SpeechRateValue
 import me.alexandervortex.shelfie.feature.settings.values.TimerValue
 import me.alexandervortex.shelfie.feature.viewer.ViewerContent
+import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookUI
+import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.playingState
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
-import me.alexandervortex.shelfie.ui.preview.getBookUI
-import me.alexandervortex.shelfie.ui.preview.playingState
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PLAY

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
 import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
+import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookUI
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.ui.component.ComponentUI
@@ -29,7 +30,6 @@ import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
 import me.alexandervortex.shelfie.ui.model.UI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
-import me.alexandervortex.shelfie.ui.preview.getBookUI
 
 @Composable
 fun ViewerContent(
@@ -111,7 +111,7 @@ fun MediaViewerPreview() {
         val bookUI = getBookUI()
         ViewerContent(
             state = ViewerState(
-                isMenuVisible = false,
+                isMenuVisible = true,
                 book = bookUI
             ),
             listState = LazyListState(),

@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.preview
+package me.alexandervortex.shelfie.feature.viewer
 
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.feature.player.MediaServiceState
@@ -8,46 +8,44 @@ import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
 import me.alexandervortex.shelfie.ui.model.UI
 
-@Deprecated("move to feature package")
-fun getImages(): List<Int> {
-    val images = listOf(
-        R.drawable.img_4,
-        R.drawable.img_5,
-        R.drawable.img_1,
-        R.drawable.img_2,
-        R.drawable.img_3,
-        R.drawable.img
-    )
-    return images
+object ViewerPreviewData {
+
+    fun getImages(): List<Int> {
+        val images = listOf(
+            R.drawable.img_4,
+            R.drawable.img_5,
+            R.drawable.img_1,
+            R.drawable.img_2,
+            R.drawable.img_3,
+            R.drawable.img
+        )
+        return images
+    }
+
+    fun playingState(): MediaServiceState {
+        return MediaServiceState(
+            isPlaying = true,
+        )
+    }
+
+    fun pausedState(): MediaServiceState {
+        return MediaServiceState(
+            isPlaying = false,
+        )
+    }
+
+    fun getBookUI(): BookUIModel {
+        return BookUIModel(
+            id = "mock_book",
+            localPath = "fake_path",
+            titleInfo = getTitleInfo(),
+            elements = getElements(),
+            progressIndex = 0,
+            progressOffset = 0
+        )
+    }
 }
 
-@Deprecated("move to feature package")
-fun getBookUI(): BookUIModel {
-    return BookUIModel(
-        id = "mock_book",
-        localPath = "fake_path",
-        titleInfo = getTitleInfo(),
-        elements = getElements(),
-        progressIndex = 0,
-        progressOffset = 0
-    )
-}
-
-@Deprecated("move to feature package")
-fun playingState(): MediaServiceState {
-    return MediaServiceState(
-        isPlaying = true,
-    )
-}
-
-@Deprecated("move to feature package")
-fun pausedState(): MediaServiceState {
-    return MediaServiceState(
-        isPlaying = false,
-    )
-}
-
-@Deprecated("move to feature package")
 fun getTitleInfo(
     coverBytes: ImageModel? = null,
     manyImages: List<ImageModel> = emptyList()
@@ -64,7 +62,7 @@ fun getTitleInfo(
     )
 }
 
-@Deprecated("move to feature package")
+
 private fun getElements(): List<UI> {
     return listOf(
         UI.Heading(1, UI.ComplexText(listOf(StyledText(emptySet(), "title one")))),

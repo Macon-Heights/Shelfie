@@ -21,6 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
+import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getImages
+import me.alexandervortex.shelfie.feature.viewer.getTitleInfo
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.new.CarouselImageUI
@@ -28,8 +30,6 @@ import me.alexandervortex.shelfie.ui.component.new.ImageUI
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
-import me.alexandervortex.shelfie.ui.preview.getImages
-import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 
 const val COVER_HEIGHT = 256
 const val CAROUSEL_HEIGHT = 128
