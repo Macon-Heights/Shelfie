@@ -61,36 +61,21 @@ fun ComponentUI(
     val fontSize = LocalAppSettings.fontSize.current
     val lineHeight = LocalAppSettings.lineHeight.current
     when (element) {
-        is  UI.ComplexText -> {
-            val linkColor = getColors().primary
-            val onBackground = getColors().onBackground
-            val onPrimaryContainer = getColors().onPrimaryContainer
-            val primaryContainer = getColors().primaryContainer
-
-            val styledText = remember(element, isCurrentElement, partIndex, linkColor, onBackground, onPrimaryContainer, primaryContainer) {
-                buildAnnotatedString {
-                    element.parts.forEachIndexed { wordIndex, word ->
-                        val isHighlight = isCurrentElement && wordIndex == partIndex
-
-                        val baseTextColor = if (isHighlight)
-                            onPrimaryContainer
-                        else
-                            onBackground
-
-                        val baseBgColor = if (isHighlight)
-                            primaryContainer
-                        else
-                            Color.Transparent
-
-                        val span = composeSpanStyle(word.styles, linkColor)
-                            .merge(SpanStyle(color = baseTextColor, background = baseBgColor))
-
-                        withStyle(span) { append(word.text) }
-                    }
-                }
-            }
+        is UI.Heading -> {
             Text(
-                text = styledText,
+                text = getStyledText(element.content, isCurrentElement, partIndex),
+                fontSize = (fontSize + 4).sp,
+                lineHeight = (fontSize * (1 + lineHeight)).sp,
+                textAlign = TextAlign.Center,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 32.dp)
+            )
+        }
+
+        is  UI.RichText -> {
+            Text(
+                text = getStyledText(element, isCurrentElement, partIndex),
                 fontSize = fontSize.sp,
                 lineHeight = (fontSize * (1 + lineHeight)).sp,
                 textAlign = TextAlign.Justify,
@@ -201,15 +186,12 @@ fun getStyledText(
 @Composable
 fun TextUiPreview() {
     CombinedPreviews {
-        ComponentUI(
-            element = getBookUI().elements.first(),
-            isCurrentElement = true,
-            partIndex = 2
-        )
-        ComponentUI(
-            element = getBookUI().elements.get(1),
-            isCurrentElement = false,
-            partIndex = 2
-        )
+        getBookUI().elements.forEach {
+            ComponentUI(
+                element = it,
+                isCurrentElement = true,
+                partIndex = 2
+            )
+        }
     }
 }
