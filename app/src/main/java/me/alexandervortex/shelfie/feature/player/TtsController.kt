@@ -131,7 +131,7 @@ class TtsController(
         val elements = bookModel?.elements ?: return stopSpeaking()
         if (currentIndex >= elements.size) return stopSpeaking()
 
-        val textUi = elements[currentIndex] as? UI.RichText ?: run {
+        val textUi = elements[currentIndex] as? UI.ComplexText ?: run {
             currentIndex++
             return speakNext()
         }

@@ -73,7 +73,7 @@ fun ComponentUI(
             )
         }
 
-        is  UI.RichText -> {
+        is  UI.ComplexText -> {
             Text(
                 text = getStyledText(element, isCurrentElement, partIndex),
                 fontSize = fontSize.sp,
@@ -142,7 +142,7 @@ fun ComponentUI(
 
 @Composable
 fun getStyledText(
-    element: UI.RichText, isCurrentElement: Boolean, partIndex: Int
+    element: UI.ComplexText, isCurrentElement: Boolean, partIndex: Int
 ): AnnotatedString {
     val linkColor = getColors().primary
     val onBackground = getColors().onBackground

@@ -19,7 +19,7 @@ sealed interface UI {
         val image: ImageModel,
     ) : UI
 
-    data class RichText(
+    data class ComplexText(
         val parts: List<StyledText>,
     ) : UI
 
@@ -29,7 +29,7 @@ sealed interface UI {
 
     data class Heading(
         val level: Int,
-        val content: RichText,
+        val content: ComplexText,
     ) : UI
 }
 
