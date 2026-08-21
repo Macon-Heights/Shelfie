@@ -5,7 +5,7 @@ import me.alexandervortex.shelfie.base.ext.getBody
 import me.alexandervortex.shelfie.base.ext.getTitleInfo
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.data.mapper.PreviewBookMapper
-import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -52,7 +52,7 @@ class Fb2Parser
     private fun getCoverImage(
         titleInfo: Element?,
         binaries: Map<String, ByteArray>,
-    ): ImageModel? {
+    ): ByteImageModel? {
         val coverImageElement = titleInfo
             ?.selectFirst("coverpage > image")
             ?: titleInfo?.selectFirst("coverpage image")
@@ -67,6 +67,6 @@ class Fb2Parser
 
         if (ref.isBlank()) return null
 
-        return ImageModel(binaries[ref])
+        return ByteImageModel(binaries[ref])
     }
 }

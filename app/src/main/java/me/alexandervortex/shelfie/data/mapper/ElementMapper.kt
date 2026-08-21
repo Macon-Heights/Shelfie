@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.data.mapper
 import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.BookNode
 import me.alexandervortex.shelfie.model.GroupKind
-import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
@@ -475,7 +475,7 @@ class ElementMapper
     private fun image(
         element: Element,
         binaries: Map<String, ByteArray>,
-    ): ImageModel? {
+    ): ByteImageModel? {
 
         val ref = element.attr("src")
             .ifBlank { element.attr("xlink:href") }
@@ -490,7 +490,7 @@ class ElementMapper
             ?: binaries[ref.substringAfterLast("/")]
 
         return bytes?.let {
-            ImageModel(it)
+            ByteImageModel(it)
         }
     }
 

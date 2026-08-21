@@ -3,7 +3,7 @@ package me.alexandervortex.shelfie.data.parser
 import me.alexandervortex.shelfie.base.ext.toSpineSection
 import me.alexandervortex.shelfie.data.mapper.ElementMapper
 import me.alexandervortex.shelfie.model.BookDocument
-import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import org.jsoup.Jsoup
@@ -72,7 +72,7 @@ class EpubParser
             }
 
         val coverImage =
-            ImageModel(coverPath?.let { binaries[it] ?: binaries[it.substringAfterLast("/")] })
+            ByteImageModel(coverPath?.let { binaries[it] ?: binaries[it.substringAfterLast("/")] })
 
         val chapters = spine.mapNotNull { item ->
             val fullPath = resolvePath(base = opfPath, relative = item.path)
