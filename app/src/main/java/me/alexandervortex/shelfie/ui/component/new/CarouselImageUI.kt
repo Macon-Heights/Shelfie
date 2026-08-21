@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastFilterNotNull
 import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getImages
+import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
@@ -36,7 +37,7 @@ fun CarouselImageUI(
                 images.forEach {
                     ImageUI(
                         modifier = Modifier.fillMaxHeight(),
-                        imageModel = it
+                        model = it
                     )
                 }
             }
@@ -51,7 +52,7 @@ private fun Preview() {
         val context = LocalContext.current
         val images = remember {
             getImages().map {
-                ImageModel(context.resources.openRawResource(it).readBytes())
+                ByteImageModel(context.resources.openRawResource(it).readBytes())
             }
         }.shuffled()
         CarouselImageUI(
