@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
@@ -34,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticWhite
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
-import me.alexandervortex.shelfie.ui.model.new.ElementUIModel
 import me.alexandervortex.shelfie.ui.model.new.UI
 import me.alexandervortex.shelfie.ui.model.new.composeSpanStyle
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -44,7 +44,7 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_S
 @Composable
 fun ComponentUI(
     modifier: Modifier = Modifier,
-    element: ElementUIModel,
+    element: UI,
     isCurrentElement: Boolean,
     partIndex: Int,
 ) {
@@ -153,6 +153,48 @@ fun ComponentUI(
             }
         }
     }
+}
+
+@Composable
+fun getStyledText(
+    element: UI.RichText, isCurrentElement: Boolean, partIndex: Int
+): AnnotatedString {
+    val linkColor = getColors().primary
+    val onBackground = getColors().onBackground
+    val onPrimaryContainer = getColors().onPrimaryContainer
+    val primaryContainer = getColors().primaryContainer
+
+    val styledText = remember(
+        element,
+        isCurrentElement,
+        partIndex,
+        linkColor,
+        onBackground,
+        onPrimaryContainer,
+        primaryContainer
+    ) {
+        buildAnnotatedString {
+            element.parts.forEachIndexed { wordIndex, word ->
+                val isHighlight = isCurrentElement && wordIndex == partIndex
+
+                val baseTextColor = if (isHighlight) onPrimaryContainer
+                else onBackground
+
+                val baseBgColor = if (isHighlight) primaryContainer
+                else Color.Transparent
+
+                val span = composeSpanStyle(word.styles, linkColor).merge(
+                    SpanStyle(
+                        color = baseTextColor,
+                        background = baseBgColor
+                    )
+                )
+
+                withStyle(span) { append(word.text) }
+            }
+        }
+    }
+    return styledText
 }
 
 @CombinedPreviews
