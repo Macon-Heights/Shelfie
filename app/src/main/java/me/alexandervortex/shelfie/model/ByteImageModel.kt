@@ -1,14 +1,16 @@
 package me.alexandervortex.shelfie.model
 
-data class ImageModel(
+interface ImageModel
+
+data class ByteImageModel(
     val image: ByteArray? = null
-) {
+) : ImageModel {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ImageModel
+        other as ByteImageModel
 
         if (!image.contentEquals(other.image)) return false
 
