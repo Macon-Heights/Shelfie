@@ -67,6 +67,10 @@ fun getTitleInfo(
 @Deprecated("move to feature package")
 private fun getElements(): List<UI> {
     return listOf(
+        UI.Heading(1, UI.ComplexText(listOf(StyledText(emptySet(), "title one")))),
+        UI.Heading(2, UI.ComplexText(listOf(StyledText(emptySet(), "Title 2")))),
+        UI.Heading(4, UI.ComplexText(listOf(StyledText(emptySet(), "Title 4")))),
+        UI.Heading(6, UI.ComplexText(listOf(StyledText(emptySet(), "Title 6")))),
         UI.Skeleton,
         UI.ComplexText(
             parts = listOf(

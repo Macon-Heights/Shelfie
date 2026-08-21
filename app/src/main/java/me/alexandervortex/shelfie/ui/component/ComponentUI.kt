@@ -62,11 +62,12 @@ fun ComponentUI(
     val lineHeight = LocalAppSettings.lineHeight.current
     when (element) {
         is UI.Heading -> {
+            val level = (1f / element.level) + 1
             Text(
                 text = getStyledText(element.content, isCurrentElement, partIndex),
-                fontSize = (fontSize + 4).sp,
+                fontSize = (fontSize * level).sp,
                 lineHeight = (fontSize * (1 + lineHeight)).sp,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.End,
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(vertical = 32.dp)
