@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.model.new
+package me.alexandervortex.shelfie.ui.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
@@ -8,7 +8,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import me.alexandervortex.shelfie.model.ImageModel
-import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 
 sealed interface UI {
 

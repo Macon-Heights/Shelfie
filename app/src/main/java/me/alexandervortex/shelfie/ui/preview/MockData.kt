@@ -5,8 +5,8 @@ import me.alexandervortex.shelfie.feature.player.MediaServiceState
 import me.alexandervortex.shelfie.model.ImageModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.new.StyledText
-import me.alexandervortex.shelfie.ui.model.new.UI
+import me.alexandervortex.shelfie.ui.model.StyledText
+import me.alexandervortex.shelfie.ui.model.UI
 
 @Deprecated("move to feature package")
 fun getImages(): List<Int> {

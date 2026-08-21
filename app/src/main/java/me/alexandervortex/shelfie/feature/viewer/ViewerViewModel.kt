@@ -22,7 +22,7 @@ import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.model.PreviewBookModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.new.UI
+import me.alexandervortex.shelfie.ui.model.UI
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,6 +1,6 @@
 package me.alexandervortex.shelfie.base.ext
 
-import me.alexandervortex.shelfie.ui.model.new.UI
+import me.alexandervortex.shelfie.ui.model.UI
 
 @Deprecated("remove asap")
 fun UI?.orEmpty(): List<UI> {

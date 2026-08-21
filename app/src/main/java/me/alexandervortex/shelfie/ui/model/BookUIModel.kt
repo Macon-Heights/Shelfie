@@ -1,7 +1,6 @@
 package me.alexandervortex.shelfie.ui.model
 
 import me.alexandervortex.shelfie.model.PreviewBookModel
-import me.alexandervortex.shelfie.ui.model.new.UI
 
 data class BookUIModel(
     val id: String,

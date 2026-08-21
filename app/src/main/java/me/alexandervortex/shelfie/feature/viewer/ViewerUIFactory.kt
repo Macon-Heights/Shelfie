@@ -5,8 +5,8 @@ import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.BookUIModel
-import me.alexandervortex.shelfie.ui.model.new.StyledText
-import me.alexandervortex.shelfie.ui.model.new.UI
+import me.alexandervortex.shelfie.ui.model.StyledText
+import me.alexandervortex.shelfie.ui.model.UI
 import javax.inject.Inject
 
 class ViewerUIFactory
