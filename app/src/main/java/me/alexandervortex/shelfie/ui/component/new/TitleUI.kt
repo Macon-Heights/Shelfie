@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -17,7 +18,7 @@ private const val spacing = 8
 @Composable
 fun TitleUI(
     modifier: Modifier = Modifier,
-    text: String?,
+    text: AnnotatedString?,
     size: Int = 64,
 ) {
     text?.let {
@@ -38,6 +39,6 @@ fun TitleUI(
 @Composable
 private fun TitlePreview() {
     CombinedPreviews {
-        TitleUI(Modifier, stringResource(R.string.catalogue_title))
+        TitleUI(Modifier, AnnotatedString(stringResource(R.string.catalogue_title)))
     }
 }
