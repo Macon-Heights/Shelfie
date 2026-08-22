@@ -2,7 +2,7 @@
 
 <p align="center">
   <img
-    src="docs/hero/shelfie-hero.png"
+    src="docs/images/banner.png"
     width="100%"
     alt="Shelfie — read when you want, listen when you can't"
   />
@@ -18,24 +18,6 @@
 
 <p align="center">
   Kotlin · Jetpack Compose · TTS · Offline-first
-</p>
-
----
-
-# See it in action
-
-<p align="center">
-  <img
-    src="docs/demo/shelfie-demo.gif"
-    width="360"
-    alt="Shelfie demo — importing, reading and listening to a book"
-  />
-</p>
-
-<p align="center">
-  Import a book. Start reading. Press play. Put the phone away.
-  <br/>
-  Come back later and continue from the same place.
 </p>
 
 ---
