@@ -28,37 +28,6 @@ want to read again.
 Books and reading progress are stored locally, so the core experience works
 without an account, backend or internet connection.
 
-## 📱 Demo
-
-<p align="center">
-  <img
-    src="docs/screenshots/catalogue.png"
-    width="45%"
-    alt="Shelfie book library"
-  />
-  &nbsp;&nbsp;
-  <img
-    src="docs/screenshots/reader-tts.png"
-    width="45%"
-    alt="Shelfie reader with active Text-to-Speech playback"
-  />
-</p>
-
-<p align="center">
-  <img
-    src="docs/screenshots/reader-settings.png"
-    width="45%"
-    alt="Shelfie reader customization"
-  />
-  &nbsp;&nbsp;
-  <img
-    src="docs/screenshots/background-playback.png"
-    width="45%"
-    alt="Shelfie background playback through Android media controls"
-  />
-</p>
-(https://github.com/Macon-Heights/Shelfie/blob/feature/RDR-202-ui-layer-refactoring/docs/videos/demo.webm)
-
 ## 📚 Features
 
 * 📖 FB2 and EPUB reading
