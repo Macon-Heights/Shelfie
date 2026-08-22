@@ -24,58 +24,33 @@
 
 # See Shelfie in action
 
-Shelfie is designed around a simple flow: bring in a book, start reading, and make the experience your own.
-
-## Add a book in seconds
-
-Import a book from your device or another Android app, preview it, and add it to your library.
+Shelfie makes reading and listening feel like one continuous experience —  
+import a book in seconds, let playback follow the text for you, and adjust the reader without breaking your flow.
 
 <p align="center">
   <img
     src="docs/gifs/import.gif"
-    width="360"
-    alt="Importing and previewing a book in Shelfie"
+    width="31%"
+    alt="Importing a book into Shelfie"
   />
-</p>
-
-<p align="center">
-  <sub>Import · Preview · Add to library</sub>
-</p>
-
-<br/>
-
-## Read naturally
-
-Open a book and move through it without unnecessary controls getting in the way.
-
-<p align="center">
   <img
     src="docs/gifs/scroll.gif"
-    width="360"
-    alt="Reading and scrolling through a book in Shelfie"
+    width="31%"
+    alt="Automatic scrolling during Text-to-Speech playback in Shelfie"
   />
-</p>
-
-<p align="center">
-  <sub>Focused reading · Smooth scrolling · Persistent progress</sub>
-</p>
-
-<br/>
-
-## Make the reader yours
-
-Change typography, spacing, and appearance without leaving the page.
-
-<p align="center">
   <img
     src="docs/gifs/settings.gif"
-    width="360"
-    alt="Customizing reader settings in Shelfie"
+    width="31%"
+    alt="Changing reader settings in Shelfie"
   />
 </p>
 
 <p align="center">
-  <sub>Typography · Spacing · Themes · Instant updates</sub>
+  <sub><b>Import a book</b></sub>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <sub><b>Follow playback with auto-scroll</b></sub>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <sub><b>Adjust the reader instantly</b></sub>
 </p>
 
 ---
