@@ -123,24 +123,21 @@ service, allowing the book to keep playing while Shelfie is in the background.
 
 ## 🛠 Tech stack
 
-Shelfie is currently a single-module Android application with feature-oriented
-code organization.
+* **Kotlin**
+* **Jetpack Compose**
+* **Material 3 / Material You**
+* **Coroutines & Flow**
+* **MVI-style UI state management**
+* **Hilt + KSP**
+* **Room**
+* **DataStore**
+* **Navigation Compose**
+* **AndroidX Media / MediaSession**
+* **Android TextToSpeech**
+* **Jsoup**
+* **Kotlin Serialization**
 
-- **Kotlin**
-- **Jetpack Compose**
-- **Material 3 / Material You**
-- **Coroutines & Flow**
-- **MVI-style UI state management**
-- **Hilt + KSP**
-- **Room**
-- **DataStore**
-- **Navigation Compose**
-- **AndroidX Media / MediaSession**
-- **Android TextToSpeech**
-- **Jsoup**
-- **Kotlin Serialization**
-
-The project currently targets modern Android while keeping the minimum SDK at 26.
+The application currently has a minimum Android SDK of **26**.
 
 ## 🚧 Status
 
