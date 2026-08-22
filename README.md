@@ -1,124 +1,279 @@
 # Shelfie
 
-### Read when you want. Listen when you can't.
-
-**Shelfie** is an offline-first Android book reader for **FB2 and EPUB** that treats reading and listening as one continuous experience.
-
-Read on screen, switch to Text-to-Speech when you're walking or commuting, and return to the same place when you're ready to read again.
-
-Built with **Kotlin** and **Jetpack Compose** as an actively developed personal product.
-
 <p align="center">
   <img
-    src="docs/screenshots/reader-tts.png"
-    width="360"
-    alt="Shelfie reader with synchronized Text-to-Speech playback"
+    src="docs/hero/shelfie-hero.png"
+    width="100%"
+    alt="Shelfie — read when you want, listen when you can't"
   />
 </p>
 
-## ✨ What makes Shelfie different?
+<h3 align="center">Read when you want. Listen when you can't.</h3>
 
-Shelfie treats reading and listening as two ways of consuming the same book,
-rather than two separate experiences.
+<p align="center">
+  An offline-first Android reader for <strong>FB2</strong> and <strong>EPUB</strong>, built around one idea:
+  <br/>
+  <strong>reading and listening should feel like the same experience.</strong>
+</p>
 
-Start reading on screen, switch to Text-to-Speech when you are walking,
-commuting or doing something else, and return to the same place when you
-want to read again.
+<p align="center">
+  Kotlin · Jetpack Compose · TTS · Offline-first
+</p>
 
-Books and reading progress are stored locally, so the core experience works
-without an account, backend or internet connection.
+---
 
-## 📚 Features
+# See it in action
 
-* 📖 FB2 and EPUB reading
-* 🔊 Built-in Text-to-Speech playback
-* 🔄 Shared progress between reading and listening
-* ✨ Sentence highlighting during TTS playback
-* 📜 Automatic scrolling synchronized with narration
-* 🎧 Background playback
-* 🔔 Android media controls with play / pause
-* ⏱️ Sleep timer
-* ⚡ Adjustable playback speed
-* 💾 Automatic reading progress persistence
-* 📂 Import from device storage and Android document providers
-* 📤 Open books shared from other Android applications
-* 🗜️ Import from ZIP archives
-* 👀 Book preview before adding it to the library
-* 🌗 Light, dark, and system themes
-* 🎨 Material You dynamic colors
-* 🔤 Customizable typography, line height, and reader spacing
+<p align="center">
+  <img
+    src="docs/demo/shelfie-demo.gif"
+    width="360"
+    alt="Shelfie demo — importing, reading and listening to a book"
+  />
+</p>
 
-## 📱 User experience
+<p align="center">
+  Import a book. Start reading. Press play. Put the phone away.
+  <br/>
+  Come back later and continue from the same place.
+</p>
 
-The UI is built around keeping the reading experience uninterrupted.
+---
 
-Reader settings are applied immediately while the book remains visible,
-loading states use skeleton animations, and importing a book includes a
-preview step before it becomes part of the library.
+# Your books. Your device. Your library.
+
+Shelfie keeps the core reading experience local.
+
+Import books from device storage, Android document providers, other applications, or ZIP archives.
+Preview them before adding them to your library and keep your reading progress without requiring an
+account or internet connection.
 
 <p align="center">
   <img
     src="docs/screenshots/catalogue.png"
-    width="45%"
+    width="390"
     alt="Shelfie book catalogue"
-  />
-  &nbsp;&nbsp;
-  <img
-    src="docs/screenshots/reader-settings.png"
-    width="45%"
-    alt="Shelfie reader settings"
   />
 </p>
 
-## 🎧 Reading and listening are one experience
+The library is designed to stay simple: your books, your progress, and a quick way back into
+reading.
 
-Shelfie is designed to keep configuration from interrupting reading.
+---
 
-When playback starts, Shelfie begins reading from the visible part of the book.
-While TTS is active, the current sentence is highlighted and the reader
-automatically follows the narration.
+# Reading that follows you
 
-Stop listening and continue reading from the same progress.
+Reading does not always mean looking at a screen.
 
-Playback continues outside the reader through an Android foreground media
-service, allowing the book to keep playing while Shelfie is in the background.
+Shelfie lets you switch from visual reading to Text-to-Speech without treating it like a separate
+audiobook session.
+
+When playback starts, narration begins from the current reading position.
+The spoken sentence is highlighted, the page follows automatically, and progress remains shared
+between reading and listening.
+
+<p align="center">
+  <img
+    src="docs/screenshots/reader-tts.png"
+    width="390"
+    alt="Shelfie reader with synchronized Text-to-Speech"
+  />
+</p>
+
+Walk somewhere. Make coffee. Commute. Lock the phone.
+
+Shelfie keeps reading.
+
+---
+
+# Keep listening outside the app
+
+Playback is not tied to the reader screen.
+
+Shelfie uses an Android foreground media service and media session integration so Text-to-Speech can
+continue while the app is in the background.
+
+System media controls expose playback directly from Android.
 
 <p align="center">
   <img
     src="docs/screenshots/background-playback.png"
-    width="360"
-    alt="Shelfie background playback in Android media controls"
+    width="390"
+    alt="Shelfie background playback in Android system media controls"
   />
 </p>
 
-## 🛠 Tech stack
+Reading progress continues to stay synchronized while the UI is gone.
 
-* **Kotlin**
-* **Jetpack Compose**
-* **Material 3 / Material You**
-* **Coroutines & Flow**
-* **MVI-style UI state management**
-* **Hilt + KSP**
-* **Room**
-* **DataStore**
-* **Navigation Compose**
-* **AndroidX Media / MediaSession**
-* **Android TextToSpeech**
-* **Jsoup**
-* **Kotlin Serialization**
+---
 
-The application currently has a minimum Android SDK of **26**.
+# Make the page yours
 
-## 🚧 Status
+A reader should adapt to the person reading it — not the other way around.
 
-Shelfie is under active development.
+Typography and layout can be changed without leaving the book. Settings are applied immediately
+while the current page remains visible.
 
-The application is already usable for importing, reading, and listening to FB2 and EPUB books, and I use it myself while developing and validating new behavior.
+<p align="center">
+  <img
+    src="docs/screenshots/reader-settings.png"
+    width="390"
+    alt="Shelfie reader appearance settings"
+  />
+</p>
 
-Current work is focused on improving book parsing, format support, reader behavior, and the overall reading experience.
+Shelfie currently supports:
 
-## 🔒 Source code
+* font size and line height
+* reader padding and spacing
+* light, dark, and system themes
+* Material You dynamic colors
+* adjustable TTS playback speed
+* sleep timer
 
-This repository is publicly available for portfolio and technical evaluation purposes.
+---
 
-**All rights reserved.** Commercial use, redistribution, or incorporation of the source code into other products requires explicit permission from the author.
+# More than a reader UI
+
+Shelfie started as a small personal reader, but the interesting part quickly became everything
+happening underneath the page.
+
+A single reading session coordinates document parsing, persistent progress, scrolling, foreground
+playback, TTS sentence tracking, runtime settings, lifecycle changes, and background Android
+services.
+
+The goal is to make all of that complexity disappear for the reader.
+
+---
+
+## One progress model for reading and listening
+
+Visual reading and TTS do not maintain two independent positions.
+
+The same book state is used to:
+
+* resume visual reading
+* start narration from the visible text
+* track spoken content
+* automatically follow playback
+* persist progress
+* return control to the reader afterwards
+
+This allows the transition between reading and listening to feel continuous instead of behaving like
+two separate modes.
+
+---
+
+## Structured FB2 and EPUB parsing
+
+Shelfie contains its own parsing layer for **FB2** and **EPUB**.
+
+Source documents are converted into format-independent book structures instead of being mapped
+directly to Compose UI.
+
+This keeps document semantics separate from presentation and creates a foundation for richer
+features such as:
+
+* chapter navigation
+* hierarchical document structure
+* links and references
+* richer text formatting
+* improved TTS segmentation
+* additional book formats
+
+FB2 XML and EPUB XHTML eventually converge into the same internal representation, allowing the
+reader to work independently of the original file format.
+
+---
+
+## Offline-first by design
+
+Books, settings, and reading progress are stored locally.
+
+The core application does not depend on a backend, user account, or network connection.
+
+That makes offline support part of the architecture rather than a fallback mode.
+
+---
+
+## Android media integration
+
+Text-to-Speech runs independently from the reader UI through a foreground service.
+
+Playback state is exposed through Android media APIs, allowing narration to continue while Shelfie
+is backgrounded and making playback controls available through the system UI.
+
+---
+
+# Built with Android in mind
+
+Shelfie is written entirely in Kotlin and built around modern Android APIs.
+
+### Core stack
+
+**Kotlin**
+**Jetpack Compose**
+**Material 3 / Material You**
+**Coroutines & Flow**
+**MVI-style state management**
+**Hilt + KSP**
+**Room**
+**DataStore**
+**Navigation Compose**
+**AndroidX Media / MediaSession**
+**Android TextToSpeech**
+**Jsoup**
+**Kotlin Serialization**
+
+Minimum Android SDK: **26**
+
+---
+
+# A real product, not a code sample
+
+Shelfie is an actively developed personal project that I use myself.
+
+It was not built specifically as a take-home assignment or portfolio mockup. The project grew from a
+simple personal need into a place where I can explore product decisions, Android architecture,
+document parsing, media playback, and interaction design in one application.
+
+That also means it is intentionally unfinished.
+
+Current development is focused on improving:
+
+* FB2 and EPUB parsing
+* document and chapter structure
+* navigation inside books
+* reader performance
+* import workflows
+* TTS behavior
+* overall product polish
+
+The codebase continues to evolve as those problems become clearer.
+
+---
+
+# Why I built Shelfie
+
+I like software where technical decisions are visible in the final experience.
+
+A parser should not matter to the reader — until a badly structured book suddenly works.
+
+A foreground service should not matter — until the screen turns off and narration keeps going.
+
+State management should not matter — until reading, scrolling, settings, playback, and persistence
+all stay synchronized.
+
+Shelfie is my way of building that kind of software:
+**a product where engineering exists to make the experience feel simple.**
+
+---
+
+# Source code
+
+This repository is publicly available for **portfolio and technical evaluation purposes**.
+
+**All rights reserved.**
+
+Commercial use, redistribution, or incorporation of the source code into other products requires
+explicit permission from the author.
