@@ -22,6 +22,64 @@
 
 ---
 
+# See Shelfie in action
+
+Shelfie is designed around a simple flow: bring in a book, start reading, and make the experience your own.
+
+## Add a book in seconds
+
+Import a book from your device or another Android app, preview it, and add it to your library.
+
+<p align="center">
+  <img
+    src="docs/gifs/import.gif"
+    width="360"
+    alt="Importing and previewing a book in Shelfie"
+  />
+</p>
+
+<p align="center">
+  <sub>Import · Preview · Add to library</sub>
+</p>
+
+<br/>
+
+## Read naturally
+
+Open a book and move through it without unnecessary controls getting in the way.
+
+<p align="center">
+  <img
+    src="docs/gifs/scroll.gif"
+    width="360"
+    alt="Reading and scrolling through a book in Shelfie"
+  />
+</p>
+
+<p align="center">
+  <sub>Focused reading · Smooth scrolling · Persistent progress</sub>
+</p>
+
+<br/>
+
+## Make the reader yours
+
+Change typography, spacing, and appearance without leaving the page.
+
+<p align="center">
+  <img
+    src="docs/gifs/settings.gif"
+    width="360"
+    alt="Customizing reader settings in Shelfie"
+  />
+</p>
+
+<p align="center">
+  <sub>Typography · Spacing · Themes · Instant updates</sub>
+</p>
+
+---
+
 # Your books. Your device. Your library.
 
 Shelfie keeps the core reading experience local.
