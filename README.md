@@ -12,7 +12,7 @@ Built with **Kotlin** and **Jetpack Compose** as an actively developed personal 
   <img
     src="docs/screenshots/reader-tts.png"
     width="360"
-    alt="Shelfie reader with synchronized TTS playback"
+    alt="Shelfie reader with synchronized Text-to-Speech playback"
   />
 </p>
 
@@ -28,27 +28,55 @@ want to read again.
 Books and reading progress are stored locally, so the core experience works
 without an account, backend or internet connection.
 
+## 📱 Demo
+
+<p align="center">
+  <img
+    src="docs/screenshots/catalogue.png"
+    width="45%"
+    alt="Shelfie book library"
+  />
+  &nbsp;&nbsp;
+  <img
+    src="docs/screenshots/reader-tts.png"
+    width="45%"
+    alt="Shelfie reader with active Text-to-Speech playback"
+  />
+</p>
+
+<p align="center">
+  <img
+    src="docs/screenshots/reader-settings.png"
+    width="45%"
+    alt="Shelfie reader customization"
+  />
+  &nbsp;&nbsp;
+  <img
+    src="docs/screenshots/background-playback.png"
+    width="45%"
+    alt="Shelfie background playback through Android media controls"
+  />
+</p>
+
 ## 📚 Features
 
-- 📖 Comfortable FB2 reader
-- 🔊 Built-in Text-to-Speech playback
-- 🔄 Shared progress between reading and listening
-- ✨ Sentence highlighting during TTS playback
-- 📜 Automatic scrolling synchronized with speech
-- 🎧 Background playback
-- 🔔 Media notification with play / pause controls
-- ⏱️ Sleep timer
-- ⚡ Adjustable playback speed
-- 💾 Automatic reading progress persistence
-- 📂 Import from device storage and document providers such as Google Drive
-- 📤 Open books shared from other Android applications
-- 🗜️ Automatic FB2 extraction from ZIP archives
-- 👀 Book preview before importing
-- 🌗 Light, dark and system themes
-- 🎨 Material You dynamic colors
-- 🔤 Customizable reader font and text size
-
-Currently, **FB2 is the first supported book format**.
+* 📖 FB2 and EPUB reading
+* 🔊 Built-in Text-to-Speech playback
+* 🔄 Shared progress between reading and listening
+* ✨ Sentence highlighting during TTS playback
+* 📜 Automatic scrolling synchronized with narration
+* 🎧 Background playback
+* 🔔 Android media controls with play / pause
+* ⏱️ Sleep timer
+* ⚡ Adjustable playback speed
+* 💾 Automatic reading progress persistence
+* 📂 Import from device storage and Android document providers
+* 📤 Open books shared from other Android applications
+* 🗜️ Import from ZIP archives
+* 👀 Book preview before adding it to the library
+* 🌗 Light, dark, and system themes
+* 🎨 Material You dynamic colors
+* 🔤 Customizable typography, line height, and reader spacing
 
 ## 📱 User experience
 
@@ -74,7 +102,7 @@ preview step before it becomes part of the library.
 
 ## 🎧 Reading and listening are one experience
 
-Shelfie maintains a single position for both visual reading and TTS playback.
+Shelfie is designed to keep configuration from interrupting reading.
 
 When playback starts, Shelfie begins reading from the visible part of the book.
 While TTS is active, the current sentence is highlighted and the reader
@@ -114,23 +142,16 @@ code organization.
 
 The project currently targets modern Android while keeping the minimum SDK at 26.
 
-## 🚧 Project status
+## 🚧 Status
 
-Shelfie is currently in **pre-alpha and active development**.
+Shelfie is under active development.
 
-It is already usable for importing, reading and listening to FB2 books, and I
-use the application myself as part of the development process.
+The application is already usable for importing, reading, and listening to FB2 and EPUB books, and I use it myself while developing and validating new behavior.
 
-The project is intentionally developed iteratively: product behavior and user
-experience are validated first, while architecture and infrastructure evolve
-alongside the product.
-
-Planned areas include support for more book formats and a broader social
-reading experience.
+Current work is focused on improving book parsing, format support, reader behavior, and the overall reading experience.
 
 ## 🔒 Source code
 
-This repository is publicly available for portfolio and evaluation purposes.
+This repository is publicly available for portfolio and technical evaluation purposes.
 
-**All rights reserved.** Commercial use, redistribution, or incorporation of
-the source code into other products requires explicit permission from the author.
+**All rights reserved.** Commercial use, redistribution, or incorporation of the source code into other products requires explicit permission from the author.
