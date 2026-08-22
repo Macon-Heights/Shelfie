@@ -57,6 +57,7 @@ without an account, backend or internet connection.
     alt="Shelfie background playback through Android media controls"
   />
 </p>
+(https://github.com/Macon-Heights/Shelfie/blob/feature/RDR-202-ui-layer-refactoring/docs/videos/demo.webm)
 
 ## 📚 Features
 
