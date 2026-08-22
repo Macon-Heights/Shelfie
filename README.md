@@ -2,10 +2,11 @@
 
 ### Read when you want. Listen when you can't.
 
-Shelfie is an offline-first Android book reader that lets you seamlessly switch
-between reading and listening while keeping a single shared reading progress.
+**Shelfie** is an offline-first Android book reader for **FB2 and EPUB** that treats reading and listening as one continuous experience.
 
-Built with Kotlin and Jetpack Compose as an actively developed personal product.
+Read on screen, switch to Text-to-Speech when you're walking or commuting, and return to the same place when you're ready to read again.
+
+Built with **Kotlin** and **Jetpack Compose** as an actively developed personal product.
 
 <p align="center">
   <img
@@ -15,7 +16,7 @@ Built with Kotlin and Jetpack Compose as an actively developed personal product.
   />
 </p>
 
-## ✨ What is Shelfie?
+## ✨ What makes Shelfie different?
 
 Shelfie treats reading and listening as two ways of consuming the same book,
 rather than two separate experiences.
