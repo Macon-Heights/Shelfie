@@ -61,7 +61,6 @@ data class RichText(
         get() = parts.joinToString("") { part ->
             when (part) {
                 is InlineNode.Text -> part.text
-                is InlineNode.Image -> ""
                 InlineNode.LineBreak -> "\n"
             }
         }
@@ -73,10 +72,6 @@ sealed interface InlineNode {
         val text: String,
         val marks: Set<TextStyleUIModel> = emptySet(),
         val link: String? = null,
-    ) : InlineNode
-
-    data class Image(
-        val image: ImageModel,
     ) : InlineNode
 
     data object LineBreak : InlineNode

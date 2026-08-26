@@ -440,12 +440,6 @@ class ElementMapper
                 listOf(InlineNode.LineBreak)
             }
 
-            "image", "img" -> {
-                image(element, binaries)
-                    ?.let { listOf(InlineNode.Image(it)) }
-                    .orEmpty()
-            }
-
             else -> {
                 // Unknown inline elements are transparent.
                 // Their children are still preserved.
