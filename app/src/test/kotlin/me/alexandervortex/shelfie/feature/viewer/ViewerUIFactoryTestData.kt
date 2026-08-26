@@ -28,7 +28,6 @@ object ViewerUIFactoryTestData {
                 gallery = emptyList()
             ),
             elements = listOf(
-
                 UI.ComplexText(
                     parts = listOf(
                         StyledText(
@@ -50,28 +49,25 @@ object ViewerUIFactoryTestData {
                         StyledText(
                             styles = emptySet(),
                             text = "Это тот старикан, который раньше каждый год приезжал на ярмарку в В."
-                        )
-                    )
-                ),
-                UI.ComplexText(parts = listOf(StyledText(styles = emptySet(), text = "[1]"))),
-                UI.ComplexText(
-                    parts = listOf(
+                        ), StyledText(
+                            styles = setOf(
+                                TextStyleUIModel.Link("ch2.xhtml#id49")
+                            ), text = "[1]"
+                        ),
                         StyledText(
                             styles = emptySet(),
                             text = ", привозил на продажу калган-траву и горечавку. Под конец заговорили о вампирах, здухачах"
-                        )
-                    )
-                ),
-                UI.ComplexText(parts = listOf(StyledText(styles = emptySet(), text = "[2]"))),
-                UI.ComplexText(
-                    parts = listOf(
+                        ), StyledText(
+                            styles = setOf(
+                                TextStyleUIModel.Link("ch2.xhtml#id48")
+                            ), text = "[2]"
+                        ),
                         StyledText(
                             styles = emptySet(),
                             text = ", джиннах, ведьмах и о другой нечистой силе, какая только может в глухую ночь человеку явиться."
                         )
                     )
                 )
-
             ),
             progressIndex = 0,
             progressOffset = 0

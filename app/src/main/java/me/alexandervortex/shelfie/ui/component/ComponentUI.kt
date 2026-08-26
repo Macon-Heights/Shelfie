@@ -69,7 +69,7 @@ fun ComponentUI(
             )
         }
 
-        is  UI.ComplexText -> {
+        is UI.ComplexText -> {
             Text(
                 text = getStyledText(element, isCurrentElement, partIndex),
                 fontSize = fontSize.sp,

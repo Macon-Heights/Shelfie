@@ -2,8 +2,8 @@ package me.alexandervortex.shelfie.data.mapper
 
 import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.BookNode
-import me.alexandervortex.shelfie.model.GroupKind
 import me.alexandervortex.shelfie.model.ByteImageModel
+import me.alexandervortex.shelfie.model.GroupKind
 import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
@@ -45,10 +45,9 @@ class ElementMapper
         fun flushInline() {
             if (pendingInline.isEmpty()) return
 
-            val parts = compactInline(pendingInline)
-            val content = RichText(parts = parts)
+            val content = compactInline(pendingInline)
 
-            if (content.plainText.isNotBlank()) {
+            if (content != null && content.plainText.isNotBlank()) {
                 result += BookNode.Paragraph(
                     id = "$parentPath/text-${result.size}",
                     content = content,
@@ -276,7 +275,7 @@ class ElementMapper
         element: Element,
         binaries: Map<String, ByteArray>,
     ): RichText? {
-        val parts = compactInline(
+        return compactInline(
             mapInlineNodes(
                 nodes = element.childNodes(),
                 binaries = binaries,
@@ -284,11 +283,6 @@ class ElementMapper
                 link = null,
             )
         )
-        return if (parts.isNotEmpty()) {
-            RichText(
-                parts = parts
-            )
-        } else null
     }
 
     private fun mapTitle(
@@ -319,9 +313,7 @@ class ElementMapper
             }
         }
 
-        return RichText(
-            parts = compactInline(result)
-        )
+        return compactInline(result)
     }
 
     private fun mapInlineNodes(
@@ -521,8 +513,8 @@ class ElementMapper
 
     private fun compactInline(
         source: List<InlineNode>,
-    ): List<InlineNode> {
-
+    ): RichText? {
+        if (source.isEmpty()) return null
         val result = mutableListOf<InlineNode>()
 
         source.forEach { node ->
@@ -544,7 +536,9 @@ class ElementMapper
             }
         }
 
-        return result
+        return if (result.isNotEmpty()) {
+            RichText(parts = result)
+        } else null
     }
 
     private companion object {

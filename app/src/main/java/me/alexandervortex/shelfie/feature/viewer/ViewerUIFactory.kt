@@ -6,6 +6,7 @@ import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
+import me.alexandervortex.shelfie.ui.model.TextStyleUIModel
 import me.alexandervortex.shelfie.ui.model.UI
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class ViewerUIFactory
     private fun mapBookNode(node: BookNode): List<UI> {
         return when (node) {
             is BookNode.Section -> mapSection(4, node)
-            is BookNode.Paragraph -> mapRichText(node.content)
+            is BookNode.Paragraph -> mapParagraph(node.content)
             is BookNode.Heading -> mapHeading(node)
             is BookNode.Image -> listOf(UI.Image(node.image))
             is BookNode.Group -> node.children.flatMap { mapBookNode(it) }
@@ -39,54 +40,56 @@ class ViewerUIFactory
         }
     }
 
+    private fun mapParagraph(content: RichText): List<UI> {
+        return listOf(
+            UI.ComplexText(
+                parts = content.parts.mapNotNull { node ->
+                    when (node) {
+                        is InlineNode.Text -> {
+                            val marks = if (node.link != null) {
+                                node.marks + TextStyleUIModel.Link(node.link)
+                            } else {
+                                node.marks
+                            }
+                            StyledText(marks, node.text)
+                        }
+
+                        InlineNode.LineBreak -> StyledText(emptySet(), "\n")
+                    }
+                }
+            )
+        )
+    }
+
     private fun mapHeading(node: BookNode.Heading): List<UI> {
-        return mapRichText(node.content).wrapWith { content ->
+        return listOf(
             UI.Heading(
                 level = node.level,
-                content = content
+                content = UI.ComplexText(
+                    parts = node.content.parts.mapNotNull { inline ->
+                        (inline as? InlineNode.Text)?.let {
+                            StyledText(it.marks, it.text)
+                        }
+                    }
+                )
             )
-        }
+        )
     }
 
     private fun mapSection(level: Int, node: BookNode.Section): List<UI> {
-        return mapRichText(node.title).wrapWith { content ->
+        val title = node.title?.let { rich ->
             UI.Heading(
                 level = level,
-                content = content
-            )
-        } + node.children.flatMap { mapBookNode(it) }
-    }
-
-    private fun List<UI>.wrapWith(content: (UI.ComplexText) -> UI): List<UI> {
-        return this.map {
-            if (it is UI.ComplexText) {
-                content.invoke(it)
-            } else {
-                it
-            }
-        }
-    }
-
-    private fun mapRichText(rich: RichText?): List<UI> {
-        if (rich == null) return emptyList()
-        val elements = rich.parts.map { part ->
-            mapInlineNode(part)
-        }
-        return elements
-    }
-
-    private fun mapInlineNode(node: InlineNode): UI {
-        return when (node) {
-            is InlineNode.Image -> UI.Image(node.image)
-            is InlineNode.LineBreak -> UI.EmptyLine
-            is InlineNode.Text -> UI.ComplexText(
-                listOf(
-                    StyledText(
-                        node.marks,
-                        node.text
-                    )
+                content = UI.ComplexText(
+                    parts = rich.parts.mapNotNull { inline ->
+                        (inline as? InlineNode.Text)?.let {
+                            StyledText(it.marks, it.text)
+                        }
+                    }
                 )
             )
         }
+        val children = node.children.flatMap { mapBookNode(it) }
+        return if (title != null) listOf(title) + children else children
     }
 }
