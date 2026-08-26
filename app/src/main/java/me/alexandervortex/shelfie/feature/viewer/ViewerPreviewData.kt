@@ -2,8 +2,13 @@ package me.alexandervortex.shelfie.feature.viewer
 
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.feature.player.MediaServiceState
+import me.alexandervortex.shelfie.model.BookDocument
+import me.alexandervortex.shelfie.model.BookNode
+import me.alexandervortex.shelfie.model.GroupKind
 import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.model.InlineNode
 import me.alexandervortex.shelfie.model.PreviewBookModel
+import me.alexandervortex.shelfie.model.RichText
 import me.alexandervortex.shelfie.ui.model.BookUIModel
 import me.alexandervortex.shelfie.ui.model.StyledText
 import me.alexandervortex.shelfie.ui.model.UI
@@ -44,6 +49,47 @@ object ViewerPreviewData {
             progressOffset = 0
         )
     }
+
+    fun getBookDocument() = BookDocument(
+        children = listOf(
+            BookNode.Group(
+                id = "id1", kind = GroupKind.Other(sourceTag = "span"),
+                children = listOf(
+                    BookNode.Paragraph(
+                        id = "node:root/0/1/1/5", content = RichText(
+                            parts = listOf(
+                                InlineNode.Text(
+                                    text = "Это тот старикан, который раньше каждый год приезжал на ярмарку в В.",
+                                    marks = emptySet(),
+                                    link = null
+                                ),
+                                InlineNode.Text(
+                                    text = "[1]",
+                                    marks = emptySet(),
+                                    link = "ch2.xhtml#id49"
+                                ),
+                                InlineNode.Text(
+                                    text = ", привозил на продажу калган-траву и горечавку. Под конец заговорили о вампирах, здухачах",
+                                    marks = emptySet(),
+                                    link = null
+                                ),
+                                InlineNode.Text(
+                                    text = "[2]",
+                                    marks = emptySet(),
+                                    link = "ch2.xhtml#id48"
+                                ),
+                                InlineNode.Text(
+                                    text = ", джиннах, ведьмах и о другой нечистой силе, какая только может в глухую ночь человеку явиться.",
+                                    marks = emptySet(),
+                                    link = null
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
 }
 
 fun getTitleInfo(
