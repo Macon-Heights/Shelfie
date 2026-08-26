@@ -7,6 +7,8 @@ import io.kotest.data.row
 import io.kotest.data.table
 import me.alexandervortex.shelfie.base.transformerTest
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplex
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplexEpub
+import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplexEpubModel
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphComplexModel
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmpty
 import me.alexandervortex.shelfie.data.mapper.ParagraphData.paragraphEmptyModel
@@ -24,6 +26,7 @@ class ElementMapperTest : BehaviorSpec({
             row(paragraphEmpty(), paragraphEmptyModel(), "paragraph empty"),
             row(paragraphWithText(), paragraphWithTextModel(), "paragraph with text"),
             row(paragraphComplex(), paragraphComplexModel(), "paragraph complex"),
+            row(paragraphComplexEpub(), paragraphComplexEpubModel(), "paragraph complex"),
         )
     ) { xml, model, name ->
 
