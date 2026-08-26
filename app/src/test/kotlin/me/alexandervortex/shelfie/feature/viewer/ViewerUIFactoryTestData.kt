@@ -14,9 +14,71 @@ object ViewerUIFactoryTestData {
         return this?.let { Jsoup.parse(it.trimIndent()) }
     }
 
-    fun uiComplexEpub(): BookUIModel? = null
+    fun uiComplexEpub(): BookUIModel {
+        return BookUIModel(
+            id = "id", localPath = "path",
+            titleInfo = PreviewBookModel(
+                title = "Frankenstein",
+                date = "1818",
+                author = "Mary Shelley",
+                annotation = "Victor Frankenstein, a young scientist driven by ambition, discovers a way to create life. However, he is horrified by the creature he brings into the world and abandons it. Rejected by society and desperate for companionship, the creature turns against its creator. The novel explores responsibility, loneliness, prejudice, and the consequences of uncontrolled ambition.",
+                genre = "Gothic Fiction",
+                lang = "en",
+                coverImage = null,
+                gallery = emptyList()
+            ),
+            elements = listOf(
 
-    fun uiComplex(): BookUIModel? {
+                UI.ComplexText(
+                    parts = listOf(
+                        StyledText(
+                            styles = emptySet(),
+                            text = "Ночь на мосту"
+                        )
+                    )
+                ),
+                UI.ComplexText(
+                    parts = listOf(
+                        StyledText(
+                            styles = emptySet(),
+                            text = "По мотивам народных поверий"
+                        )
+                    )
+                ),
+                UI.ComplexText(
+                    parts = listOf(
+                        StyledText(
+                            styles = emptySet(),
+                            text = "Это тот старикан, который раньше каждый год приезжал на ярмарку в В."
+                        )
+                    )
+                ),
+                UI.ComplexText(parts = listOf(StyledText(styles = emptySet(), text = "[1]"))),
+                UI.ComplexText(
+                    parts = listOf(
+                        StyledText(
+                            styles = emptySet(),
+                            text = ", привозил на продажу калган-траву и горечавку. Под конец заговорили о вампирах, здухачах"
+                        )
+                    )
+                ),
+                UI.ComplexText(parts = listOf(StyledText(styles = emptySet(), text = "[2]"))),
+                UI.ComplexText(
+                    parts = listOf(
+                        StyledText(
+                            styles = emptySet(),
+                            text = ", джиннах, ведьмах и о другой нечистой силе, какая только может в глухую ночь человеку явиться."
+                        )
+                    )
+                )
+
+            ),
+            progressIndex = 0,
+            progressOffset = 0
+        )
+    }
+
+    fun uiComplex(): BookUIModel {
         return BookUIModel(
             id = "id", localPath = "path", titleInfo = PreviewBookModel(
                 title = "Frankenstein",

@@ -29,7 +29,7 @@ class ViewerUIFactoryTest : BehaviorSpec({
             row(uiEmpty(), paragraphEmptyModel().toProgressBookModel(), "paragraph empty"),
             row(uiWithText(), paragraphWithTextModel().toProgressBookModel(), "paragraph with text"),
             row(uiComplex(), paragraphComplexModel().toProgressBookModel(), "paragraph complex"),
-//            row(uiComplexEpub(), paragraphComplexEpubModel().toProgressBookModel(), "paragraph complex epub"),
+            row(uiComplexEpub(), paragraphComplexEpubModel().toProgressBookModel(), "paragraph complex epub"),
         )
     ) { ui: BookUIModel?, model: ProgressBookModel, name: String ->
 
