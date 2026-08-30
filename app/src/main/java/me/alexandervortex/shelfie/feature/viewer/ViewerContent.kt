@@ -108,7 +108,9 @@ fun ViewerContent(
             }
 
             if (state.isSectionsVisible) {
-                SectionsUI { onIntent(ViewerIntent.ToggleSections) }
+                SectionsUI(
+                    state.book?.elements.orEmpty()
+                ) { onIntent(ViewerIntent.ToggleSections) }
             }
         }
     )

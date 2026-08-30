@@ -126,7 +126,9 @@ fun ComponentUI(
 
 @Composable
 fun getStyledText(
-    element: UI.ComplexText, isCurrentElement: Boolean, partIndex: Int
+    element: UI.ComplexText,
+    isCurrentElement: Boolean,
+    partIndex: Int
 ): AnnotatedString {
     val linkColor = getColors().primary
     val onBackground = getColors().onBackground
