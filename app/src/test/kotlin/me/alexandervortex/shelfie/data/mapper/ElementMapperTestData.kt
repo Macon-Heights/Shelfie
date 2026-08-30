@@ -39,8 +39,9 @@ object ElementMapperTestData {
             BookNode.Group(
                 id = "id1", kind = GroupKind.Other(sourceTag = "span"),
                 children = listOf(
-                    BookNode.Paragraph(
-                        id = "node:root/0/1/1/1/1",
+                    BookNode.Heading(
+                        level = 1,
+                        id = "node:root/0/1/1/1",
                         content = RichText(
                             parts = listOf(
                                 InlineNode.Text(
@@ -51,8 +52,10 @@ object ElementMapperTestData {
                             )
                         )
                     ),
-                    BookNode.Paragraph(
-                        id = "node:root/0/1/1/3", content = RichText(
+                    BookNode.Heading(
+                        level = 2,
+                        id = "node:root/0/1/1/3",
+                        content = RichText(
                             parts = listOf(
                                 InlineNode.Text(
                                     text = "По мотивам народных поверий",
@@ -112,8 +115,9 @@ object ElementMapperTestData {
                 id = "id1",
                 kind = GroupKind.Other(sourceTag = "span"),
                 children = listOf(
-                    BookNode.Paragraph(
-                        id = "node:root/0/1/1/0/1",
+                    BookNode.Heading(
+                        level = 1,
+                        id = "node:root/0/1/1/0",
                         content = RichText(
                             parts = listOf(
                                 InlineNode.Text(

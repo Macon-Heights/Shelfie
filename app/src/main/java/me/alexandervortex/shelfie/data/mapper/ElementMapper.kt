@@ -104,7 +104,10 @@ class ElementMapper
     ): BookNode? {
 
         val tag = element.tagName().lowercase()
+        val classes = element.classNames().map { it.lowercase() } // todo
         val id = elementId(element, path)
+
+        fun isType(type: String) = tag == type || classes.any { it.contains(type) } // todo
 
         return when {
 
@@ -116,30 +119,21 @@ class ElementMapper
                 )
             }
 
-            tag == "p" -> {
+            isType("subtitle") -> {
                 mapRichText(element, binaries)?.let {
-                    BookNode.Paragraph(
-                        id = id,
-                        content = it
-                    )
-                }
-            }
-
-            tag == "title" -> {
-                mapTitle(element, binaries)?.let {
                     BookNode.Heading(
                         id = id,
-                        level = 1,
+                        level = 2,
                         content = it,
                     )
                 }
             }
 
-            tag == "subtitle" -> {
-                mapRichText(element, binaries)?.let {
+            isType("title") && !tag.startsWith("h") -> {
+                mapTitle(element, binaries)?.let {
                     BookNode.Heading(
                         id = id,
-                        level = 2,
+                        level = 1,
                         content = it,
                     )
                 }
@@ -151,6 +145,15 @@ class ElementMapper
                         id = id,
                         level = tag.substring(1).toInt(),
                         content = it,
+                    )
+                }
+            }
+
+            tag == "p" || classes.any { it == "p" || it == "paragraph" } -> {
+                mapRichText(element, binaries)?.let {
+                    BookNode.Paragraph(
+                        id = id,
+                        content = it
                     )
                 }
             }
@@ -505,9 +508,16 @@ class ElementMapper
         element: Element,
     ): Boolean {
         val tag = element.tagName().lowercase()
+        val classes = element.classNames().map { it.lowercase() }
+
         if (tag in BLOCK_TAGS || tag.matches(Regex("h[1-6]"))) {
             return true
         }
+
+        if (classes.any { it.contains("title") || it.contains("subtitle") || it == "p" || it == "paragraph" }) {
+            return true
+        }
+
         return element.children().any { isBlockElement(it) }
     }
 

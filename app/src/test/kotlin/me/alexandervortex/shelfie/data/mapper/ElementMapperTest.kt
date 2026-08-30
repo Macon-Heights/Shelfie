@@ -27,7 +27,7 @@ class ElementMapperTest : BehaviorSpec({
             row(paragraphEmpty(), paragraphEmptyModel(), "paragraph empty"),
             row(paragraphWithText(), paragraphWithTextModel(), "paragraph with text"),
             row(paragraphComplex(), paragraphComplexModel(), "paragraph complex"),
-            row(paragraphComplexEpub(), paragraphComplexEpubModel(), "paragraph complex"),
+            row(paragraphComplexEpub(), paragraphComplexEpubModel(), "paragraph complex epub"),
         )
     ) { xml, model, name ->
 
