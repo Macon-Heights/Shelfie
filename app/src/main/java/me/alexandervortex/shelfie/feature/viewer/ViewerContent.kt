@@ -30,6 +30,7 @@ import me.alexandervortex.shelfie.model.ProgressModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
+import me.alexandervortex.shelfie.ui.component.SectionsUI
 import me.alexandervortex.shelfie.ui.component.SettingsUI
 import me.alexandervortex.shelfie.ui.model.UI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
@@ -41,12 +42,12 @@ fun ViewerContent(
     onIntent: (ViewerIntent) -> Unit,
 ) {
     val book = state.book
-    val isSettings = state.isSettingsVisible
+    val isPopup = state.isSettingsVisible || state.isSectionsVisible
     val padding = LocalAppSettings.padding.current
     PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
-        isPopup = isSettings,
+        isPopup = isPopup,
         content = {
             LazyColumn(
                 userScrollEnabled = !state.serviceState.isPlaying,
@@ -101,8 +102,14 @@ fun ViewerContent(
             )
         },
         popup = {
-            val viewModel = hiltViewModel<SettingsViewModel>()
-            SettingsUI(viewModel) { onIntent(ViewerIntent.ToggleSettings) }
+            if (state.isSettingsVisible) {
+                val viewModel = hiltViewModel<SettingsViewModel>()
+                SettingsUI(viewModel) { onIntent(ViewerIntent.ToggleSettings) }
+            }
+
+            if (state.isSectionsVisible) {
+                SectionsUI { onIntent(ViewerIntent.ToggleSections) }
+            }
         }
     )
 }

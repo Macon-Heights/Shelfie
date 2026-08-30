@@ -1,0 +1,57 @@
+package me.alexandervortex.shelfie.ui.component
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import me.alexandervortex.shelfie.base.ext.getColors
+import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
+import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.theme.SHAPE_M
+
+@Composable
+fun SectionsUI(
+    onDecline: () -> Unit,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(getStaticSurfaceVariant().copy(alpha = 0.7f))
+            .clickable { onDecline.invoke() }
+            .padding(ROOT_PADDING.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(SHAPE_M)
+                .background(getColors().surface)
+                .padding(BOX_PADDING.dp)
+        ) {
+            val fontSize = LocalAppSettings.fontSize.current
+            SettingsItemUI(
+                "SECTIONS",
+                value = fontSize.toString(),
+                onDecrease = {},
+                onIncrease = {},
+                onReset = {}
+            )
+        }
+    }
+}
+
+@CombinedPreviews
+@Composable
+private fun SettingsPreview() {
+    CombinedPreviews {
+        SectionsUI {}
+    }
+}

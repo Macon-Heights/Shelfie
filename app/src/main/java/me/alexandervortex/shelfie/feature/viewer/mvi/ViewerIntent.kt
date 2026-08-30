@@ -23,4 +23,5 @@ sealed interface ViewerIntent {
 
     data object ToggleMenu : ViewerIntent
     data object ToggleSettings : ViewerIntent
+    data object ToggleSections : ViewerIntent
 }

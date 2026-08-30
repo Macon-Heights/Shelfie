@@ -60,6 +60,7 @@ class ViewerViewModel
             ViewerIntent.ToggleSpeed -> service?.clickSpeed()
             ViewerIntent.ToggleMenu -> _state.update { it.copy(isMenuVisible = !it.isMenuVisible) }
             ViewerIntent.ToggleSettings -> _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
+            ViewerIntent.ToggleSections -> _state.update { it.copy(isSectionsVisible = !it.isSectionsVisible) }
         }
     }
 
