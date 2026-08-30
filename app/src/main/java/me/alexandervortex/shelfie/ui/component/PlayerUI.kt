@@ -41,7 +41,7 @@ import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_NEXT
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PAUSE
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PLAY
-import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_PREV
+import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_SECTIONS
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_SPEED
 import me.alexandervortex.shelfie.ui.theme.IC_PLAYER_TIMER
 import me.alexandervortex.shelfie.ui.theme.IC_SETTINGS
@@ -58,7 +58,7 @@ fun PlayerUI(
     playPauseAction: () -> Unit,
     timerAction: () -> Unit,
     speedAction: () -> Unit,
-    prevAction: () -> Unit,
+    sectionsAction: () -> Unit,
     nextAction: () -> Unit,
 ) {
 
@@ -130,7 +130,7 @@ fun PlayerUI(
                 ) {
                     val playPauseIcon = if (state.isPlaying) IC_PLAYER_PAUSE else IC_PLAYER_PLAY
 
-                    ButtonWithLabel(IC_PLAYER_PREV) { prevAction.invoke() }
+                    ButtonWithLabel(IC_PLAYER_SECTIONS) { sectionsAction.invoke() }
                     ButtonWithLabel(IC_PLAYER_TIMER, state.timer.text) { timerAction.invoke() }
                     ButtonUI(
                         modifierAfter = Modifier

@@ -7,6 +7,7 @@ data class ViewerState(
     val book: BookUIModel? = null,
     val serviceState: MediaServiceState = MediaServiceState(),
     val isMenuVisible: Boolean = true,
+    val isSectionsVisible: Boolean = false,
     val isSettingsVisible: Boolean = false,
     val error: String = "",
 )

@@ -17,7 +17,7 @@ sealed interface ViewerIntent {
 
     data class TogglePlayPause(val index: Int) : ViewerIntent
     data object Next : ViewerIntent
-    data object Prev : ViewerIntent
+    data object Sections : ViewerIntent
     data object ToggleTimer : ViewerIntent
     data object ToggleSpeed : ViewerIntent
 

@@ -55,7 +55,7 @@ class ViewerViewModel
             )
 
             ViewerIntent.Next -> service?.clickNext()
-            ViewerIntent.Prev -> service?.clickPrev()
+            ViewerIntent.Sections -> _state.update { it.copy(isSectionsVisible = !it.isSettingsVisible) }
             ViewerIntent.ToggleTimer -> service?.clickTimer()
             ViewerIntent.ToggleSpeed -> service?.clickSpeed()
             ViewerIntent.ToggleMenu -> _state.update { it.copy(isMenuVisible = !it.isMenuVisible) }

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Polyline
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.material.icons.filled.Speed
@@ -31,6 +32,7 @@ val IC_PLAYER_NEXT = icons.ChevronRight
 val IC_PLAYER_PREV = icons.ChevronLeft
 val IC_PLAYER_SPEED = icons.Speed
 val IC_PLAYER_TIMER = icons.Timer
+val IC_PLAYER_SECTIONS = icons.Polyline
 
 // Settings
 val IC_SETTINGS = icons.Settings

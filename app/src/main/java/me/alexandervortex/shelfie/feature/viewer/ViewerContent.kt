@@ -96,7 +96,7 @@ fun ViewerContent(
                 playPauseAction = { onIntent(ViewerIntent.TogglePlayPause(listState.firstVisibleItemIndex)) },
                 timerAction = { onIntent(ViewerIntent.ToggleTimer) },
                 speedAction = { onIntent(ViewerIntent.ToggleSpeed) },
-                prevAction = { onIntent(ViewerIntent.Prev) },
+                sectionsAction = { onIntent(ViewerIntent.Sections) },
                 nextAction = { onIntent(ViewerIntent.Next) }
             )
         },
@@ -127,8 +127,8 @@ fun MediaViewerPreview() {
 
         ViewerContent(
             state = ViewerState(
-                isMenuVisible = false,
-                book = bookUI
+                isSectionsVisible = true,
+                book = bookUI,
             ),
             listState = LazyListState(),
             onIntent = {}
