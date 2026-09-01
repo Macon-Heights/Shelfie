@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.feature.viewer
+package me.alexandervortex.shelfie.ui.preview
 
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.feature.player.MediaServiceState
