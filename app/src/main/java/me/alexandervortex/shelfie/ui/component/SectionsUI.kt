@@ -18,9 +18,9 @@ import androidx.compose.ui.util.fastAll
 import androidx.compose.ui.util.fastAny
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
-import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookDocument
+import me.alexandervortex.shelfie.ui.preview.ViewerPreviewData.getBookDocument
 import me.alexandervortex.shelfie.feature.viewer.ViewerUIFactory
-import me.alexandervortex.shelfie.feature.viewer.getTitleInfo
+import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.ProgressModel

@@ -19,6 +19,7 @@ import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.ProgressBookModel
 import me.alexandervortex.shelfie.model.ProgressModel
 import me.alexandervortex.shelfie.ui.model.BookUIModel
+import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 
 class ViewerUIFactoryTest : BehaviorSpec({
     val factory = ViewerUIFactory()
