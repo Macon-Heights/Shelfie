@@ -25,7 +25,7 @@ class BookRepository
     private val zipHelper: ZipHelper
 ) {
 
-    fun previewBook(uri: Uri): PreviewBookModel? {
+    suspend fun previewBook(uri: Uri): PreviewBookModel? {
         return zipHelper.processUriContent(uri, supportedBooks) { stream, extension ->
             parser.bookParser(stream, extension)?.titleInfo
         }

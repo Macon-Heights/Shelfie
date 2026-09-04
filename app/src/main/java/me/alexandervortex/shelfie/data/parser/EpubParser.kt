@@ -6,6 +6,8 @@ import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.util.zip.ZipFile
@@ -21,9 +23,9 @@ class EpubParser
     private val elementMapper: ElementMapper,
 ) {
 
-    fun parse(
+    suspend fun parse(
         zip: ZipFile
-    ): ParsedBookModel {
+    ): ParsedBookModel = withContext(Dispatchers.IO) {
         val opfPath = getOpfPath(zip) ?: throw Exception("OPF not found")
         val opfDoc = zip.getInputStream(zip.getEntry(opfPath)).use {
             Jsoup.parse(it, "UTF-8", "", Parser.xmlParser())
@@ -99,7 +101,7 @@ class EpubParser
             )
         }
 
-        return ParsedBookModel(
+        ParsedBookModel(
             titleInfo = PreviewBookModel(
                 title = title,
                 author = author,

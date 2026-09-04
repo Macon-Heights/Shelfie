@@ -12,6 +12,8 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
 import java.io.InputStream
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class Fb2Parser
@@ -20,9 +22,9 @@ class Fb2Parser
     private val elementMapper: ElementMapper,
 ) {
 
-    fun parse(
+    suspend fun parse(
         inputStream: InputStream
-    ): ParsedBookModel {
+    ): ParsedBookModel = withContext(Dispatchers.IO) {
         val doc: Document = Jsoup.parse(
             inputStream,
             null,
@@ -35,7 +37,7 @@ class Fb2Parser
         val binaries = doc.getBinaries()
 
         val coverImage = getCoverImage(titleInfo, binaries)
-        val result = ParsedBookModel(
+        ParsedBookModel(
             titleInfo = previewBookMapper.map(
                 titleInfo = titleInfo,
                 coverImage = coverImage,
@@ -46,7 +48,6 @@ class Fb2Parser
                 binaries = binaries,
             ),
         )
-        return result
     }
 
     private fun getCoverImage(

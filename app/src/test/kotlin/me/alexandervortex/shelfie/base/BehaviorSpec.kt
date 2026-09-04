@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 fun <T> BehaviorSpec.transformerTest(
     expected: T,
     name: String,
-    function: () -> T,
+    function: suspend () -> T,
 ) {
     Given(name) {
         When("transform") {

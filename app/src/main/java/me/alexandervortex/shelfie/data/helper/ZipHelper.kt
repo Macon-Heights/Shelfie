@@ -3,6 +3,8 @@ package me.alexandervortex.shelfie.data.helper
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.alexandervortex.shelfie.base.ext.safeGetFileExtension
 import java.io.File
 import java.io.InputStream
@@ -15,13 +17,13 @@ private const val ZIP_EXT = "zip"
 class ZipHelper @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
-    fun <T> processUriContent(
+    suspend fun <T> processUriContent(
         uri: Uri,
         supportedExtensions: Set<String>,
-        contentAction: (InputStream, String) -> T
-    ): T? {
-        val extension = uri.safeGetFileExtension(context) ?: return null
-        return openStream(uri) { stream ->
+        contentAction: suspend (InputStream, String) -> T
+    ): T? = withContext(Dispatchers.IO) {
+        val extension = uri.safeGetFileExtension(context) ?: return@withContext null
+        openStream(uri) { stream ->
             if (extension.lowercase() == ZIP_EXT) {
                 ZipInputStream(stream).use { zipStream ->
                     var entry = zipStream.nextEntry
@@ -40,9 +42,9 @@ class ZipHelper @Inject constructor(
         }
     }
 
-    fun <T> useZipFile(inputStream: InputStream, block: (ZipFile) -> T): T {
+    suspend fun <T> useZipFile(inputStream: InputStream, block: suspend (ZipFile) -> T): T = withContext(Dispatchers.IO) {
         val tempFile = File.createTempFile("temp_book", ".zip", context.cacheDir)
-        return try {
+        try {
             tempFile.outputStream().use { output ->
                 inputStream.copyTo(output)
             }
@@ -58,9 +60,11 @@ class ZipHelper @Inject constructor(
         return supportedExtensions.any { fileName.endsWith(it, ignoreCase = true) }
     }
 
-    private fun <T> openStream(
-        uri: Uri, block: (InputStream) -> T
+    private suspend fun <T> openStream(
+        uri: Uri, block: suspend (InputStream) -> T
     ): T? {
-        return context.contentResolver.openInputStream(uri)?.use(block)
+        return context.contentResolver.openInputStream(uri)?.use { 
+            block(it)
+        }
     }
 }
