@@ -8,6 +8,8 @@ import android.os.IBinder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +31,8 @@ import javax.inject.Inject
 class ViewerViewModel
 @Inject constructor(
     private val repo: BookRepository,
-    private val factory: ViewerUIFactory
+    private val factory: ViewerUIFactory,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewerState())
@@ -38,15 +41,16 @@ class ViewerViewModel
     private val _effect = MutableSharedFlow<ViewerEffect>()
     val effect = _effect.asSharedFlow()
 
-    private var service: MediaService? = null // todo leaked context
+    private var serviceRef: WeakReference<MediaService>? = null
+    private val service: MediaService? get() = serviceRef?.get()
     private var serviceJob: Job? = null
     private var isBound = false
 
     fun onIntent(intent: ViewerIntent) {
         when (intent) {
             is ViewerIntent.LoadBook -> loadCurrentBook(intent.id)
-            is ViewerIntent.BindService -> bindService(intent.context)
-            is ViewerIntent.UnbindService -> unbindService(intent.context)
+            ViewerIntent.BindService -> bindService()
+            ViewerIntent.UnbindService -> unbindService()
             is ViewerIntent.TogglePlayPause -> togglePlayPause(intent.index)
             is ViewerIntent.SaveScrollStateOnDispose -> saveScrollStateOnDispose(
                 intent.id,
@@ -55,7 +59,7 @@ class ViewerViewModel
             )
 
             ViewerIntent.Next -> service?.clickNext()
-            ViewerIntent.Sections -> _state.update { it.copy(isSectionsVisible = !it.isSettingsVisible) }
+            ViewerIntent.Sections -> _state.update { it.copy(isSectionsVisible = !it.isSectionsVisible) }
             ViewerIntent.ToggleTimer -> service?.clickTimer()
             ViewerIntent.ToggleSpeed -> service?.clickSpeed()
             ViewerIntent.ToggleMenu -> _state.update { it.copy(isMenuVisible = !it.isMenuVisible) }
@@ -68,7 +72,7 @@ class ViewerViewModel
 
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             val newService = (binder as? MediaService.LocalBinder)?.getService() ?: return
-            service = newService
+            serviceRef = WeakReference(newService)
             isBound = true
 
             serviceJob?.cancel() // todo: check later // MB WE NEED IS_ACTIVE
@@ -93,12 +97,12 @@ class ViewerViewModel
         override fun onServiceDisconnected(name: ComponentName?) {
             serviceJob?.cancel()
             serviceJob = null
-            service = null
+            serviceRef = null
             isBound = false
         }
     }
 
-    private fun bindService(context: Context) {
+    private fun bindService() {
         if (isBound) return
         val intent = Intent(context, MediaService::class.java)
         context.startForegroundService(intent)
@@ -106,15 +110,21 @@ class ViewerViewModel
         isBound = true
     }
 
-    private fun unbindService(context: Context) {
+    private fun unbindService() {
         if (!isBound) return
+        service?.setOnSaveProgressListener { _, _, _ -> }
         runCatching {
             context.unbindService(conn)
         }
         serviceJob?.cancel()
         serviceJob = null
-        service = null
+        serviceRef = null
         isBound = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        unbindService()
     }
 
     private fun loadCurrentBook(id: String) {

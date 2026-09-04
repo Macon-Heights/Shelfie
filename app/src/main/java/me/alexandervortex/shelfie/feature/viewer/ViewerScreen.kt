@@ -24,7 +24,7 @@ fun ViewerScreen(
 
     LaunchedEffect(id) {
         viewModel.onIntent(ViewerIntent.LoadBook(id))
-        viewModel.onIntent(ViewerIntent.BindService(context))
+        viewModel.onIntent(ViewerIntent.BindService)
     }
 
     LaunchedEffect(book) {
@@ -57,7 +57,7 @@ fun ViewerScreen(
                     offset = listState.firstVisibleItemScrollOffset
                 )
             )
-            viewModel.onIntent(ViewerIntent.UnbindService(context))
+            viewModel.onIntent(ViewerIntent.UnbindService)
         }
     }
 
