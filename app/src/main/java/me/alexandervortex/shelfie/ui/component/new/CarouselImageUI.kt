@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastFilterNotNull
-import me.alexandervortex.shelfie.ui.preview.ViewerPreviewData.getImages
 import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.ui.preview.BookPreviewFactory.getImages
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 private const val GAP = 16

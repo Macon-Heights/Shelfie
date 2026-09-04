@@ -1,6 +1,19 @@
 package me.alexandervortex.shelfie.ui.preview
 
+import me.alexandervortex.shelfie.R
+
 object BookPreviewFactory {
+
+    fun getImages(): List<Int> {
+        return listOf(
+            R.drawable.img_4,
+            R.drawable.img_5,
+            R.drawable.img_1,
+            R.drawable.img_2,
+            R.drawable.img_3,
+            R.drawable.img
+        )
+    }
 
     fun getTitles(): List<List<String>> {
         return listOf(

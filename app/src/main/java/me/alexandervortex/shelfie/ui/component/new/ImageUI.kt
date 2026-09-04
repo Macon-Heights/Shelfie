@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import me.alexandervortex.shelfie.ui.preview.ViewerPreviewData.getImages
 import me.alexandervortex.shelfie.model.BitmapImageModel
 import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ImageModel
+import me.alexandervortex.shelfie.ui.preview.BookPreviewFactory.getImages
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable

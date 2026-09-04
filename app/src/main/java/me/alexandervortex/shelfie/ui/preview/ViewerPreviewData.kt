@@ -1,6 +1,5 @@
 package me.alexandervortex.shelfie.ui.preview
 
-import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.feature.player.MediaServiceState
 import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.BookNode
@@ -14,18 +13,6 @@ import me.alexandervortex.shelfie.ui.model.StyledText
 import me.alexandervortex.shelfie.ui.model.UI
 
 object ViewerPreviewData {
-
-    fun getImages(): List<Int> {
-        val images = listOf(
-            R.drawable.img_4,
-            R.drawable.img_5,
-            R.drawable.img_1,
-            R.drawable.img_2,
-            R.drawable.img_3,
-            R.drawable.img
-        )
-        return images
-    }
 
     fun playingState(): MediaServiceState {
         return MediaServiceState(
