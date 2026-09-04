@@ -13,6 +13,8 @@ import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
 import java.io.InputStream
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -24,29 +26,38 @@ class Fb2Parser
 
     suspend fun parse(
         inputStream: InputStream
-    ): ParsedBookModel = withContext(Dispatchers.IO) {
-        val doc: Document = Jsoup.parse(
-            inputStream,
-            null,
-            "",
-            Parser.xmlParser()
-        )
+    ): ParsedBookModel = coroutineScope {
+        val doc: Document = withContext(Dispatchers.IO) {
+            Jsoup.parse(
+                inputStream,
+                null,
+                "",
+                Parser.xmlParser()
+            )
+        }
 
         val body = doc.getBody()
         val titleInfo = doc.getTitleInfo()
         val binaries = doc.getBinaries()
 
         val coverImage = getCoverImage(titleInfo, binaries)
-        ParsedBookModel(
-            titleInfo = previewBookMapper.map(
+
+        val titleInfoModelDeferred = async {
+            previewBookMapper.map(
                 titleInfo = titleInfo,
                 coverImage = coverImage,
                 gallery = emptyList(),
-            ),
-            document = elementMapper.map(
-                root = body,
-                binaries = binaries,
-            ),
+            )
+        }
+
+        val document = elementMapper.map(
+            root = body,
+            binaries = binaries,
+        )
+
+        ParsedBookModel(
+            titleInfo = titleInfoModelDeferred.await(),
+            document = document,
         )
     }
 
