@@ -1,5 +1,8 @@
 package me.alexandervortex.shelfie.data.mapper
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.BookNode
 import me.alexandervortex.shelfie.model.ByteImageModel
@@ -15,25 +18,24 @@ import javax.inject.Inject
 class ElementMapper
 @Inject constructor() {
 
-    fun map(
+    suspend fun map(
         root: Element?,
         binaries: Map<String, ByteArray>,
-    ): BookDocument {
+    ): BookDocument = withContext(Dispatchers.Default) {
         if (root == null) {
-            return BookDocument(emptyList())
+            return@withContext BookDocument(emptyList())
         }
 
-        val result = BookDocument(
+        BookDocument(
             children = mapNodes(
                 nodes = root.childNodes(),
                 binaries = binaries,
                 parentPath = "root",
             )
         )
-        return result
     }
 
-    private fun mapNodes(
+    private suspend fun mapNodes(
         nodes: List<Node>,
         binaries: Map<String, ByteArray>,
         parentPath: String,
@@ -58,6 +60,7 @@ class ElementMapper
         }
 
         nodes.forEachIndexed { index, node ->
+            yield()
 
             val path = "$parentPath/$index"
 
@@ -97,7 +100,7 @@ class ElementMapper
         return result
     }
 
-    private fun mapBlock(
+    private suspend fun mapBlock(
         element: Element,
         binaries: Map<String, ByteArray>,
         path: String,
@@ -218,7 +221,7 @@ class ElementMapper
         }
     }
 
-    private fun mapSection(
+    private suspend fun mapSection(
         element: Element,
         binaries: Map<String, ByteArray>,
         path: String,
@@ -251,7 +254,7 @@ class ElementMapper
         )
     }
 
-    private fun mapGroup(
+    private suspend fun mapGroup(
         element: Element,
         binaries: Map<String, ByteArray>,
         path: String,
@@ -274,7 +277,7 @@ class ElementMapper
         }
     }
 
-    private fun mapRichText(
+    private suspend fun mapRichText(
         element: Element,
         binaries: Map<String, ByteArray>,
     ): RichText? {
@@ -288,7 +291,7 @@ class ElementMapper
         )
     }
 
-    private fun mapTitle(
+    private suspend fun mapTitle(
         element: Element,
         binaries: Map<String, ByteArray>,
     ): RichText? {
@@ -319,7 +322,7 @@ class ElementMapper
         return compactInline(result)
     }
 
-    private fun mapInlineNodes(
+    private suspend fun mapInlineNodes(
         nodes: List<Node>,
         binaries: Map<String, ByteArray>,
         marks: Set<TextStyleUIModel>,
@@ -329,6 +332,7 @@ class ElementMapper
         val result = mutableListOf<InlineNode>()
 
         nodes.forEach { node ->
+            yield()
             when (node) {
 
                 is TextNode -> {
@@ -353,7 +357,7 @@ class ElementMapper
         return result
     }
 
-    private fun mapInlineElement(
+    private suspend fun mapInlineElement(
         element: Element,
         binaries: Map<String, ByteArray>,
         marks: Set<TextStyleUIModel>,
