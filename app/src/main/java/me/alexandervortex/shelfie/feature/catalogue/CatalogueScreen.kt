@@ -49,7 +49,9 @@ fun CatalogueScreen(
         val intent = Intent.FLAG_GRANT_READ_URI_PERMISSION
         try {
             context.contentResolver.takePersistableUriPermission(uri, intent)
-        } catch (_: SecurityException) { }
+        } catch (_: SecurityException) {
+            // todo picker exception here
+        }
         nav.navigate(AddBookRoute(uri).route)
     }
 

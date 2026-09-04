@@ -147,6 +147,7 @@ class ViewerViewModel
                 }
                 service?.loadBook(_state.value.book)
             } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
                 _state.update {
                     it.copy(error = e.localizedMessage ?: "unknown viewmodel error")
                 }

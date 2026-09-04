@@ -63,11 +63,7 @@ fun ViewerScreen(
 
     LaunchedEffect(serviceState.index, serviceState.offset) {
         if (serviceState.isPlaying) {
-            try {
-                listState.animateScrollToItem(serviceState.index, scrollOffset = serviceState.offset)
-            } catch (e: Exception) {
-
-            }
+            listState.animateScrollToItem(serviceState.index, scrollOffset = serviceState.offset)
         }
     }
 
