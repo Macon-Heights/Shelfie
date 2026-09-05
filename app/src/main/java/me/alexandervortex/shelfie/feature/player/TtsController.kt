@@ -89,6 +89,11 @@ class TtsController(
         onStateChanged(isSpeaking)
         currentIndex = startIndex
         currentPart = 0
+
+        bookModel?.let {
+            saveScrollState.invoke(it.id, currentIndex, currentPart)
+        }
+
         tts?.stop()
         speakNext()
     }
@@ -114,25 +119,25 @@ class TtsController(
     }
 
     private fun speakNext() {
+        val model = bookModel ?: return stopSpeaking()
         val stopAt = stoppingTime
         if (stopAt != null && System.currentTimeMillis() >= stopAt) {
-            bookModel?.let {
-                saveScrollState.invoke(
-                    it.id,
-                    currentIndex,
-                    currentPart
-                )
-            }
+            saveScrollState.invoke(
+                model.id,
+                currentIndex,
+                currentPart
+            )
 
             stopSpeaking()
             return
         }
 
-        val elements = bookModel?.elements ?: return stopSpeaking()
+        val elements = model.elements
         if (currentIndex >= elements.size) return stopSpeaking()
 
         val textUi = elements[currentIndex] as? UI.ComplexText ?: run {
             currentIndex++
+            saveScrollState.invoke(model.id, currentIndex, 0)
             return speakNext()
         }
 
@@ -140,6 +145,7 @@ class TtsController(
         if (currentPart >= parts.size) {
             currentIndex++
             currentPart = 0
+            saveScrollState.invoke(model.id, currentIndex, currentPart)
             return speakNext()
         }
 
@@ -157,6 +163,9 @@ class TtsController(
     private fun stopSpeaking() {
         tts?.stop()
         isSpeaking = false
+        bookModel?.let {
+            saveScrollState.invoke(it.id, currentIndex, currentPart)
+        }
         onStateChanged(isSpeaking)
     }
 
