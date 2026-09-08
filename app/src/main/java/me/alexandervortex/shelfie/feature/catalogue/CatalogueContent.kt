@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -43,6 +44,7 @@ import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
+import me.alexandervortex.shelfie.ui.theme.IC_UPDATE
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -54,6 +56,7 @@ fun CatalogueContent(
     onToggleRemoveMode: (CatalogueItemUIModel.Model) -> Unit,
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
+    updateClick: () -> Unit,
 ) {
     PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
@@ -130,30 +133,49 @@ fun CatalogueContent(
             val icon = if (state.isRemoveMode) IC_DELETE else IC_ADD
             val containerColor = if (state.isRemoveMode) getColors().error else null
             val contentColor = if (state.isRemoveMode) getColors().onError else null
-
-            ButtonUI(
+            Row(
                 modifier = Modifier
                     .padding(32.dp)
                     .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
-                contentColor = contentColor,
-                containerColor = containerColor,
-                modifierAfter = Modifier
-                    .size(BUTTON_BIG.dp)
-                    .clickable {
-                        if (state.isRemoveMode) {
-                            onTogglePopup.invoke(true)
-                        } else {
-                            onAddClick.invoke()
-                        }
-                    },
-                content = {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = it
-                    )
-                }
-            )
+            ) {
+                ButtonUI(
+                    contentColor = contentColor,
+                    containerColor = containerColor,
+                    modifierAfter = Modifier
+                        .size(BUTTON_BIG.dp)
+                        .clickable {
+                            updateClick.invoke()
+                        },
+                    content = {
+                        Icon(
+                            imageVector = IC_UPDATE,
+                            contentDescription = null,
+                            tint = it
+                        )
+                    }
+                )
+                Spacer(Modifier.size(32.dp))
+                ButtonUI(
+                    contentColor = contentColor,
+                    containerColor = containerColor,
+                    modifierAfter = Modifier
+                        .size(BUTTON_BIG.dp)
+                        .clickable {
+                            if (state.isRemoveMode) {
+                                onTogglePopup.invoke(true)
+                            } else {
+                                onAddClick.invoke()
+                            }
+                        },
+                    content = {
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            tint = it
+                        )
+                    }
+                )
+            }
         },
         popup = {
             ConfirmationUI(

@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Polyline
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.material.icons.filled.Speed
+import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material.icons.filled.Timer
 
 private val icons = Icons.Default
@@ -36,4 +37,5 @@ val IC_PLAYER_SECTIONS = icons.Polyline
 
 // Settings
 val IC_SETTINGS = icons.Settings
+val IC_UPDATE = icons.SystemUpdate
 val IC_RESET = icons.SettingsBackupRestore
