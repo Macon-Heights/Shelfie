@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
 }
 
@@ -39,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -83,6 +85,7 @@ dependencies {
     // Parsers
     implementation(libs.jsoup)
     implementation(libs.serialization.core)
+    implementation(libs.serialization.json)
     implementation(libs.storage)
 
     // Test
@@ -91,4 +94,8 @@ dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.framework)
     testImplementation(libs.mockk)
+
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
 }
