@@ -6,4 +6,6 @@ sealed interface CatalogueIntent {
     data class TogglePopup(val isEnabled: Boolean) : CatalogueIntent
     data object RemoveChecked : CatalogueIntent
     data object CheckForUpdates : CatalogueIntent
+    data object ApproveUpdate : CatalogueIntent
+    data object DismissUpdate : CatalogueIntent
 }
