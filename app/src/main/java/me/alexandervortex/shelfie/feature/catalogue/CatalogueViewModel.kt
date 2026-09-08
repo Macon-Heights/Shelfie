@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
+import me.alexandervortex.shelfie.feature.updater.UpdateRepository
+import me.alexandervortex.shelfie.feature.updater.UpdateManager
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
@@ -20,7 +22,9 @@ import javax.inject.Inject
 class CatalogueViewModel
 @Inject constructor(
     private val repository: BookRepository,
-    private val factory: CatalogueUIFactory
+    private val factory: CatalogueUIFactory,
+    private val updateRepository: UpdateRepository,
+    private val updateManager: UpdateManager,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CatalogueState(books = getSkeletons()))
@@ -50,7 +54,33 @@ class CatalogueViewModel
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)
             is CatalogueIntent.RemoveChecked -> removeChecked()
             is CatalogueIntent.TogglePopup -> togglePopup(intent.isEnabled)
+            is CatalogueIntent.CheckForUpdates -> checkForUpdates()
+            is CatalogueIntent.ApproveUpdate -> approveUpdate()
+            is CatalogueIntent.DismissUpdate -> dismissUpdate()
         }
+    }
+
+    private fun checkForUpdates() = viewModelScope.launch {
+        _effect.emit(CatalogueEffect.ShowToast("Checking for updates..."))
+        val update = updateRepository.getAvailableUpdate()
+        if (update != null) {
+            _state.update { it.copy(pendingUpdate = update) }
+        } else {
+            _effect.emit(CatalogueEffect.ShowToast("No updates available"))
+        }
+    }
+
+    private fun approveUpdate() {
+        val update = _state.value.pendingUpdate ?: return
+        viewModelScope.launch {
+            _effect.emit(CatalogueEffect.ShowToast("Downloading update..."))
+        }
+        updateManager.downloadAndInstall(update)
+        dismissUpdate()
+    }
+
+    private fun dismissUpdate() {
+        _state.update { it.copy(pendingUpdate = null) }
     }
 
     private fun togglePopup(enabled: Boolean) {
