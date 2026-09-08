@@ -78,6 +78,7 @@ nav-compose = { group = "androidx.navigation", name = "navigation-compose", vers
 ### Parsers
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoupVersion" }
 serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serializationVersion" }
+serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationVersion" }
 storage = { group = "com.anggrayudi", name = "storage", version.ref = "storageVersion" }
 
 ### Tests
@@ -90,4 +91,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVer
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 
