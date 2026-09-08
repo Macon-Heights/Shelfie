@@ -16,8 +16,8 @@ android {
         applicationId = "me.alexandervortex.shelfie"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.26.09"
+        versionCode = 3
+        versionName = "1.26.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
