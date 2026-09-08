@@ -1,5 +1,6 @@
 package me.alexandervortex.shelfie.feature.catalogue.mvi
 
+import me.alexandervortex.shelfie.feature.updater.AppUpdate
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 
 data class CatalogueState(
@@ -7,4 +8,5 @@ data class CatalogueState(
     val isRemoveMode: Boolean = false,
     val books: List<CatalogueItemUIModel> = emptyList(),
     val error: String? = null,
+    val pendingUpdate: AppUpdate? = null,
 )
