@@ -57,11 +57,13 @@ fun CatalogueContent(
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
     updateClick: () -> Unit,
+    onApproveUpdate: () -> Unit,
+    onDismissUpdate: () -> Unit,
 ) {
     PopupBoxUI(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
-        isPopup = state.isPopup,
+        isPopup = state.isPopup || state.pendingUpdate != null,
         content = {
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -178,19 +180,30 @@ fun CatalogueContent(
             }
         },
         popup = {
-            ConfirmationUI(
-                title = stringResource(R.string.catalogue_remove_title),
-                subtitle = stringResource(R.string.catalogue_remove_subtitle),
-                approveText = stringResource(R.string.catalogue_remove_yes),
-                declineText = stringResource(R.string.catalogue_remove_no),
-                onApprove = {
-                    onDeleteClick.invoke()
-                    onTogglePopup(false)
-                },
-                onDecline = {
-                    onTogglePopup(false)
-                }
-            )
+            if (state.pendingUpdate != null) {
+                ConfirmationUI(
+                    title = stringResource(R.string.update_dialog_title),
+                    subtitle = stringResource(R.string.update_dialog_subtitle, state.pendingUpdate.versionName),
+                    approveText = stringResource(R.string.update_dialog_approve),
+                    declineText = stringResource(R.string.update_dialog_decline),
+                    onApprove = onApproveUpdate,
+                    onDecline = onDismissUpdate
+                )
+            } else {
+                ConfirmationUI(
+                    title = stringResource(R.string.catalogue_remove_title),
+                    subtitle = stringResource(R.string.catalogue_remove_subtitle),
+                    approveText = stringResource(R.string.catalogue_remove_yes),
+                    declineText = stringResource(R.string.catalogue_remove_no),
+                    onApprove = {
+                        onDeleteClick.invoke()
+                        onTogglePopup(false)
+                    },
+                    onDecline = {
+                        onTogglePopup(false)
+                    }
+                )
+            }
         }
     )
 }
