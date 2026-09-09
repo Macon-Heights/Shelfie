@@ -39,9 +39,9 @@ import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.CatalogueItemUI
 import me.alexandervortex.shelfie.ui.component.ConfirmationUI
 import me.alexandervortex.shelfie.ui.component.EmptyStateUI
-import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
 import me.alexandervortex.shelfie.ui.theme.IC_UPDATE
@@ -205,5 +205,19 @@ fun CatalogueContent(
                 )
             }
         }
+    )
+}
+
+@Composable
+@CombinedPreviews
+fun PreviewCatalogue() {
+    val state = CatalogueState(
+
+    )
+    CatalogueContent(
+        state = state,
+        {}, {}, {},
+        {}, {}, {},
+        {}, {}, {}
     )
 }
