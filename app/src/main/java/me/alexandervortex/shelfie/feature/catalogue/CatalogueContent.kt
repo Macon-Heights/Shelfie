@@ -52,15 +52,15 @@ import me.alexandervortex.shelfie.ui.theme.IC_UPDATE
 @Composable
 fun CatalogueContent(
     state: CatalogueState,
-    onBookOpen: (CatalogueItemUIModel.Model) -> Unit,
-    onToggleBookCheck: (CatalogueItemUIModel.Model) -> Unit,
-    onTogglePopup: (Boolean) -> Unit,
-    onToggleRemoveMode: (CatalogueItemUIModel.Model) -> Unit,
-    onAddClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    updateClick: () -> Unit,
-    onApproveUpdate: () -> Unit,
-    onDismissUpdate: () -> Unit,
+    onBookOpen: (CatalogueItemUIModel.Model) -> Unit = {},
+    onToggleBookCheck: (CatalogueItemUIModel.Model) -> Unit = {},
+    onTogglePopup: (Boolean) -> Unit = {},
+    onToggleRemoveMode: (CatalogueItemUIModel.Model) -> Unit = {},
+    onAddClick: () -> Unit = {},
+    onDeleteClick: () -> Unit = {},
+    updateClick: () -> Unit = {},
+    onApproveUpdate: () -> Unit = {},
+    onDismissUpdate: () -> Unit = {},
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -211,13 +211,8 @@ fun CatalogueContent(
 @Composable
 @CombinedPreviews
 fun PreviewCatalogue() {
-    val state = CatalogueState(
-
-    )
-    CatalogueContent(
-        state = state,
-        {}, {}, {},
-        {}, {}, {},
-        {}, {}, {}
-    )
+    CombinedPreviews {
+        val state = CatalogueState()
+        CatalogueContent(state)
+    }
 }
