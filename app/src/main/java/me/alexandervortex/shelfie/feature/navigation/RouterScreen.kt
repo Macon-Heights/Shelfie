@@ -77,7 +77,8 @@ fun RouterScreen(data: Uri? = null) {
             val viewModel = hiltViewModel<ViewerViewModel>()
             ViewerScreen(
                 id = it.getId(),
-                viewModel = viewModel
+                viewModel = viewModel,
+                navController
             )
         }
     }

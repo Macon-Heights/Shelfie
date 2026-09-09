@@ -1,4 +1,4 @@
-package me.alexandervortex.shelfie.ui.component
+package me.alexandervortex.shelfie.feature.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,17 +13,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
-import me.alexandervortex.shelfie.feature.settings.SettingsIntent
-import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
 import me.alexandervortex.shelfie.feature.settings.values.ThemeValue
 import me.alexandervortex.shelfie.feature.settings.values.next
 import me.alexandervortex.shelfie.feature.settings.values.prev
+import me.alexandervortex.shelfie.ui.component.BOX_PADDING
+import me.alexandervortex.shelfie.ui.component.SettingsItemUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 
 @Composable
-fun SettingsUI(
+fun SettingsScreen(
     viewModel: SettingsViewModel?,
 ) {
     Column(
@@ -100,6 +99,6 @@ fun SettingsUI(
 @Composable
 private fun SettingsPreview() {
     CombinedPreviews {
-        SettingsUI(null)
+        SettingsScreen(null)
     }
 }

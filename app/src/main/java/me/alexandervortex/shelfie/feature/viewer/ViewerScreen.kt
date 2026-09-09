@@ -8,12 +8,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import me.alexandervortex.shelfie.feature.navigation.SettingsRoute
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 
 @Composable
 fun ViewerScreen(
     id: String,
     viewModel: ViewerViewModel,
+    nav: NavController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -74,6 +77,7 @@ fun ViewerScreen(
     ViewerContent(
         state = state,
         listState = listState,
-        onIntent = viewModel::onIntent
+        onIntent = viewModel::onIntent,
+        onSettingsClick = { nav.navigate(SettingsRoute.route) }
     )
 }
