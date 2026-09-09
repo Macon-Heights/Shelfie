@@ -221,3 +221,17 @@ fun PreviewCatalogue() {
         {}, {}, {}
     )
 }
+
+@Composable
+@CombinedPreviews
+fun PreviewCatalogue() {
+    val state = CatalogueState(
+
+    )
+    CatalogueContent(
+        state = state,
+        {}, {}, {},
+        {}, {}, {},
+        {}, {}, {}
+    )
+}
