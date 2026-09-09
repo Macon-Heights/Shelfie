@@ -70,6 +70,6 @@ class UpdateRepository
             if (remotePart < currentPart) return false
         }
 
-        return true
+        return false
     }
 }
