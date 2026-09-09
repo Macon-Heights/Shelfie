@@ -154,23 +154,22 @@ fun CatalogueContent(
                 )
             }
         )
-    }
-
-    if (state.isPopup) {
-        Dialog(onDismissRequest = { onTogglePopup(false) }) {
-            ConfirmationUI(
-                title = stringResource(R.string.catalogue_remove_title),
-                subtitle = stringResource(R.string.catalogue_remove_subtitle),
-                approveText = stringResource(R.string.catalogue_remove_yes),
-                declineText = stringResource(R.string.catalogue_remove_no),
-                onApprove = {
-                    onDeleteClick.invoke()
-                    onTogglePopup(false)
-                },
-                onDecline = {
-                    onTogglePopup(false)
-                }
-            )
+        if (state.isPopup) {
+            Dialog(onDismissRequest = { onTogglePopup(false) }) {
+                ConfirmationUI(
+                    title = stringResource(R.string.catalogue_remove_title),
+                    subtitle = stringResource(R.string.catalogue_remove_subtitle),
+                    approveText = stringResource(R.string.catalogue_remove_yes),
+                    declineText = stringResource(R.string.catalogue_remove_no),
+                    onApprove = {
+                        onDeleteClick.invoke()
+                        onTogglePopup(false)
+                    },
+                    onDecline = {
+                        onTogglePopup(false)
+                    }
+                )
+            }
         }
     }
 }

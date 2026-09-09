@@ -40,42 +40,33 @@ fun ConfirmationUI(
     onApprove: () -> Unit,
     onDecline: () -> Unit,
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxSize()
-            .background(getStaticSurfaceVariant().copy(alpha = 0.7f))
-            .clickable { onDecline.invoke() }
-            .padding(ROOT_PADDING.dp)
+            .clip(SHAPE_M)
+            .background(getColors().surface)
+            .padding(BOX_PADDING.dp)
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .clip(SHAPE_M)
-                .background(getColors().surface)
-                .padding(BOX_PADDING.dp)
-        ) {
-            Text(text = title, fontSize = TITLE_SIZE.sp)
-            Spacer(Modifier.size(TITLE_GAP.dp))
-            Text(subtitle)
-            Spacer(Modifier.size(TEXT_GAP.dp))
-            ButtonUI(
-                shape = SHAPE_S,
-                containerColor = getColors().error,
-                contentColor = getColors().onError,
-                modifierAfter = Modifier
-                    .fillMaxWidth()
-                    .clickable { onApprove.invoke() },
-                content = { Text(text = approveText, color = it) }
-            )
-            Spacer(Modifier.size(BUTTON_GAP.dp))
-            ButtonUI(
-                shape = SHAPE_S,
-                modifierAfter = Modifier
-                    .fillMaxWidth()
-                    .clickable { onDecline.invoke() },
-                content = { Text(text = declineText, color = it) })
-        }
+        Text(text = title, fontSize = TITLE_SIZE.sp)
+        Spacer(Modifier.size(TITLE_GAP.dp))
+        Text(subtitle)
+        Spacer(Modifier.size(TEXT_GAP.dp))
+        ButtonUI(
+            shape = SHAPE_S,
+            containerColor = getColors().error,
+            contentColor = getColors().onError,
+            modifierAfter = Modifier
+                .fillMaxWidth()
+                .clickable { onApprove.invoke() },
+            content = { Text(text = approveText, color = it) }
+        )
+        Spacer(Modifier.size(BUTTON_GAP.dp))
+        ButtonUI(
+            shape = SHAPE_S,
+            modifierAfter = Modifier
+                .fillMaxWidth()
+                .clickable { onDecline.invoke() },
+            content = { Text(text = declineText, color = it) })
     }
 }
 
