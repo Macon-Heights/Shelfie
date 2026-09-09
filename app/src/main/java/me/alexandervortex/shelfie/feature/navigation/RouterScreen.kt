@@ -9,10 +9,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import me.alexandervortex.shelfie.feature.preview.PreviewScreen
-import me.alexandervortex.shelfie.feature.preview.PreviewScreenViewModel
 import me.alexandervortex.shelfie.feature.catalogue.CatalogueScreen
 import me.alexandervortex.shelfie.feature.catalogue.CatalogueViewModel
+import me.alexandervortex.shelfie.feature.preview.PreviewScreen
+import me.alexandervortex.shelfie.feature.preview.PreviewScreenViewModel
+import me.alexandervortex.shelfie.feature.settings.SettingsScreen
+import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
 import me.alexandervortex.shelfie.feature.viewer.ViewerScreen
 import me.alexandervortex.shelfie.feature.viewer.ViewerViewModel
 
@@ -44,6 +46,14 @@ fun RouterScreen(data: Uri? = null) {
                 uri = uri,
                 viewModel = hiltViewModel<PreviewScreenViewModel>(),
                 navController = navController
+            )
+        }
+
+        composable(
+            route = SettingsRoute.route,
+        ) {
+            SettingsScreen(
+                viewModel = hiltViewModel<SettingsViewModel>(),
             )
         }
 

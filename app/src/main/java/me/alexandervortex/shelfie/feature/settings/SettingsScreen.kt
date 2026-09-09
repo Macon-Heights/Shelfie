@@ -1,7 +1,6 @@
 package me.alexandervortex.shelfie.feature.settings
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,15 +28,13 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel?,
-    onDecline: () -> Unit,
+    viewModel: SettingsViewModel?
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(getStaticSurfaceVariant().copy(alpha = 0.7f))
-            .clickable { onDecline.invoke() }
             .padding(ROOT_PADDING.dp)
     ) {
         Column(
@@ -115,6 +112,6 @@ fun SettingsScreen(
 @Composable
 private fun SettingsPreview() {
     CombinedPreviews {
-        SettingsScreen(null) {}
+        SettingsScreen(null)
     }
 }
