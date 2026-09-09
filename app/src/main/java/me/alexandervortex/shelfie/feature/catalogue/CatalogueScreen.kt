@@ -13,8 +13,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueIntent
+import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.feature.navigation.AddBookRoute
 import me.alexandervortex.shelfie.feature.navigation.MediaViewerRoute
+import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
 fun CatalogueScreen(
@@ -67,4 +69,13 @@ fun CatalogueScreen(
         onApproveUpdate = { vm.onIntent(CatalogueIntent.ApproveUpdate) },
         onDismissUpdate = { vm.onIntent(CatalogueIntent.DismissUpdate) }
     )
+}
+
+@Composable
+@CombinedPreviews
+private fun PreviewCatalogue() {
+    CombinedPreviews {
+        val state = CatalogueState()
+        CatalogueContent(state)
+    }
 }
