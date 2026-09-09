@@ -68,9 +68,7 @@ fun CatalogueScreen(
         onAddClick = { picker.launch(arrayOf("text/*", "application/*")) },
         onDeleteClick = { vm.onIntent(CatalogueIntent.RemoveChecked) },
         onTogglePopup = { vm.onIntent(CatalogueIntent.TogglePopup(it)) },
-        updateClick = { vm.onIntent(CatalogueIntent.CheckForUpdates) },
-        onApproveUpdate = { vm.onIntent(CatalogueIntent.ApproveUpdate) },
-        onDismissUpdate = { vm.onIntent(CatalogueIntent.DismissUpdate) }
+        updateClick = { vm.onIntent(CatalogueIntent.ClickUpdate) },
     )
 }
 

@@ -60,8 +60,6 @@ fun CatalogueContent(
     onAddClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
     updateClick: () -> Unit = {},
-    onApproveUpdate: () -> Unit = {},
-    onDismissUpdate: () -> Unit = {},
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),

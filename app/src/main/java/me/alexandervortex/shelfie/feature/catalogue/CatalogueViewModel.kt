@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.alexandervortex.shelfie.data.repository.BookRepository
-import me.alexandervortex.shelfie.feature.updater.UpdateRepository
-import me.alexandervortex.shelfie.feature.updater.UpdateManager
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueEffect
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
+import me.alexandervortex.shelfie.feature.updater.UpdateManager
+import me.alexandervortex.shelfie.feature.updater.UpdateRepository
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import javax.inject.Inject
 
@@ -34,17 +34,17 @@ class CatalogueViewModel
 
     init {
         viewModelScope.launch {
-            repository.getCatalogueItems().collect { dbBooks ->
-                _state.update { current ->
-                    val updatedBooks = dbBooks.map { dbBook ->
-                        val uiBook = factory.getCatalogueItemUIModel(dbBook)
-                        val currentBook = current.books.filterIsInstance<CatalogueItemUIModel.Model>()
-                            .find { it.data.id == uiBook.data.id }
-                        uiBook.copy(isChecked = currentBook?.isChecked ?: false)
+            launch {
+                repository.getCatalogueItems().collect { dbBooks ->
+                    _state.update { current ->
+                        val updatedBooks = dbBooks.map { dbBook ->
+                            factory.getCatalogueItemUIModel(dbBook)
+                        }
+                        current.copy(books = updatedBooks)
                     }
-                    current.copy(books = updatedBooks)
                 }
             }
+            launch { checkForUpdates() }
         }
     }
 
@@ -54,19 +54,16 @@ class CatalogueViewModel
             is CatalogueIntent.ToggleBookCheck -> toggleBookCheck(intent.id)
             is CatalogueIntent.RemoveChecked -> removeChecked()
             is CatalogueIntent.TogglePopup -> togglePopup(intent.isEnabled)
-            is CatalogueIntent.CheckForUpdates -> checkForUpdates()
-            is CatalogueIntent.ApproveUpdate -> approveUpdate()
-            is CatalogueIntent.DismissUpdate -> dismissUpdate()
+            is CatalogueIntent.ClickUpdate -> {
+                approveUpdate()
+            }
         }
     }
 
-    private fun checkForUpdates() = viewModelScope.launch {
-        _effect.emit(CatalogueEffect.ShowToast("Checking for updates..."))
+    private suspend fun checkForUpdates() {
         val update = updateRepository.getAvailableUpdate()
         if (update != null) {
             _state.update { it.copy(pendingUpdate = update) }
-        } else {
-            _effect.emit(CatalogueEffect.ShowToast("No updates available"))
         }
     }
 
@@ -76,11 +73,6 @@ class CatalogueViewModel
             _effect.emit(CatalogueEffect.ShowToast("Downloading update..."))
         }
         updateManager.downloadAndInstall(update)
-        dismissUpdate()
-    }
-
-    private fun dismissUpdate() {
-        _state.update { it.copy(pendingUpdate = null) }
     }
 
     private fun togglePopup(enabled: Boolean) {
