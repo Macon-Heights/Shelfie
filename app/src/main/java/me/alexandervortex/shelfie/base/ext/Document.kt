@@ -1,6 +1,10 @@
 package me.alexandervortex.shelfie.base.ext
 
 import android.util.Base64
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
@@ -17,11 +21,15 @@ fun Document.getTitleInfo(): Element? {
     return selectFirst(TITLE_INFO) ?: selectFirst("title-info")
 }
 
-fun Document.getBinaries(): Map<String, ByteArray> {
-    return select(BINARY)
-        .associate {
-            val binaryId = it.attr(ID)
-            val base64 = it.text().trim()
-            binaryId to Base64.decode(base64, Base64.DEFAULT)
+suspend fun Document.getBinaries(): Map<String, ByteArray> = coroutineScope {
+    select(BINARY)
+        .map { element ->
+            async(Dispatchers.Default) {
+                val binaryId = element.attr(ID)
+                val base64 = element.text().trim()
+                binaryId to Base64.decode(base64, Base64.DEFAULT)
+            }
         }
+        .awaitAll()
+        .toMap()
 }

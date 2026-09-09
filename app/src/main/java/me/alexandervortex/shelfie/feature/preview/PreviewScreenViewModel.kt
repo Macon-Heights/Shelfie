@@ -40,6 +40,7 @@ class PreviewScreenViewModel
                     val titleInfo = bookRepository.previewBook(uri)
                     _state.update { titleInfo ?: it }
                 } catch (e: Exception) {
+                    if (e is kotlinx.coroutines.CancellationException) throw e
                     _effect.emit(PreviewScreenEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }
             }
@@ -54,6 +55,7 @@ class PreviewScreenViewModel
                     _effect.emit(PreviewScreenEffect.ShowToast("Book added"))
                     _effect.emit(PreviewScreenEffect.Close)
                 } catch (e: Exception) {
+                    if (e is kotlinx.coroutines.CancellationException) throw e
                     _effect.emit(PreviewScreenEffect.ShowToast("Error: ${e.localizedMessage}"))
                 }
             }

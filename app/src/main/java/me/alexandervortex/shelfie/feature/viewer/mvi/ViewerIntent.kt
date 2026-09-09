@@ -1,14 +1,12 @@
 package me.alexandervortex.shelfie.feature.viewer.mvi
 
-import android.content.Context
-
 sealed interface ViewerIntent {
 
     data class LoadBook(val id: String) : ViewerIntent
 
-    data class BindService(val context: Context) : ViewerIntent
+    data object BindService : ViewerIntent
 
-    data class UnbindService(val context: Context) : ViewerIntent
+    data object UnbindService : ViewerIntent
     data class SaveScrollStateOnDispose(
         val id: String,
         val index: Int,

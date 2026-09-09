@@ -19,7 +19,7 @@ class UniversalFileParser
     private val fileHelper: FileHelper,
 ) {
 
-    fun bookParser(
+    suspend fun bookParser(
         stream: InputStream,
         extension: String
     ): ParsedBookModel? {

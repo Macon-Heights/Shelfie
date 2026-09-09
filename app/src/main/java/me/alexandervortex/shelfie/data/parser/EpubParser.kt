@@ -6,6 +6,11 @@ import me.alexandervortex.shelfie.model.BookDocument
 import me.alexandervortex.shelfie.model.ByteImageModel
 import me.alexandervortex.shelfie.model.ParsedBookModel
 import me.alexandervortex.shelfie.model.PreviewBookModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.util.zip.ZipFile
@@ -21,12 +26,14 @@ class EpubParser
     private val elementMapper: ElementMapper,
 ) {
 
-    fun parse(
+    suspend fun parse(
         zip: ZipFile
-    ): ParsedBookModel {
-        val opfPath = getOpfPath(zip) ?: throw Exception("OPF not found")
-        val opfDoc = zip.getInputStream(zip.getEntry(opfPath)).use {
-            Jsoup.parse(it, "UTF-8", "", Parser.xmlParser())
+    ): ParsedBookModel = coroutineScope {
+        val opfPath = withContext(Dispatchers.IO) { getOpfPath(zip) } ?: throw Exception("OPF not found")
+        val opfDoc = withContext(Dispatchers.IO) {
+            zip.getInputStream(zip.getEntry(opfPath)).use {
+                Jsoup.parse(it, "UTF-8", "", Parser.xmlParser())
+            }
         }
 
         val metadata = opfDoc.selectFirst("metadata")
@@ -45,21 +52,25 @@ class EpubParser
                 SpineItem(id = id, path = path)
             }
 
-        val binaries = mutableMapOf<String, ByteArray>()
-        manifest.values.forEach { path ->
-            if (path.endsWith(".jpg", true) || path.endsWith(".png", true) || path.endsWith(
-                    ".jpeg",
-                    true
-                )
-            ) {
-                val fullPath = resolvePath(opfPath, path)
-                zip.getEntry(fullPath)?.let { entry ->
-                    val data = zip.getInputStream(entry).use { it.readBytes() }
-                    binaries[path] = data
-                    binaries[path.substringAfterLast("/")] = data
+        val binaries = manifest.values
+            .filter { path ->
+                path.endsWith(".jpg", true) || path.endsWith(".png", true) || path.endsWith(".jpeg", true)
+            }
+            .map { path ->
+                async(Dispatchers.IO) {
+                    val fullPath = resolvePath(opfPath, path)
+                    zip.getEntry(fullPath)?.let { entry ->
+                        val data = zip.getInputStream(entry).use { it.readBytes() }
+                        path to data
+                    }
                 }
             }
-        }
+            .awaitAll()
+            .filterNotNull()
+            .flatMap { (path, data) ->
+                listOf(path to data, path.substringAfterLast("/") to data)
+            }
+            .toMap()
 
         // Get cover image specifically
         val coverId = metadata?.selectFirst("meta[name=cover]")?.attr("content")
@@ -74,32 +85,36 @@ class EpubParser
         val coverImage =
             ByteImageModel(coverPath?.let { binaries[it] ?: binaries[it.substringAfterLast("/")] })
 
-        val chapters = spine.mapNotNull { item ->
-            val fullPath = resolvePath(base = opfPath, relative = item.path)
-            val entry = zip.getEntry(fullPath) ?: return@mapNotNull null
-            val doc = zip.getInputStream(entry).use {
-                Jsoup.parse(
-                    it,
-                    "UTF-8",
-                    "",
-                    Parser.xmlParser()
+        val chapters = spine.map { item ->
+            async {
+                val fullPath = resolvePath(base = opfPath, relative = item.path)
+                val entry = withContext(Dispatchers.IO) { zip.getEntry(fullPath) } ?: return@async null
+                val doc = withContext(Dispatchers.IO) {
+                    zip.getInputStream(entry).use {
+                        Jsoup.parse(
+                            it,
+                            "UTF-8",
+                            "",
+                            Parser.xmlParser()
+                        )
+                    }
+                }
+
+                val body = doc.selectFirst("body")
+                    ?: return@async null
+
+                val document = elementMapper.map(
+                    root = body,
+                    binaries = binaries,
+                )
+
+                document.toSpineSection(
+                    id = item.id
                 )
             }
+        }.awaitAll().filterNotNull()
 
-            val body = doc.selectFirst("body")
-                ?: return@mapNotNull null
-
-            val document = elementMapper.map(
-                root = body,
-                binaries = binaries,
-            )
-
-            document.toSpineSection(
-                id = item.id
-            )
-        }
-
-        return ParsedBookModel(
+        ParsedBookModel(
             titleInfo = PreviewBookModel(
                 title = title,
                 author = author,

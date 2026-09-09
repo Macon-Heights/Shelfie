@@ -7,6 +7,9 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import me.alexandervortex.shelfie.feature.navigation.SettingsRoute
@@ -20,6 +23,7 @@ fun ViewerScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val listState = rememberLazyListState()
 
     val serviceState = state.serviceState
@@ -27,7 +31,7 @@ fun ViewerScreen(
 
     LaunchedEffect(id) {
         viewModel.onIntent(ViewerIntent.LoadBook(id))
-        viewModel.onIntent(ViewerIntent.BindService(context))
+        viewModel.onIntent(ViewerIntent.BindService)
     }
 
     LaunchedEffect(book) {
@@ -51,8 +55,22 @@ fun ViewerScreen(
         }
     }
 
-    DisposableEffect(Unit) {
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                viewModel.onIntent(
+                    ViewerIntent.SaveScrollStateOnDispose(
+                        id = id,
+                        index = listState.firstVisibleItemIndex,
+                        offset = listState.firstVisibleItemScrollOffset
+                    )
+                )
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+
         onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
             viewModel.onIntent(
                 ViewerIntent.SaveScrollStateOnDispose(
                     id = id,
@@ -60,17 +78,13 @@ fun ViewerScreen(
                     offset = listState.firstVisibleItemScrollOffset
                 )
             )
-            viewModel.onIntent(ViewerIntent.UnbindService(context))
+            viewModel.onIntent(ViewerIntent.UnbindService)
         }
     }
 
     LaunchedEffect(serviceState.index, serviceState.offset) {
         if (serviceState.isPlaying) {
-            try {
-                listState.animateScrollToItem(serviceState.index, scrollOffset = serviceState.offset)
-            } catch (e: Exception) {
-
-            }
+            listState.animateScrollToItem(serviceState.index, scrollOffset = serviceState.offset)
         }
     }
 
