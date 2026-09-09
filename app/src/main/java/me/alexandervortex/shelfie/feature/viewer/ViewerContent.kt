@@ -31,7 +31,7 @@ import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.SectionsUI
-import me.alexandervortex.shelfie.ui.component.SettingsUI
+import me.alexandervortex.shelfie.feature.settings.SettingsScreen
 import me.alexandervortex.shelfie.ui.model.UI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
@@ -104,7 +104,7 @@ fun ViewerContent(
         popup = {
             if (state.isSettingsVisible) {
                 val viewModel = hiltViewModel<SettingsViewModel>()
-                SettingsUI(viewModel) { onIntent(ViewerIntent.ToggleSettings) }
+                SettingsScreen(viewModel) { onIntent(ViewerIntent.ToggleSettings) }
             }
 
             if (state.isSectionsVisible) {
