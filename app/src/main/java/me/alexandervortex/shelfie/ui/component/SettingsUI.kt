@@ -1,23 +1,18 @@
 package me.alexandervortex.shelfie.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.base.ext.getStaticSurfaceVariant
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
 import me.alexandervortex.shelfie.feature.settings.SettingsIntent
 import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
@@ -30,84 +25,74 @@ import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 @Composable
 fun SettingsUI(
     viewModel: SettingsViewModel?,
-    onDecline: () -> Unit,
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
+    Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(getStaticSurfaceVariant().copy(alpha = 0.7f))
-            .clickable { onDecline.invoke() }
-            .padding(ROOT_PADDING.dp)
+            .fillMaxWidth()
+            .clip(SHAPE_M)
+            .background(getColors().surface)
+            .padding(BOX_PADDING.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(SHAPE_M)
-                .background(getColors().surface)
-                .padding(BOX_PADDING.dp)
-        ) {
-            val fontSize = LocalAppSettings.fontSize.current
-            SettingsItemUI(
-                stringResource(R.string.settings_font_size),
-                value = fontSize.toString(),
-                onDecrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeFont(fontSize - 2))
-                },
-                onIncrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeFont(fontSize + 2))
-                },
-                onReset = {
-                    viewModel?.onIntent(SettingsIntent.ChangeFont())
-                }
-            )
-            Spacer(Modifier.size(16.dp))
-            val lineHeight = LocalAppSettings.lineHeight.current
-            SettingsItemUI(
-                stringResource(R.string.settings_line_height),
-                value = lineHeight.toString(),
-                onDecrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight - 0.25f))
-                },
-                onIncrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight + 0.25f))
-                },
-                onReset = {
-                    viewModel?.onIntent(SettingsIntent.ChangeLineHeight())
-                }
-            )
-            Spacer(Modifier.size(16.dp))
-            val padding = LocalAppSettings.padding.current
-            SettingsItemUI(
-                title = stringResource(R.string.settings_paddings),
-                value = padding.toString(),
-                onDecrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangePadding(padding - 2))
-                },
-                onIncrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangePadding(padding + 2))
-                },
-                onReset = {
-                    viewModel?.onIntent(SettingsIntent.ChangePadding())
-                }
-            )
-            Spacer(Modifier.size(16.dp))
-            val themeValue = LocalAppSettings.theme.current
-            val theme = ThemeValue.fromValue(themeValue)
-            SettingsItemUI(
-                title = stringResource(R.string.settings_theme),
-                value = stringResource(ThemeValue.fromValue(themeValue).textResId),
-                onDecrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme.prev()))
-                },
-                onIncrease = {
-                    viewModel?.onIntent(SettingsIntent.ChangeTheme(theme.next()))
-                },
-                onReset = {
-                    viewModel?.onIntent(SettingsIntent.ChangeTheme())
-                }
-            )
-        }
+        val fontSize = LocalAppSettings.fontSize.current
+        SettingsItemUI(
+            stringResource(R.string.settings_font_size),
+            value = fontSize.toString(),
+            onDecrease = {
+                viewModel?.onIntent(SettingsIntent.ChangeFont(fontSize - 2))
+            },
+            onIncrease = {
+                viewModel?.onIntent(SettingsIntent.ChangeFont(fontSize + 2))
+            },
+            onReset = {
+                viewModel?.onIntent(SettingsIntent.ChangeFont())
+            }
+        )
+        Spacer(Modifier.size(16.dp))
+        val lineHeight = LocalAppSettings.lineHeight.current
+        SettingsItemUI(
+            stringResource(R.string.settings_line_height),
+            value = lineHeight.toString(),
+            onDecrease = {
+                viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight - 0.25f))
+            },
+            onIncrease = {
+                viewModel?.onIntent(SettingsIntent.ChangeLineHeight(lineHeight + 0.25f))
+            },
+            onReset = {
+                viewModel?.onIntent(SettingsIntent.ChangeLineHeight())
+            }
+        )
+        Spacer(Modifier.size(16.dp))
+        val padding = LocalAppSettings.padding.current
+        SettingsItemUI(
+            title = stringResource(R.string.settings_paddings),
+            value = padding.toString(),
+            onDecrease = {
+                viewModel?.onIntent(SettingsIntent.ChangePadding(padding - 2))
+            },
+            onIncrease = {
+                viewModel?.onIntent(SettingsIntent.ChangePadding(padding + 2))
+            },
+            onReset = {
+                viewModel?.onIntent(SettingsIntent.ChangePadding())
+            }
+        )
+        Spacer(Modifier.size(16.dp))
+        val themeValue = LocalAppSettings.theme.current
+        val theme = ThemeValue.fromValue(themeValue)
+        SettingsItemUI(
+            title = stringResource(R.string.settings_theme),
+            value = stringResource(ThemeValue.fromValue(themeValue).textResId),
+            onDecrease = {
+                viewModel?.onIntent(SettingsIntent.ChangeTheme(theme.prev()))
+            },
+            onIncrease = {
+                viewModel?.onIntent(SettingsIntent.ChangeTheme(theme.next()))
+            },
+            onReset = {
+                viewModel?.onIntent(SettingsIntent.ChangeTheme())
+            }
+        )
     }
 }
 
@@ -115,6 +100,6 @@ fun SettingsUI(
 @Composable
 private fun SettingsPreview() {
     CombinedPreviews {
-        SettingsUI(null) {}
+        SettingsUI(null)
     }
 }
