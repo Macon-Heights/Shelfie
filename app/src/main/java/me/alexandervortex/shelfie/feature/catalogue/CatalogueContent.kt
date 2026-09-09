@@ -12,7 +12,6 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -36,6 +35,7 @@ import androidx.compose.ui.window.Dialog
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
+import me.alexandervortex.shelfie.feature.updater.AppUpdate
 import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.ui.component.BUTTON_BIG
 import me.alexandervortex.shelfie.ui.component.ButtonUI
@@ -48,7 +48,6 @@ import me.alexandervortex.shelfie.ui.preview.BookPreviewFactory.getTitles
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
-import me.alexandervortex.shelfie.ui.theme.IC_UPDATE
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -81,6 +80,33 @@ fun CatalogueContent(
                     modifier = Modifier.padding(vertical = 64.dp),
                     text = AnnotatedString(stringResource(R.string.catalogue_title))
                 )
+            }
+            if (state.pendingUpdate != null) {
+                item {
+                    val model = CatalogueItemUIModel.Model(
+                        isChecked = false, data = CatalogueItemModel(
+                            author = stringResource(
+                                R.string.update_dialog_subtitle,
+                                state.pendingUpdate.versionName
+                            ),
+                            title = stringResource(R.string.update_dialog_title),
+                            id = "",
+                            localPath = "",
+                            year = ""
+                        )
+                    )
+                    CatalogueItemUI(
+                        isRemoveMode = state.isRemoveMode,
+                        model = model,
+                        modifier = Modifier
+                            .animateItem(
+                                fadeInSpec = tween(), fadeOutSpec = tween(), placementSpec = tween()
+                            )
+                            .clickable {
+                                updateClick.invoke()
+                            },
+                    )
+                }
             }
             when {
                 state.books.isEmpty() -> item { EmptyStateUI(R.string.catalogue_empty) }
@@ -138,29 +164,10 @@ fun CatalogueContent(
         val icon = if (state.isRemoveMode) IC_DELETE else IC_ADD
         val containerColor = if (state.isRemoveMode) getColors().error else null
         val contentColor = if (state.isRemoveMode) getColors().onError else null
-            Row(
+        ButtonUI(
             modifier = Modifier
                 .padding(32.dp)
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
-            ) {
-                ButtonUI(
-                    contentColor = contentColor,
-                    containerColor = containerColor,
-                    modifierAfter = Modifier
-                        .size(BUTTON_BIG.dp)
-                        .clickable {
-                            updateClick.invoke()
-                        },
-                    content = {
-                        Icon(
-                            imageVector = IC_UPDATE,
-                            contentDescription = null,
-                            tint = it
-                        )
-                    }
-                )
-                Spacer(Modifier.size(32.dp))
-                ButtonUI(
             contentColor = contentColor,
             containerColor = containerColor,
             modifierAfter = Modifier
@@ -179,7 +186,8 @@ fun CatalogueContent(
                     tint = it
                 )
             }
-        )}
+        )
+        /*
         if (state.pendingUpdate != null) {
             ConfirmationUI(
                 title = stringResource(R.string.update_dialog_title),
@@ -190,6 +198,7 @@ fun CatalogueContent(
                 onDecline = onDismissUpdate
             )
         }
+        */
         if (state.isPopup) {
             Dialog(onDismissRequest = { onTogglePopup(false) }) {
                 ConfirmationUI(
@@ -225,7 +234,18 @@ private fun PreviewCatalogue() {
                 )
             )
         }
-        val state = CatalogueState(false, false, books = books)
+        val updateMoodel = AppUpdate(
+            versionName = "1.26.11",
+            downloadUrl = "",
+            changelog = "This is changelog",
+            size = 12L
+        )
+        val state = CatalogueState(
+            false,
+            false,
+            books = books,
+            pendingUpdate = updateMoodel
+        )
         CatalogueContent(state)
     }
 }
