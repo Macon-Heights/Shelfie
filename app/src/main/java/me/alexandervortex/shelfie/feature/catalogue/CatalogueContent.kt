@@ -36,6 +36,7 @@ import androidx.compose.ui.window.Dialog
 import me.alexandervortex.shelfie.R
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
+import me.alexandervortex.shelfie.model.CatalogueItemModel
 import me.alexandervortex.shelfie.ui.component.BUTTON_BIG
 import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.CatalogueItemUI
@@ -43,6 +44,7 @@ import me.alexandervortex.shelfie.ui.component.ConfirmationUI
 import me.alexandervortex.shelfie.ui.component.EmptyStateUI
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
+import me.alexandervortex.shelfie.ui.preview.BookPreviewFactory.getTitles
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
@@ -210,9 +212,20 @@ fun CatalogueContent(
 
 @Composable
 @CombinedPreviews
-fun PreviewCatalogue() {
+private fun PreviewCatalogue() {
     CombinedPreviews {
-        val state = CatalogueState()
+        val books: List<CatalogueItemUIModel> = getTitles().map { title ->
+            CatalogueItemUIModel.Model(
+                false, CatalogueItemModel(
+                    id = "",
+                    localPath = "",
+                    title = title.first(),
+                    author = title.last(),
+                    year = "",
+                )
+            )
+        }
+        val state = CatalogueState(false, false, books = books)
         CatalogueContent(state)
     }
 }

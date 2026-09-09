@@ -16,6 +16,9 @@ import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueIntent
 import me.alexandervortex.shelfie.feature.catalogue.mvi.CatalogueState
 import me.alexandervortex.shelfie.feature.navigation.AddBookRoute
 import me.alexandervortex.shelfie.feature.navigation.MediaViewerRoute
+import me.alexandervortex.shelfie.model.CatalogueItemModel
+import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
+import me.alexandervortex.shelfie.ui.preview.BookPreviewFactory.getTitles
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
 @Composable
@@ -75,7 +78,18 @@ fun CatalogueScreen(
 @CombinedPreviews
 private fun PreviewCatalogue() {
     CombinedPreviews {
-        val state = CatalogueState()
+        val books: List<CatalogueItemUIModel> = getTitles().map { title ->
+            CatalogueItemUIModel.Model(
+                false, CatalogueItemModel(
+                    id = "",
+                    localPath = "",
+                    title = title.first(),
+                    author = title.last(),
+                    year = "",
+                )
+            )
+        }
+        val state = CatalogueState(false, false, books = books)
         CatalogueContent(state)
     }
 }
