@@ -1,11 +1,21 @@
-package me.alexandervortex.shelfie.feature.catalogue
+package me.alexandervortex.shelfie.ui.preview
 
-import me.alexandervortex.shelfie.model.CatalogueItemModel
-import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
+import me.alexandervortex.shelfie.R
 
-object CataloguePreviewData {
+object BookPreviewFactory {
 
-    fun getBooks(): List<CatalogueItemUIModel.Model> {
+    fun getImages(): List<Int> {
+        return listOf(
+            R.drawable.img_4,
+            R.drawable.img_5,
+            R.drawable.img_1,
+            R.drawable.img_2,
+            R.drawable.img_3,
+            R.drawable.img
+        )
+    }
+
+    fun getTitles(): List<List<String>> {
         return listOf(
             listOf("1984", "George Orwell"),
             listOf("To Kill a Mockingbird", "Harper Lee"),
@@ -37,19 +47,6 @@ object CataloguePreviewData {
             listOf("Dracula", "Bram Stoker"),
             listOf("Frankenstein", "Mary Shelley"),
             listOf("The Shining", "Stephen King")
-        ).map {
-            CatalogueItemUIModel.Model(
-                data = CatalogueItemModel(
-                    id = "id",
-                    localPath = "path",
-                    title = it.firstOrNull().orEmpty(),
-                    author = it.lastOrNull(),
-                    year = (1800..2010).random().toString(),
-                    scrollIndex = 9,
-                    elements = 20
-                ),
-                isChecked = listOf(true, false).random(),
-            )
-        }
+        )
     }
 }

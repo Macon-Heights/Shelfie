@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import me.alexandervortex.shelfie.base.ext.getColors
 import me.alexandervortex.shelfie.feature.preview.COVER_HEIGHT
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
-import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookUI
+import me.alexandervortex.shelfie.ui.preview.ViewerPreviewData.getBookUI
 import me.alexandervortex.shelfie.ui.component.new.ImageUI
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.UI

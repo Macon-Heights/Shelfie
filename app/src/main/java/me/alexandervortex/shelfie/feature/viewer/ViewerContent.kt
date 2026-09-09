@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
 import me.alexandervortex.shelfie.feature.settings.SettingsScreen
 import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
-import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookDocument
+import me.alexandervortex.shelfie.ui.preview.ViewerPreviewData.getBookDocument
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerState
 import me.alexandervortex.shelfie.model.ParsedBookModel
@@ -35,6 +35,7 @@ import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.SectionsUI
 import me.alexandervortex.shelfie.ui.model.UI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
+import me.alexandervortex.shelfie.ui.preview.getTitleInfo
 
 @Composable
 fun ViewerContent(
