@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
 }
 
@@ -15,8 +16,8 @@ android {
         applicationId = "me.alexandervortex.shelfie"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.26.09"
+        versionCode = 3
+        versionName = "1.26.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -83,6 +85,7 @@ dependencies {
     // Parsers
     implementation(libs.jsoup)
     implementation(libs.serialization.core)
+    implementation(libs.serialization.json)
     implementation(libs.storage)
 
     // Test
@@ -91,4 +94,8 @@ dependencies {
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.framework)
     testImplementation(libs.mockk)
+
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
 }

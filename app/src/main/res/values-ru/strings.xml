@@ -19,4 +19,9 @@
     <string name="settings_theme_dark">Темная</string>
 
     <string name="add_book_import_title">Добавить</string>
+
+    <string name="update_dialog_title">Доступно обновление</string>
+    <string name="update_dialog_subtitle">Новая версия v%s готова к установке.</string>
+    <string name="update_dialog_approve">Обновить</string>
+    <string name="update_dialog_decline">Позже</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -40,10 +41,12 @@ import me.alexandervortex.shelfie.ui.component.ButtonUI
 import me.alexandervortex.shelfie.ui.component.CatalogueItemUI
 import me.alexandervortex.shelfie.ui.component.ConfirmationUI
 import me.alexandervortex.shelfie.ui.component.EmptyStateUI
+import me.alexandervortex.shelfie.ui.component.PopupBoxUI
 import me.alexandervortex.shelfie.ui.component.new.TitleUI
 import me.alexandervortex.shelfie.ui.model.CatalogueItemUIModel
 import me.alexandervortex.shelfie.ui.theme.IC_ADD
 import me.alexandervortex.shelfie.ui.theme.IC_DELETE
+import me.alexandervortex.shelfie.ui.theme.IC_UPDATE
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -55,6 +58,9 @@ fun CatalogueContent(
     onToggleRemoveMode: (CatalogueItemUIModel.Model) -> Unit,
     onAddClick: () -> Unit,
     onDeleteClick: () -> Unit,
+    updateClick: () -> Unit,
+    onApproveUpdate: () -> Unit,
+    onDismissUpdate: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -130,11 +136,29 @@ fun CatalogueContent(
         val icon = if (state.isRemoveMode) IC_DELETE else IC_ADD
         val containerColor = if (state.isRemoveMode) getColors().error else null
         val contentColor = if (state.isRemoveMode) getColors().onError else null
-
-        ButtonUI(
+            Row(
             modifier = Modifier
                 .padding(32.dp)
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
+            ) {
+                ButtonUI(
+                    contentColor = contentColor,
+                    containerColor = containerColor,
+                    modifierAfter = Modifier
+                        .size(BUTTON_BIG.dp)
+                        .clickable {
+                            updateClick.invoke()
+                        },
+                    content = {
+                        Icon(
+                            imageVector = IC_UPDATE,
+                            contentDescription = null,
+                            tint = it
+                        )
+                    }
+                )
+                Spacer(Modifier.size(32.dp))
+                ButtonUI(
             contentColor = contentColor,
             containerColor = containerColor,
             modifierAfter = Modifier
@@ -153,7 +177,17 @@ fun CatalogueContent(
                     tint = it
                 )
             }
-        )
+        )}
+        if (state.pendingUpdate != null) {
+            ConfirmationUI(
+                title = stringResource(R.string.update_dialog_title),
+                subtitle = stringResource(R.string.update_dialog_subtitle, state.pendingUpdate.versionName),
+                approveText = stringResource(R.string.update_dialog_approve),
+                declineText = stringResource(R.string.update_dialog_decline),
+                onApprove = onApproveUpdate,
+                onDecline = onDismissUpdate
+            )
+        }
         if (state.isPopup) {
             Dialog(onDismissRequest = { onTogglePopup(false) }) {
                 ConfirmationUI(

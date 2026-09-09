@@ -19,4 +19,9 @@
     <string name="settings_theme_dark">Dark</string>
 
     <string name="add_book_import_title">Add</string>
+
+    <string name="update_dialog_title">Update Available</string>
+    <string name="update_dialog_subtitle">New version v%s is ready to install.</string>
+    <string name="update_dialog_approve">Update</string>
+    <string name="update_dialog_decline">Later</string>
 </resources>
