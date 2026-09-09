@@ -17,6 +17,11 @@ data object CatalogueRoute {
     val route = "catalogue"
 }
 
+data object SettingsRoute {
+
+    val route = "settings"
+}
+
 data class MediaViewerRoute(
     val id: String,
 ) {

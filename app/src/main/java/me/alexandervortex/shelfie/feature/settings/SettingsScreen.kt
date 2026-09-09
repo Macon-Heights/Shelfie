@@ -1,37 +1,31 @@
-package me.alexandervortex.shelfie.ui.component
+package me.alexandervortex.shelfie.feature.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.alexandervortex.shelfie.R
-import me.alexandervortex.shelfie.base.ext.getColors
-import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
-import me.alexandervortex.shelfie.feature.settings.SettingsIntent
-import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
 import me.alexandervortex.shelfie.feature.settings.values.ThemeValue
 import me.alexandervortex.shelfie.feature.settings.values.next
 import me.alexandervortex.shelfie.feature.settings.values.prev
+import me.alexandervortex.shelfie.ui.component.SettingsItemUI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
-import me.alexandervortex.shelfie.ui.theme.SHAPE_M
 
 @Composable
-fun SettingsUI(
+fun SettingsScreen(
     viewModel: SettingsViewModel?,
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(SHAPE_M)
-            .background(getColors().surface)
-            .padding(BOX_PADDING.dp)
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
         val fontSize = LocalAppSettings.fontSize.current
         SettingsItemUI(
@@ -100,6 +94,6 @@ fun SettingsUI(
 @Composable
 private fun SettingsPreview() {
     CombinedPreviews {
-        SettingsUI(null)
+        SettingsScreen(null)
     }
 }

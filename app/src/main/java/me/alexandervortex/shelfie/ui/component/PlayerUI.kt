@@ -205,7 +205,7 @@ fun MediaViewerPreview2() {
                     ),
             ),
             listState = LazyListState(),
-            onIntent = {},
+            onIntent = {},{}
         )
     }
 }

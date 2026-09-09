@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.alexandervortex.shelfie.feature.settings.LocalAppSettings
+import me.alexandervortex.shelfie.feature.settings.SettingsScreen
 import me.alexandervortex.shelfie.feature.settings.SettingsViewModel
 import me.alexandervortex.shelfie.feature.viewer.ViewerPreviewData.getBookDocument
 import me.alexandervortex.shelfie.feature.viewer.mvi.ViewerIntent
@@ -32,7 +33,6 @@ import me.alexandervortex.shelfie.model.ProgressModel
 import me.alexandervortex.shelfie.ui.component.ComponentUI
 import me.alexandervortex.shelfie.ui.component.PlayerUI
 import me.alexandervortex.shelfie.ui.component.SectionsUI
-import me.alexandervortex.shelfie.ui.component.SettingsUI
 import me.alexandervortex.shelfie.ui.model.UI
 import me.alexandervortex.shelfie.ui.preview.CombinedPreviews
 
@@ -41,6 +41,7 @@ fun ViewerContent(
     state: ViewerState,
     listState: LazyListState,
     onIntent: (ViewerIntent) -> Unit,
+    onSettingsClick: () -> Unit,
 ) {
     val book = state.book
     val padding = LocalAppSettings.padding.current
@@ -64,7 +65,6 @@ fun ViewerContent(
                     index
                 }
             ) { index, section ->
-
                 AnimatedContent(
                     targetState = section,
                     transitionSpec = {
@@ -92,7 +92,10 @@ fun ViewerContent(
             state = state.serviceState,
             index = remember { derivedStateOf { listState.firstVisibleItemIndex } }.value,
             elements = book?.elements?.size ?: 0,
-            settingsAction = { onIntent(ViewerIntent.ToggleSettings) },
+            settingsAction = { onSettingsClick.invoke() },
+
+//            onBookOpen = { nav.navigate(MediaViewerRoute(it.data.id).route) },
+
             playPauseAction = { onIntent(ViewerIntent.TogglePlayPause(listState.firstVisibleItemIndex)) },
             timerAction = { onIntent(ViewerIntent.ToggleTimer) },
             speedAction = { onIntent(ViewerIntent.ToggleSpeed) },
@@ -104,7 +107,7 @@ fun ViewerContent(
     if (state.isSettingsVisible) {
         val viewModel = hiltViewModel<SettingsViewModel>()
         Dialog(onDismissRequest = { onIntent(ViewerIntent.ToggleSettings) }) {
-            SettingsUI(viewModel)
+            SettingsScreen(viewModel)
         }
     }
 
@@ -139,7 +142,7 @@ fun MediaViewerPreview() {
                 book = bookUI,
             ),
             listState = LazyListState(),
-            onIntent = {}
+            onIntent = {}, {}
         )
     }
 }
